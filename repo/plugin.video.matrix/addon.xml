@@ -11,7 +11,7 @@
                 <import addon="xbmc.python" version="2.24.0"/>
             </catch>
         </trycatch>
-        <import addon="repository.zombi"/>
+        <import addon="bassemhelal18_Repo"/>
         <import addon="script.module.pyqrcode"/>
         <import addon="script.kodi.loguploader"/>
         <import addon="script.module.requests" version="2.9.1"/>

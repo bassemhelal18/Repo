@@ -12,7 +12,7 @@
                 <import addon="xbmc.python" version="2.24.0"/>
             </catch>
         </trycatch>
-        <import addon="Bassem_Repo"/>
+        <import addon="bassemhelal18_Repo"/>
         <import addon="script.module.pyqrcode"/>
         <import addon="script.module.requests" version="2.9.1"/>
         <import addon="script.module.resolveurl" version="5.1.0"/>
@@ -63,7 +63,7 @@
     </extension>
 </addon>
 
-    <addon id="Bassem_Repo" 
+    <addon id="bassemhelal18_Repo" 
 			name="Bassem Repo" 
 			version="1.00" 
 			provider-name="bassemhelal18">
