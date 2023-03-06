@@ -2,9 +2,9 @@
 <addon id="Bassem_Repo" name="Baseem Repo" version="100" provider-name="bassemhelal18">
     <extension point="xbmc.addon.repository" name="Bassem Repo">
         <dir>
-            <info compressed="false">https://raw.githubusercontent.com/bassemhelal18/bassem/master/repo/zips/addons.xml</info>
-            <checksum>https://raw.githubusercontent.com/bassemhelal18/Repo/master/bassem/zips/addons.xml.md5</checksum>
-            <datadir zip="true">https://raw.githubusercontent.com/bassemhelal18/bassem/master/repo/zips/</datadir>
+            <info compressed="false">https://raw.githubusercontent.com/bassemhelal18/Repo/master/repo/zips/addons.xml</info>
+            <checksum>https://raw.githubusercontent.com/bassemhelal18/Repo/master/Repo/zips/addons.xml.md5</checksum>
+            <datadir zip="true">https://raw.githubusercontent.com/bassemhelal18/Repo/master/repo/zips/</datadir>
         </dir>
     </extension>
     <extension point="xbmc.addon.metadata">
