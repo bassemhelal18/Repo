@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<addons><addon id="bassemhelal18_Repo" name="Bassem Repo" version="1.00" provider-name="bassemhelal18">
+<addons><addon id="bassemhelal18_Repo" name="Bassem Repo" version="1.0" provider-name="bassemhelal18">
     <extension point="xbmc.addon.repository" name="Bassem Repo">
         <dir>
             <info compressed="false">https://raw.githubusercontent.com/bassemhelal18/Repo/master/repo/zips/addons.xml</info>
