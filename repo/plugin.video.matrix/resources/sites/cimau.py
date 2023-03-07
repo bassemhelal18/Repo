@@ -262,7 +262,7 @@ def showSeries(sSearch = ''):
             siteUrl = aEntry[0]
             sThumb = aEntry[1].replace("(","").replace(")","")
             sDesc = ""
-            sTitle = sTitle.split("موسم")[0].split("حلقة")[0]
+            sTitle = sTitle.split("موسم")[0].split("حلقة")[0].split("حلقه")[0]
             
             
 
