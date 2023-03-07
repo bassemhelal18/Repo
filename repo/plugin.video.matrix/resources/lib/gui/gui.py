@@ -260,7 +260,7 @@ class cGui:
 
     # afficher les liens non playable
     def addFolder(self, oGuiElement, oOutputParameterHandler='', _isFolder=True):
-        if _isFolder:
+        if _isFolder is False:
             cGui.CONTENT = 'files'
 
         # recherche append les reponses
@@ -737,7 +737,7 @@ class cGui:
         
         # Si lancé depuis la page Home de Kodi, il faut d'abord en sortir pour lancer la recherche
         if xbmc.getCondVisibility('Window.IsVisible(home)'):
-            xbmc.executebuiltin('ActivateWindow(%d)' % 10025)
+            xbmc.executebuiltin('ActivateWindow(%d)' % 10028)
 
         xbmc.executebuiltin('Container.Update(%s)' % sTest)
 

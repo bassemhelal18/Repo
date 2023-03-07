@@ -41,18 +41,20 @@ DOC_SERIES = (URL_MAIN + 'category/%D9%85%D8%B3%D9%84%D8%B3%D9%84%D8%A7%D8%AA-%D
 SPORT_NEWS = (URL_MAIN + 'category/%D8%A7%D9%84%D9%85%D8%B5%D8%A7%D8%B1%D8%B9%D9%87-wwe', 'showMovies')
 URL_SEARCH = (URL_MAIN + 'search?s=', 'showMovies')
 URL_SEARCH_MOVIES = (URL_MAIN + 'search?s=%D9%81%D9%8A%D9%84%D9%85+', 'showMovies')
-URL_SEARCH_SERIES = (URL_MAIN + 'search?s=', 'showSerie')
+URL_SEARCH_SERIES = (URL_MAIN + 'search?s=', 'showSeriesSearch')
 URL_SEARCH_MISC = (URL_MAIN + 'search?s=', 'showSerie')
 FUNCTION_SEARCH = 'showMovies'
+
+
 UA = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36'
 def load():
     oGui = cGui()
     oOutputParameterHandler = cOutputParameterHandler()
     oGui.addDir(SITE_IDENTIFIER, 'showSearch', 'SEARCH_MOVIES', 'search.png', oOutputParameterHandler)
     
-    oGui.addDir(SITE_IDENTIFIER, 'showSeriesSearch', 'SEARCH_SERIES', 'search.png', oOutputParameterHandler)
+    oGui.addDir(SITE_IDENTIFIER, 'showSearchSeries', 'SEARCH_SERIES', 'search.png', oOutputParameterHandler)
 
-    oGui.addDir(SITE_IDENTIFIER, 'showSearchAll', 'Search All', 'search.png', oOutputParameterHandler)
+    
     
     oOutputParameterHandler.addParameter('siteUrl', MOVIE_EN[0])
     oGui.addDir(SITE_IDENTIFIER, 'showMovies', 'أفلام أجنبية', 'film.png', oOutputParameterHandler)
@@ -105,16 +107,14 @@ def load():
 
 def showSearch():
     oGui = cGui()
- 
     sSearchText = oGui.showKeyBoard()
     if sSearchText:
         sUrl = URL_MAIN + '/search?s=%D9%81%D9%8A%D9%84%D9%85+'+sSearchText
         showMovies(sUrl)
         oGui.setEndOfDirectory()
         return 
-def showSeriesSearch():
+def showSearchSeries():
     oGui = cGui()
- 
     sSearchText = oGui.showKeyBoard()
     if sSearchText:
         sUrl = URL_MAIN + 'search?s=مسلسل+'+ sSearchText
@@ -221,10 +221,9 @@ def showSerieSearch(sSearch = ''):
             progress_.VSupdate(progress_, total)
             if progress_.iscanceled():
                 break
-            if'/series/'in aEntry[0]:
-                continue
+            
             sTitle = aEntry[2].replace("مشاهدة","").replace("مشاهده","").replace("مسلسل","").replace("انيمي","").replace("انمي","").replace("انمى","").replace("مترجمة","").replace("برنامج","").replace("مترجم","").replace("مترجمة","").replace("فيلم","").replace("اون لاين","").replace("WEB-DL","").replace("BRRip","").replace("720p","").replace("HD-TC","").replace("HDRip","").replace("HD-CAM","").replace("DVDRip","").replace("BluRay","").replace("1080p","").replace("WEBRip","").replace("WEB-dl","").replace("مترجم ","").replace("مدبلج للعربية","مدبلج").replace("مشاهدة وتحميل","").replace("اون لاين","").replace("انيمي","").replace("كامل","")  
-            siteUrl = aEntry[0]
+            siteUrl = aEntry[0].replace("/series/","/season/")
             sThumb = aEntry[1]
             sDesc = ''
             sTitle = sTitle.split("الموسم")[0].split("الحلقة")[0].split("موسم")[0].split("حلقة")[0]

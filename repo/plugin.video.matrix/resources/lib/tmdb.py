@@ -1089,7 +1089,7 @@ class cTMDb:
                 cleanTitle = self._clean_title(name)
 
             self._cache_save(meta, cleanTitle, media_type, season, episode, year)
-        elif meta:   # initialise un meta vide
+        elif meta != False:   # initialise un meta vide
             meta = self._format(meta, name)
         else:
             meta = {}

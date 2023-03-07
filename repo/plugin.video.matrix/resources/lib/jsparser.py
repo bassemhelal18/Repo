@@ -455,7 +455,7 @@ class JSBuffer(object):
             return 'undefined'
         if value is True:
             return 'true'
-        if not value:
+        if value is False:
             return 'false'
         if type(value) in [list]:
             convert_first_to_generator = (str(w) for w in value)
