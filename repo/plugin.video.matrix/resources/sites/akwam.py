@@ -516,14 +516,14 @@ def showHosters():
     sPattern =  'href="(http[^<]+/watch/.+?)"' 
     aResult = oParser.parse(sHtmlContent,sPattern)
     if aResult[0] :
-        murl =  aResult[1][0]
+        murl =  aResult[1][0].replace("akwam.to","ak4eg.cam")
         oRequest = cRequestHandler(murl)
         sHtmlContent = oRequest.request()
 # ([^<]+) .+? (.+?)
     sPattern =  'href="(http[^<]+/watch/.+?)"' 
     aResult = oParser.parse(sHtmlContent,sPattern)
     if aResult[0] :
-        murl =  aResult[1][0]
+        murl =  aResult[1][0].replace("akwam.to","ak4eg.cam")
         oRequest = cRequestHandler(murl)
         sHtmlContent = oRequest.request()
             
@@ -531,7 +531,7 @@ def showHosters():
     sPattern =  '>Click here</span> to go for your link...</a>.+?<a href="(.+?)"' 
     aResult = oParser.parse(sHtmlContent,sPattern)
     if aResult[0] :
-        murl =  aResult[1][0]
+        murl =  aResult[1][0].replace("akwam.to","ak4eg.cam")
         oRequest = cRequestHandler(murl)
         sHtmlContent = oRequest.request()
 
@@ -543,8 +543,8 @@ def showHosters():
 
     if aResult[0] :
        for aEntry1 in aResult[1]:
-           sHosterUrl = aEntry1[0] 
-           sHost = aEntry1[1]  
+           sHosterUrl = aEntry1[0].replace("akwam.to","ak4eg.cam")
+           sHost = aEntry1[1] .replace("akwam.to","ak4eg.cam") 
            sTitle = ('%s  [COLOR coral](%sp)[/COLOR]') % (sMovieTitle, sHost)  
            oHoster = cHosterGui().checkHoster(sHosterUrl)
            if oHoster:
@@ -569,7 +569,7 @@ def showHosters2():
     sPattern =  '<a href="([^<]+)" class="download-link"' 
     aResult = oParser.parse(sHtmlContent,sPattern)
     if aResult[0] :
-        murl =  aResult[1][0]
+        murl =  aResult[1][0].replace("akwam.to","ak4eg.cam")
         oRequest = cRequestHandler(murl)
         sHtmlContent2 = oRequest.request()
 
@@ -584,8 +584,8 @@ def showHosters2():
 	
     if aResult[0] : 
        for aEntry in aResult[1]:      
-           url = aEntry[0]
-           sHost = aEntry[1]				
+           url = aEntry[0].replace("akwam.to","ak4eg.cam")
+           sHost = aEntry[1].replace("akwam.to","ak4eg.cam")				
            sTitle = ('%s  [COLOR coral]%sp[/COLOR]') % (sMovieTitle, sHost)
 				
 					

@@ -8,12 +8,12 @@
         "akwam": {
             "label": "Akwam",
             "active": "True",
-            "url": "https://ak4eg.cam/"
+            "url": "https://eg1.ak4eg.cam/"
         },
         "aflaam": {
             "label": "Aflaam",
             "active": "True",
-            "url": "https://aflaam.com/"    
+            "url": "https://aflaam.com/"
         },
         "alarab": {
             "label": "Alarab",
@@ -34,7 +34,7 @@
             "label": "Alwanfilm",
             "active": "True",
             "url": "https://alwanfilm.com/"
-       },
+        },
         "aracinema_co": {
             "label": "Aramosalsal",
             "active": "True",
@@ -53,7 +53,7 @@
         "cimaclub": {
             "label": "Cimaclub",
             "active": "True",
-            "url": "https://ciimaclub.boats/"
+            "url": "https://ciimaclub.quest/"
         },
         "cimanow": {
             "label": "Cimanow",
@@ -63,17 +63,17 @@
         "ciimalight": {
             "label": "Ciimalight",
             "active": "True",
-            "url": "https://a.ciimalight.mom/"    
+            "url": "https://a.ciiimalight.makeup/"
         },
         "cimau": {
             "label": "Cima4u",
             "active": "True",
-            "url": "https://cima4u1.online/"
+            "url": "https://cima4u1.beauty/"
         },
         "dramacafe": {
             "label": "Dramacafe",
             "active": "True",
-            "url": "https://ab.dramacafe-tv.com:82/"    
+            "url": "https://dramacafe-tv.cloud/"
         },
         "egyclub": {
             "label": "Egyclub",
@@ -88,7 +88,7 @@
         "fushaar": {
             "label": "Fushaar",
             "active": "True",
-            "url": "https://www.fushaar.info/"    
+            "url": "https://www.fushaar.info/"
         },
         "faselhd": {
             "label": "Faselhd",
@@ -118,17 +118,12 @@
         "mycima": {
             "label": "Mycima",
             "active": "True",
-            "url": "https://wecimaa.beauty/"
+            "url": "https://weecima.click/"
         },
         "prstej": {
             "label": "Prstej",
             "active": "True",
             "url": "https://ps.3rb.tv/"
-        },
-        "shahidu": {
-            "label": "Shahid4u",
-            "active": "True",
-            "url": "https://shahidforu.net/"
         },
         "shooflive": {
             "label": "Shooflive",
@@ -158,8 +153,7 @@
         "tuktukcinema": {
             "label": "Tuktukcinema",
             "active": "True",
-            "url": "https://tuktukcinema.quest/"
-       
+            "url": "https://tuktukcinema.monster/"
         }
     }
 }

@@ -320,15 +320,15 @@ def showHosters():
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
 
-    
+   
     oParser = cParser()
-    sId = ''
+    sId2 = ''
 
     sPattern = '<a href="(.+?)" target="_blank" rel="nofollow" class="controls-play-pause-big" data-control="play-pause" playing="paused"></a>'
     aResult = oParser.parse(sHtmlContent, sPattern)
     
-    if aResult[0]:
-        sId = aResult[1][0]
+    if (aResult[0]):
+        sId2 = aResult[1][0]
     #Recuperation infos
     html = ''
      # (.+?) ([^<]+) .+?
@@ -338,7 +338,7 @@ def showHosters():
     if (aResult[0]):
         for aEntry in aResult[1]:
             
-            headers = {'Host': 'ab.dramacafe-tv.com:82',
+            headers = {'Host': 'z.dramacafe-tv.com:82',
 							'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:65.0) Gecko/20100101 Firefox/65.0',
 							'Accept': '*/*',
 							'Accept-Language': 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3',
@@ -371,3 +371,6 @@ def showHosters():
 
                 
     oGui.setEndOfDirectory()
+                
+   
+

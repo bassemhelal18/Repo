@@ -177,7 +177,7 @@ class cHosterGui:
                 else:
                     return self.getHoster("lien_direct")
 
-        supported_player = ['hdup', 'streamable', 'stardima', 'filescdn', 'vidgot', 'videott', 'vidlo', 'sendit', 'thevid', 'vidmoly', 'fastplay', 'cloudy', 'hibridvod', 'arabveturk', 'mycima', 'extremenow', 'yourupload', 'vidspeeds', 'moshahda', 'voe', 'faselhd', 'streamz', 'streamax', 'gounlimited', 'xdrive', 'mixdrop', 'mixloads', 'vidoza',
+        supported_player = ['hdup', 'streamable', 'stardima', 'filescdn', 'vidgot', 'videott', 'vidlo', 'sendit', 'thevid', 'vidmoly', 'fastplay', 'cloudy', 'hibridvod', 'arabveturk', 'extremenow', 'yourupload', 'vidspeeds', 'moshahda', 'voe', 'faselhd', 'streamz', 'streamax', 'gounlimited', 'xdrive', 'mixdrop', 'mixloads', 'vidoza',
                             'rutube', 'megawatch', 'vidzi', 'filetrip', 'uptostream', 'speedvid', 'netu', 'letsupload',
                             'onevideo', 'playreplay', 'prostream', 'vidfast', 'uqload', 'letwatch','vidbem','mail.ru',
                             'filepup', 'vimple', 'wstream', 'watchvideo', 'vidwatch', 'up2stream', 'tune', 'playtube',
@@ -195,7 +195,10 @@ class cHosterGui:
         # Gestion classique
         if ('vadshar' in sHostName) or ('vidshar' in sHostName) or ('vedshaar' in sHostName) or ('vedsharr' in sHostName) or ('vedshar' in sHostName) or ('vidshare' in sHostName):
             return self.getHoster('vidshare')
-        
+        if ('weecima' in sHostName):
+            return self.getHoster('mycima')
+        if ('sbbrisk' in sHostName):
+            return self.getHoster('resolver')
         if ('sbfull' in sHostName):
             return self.getHoster('resolver')
         if ('vanfem' in sHostName):
@@ -233,6 +236,7 @@ class cHosterGui:
 
         if ('nextcdn' in sHostName):
             return self.getHoster('lien_direct')
+        
 
         if ('akwam' in sHostName):
             return self.getHoster('lien_direct')
