@@ -53,7 +53,7 @@
         "cimaclub": {
             "label": "Cimaclub",
             "active": "True",
-            "url": "https://ciimaclub.quest/"
+            "url": "https://ciimaclub.makeup/"
         },
         "cimanow": {
             "label": "Cimanow",
@@ -68,7 +68,7 @@
         "cimau": {
             "label": "Cima4u",
             "active": "True",
-            "url": "https://cima4u1.beauty/"
+            "url": "https://cima4u1.quest/"
         },
         "dramacafe": {
             "label": "Dramacafe",
@@ -118,7 +118,7 @@
         "mycima": {
             "label": "Mycima",
             "active": "True",
-            "url": "https://weecima.click/"
+            "url": "https://weecima.mom/"
         },
         "prstej": {
             "label": "Prstej",
@@ -153,7 +153,7 @@
         "tuktukcinema": {
             "label": "Tuktukcinema",
             "active": "True",
-            "url": "https://tuktukcinema.monster/"
+            "url": "https://tuktukcinema.xyz/"
         }
     }
 }
