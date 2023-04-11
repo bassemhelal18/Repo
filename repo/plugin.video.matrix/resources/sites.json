@@ -1,29 +1,14 @@
 {
     "sites": {
-        "aflamfree": {
-            "label": "Aflamfree",
-            "active": "True",
-            "url": "https://www.aflamfree.top/"
-        },
         "akwam": {
             "label": "Akwam",
             "active": "True",
-            "url": "https://eg2.اكوام.site/"
+            "url": "https://eg3.xn--mgba7fjn.fun/"
         },
         "aflaam": {
             "label": "Aflaam",
             "active": "True",
             "url": "https://aflaam.com/"
-        },
-        "alarab": {
-            "label": "Alarab",
-            "active": "True",
-            "url": "https://vod2.alarab.com/"
-        },
-        "alarabclub": {
-            "label": "Alarabclub",
-            "active": "False",
-            "url": "https://alarabclub.com/"
         },
         "alfajertv": {
             "label": "Alfajertv",
@@ -35,16 +20,6 @@
             "active": "True",
             "url": "https://alwanfilm.com/"
         },
-        "aracinema_co": {
-            "label": "Aramosalsal",
-            "active": "True",
-            "url": "https://aradramtv.com/"
-        },
-        "arbcinema": {
-            "label": "Arbcinema",
-            "active": "True",
-            "url": "https://ok.arbcinema.com/"
-        },
         "arblionz": {
             "label": "Arblionz",
             "active": "True",
@@ -53,7 +28,7 @@
         "arabseed": {
             "label": "Arabseed",
             "active": "True",
-            "url": "https://m.arbsd1.pics/"
+            "url": "https://arbsd2.homes/"
         },
         "cimaclub": {
             "label": "Cimaclub",
@@ -65,20 +40,15 @@
             "active": "True",
             "url": "https://z.cimanow.cc/"
         },
-        "ciimalight": {
-            "label": "Ciimalight",
-            "active": "True",
-            "url": "https://mx.cimalight.vip/"
-        },
         "cimau": {
             "label": "Cima4u",
             "active": "True",
-            "url": "https://cima4u2.shop/"
+            "url": "https://cima4u2.cyou/"
         },
         "dramacafe": {
             "label": "Dramacafe",
             "active": "True",
-            "url": "https://wwk.dramacafe-tv.com/"
+            "url": "https://k8.dramacafe-tv.xyz/"
         },
         "egyclub": {
             "label": "Egyclub",
@@ -100,11 +70,6 @@
             "active": "True",
             "url": "https://www.faselhd.ac/"
         },
-        "fnteam": {
-            "label": "Fnteam",
-            "active": "True",
-            "url": "https://www.fn-team.com/"
-        },
         "halacima": {
             "label": "Halacima",
             "active": "True",
@@ -118,17 +83,12 @@
         "movizland": {
             "label": "Movizland",
             "active": "True",
-            "url": "https://new.movizland.xyz/"
+            "url": "https://movzland.top/"
         },
         "mycima": {
             "label": "Mycima",
             "active": "True",
-            "url": "https://wecima1.yachts/"
-        },
-        "prstej": {
-            "label": "Prstej",
-            "active": "True",
-            "url": "https://r.3rb.cam/"
+            "url": "https://wecima2.online/"
         },
         "shooflive": {
             "label": "Shooflive",
