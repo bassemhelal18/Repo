@@ -28,12 +28,12 @@
         "arabseed": {
             "label": "Arabseed",
             "active": "True",
-            "url": "https://arbsd2.mom/"
+            "url": "https://arbsd3.cfd/"
         },
         "cimaclub": {
             "label": "Cimaclub",
             "active": "True",
-            "url": "https://cimaclub1.yachts/"
+            "url": "https://cimaclub1.cfd/"
         },
         "cimanow": {
             "label": "Cimanow",
@@ -43,7 +43,7 @@
         "cimau": {
             "label": "Cima4u",
             "active": "True",
-            "url": "https://cima4u2.website/"
+            "url": "https://cima4u3.store/"
         },
         "dramacafe": {
             "label": "Dramacafe",
@@ -83,7 +83,7 @@
         "movizland": {
             "label": "Movizland",
             "active": "True",
-            "url": "https://movzland.top/"
+            "url": "https://mob.movizland.xyz/"
         },
         "mycima": {
             "label": "Mycima",
