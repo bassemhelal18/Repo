@@ -5,20 +5,10 @@
             "active": "True",
             "url": "https://two.ak4ar.mom/"
         },
-        "aflaam": {
-            "label": "Aflaam",
-            "active": "True",
-            "url": "https://aflaam.com/"
-        },
         "alfajertv": {
             "label": "Alfajertv",
             "active": "True",
             "url": "https://fajer.show/"
-        },
-        "alwanfilm": {
-            "label": "Alwanfilm",
-            "active": "True",
-            "url": "https://alwanfilm.com/"
         },
         "arblionz": {
             "label": "Arblionz",
@@ -28,57 +18,37 @@
         "arabseed": {
             "label": "Arabseed",
             "active": "True",
-            "url": "https://arbsd3.mom/"
+            "url": "https://arbsd3.site/"
         },
         "cimaclub": {
             "label": "Cimaclub",
             "active": "True",
-            "url": "https://cimaclub1.cfd/"
+            "url": "https://cimaclub1.yachts/"
         },
         "cimanow": {
             "label": "Cimanow",
             "active": "True",
-            "url": "https://v.cimanow.cc/"
+            "url": "https://k.cimanow.cc/"
         },
         "cimau": {
             "label": "Cima4u",
             "active": "True",
-            "url": "https://cima4u3.site/"
+            "url": "https://cima4u3.autos/"
         },
         "dramacafe": {
             "label": "Dramacafe",
             "active": "True",
-            "url": "https://wwl.dramacafe-tv.com/"
-        },
-        "egyclub": {
-            "label": "Egyclub",
-            "active": "True",
-            "url": "https://www.egy-club.com/"
+            "url": "https://b4.dramacafe-tv.xyz/"
         },
         "egydead": {
             "label": "Egydead",
             "active": "True",
             "url": "https://w7.egydead.live/"
         },
-        "fushaar": {
-            "label": "Fushaar",
-            "active": "True",
-            "url": "https://www.fushaar.info/"
-        },
-        "faselhd": {
-            "label": "Faselhd",
-            "active": "True",
-            "url": "https://www.faselhd.ac/"
-        },
         "halacima": {
             "label": "Halacima",
             "active": "True",
             "url": "https://halcima.store/"
-        },
-        "lodynet": {
-            "label": "Lodynet",
-            "active": "True",
-            "url": "https://lodynat.autos/"
         },
         "movizland": {
             "label": "Movizland",
@@ -104,11 +74,6 @@
             "label": "The Movie Database",
             "active": "True",
             "url": "https://www.themoviedb.org/"
-        },
-        "toonsland": {
-            "label": "Toonsland",
-            "active": "True",
-            "url": "https://www.toonsland.site/"
         },
         "topimdb": {
             "label": "Top IMDB",
