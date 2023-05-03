@@ -50,6 +50,12 @@
             "active": "True",
             "url": "https://halacima.website/"
         },
+    
+        "faselhd": {
+            "label": "Faselhd",
+            "active": "True",
+            "url": "https://www.faselhd.bz/"
+    },
         "movizland": {
             "label": "Movizland",
             "active": "True",
