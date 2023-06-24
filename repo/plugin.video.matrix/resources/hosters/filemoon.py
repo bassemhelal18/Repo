@@ -24,18 +24,25 @@ class cHoster(iHoster):
 
         sPattern = '(\s*eval\s*\(\s*function\(p,a,c,k,e(?:.|\s)+?)<\/script>'
         aResult = oParser.parse(sHtmlContent, sPattern)
-        if aResult[0] :
+        if aResult[0]:
             sHtmlContent = cPacker().unpack(aResult[1][0])
             sPattern = 'file:"(.+?)"'
             aResult = oParser.parse(sHtmlContent, sPattern)
-            if aResult[0] :
+            if aResult[0]:
                 api_call = aResult[1][0]
 
         else:
             sPattern = 'file:"([^"]+)",label:"[0-9]+"}'
             aResult = oParser.parse(sHtmlContent, sPattern)
-            if aResult[0] :
-                api_call = aResult[1][0] + '|User-Agent=' + UA# + '&Referer=' + self._url
+            if aResult[0]:
+                # initialisation des tableaux
+                url = []
+                qua = []
+                for i in aResult[1]:
+                    url.append(str(i[0]))
+                    qua.append(str(i[1]))
+
+                api_call = dialog().VSselectqual(qua, url + '|User-Agent=' + UA)
 
 
         if api_call:

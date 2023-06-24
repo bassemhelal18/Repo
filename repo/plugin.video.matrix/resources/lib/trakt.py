@@ -700,7 +700,7 @@ class cTrakt:
     def getLocalizedTitle(self, item, what):
         try:
             if 'episode' not in what:
-                oRequestHandler = cRequestHandler(URL_API + '%s/%s/translations/ar' % (what, item['ids']['slug']))
+                oRequestHandler = cRequestHandler(URL_API + '%s/%s/translations/en' % (what, item['ids']['slug']))
                 oRequestHandler.addHeaderEntry('Content-Type', 'application/json')
                 oRequestHandler.addHeaderEntry('trakt-api-key', API_KEY)
                 oRequestHandler.addHeaderEntry('trakt-api-version', API_VERS)
@@ -710,7 +710,7 @@ class cTrakt:
                 show_title = self.getLocalizedTitle(item['show'], 'shows')
                 t_values = (item['show']['ids']['slug'], item['episode']['season'], item['episode']['number'])
 
-                oRequestHandler = cRequestHandler(URL_API + 'shows/%s/seasons/%s/episodes/%s/translations/ar' % t_values)
+                oRequestHandler = cRequestHandler(URL_API + 'shows/%s/seasons/%s/episodes/%s/translations/en' % t_values)
                 oRequestHandler.addHeaderEntry('Content-Type', 'application/json')
                 oRequestHandler.addHeaderEntry('trakt-api-key', API_KEY)
                 oRequestHandler.addHeaderEntry('trakt-api-version', API_VERS)

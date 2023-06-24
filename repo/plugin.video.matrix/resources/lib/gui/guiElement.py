@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 # vStream https://github.com/Kodi-vStream/venom-xbmc-addons
-from pickle import UNICODE
 import re
 import xbmc
 
@@ -60,7 +59,7 @@ class cGuiElement:
         self.__ImdbId = ''
         self.__Year = ''
 
-        self.__sRes = '' # resolution
+        self.__sRes = ''  # resolution
 
         self.__aItemValues = {}
         self.__aProperties = {}
@@ -119,13 +118,13 @@ class cGuiElement:
         return self.__Year
 
     def setRes(self, data):
-        if data.upper() in ('1080P', 'FHD', 'FULLHD'): 
+        if data.upper() in ('1080P', 'FHD', 'FULLHD'):
             data = '1080p'
-        elif data.upper() in ('720P', 'DVDRIP', 'DVDSCR', 'HD', 'HDLIGHT', 'HDRIP', 'BDRIP', 'BRRIP'): 
+        elif data.upper() in ('720P', 'DVDRIP', 'DVDSCR', 'HD', 'HDLIGHT', 'HDRIP', 'BDRIP', 'BRRIP'):
             data = '720p'
-        elif data.upper() in ('4K', 'UHD', '2160P'): 
+        elif data.upper() in ('4K', 'UHD', '2160P'):
             data = '2160p'
-        
+
         self.__sRes = data
 
     def getRes(self):
@@ -180,11 +179,7 @@ class cGuiElement:
         return self.__sSiteName
 
     def setFileName(self, sFileName):
-        if isMatrix():
-            self.__sFileName = sFileName
-        else:
-            self.__sFileName = cUtil().titleWatched(sFileName)
-
+        self.__sFileName = cUtil().titleWatched(sFileName)
 
     def getFileName(self):
         return self.__sFileName
@@ -222,10 +217,9 @@ class cGuiElement:
         sTitle = sTitle.replace('()', '').replace('[]', '').replace('- -', '-')
 
         # vire espace et - a la fin (/!\ il y a 2 tirets differents meme si invisible a l'oeil nu et un est en unicode)
-        sTitle = re.sub('[- –]+$', '', sTitle)
+        sTitle = re.sub('[- –_\.\[]+$', '', sTitle)
         # et au debut
-        if sTitle.startswith(' '):
-            sTitle = sTitle[1:]
+        sTitle = re.sub('^[- –_\.]+', '', sTitle)
 
         """ Fin Nettoyage du titre """
 
@@ -268,6 +262,8 @@ class cGuiElement:
         # enleve les crochets et les parentheses si elles sont vides
         if sa or ep:
             sTitle = sTitle.replace('()', '').replace('[]', '').replace('- -', '-')
+            # vire espace et - a la fin
+            sTitle = re.sub('[- –_\.\[]+$', '', sTitle)
 
         if sa:
             self.__Season = sa
@@ -275,22 +271,20 @@ class cGuiElement:
         if ep:
             self.__Episode = ep
             self.addItemValues('Episode', self.__Episode)
-			
+
         # on repasse en utf-8
         if not isMatrix():
             try:
                 sTitle = sTitle.encode('utf-8')
             except:
-                pass    
-				
+                pass
+
         # on reformate SXXEXX Titre [tag] (Annee)
         sTitle2 = ''
         if self.__Season:
             sTitle2 = sTitle2 + 'S%02d' % int(self.__Season)
         if self.__Episode:
             sTitle2 = sTitle2 + 'E%02d' % int(self.__Episode)
-
-        
 
         # Titre unique pour marquer VU (avec numéro de l'épisode pour les séries)
         self.__sTitleWatched = cUtil().titleWatched(sTitle).replace(' ', '')
@@ -316,6 +310,7 @@ class cGuiElement:
             self.__sCleanTitle = re.sub('\[.+?\]|\(.+?\)', '', sTitle)
             if not self.__sCleanTitle:
                 self.__sCleanTitle = sTitle.replace('[', '').replace(']', '').replace('(', '').replace(')', '')
+
         if isMatrix():
             # Python 3 decode sTitle
             try:
@@ -339,8 +334,8 @@ class cGuiElement:
     def getCleanTitle(self):
         return self.__sCleanTitle
 
-#    def setTitleWatched(self, sTitleWatched):
-#        self.__sTitleWatched = sTitleWatched
+   # def setTitleWatched(self, sTitleWatched):
+       # self.__sTitleWatched = sTitleWatched
 
     def getTitleWatched(self):
         return self.__sTitleWatched
@@ -349,10 +344,10 @@ class cGuiElement:
         # Py3
         if isMatrix():
             try:
-
-                self.__sDescription = str(sDescription.encode('latin-1'),'utf-8')
-
-
+                if 'Ã' in sDescription or '\\xc' in sDescription:
+                    self.__sDescription = str(sDescription.encode('latin-1'), 'utf-8')
+                else:
+                    self.__sDescription = sDescription
             except:
                 self.__sDescription = sDescription
         else:
@@ -369,6 +364,7 @@ class cGuiElement:
 
     def setPoster(self, sPoster):
         self.__sPoster = sPoster
+        
 
     def getPoster(self):
         return self.__sPoster
@@ -425,7 +421,7 @@ class cGuiElement:
         if not self.getTitleWatched():
             return 0
 
-        meta = {'title': self.getTitleWatched(),
+        meta = {'titleWatched': self.getTitleWatched(),
                 'site': self.getSiteUrl(),
                 'cat': self.getCat()
                 }
@@ -457,7 +453,8 @@ class cGuiElement:
                 'imdbnumber': xbmc.getInfoLabel('ListItem.IMDBNumber'),
                 'season': xbmc.getInfoLabel('ListItem.season'),
                 'episode': xbmc.getInfoLabel('ListItem.episode'),
-                'tvshowtitle': xbmc.getInfoLabel('ListItem.tvshowtitle')
+                'tvshowtitle': xbmc.getInfoLabel('ListItem.tvshowtitle'),
+                'HdrType': xbmc.getInfoLabel('ListItem.HdrType')
                 }
 
         if 'title' in meta and meta['title']:

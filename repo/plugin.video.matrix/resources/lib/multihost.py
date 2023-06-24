@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # vStream https://github.com/Kodi-vStream/venom-xbmc-addons
 
+from resources.lib.comaddon import VSlog
 from resources.lib.handler.requestHandler import cRequestHandler
 import re
 
@@ -16,24 +17,24 @@ class cMultiup:
         sHtmlContent = GetHtml(url)
         sPattern = '<form action="(.+?)" method="post"'
         result = re.findall(sPattern, sHtmlContent)
-        url = 'https://multiup.org' + ''.join(result[0])
-
-        NewUrl = url.replace('http://www.multiup.org/fr/download', 'http://www.multiup.eu/fr/mirror')\
-                    .replace('http://www.multiup.eu/fr/download', 'http://www.multiup.eu/fr/mirror')\
-                    .replace('http://www.multiup.org/download', 'http://www.multiup.eu/fr/mirror')
-
-        sHtmlContent = GetHtml(NewUrl)
-
-        sPattern = 'nameHost="([^"]+)".+?link="([^"]+)".+?class="([^"]+)"'
-        r = re.findall(sPattern, sHtmlContent, re.DOTALL)
-
+        if result:
+         url = 'https://www.multiup.org' + ''.join(result[0])
+        
+        
+        
+        sHtmlContent = GetHtml(url)
+        
+        sPattern = 'link="([^"]+)".+?class="([^"]+)"'
+        
+        r = re.findall(sPattern, sHtmlContent, re.MULTILINE)
+        
         if not r:
             return False
 
         for item in r:
 
-            if 'bounce-to-right' in str(item[2]) and not 'download-fast' in item[1]:
-                self.list.append(item[1])
+            if 'bounce-to-right' in str(item[1]) and not 'download-fast' in item[0]:
+                self.list.append(item[0])
 
         return self.list
 

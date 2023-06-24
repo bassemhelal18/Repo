@@ -27,6 +27,7 @@ class cUpdate:
             properties = oRequestHandler.request(jsonDecode=True)
             if properties == "":
                 return
+
             siteManager().setDefaultProps(properties)
 
             addons.setSetting('setting_time', str(time_now))

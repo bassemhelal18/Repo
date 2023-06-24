@@ -51,6 +51,7 @@ class cShowBA:
         sSearchTitle = self.search + ' Trailer'
         if self.year:
             sSearchTitle += ' (%s)' % self.year
+
         # Le lien sur la BA est déjà connu
         urlTrailer = self.sTrailerUrl
 

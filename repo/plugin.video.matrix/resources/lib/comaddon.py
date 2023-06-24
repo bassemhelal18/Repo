@@ -153,6 +153,7 @@ class empty:
 
     def getProgress(self):
         return 100  # simuler la fin de la progression
+
 # Basé sur ResolveURL
 class CountdownDialog(object):
     __INTERVALS = 5
@@ -259,6 +260,7 @@ class progress:
         if self.PROGRESS == None:
             if not title:
                 title = addon().VSlang(30140)
+            
             if large:
                 self.PROGRESS = xbmcgui.DialogProgress()
             elif ADDONVS.getSetting('spinner_small') == 'true':
@@ -274,7 +276,8 @@ class progress:
             return
 
         if not search and window(10101).getProperty('search') == 'true':
-            return				
+            return
+
         if not text:
             text= addon().VSlang(30140)
 
@@ -285,6 +288,7 @@ class progress:
             self.PROGRESS.update(iPercent, text )
         else:
             self.PROGRESS.update(iPercent, message = text )
+
     def iscanceled(self):
         if isinstance(self.PROGRESS, xbmcgui.DialogProgress):
             return self.PROGRESS.iscanceled()

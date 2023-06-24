@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 # zombi https://github.com/zombiB/zombi-addons/
 
 import re
@@ -33,7 +33,7 @@ SERIE_AR = (URL_MAIN + 'genre/arabic-series/', 'showSeries')
 
 REPLAYTV_PLAY = (URL_MAIN + 'genre/plays/', 'showMovies')
 
-RAMADAN_SERIES = (URL_MAIN + 'genre/ramadan2022/', 'showSeries')
+RAMADAN_SERIES = (URL_MAIN + '/genre/ramadan2023', 'showSeries')
 URL_SEARCH = (URL_MAIN + '?s=', 'showMoviesSearch')
 URL_SEARCH_MOVIES = (URL_MAIN + '?s=', 'showMoviesSearch')
 URL_SEARCH_SERIES = (URL_MAIN + '?s=', 'showSeriesSearch')
@@ -415,7 +415,27 @@ def showEpisodes():
             oOutputParameterHandler.addParameter('sThumb', sThumb)
 
             oGui.addEpisode(SITE_IDENTIFIER, 'showServer', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
+    
+    sPattern = '<div class="imagen"><a href="([^<]+)"><img src="([^<]+)"></a></div><div class="numerando">([^<]+)</div><div class="episodiotitle"><a href=".+?">(.+?)</a> <span class="date">'
 
+    aResult = oParser.parse(sHtmlContent, sPattern)
+
+   
+    if aResult[0] :
+        oOutputParameterHandler = cOutputParameterHandler() 
+        for aEntry in aResult[1]:
+ 
+            sTitle = sMovieTitle+' S'+aEntry[2].replace("- ","E")
+            siteUrl = aEntry[0]
+            sThumb = aEntry[1]
+            sDesc =  sDesc
+
+ 
+            oOutputParameterHandler.addParameter('siteUrl', siteUrl)
+            oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
+            oOutputParameterHandler.addParameter('sThumb', sThumb)
+
+            oGui.addEpisode(SITE_IDENTIFIER, 'showServer', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
        
     oGui.setEndOfDirectory()
 
@@ -443,7 +463,7 @@ def showServer():
     oParser = cParser()
     Host = URL_MAIN.split('//')[1]
      # (.+?) ([^<]+) .+?
-    sPattern = 'data-post="([^<]+)" data-nume="(.+?)">'
+    sPattern = 'data-post="(.+?)".+?data-nume="(.+?)">'
     aResult = oParser.parse(sHtmlContent, sPattern)
     
     if aResult[0] :
@@ -457,13 +477,13 @@ def showServer():
            oRequest.setRequestType(1)
            oRequest.addHeaderEntry('User-Agent', UA)
            oRequest.addHeaderEntry('Referer', sUrl)
-           oRequest.addHeaderEntry('Host', 'show.alfajertv.com')
+           oRequest.addHeaderEntry('Host', 'fajer.show')
            oRequest.addHeaderEntry('Accept', '*/*')
            oRequest.addHeaderEntry('Accept-Language', 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3')
            oRequest.addHeaderEntry('Content-Type', 'application/x-www-form-urlencoded')
            oRequest.addParametersLine(pdata)
            sHtmlContent = oRequest.request() 
-           sPattern = "<iframe.+?src='(.+?)' frameborder"
+           sPattern = '<iframe.+?src="(.+?)".+?frameborder'
            aResult = oParser.parse(sHtmlContent, sPattern)
            if aResult[0] :
                for aEntry in aResult[1]:            
@@ -486,7 +506,7 @@ def showServer():
                       oHoster.setDisplayName(sMovieTitle)
                       oHoster.setFileName(sMovieTitle)
                       cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
-           sPattern = '<iframe.+?src="(.+?)" frameborder'
+           sPattern = "<iframe.+?src='(.+?)' frameborder"
            aResult = oParser.parse(sHtmlContent, sPattern)
            if aResult[0] :
                for aEntry in aResult[1]:            

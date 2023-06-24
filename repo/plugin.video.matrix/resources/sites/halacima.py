@@ -93,7 +93,7 @@ def showSearch():
  
     sSearchText = oGui.showKeyBoard()
     if sSearchText:
-        sUrl = URL_MAIN + '/search/'+sSearchText
+        sUrl = URL_MAIN + '/search/فيلم-'+sSearchText
         showMovies(sUrl)
         oGui.setEndOfDirectory()
         return
@@ -103,7 +103,7 @@ def showSeriesSearch():
  
     sSearchText = oGui.showKeyBoard()
     if sSearchText:
-        sUrl = URL_MAIN + '/search/'+sSearchText
+        sUrl = URL_MAIN + '/search/مسلسل-'+sSearchText
         showSeries(sUrl)
         oGui.setEndOfDirectory()
         return
@@ -143,7 +143,7 @@ def showMovies(sSearch = ''):
             if "حلقة"  in aEntry[1]:
                 continue
  
-            sTitle = aEntry[1].replace("مشاهدة","").replace("مترجمة","").replace("مترجم","").replace("مترجمة","").replace("فيلم","").replace("اون لاين","").replace("WEB-DL","").replace("BRRip","").replace("720p","").replace("HD-TC","").replace("HDRip","").replace("HD-CAM","").replace("DVDRip","").replace("BluRay","").replace("1080p","").replace("WEBRip","").replace("WEB-dl","").replace("مترجم ","").replace("مشاهدة وتحميل","").replace("اون لاين","").replace("مدبلج للعربية","مدبلج").replace("مدبلج","").replace("كامله","").replace("بجودة عالية","").replace("كاملة","").replace("جودة عالية","").replace("كامل","").replace("اونلاين","").replace("اون لاين","").replace("انمي","") 
+            sTitle = aEntry[1].replace("مشاهدة","").replace("بجودة","").replace("مترجمة","").replace("مترجم","").replace("مترجمة","").replace("فيلم","").replace("اون لاين","").replace("WEB-DL","").replace("BRRip","").replace("720p","").replace("HD-TC","").replace("HDRip","").replace("HD-CAM","").replace("DVDRip","").replace("BluRay","").replace("1080p","").replace("WEBRip","").replace("WEB-dl","").replace("مترجم ","").replace("مشاهدة وتحميل","").replace("اون لاين","").replace("مدبلج للعربية","مدبلج").replace("مدبلج","").replace("كامله","").replace("بجودة عالية","").replace("كاملة","").replace("جودة عالية","").replace("كامل","").replace("اونلاين","").replace("اون لاين","").replace("انمي","") 
             
             sTitle = sTitle
             sThumb = aEntry[2]
@@ -296,8 +296,12 @@ def showSeasons():
     sHtmlContent = oRequestHandler.request()
     oParser = cParser()
     
+    sStart = '<a title="سلسلة مواسم">'
+    sEnd = '<div class="container">'
+    sHtmlContent = oParser.abParse(sHtmlContent, sStart, sEnd)
+    
      # (.+?) .+?  ([^<]+)
-    sPattern = '<a href="([^<]+)" title="([^<]+)">.+?</a>.+?<b> , </b>'
+    sPattern = '<div class="seasonNum">([^<]+)</div>.+?<a href="([^<]+)" title="([^<]+)">'
     
     oParser = cParser()
     aResult = oParser.parse(sHtmlContent, sPattern)
@@ -311,11 +315,12 @@ def showSeasons():
                 break
            
                 
- 
-            sTitle = aEntry[1].replace("مسلسل","").replace("مترجم","").replace("الموسم العاشر","S10").replace("الموسم الحادي عشر","S11").replace("الموسم الثاني عشر","S12").replace("الموسم الثالث عشر","S13").replace("الموسم الرابع عشر","S14").replace("الموسم الخامس عشر","S15").replace("الموسم السادس عشر","S16").replace("الموسم السابع عشر","S17").replace("الموسم الثامن عشر","S18").replace("الموسم التاسع عشر","S19").replace("الموسم العشرون","S20").replace("الموسم الحادي و العشرون","S21").replace("الموسم الثاني و العشرون","S22").replace("الموسم الثالث و العشرون","S23").replace("الموسم الرابع والعشرون","S24").replace("الموسم الخامس و العشرون","S25").replace("الموسم السادس والعشرون","S26").replace("الموسم السابع و العشرون","S27").replace("الموسم الثامن والعشرون","S28").replace("الموسم التاسع والعشرون","S29").replace("الموسم الثلاثون","S30").replace("الموسم الحادي و الثلاثون","S31").replace("الموسم الثاني والثلاثون","S32").replace("الموسم الثالث و الثلاثون","S33").replace("الموسم الأول","S1").replace("الموسم الاول","S1").replace("الموسم الثاني","S2").replace("الموسم الثالث","S3").replace("الموسم الثالث","S3").replace("الموسم الرابع","S4").replace("الموسم الخامس","S5").replace("الموسم السادس","S6").replace("الموسم السابع","S7").replace("الموسم الثامن","S8").replace("الموسم التاسع","S9").replace("season ","S")
+            sSeason = aEntry[0].replace("الموسم","S").replace(" ","")
+            sTitle = aEntry[2].replace("مسلسل","").replace("مترجم","").replace("الموسم العاشر","S10").replace("الموسم الحادي عشر","S11").replace("الموسم الثاني عشر","S12").replace("الموسم الثالث عشر","S13").replace("الموسم الرابع عشر","S14").replace("الموسم الخامس عشر","S15").replace("الموسم السادس عشر","S16").replace("الموسم السابع عشر","S17").replace("الموسم الثامن عشر","S18").replace("الموسم التاسع عشر","S19").replace("الموسم العشرون","S20").replace("الموسم الحادي و العشرون","S21").replace("الموسم الثاني و العشرون","S22").replace("الموسم الثالث و العشرون","S23").replace("الموسم الرابع والعشرون","S24").replace("الموسم الخامس و العشرون","S25").replace("الموسم السادس والعشرون","S26").replace("الموسم السابع و العشرون","S27").replace("الموسم الثامن والعشرون","S28").replace("الموسم التاسع والعشرون","S29").replace("الموسم الثلاثون","S30").replace("الموسم الحادي و الثلاثون","S31").replace("الموسم الثاني والثلاثون","S32").replace("الموسم الثالث و الثلاثون","S33").replace("الموسم الأول","S1").replace("الموسم الاول","S1").replace("الموسم الثاني","S2").replace("الموسم الثالث","S3").replace("الموسم الثالث","S3").replace("الموسم الرابع","S4").replace("الموسم الخامس","S5").replace("الموسم السادس","S6").replace("الموسم السابع","S7").replace("الموسم الثامن","S8").replace("الموسم التاسع","S9").replace("season ","S")
             sTitle = sTitle + sMovieTitle
             sTitle = sTitle.split('S')[0]
-            siteUrl = aEntry[0]
+            sTitle = sTitle + sSeason
+            siteUrl = aEntry[1]
             sThumb = sThumb
             sDesc = ""
  
@@ -325,9 +330,11 @@ def showSeasons():
             oOutputParameterHandler.addParameter('sThumb', sThumb)
             
 
- 
             oGui.addSeason(SITE_IDENTIFIER, 'showEpisodes', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
+            
+                    
     oGui.setEndOfDirectory()            
+
 def showEpisodes():
     oGui = cGui()
     
@@ -463,7 +470,7 @@ def showServers():
     oParser = cParser()
     sId2 = ''
 
-    sPattern = 'postID = "(.+?)",'
+    sPattern = '<form method="post" action="(.+?)">'
     aResult = oParser.parse(sHtmlContent, sPattern)
     
     if (aResult[0]):
@@ -471,13 +478,13 @@ def showServers():
     #Recuperation infos
     sId = ''
      # (.+?) ([^<]+) .+?
-    sPattern = 'onclick="getPlayer(.+?)">'
+    sPattern = '<input type="hidden" value="(.+?)">'
     aResult = oParser.parse(sHtmlContent, sPattern)
     
     if (aResult[0]):
         for aEntry in aResult[1]:
             
-            headers = {'Host': 'halacima.online',
+            headers = {'Host': 'halacima.website',
 							'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:65.0) Gecko/20100101 Firefox/65.0',
 							'Accept': '*/*',
 							'Accept-Language': 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3',
@@ -491,7 +498,7 @@ def showServers():
             r = s.post(URL_MAIN+'/ajax/getPlayer',data = data)
             sHtmlContent1 = r.content.decode('utf8',errors='ignore')  
             VSlog(sHtmlContent1)   
-            sPattern = "src='(.+?)' frameborder"
+            sPattern = '<li data-server="(.+?)"'
             oParser = cParser()
             aResult = oParser.parse(sHtmlContent1, sPattern)
             if aResult[0] :
@@ -564,7 +571,7 @@ def showHosters():
 
     oRequestHandler = cRequestHandler(sUrl)
     oRequestHandler.addHeaderEntry('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101 Firefox/45.0')
-    oRequestHandler.addHeaderEntry('Host', 'm.halacima.net')
+    oRequestHandler.addHeaderEntry('Host', 'halacima.website')
     oRequestHandler.addHeaderEntry('Accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8')
     oRequestHandler.addHeaderEntry('X-Requested-With', 'XMLHttpRequest')
     oRequestHandler.addHeaderEntry('Accept-Language', 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3')

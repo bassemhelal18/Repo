@@ -40,7 +40,6 @@ class cEnregistremement:
 
         marge = ADDON.getSetting('marge_auto')
         timedelta = datetime.timedelta(minutes = int(marge))
-
         duree += timedelta
 
         realPath = VSPath(pathEnregistrement + '/' + str(heureFichier) + '.py').replace('\\', '\\\\')

@@ -289,7 +289,7 @@ def showSeasons():
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
      # (.+?) ([^<]+) .+?
-    sPattern = '<div class="seasonDiv.+?" data-href="(.+?)">.+?data-src="(.+?)".+?alt="(.+?)"/>.+?<div class="title">(.+?)</div>'
+    sPattern = '<div class="seasonDiv.+?onclick="([^<]+)".+?data-src="(.+?)".+?alt="(.+?)"/>.+?<div class="title">(.+?)</div>'
 
     oParser = cParser()
     aResult = oParser.parse(sHtmlContent, sPattern)
@@ -297,13 +297,14 @@ def showSeasons():
     if (aResult[0]):
         oOutputParameterHandler = cOutputParameterHandler() 
         for aEntry in aResult[1]:
-            postid = aEntry[0]
+            postid = aEntry[0].split("= '")[1]
+            postid = postid.replace("'","")
             nume = aEntry[3].replace("موسم "," S")
-            link = URL_MAIN + '/series-ajax/?_action=get_season_list&_post_id='+postid
+            link = URL_MAIN+postid
  
             sTitle = aEntry[2]+nume           
             sTitle = sTitle.replace("مشاهدة","").replace("مسلسل","").replace("انمى","").replace("مترجم","").replace("فيلم","").replace("مشاهدة","").replace("مسلسل","").replace("انمي","").replace("مترجمة","").replace("مترجم","").replace("فيلم","").replace("والأخيرة","").replace("مدبلج للعربية","مدبلج").replace("والاخيرة","").replace("كاملة","").replace("حلقات كاملة","").replace("اونلاين","").replace("مباشرة","").replace("انتاج ","").replace("جودة عالية","").replace("كامل","").replace("HD","").replace("السلسلة الوثائقية","").replace("الفيلم الوثائقي","").replace("اون لاين","").replace("برنامج","")
-            siteUrl = sUrl
+            siteUrl = link
             sThumb = aEntry[1]
             sDesc = ""
 			
@@ -313,7 +314,7 @@ def showSeasons():
             oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
             oOutputParameterHandler.addParameter('postid', postid)
             oOutputParameterHandler.addParameter('sThumb', sThumb)
-            oGui.addSeason(SITE_IDENTIFIER, 'showEpisodes', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
+            oGui.addSeason(SITE_IDENTIFIER, 'showEpisodes1', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
  
        
     oGui.setEndOfDirectory() 
@@ -339,7 +340,7 @@ def showEpisodes():
 
     postdata = {'seasonID':postid}
     link = URL_MAIN + '/series-ajax/?_action=get_season_list&_post_id='+postid
-    headers = {'Host': 'www.faselhd.io',
+    headers = {'Host': 'www.faselhd.ac',
 							'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Mobile Safari/537.36',
 							'Referer': sUrl,
 							'origin': URL_MAIN}
@@ -349,7 +350,7 @@ def showEpisodes():
     if isMatrix(): 
        sHtmlContent = sHtmlContent.decode('utf8',errors='ignore') 
     if sHtmlContent:
-       sPattern = '<a href="([^<]+)>([^<]+)</a>' 
+       sPattern = '<a href="([^<]+).+?>([^<]+)</a>' 
 
        oParser = cParser()
        aResult = oParser.parse(sHtmlContent,sPattern)
@@ -417,21 +418,15 @@ def showEpisodes1():
     #Recuperation infos
     sNote = ''
 
-    sPattern = '<div class="epAll"(.+?)<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">'
-    aResult = oParser.parse(sHtmlContent, sPattern)
+    sStart = '<div class="epAll" id="epAll">'
+    sEnd = '<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">'
+    sHtmlContent = oParser.abParse(sHtmlContent, sStart, sEnd)
     
-    oParser = cParser()
-    aResult = oParser.parse(sHtmlContent, sPattern) 
-     
     
-    if (aResult[0]):
-        sHtmlContent1 = aResult[1][0]
 	
      # (.+?) ([^<]+) .+?
-    sPattern = '<a href="([^<]+)">([^<]+)</a>'
-
-    oParser = cParser()
-    aResult = oParser.parse(sHtmlContent1, sPattern)
+    sPattern = '<a href="(.+?)".+?>(.+?)</a>'
+    aResult = oParser.parse(sHtmlContent, sPattern)
 	
 	
     if aResult[0] :  
@@ -440,10 +435,10 @@ def showEpisodes1():
  
             sTitle = aEntry[1].replace("الحلقة "," E")
             sTitle = sMovieTitle+sTitle
-            siteUrl = aEntry[0].replace('" class="active',"")
+            siteUrl = aEntry[0]
             sThumb = sThumb
             sDesc = sNote
-			
+    		
 
 
             oOutputParameterHandler.addParameter('siteUrl',siteUrl)
