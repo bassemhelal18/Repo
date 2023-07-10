@@ -13,9 +13,11 @@ from resources.lib.gui.guiElement import cGuiElement
 from resources.lib.handler.inputParameterHandler import cInputParameterHandler
 from resources.lib.handler.outputParameterHandler import cOutputParameterHandler
 from resources.lib.handler.pluginHandler import cPluginHandler
-from resources.lib.parser import cParser
+
 from resources.lib.util import QuotePlus
 
+Addon = addon()
+icons = Addon.getSetting('defaultIcons')
 
 class cGui:
 
@@ -218,7 +220,7 @@ class cGui:
         oGuiElement.setSiteName(sId)
         oGuiElement.setFunction(sFunction)
         oGuiElement.setTitle('[COLOR teal]' + sLabel + ' >>>[/COLOR]')
-        oGuiElement.setIcon('next.png')
+        oGuiElement.setIcon(icons + '/Next.png')
         oGuiElement.setThumbnail(oGuiElement.getIcon())
         oGuiElement.setMeta(0)
         oGuiElement.setCat(5)
@@ -231,7 +233,7 @@ class cGui:
     def addNone(self, sId):
         return self.addText(sId)
 
-    def addText(self, sId, sLabel='', sIcon='none.png'):
+    def addText(self, sId, sLabel='', sIcon=icons + '/None.png'):
         # Pas de texte lors des recherches globales
         if window(10101).getProperty('search') == 'true':
             return
@@ -357,6 +359,8 @@ class cGui:
 
         itemTitle = oGuiElement.getTitle()
 
+        sMediaUrl = oGuiElement.getMediaUrl()
+
         # Formatage nom episode
         sCat = oGuiElement.getCat()
         if sCat and int(sCat) == 8:  # Nom de l'épisode
@@ -378,9 +382,16 @@ class cGui:
             except:
                 data['title'] = itemTitle
                 pass
+
+            # release du lien
+            if sMediaUrl:
+                data['plot'] = sMediaUrl
         else:
-            # Permets d'afficher toutes les informations pour les films.
+            # Permet d'afficher toutes les informations pour les films.
             data['title'] = itemTitle
+
+            if sMediaUrl:   # release du lien
+                data['tagline'] = sMediaUrl
 
         if ":" in str(data.get('duration')):
             # Convertion en seconde, utile pour le lien final.

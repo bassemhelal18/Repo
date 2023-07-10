@@ -23,7 +23,7 @@
         "cimaclub": {
             "label": "Cimaclub",
             "active": "True",
-            "url": "https://cima-club.cam/"
+            "url": "https://cima-club.live/"
         },
         "cimanow": {
             "label": "Cimanow",
@@ -33,7 +33,7 @@
         "cimau": {
             "label": "Cima4u",
             "active": "True",
-            "url": "https://1cima4u.com/"
+            "url": "https://v1.cimaa4u.net/"
         },
         "dramacafe": {
             "label": "Dramacafe",

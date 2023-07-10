@@ -4,7 +4,7 @@
 import re
 import unicodedata
 
-from resources.lib.comaddon import progress,siteManager
+from resources.lib.comaddon import progress, addon
 from resources.lib.gui.gui import cGui
 from resources.lib.handler.inputParameterHandler import cInputParameterHandler
 from resources.lib.handler.outputParameterHandler import cOutputParameterHandler
@@ -16,6 +16,9 @@ try:
     xrange
 except NameError:
     xrange = range
+
+ADDON = addon()
+icons = ADDON.getSetting('defaultIcons')
 
 SITE_IDENTIFIER = 'topimdb'
 SITE_NAME = '[COLOR orange]Top 1000 IMDb[/COLOR]'
@@ -62,13 +65,13 @@ def load():
 
     oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', MOVIE_WORLD[0])
-    oGui.addDir(SITE_IDENTIFIER, MOVIE_WORLD[1], 'Top Films Mondial', 'films.png', oOutputParameterHandler)
+    oGui.addDir(SITE_IDENTIFIER, MOVIE_WORLD[1], 'Top Films Mondial',icons + '/Movies.png', oOutputParameterHandler)
 
     oOutputParameterHandler.addParameter('siteUrl', MOVIE_TOP250[0])
-    oGui.addDir(SITE_IDENTIFIER, MOVIE_TOP250[1], 'Top 250', 'films.png', oOutputParameterHandler)
+    oGui.addDir(SITE_IDENTIFIER, MOVIE_TOP250[1], 'Top 250',icons + '/Movies.png', oOutputParameterHandler)
 
     oOutputParameterHandler.addParameter('siteUrl', MOVIE_ANNEES[0])
-    oGui.addDir(SITE_IDENTIFIER, MOVIE_ANNEES[1], 'Top (Par Années)', 'annees.png', oOutputParameterHandler)
+    oGui.addDir(SITE_IDENTIFIER, MOVIE_ANNEES[1], 'Top (Par Années)', icons + '/Calendar.png', oOutputParameterHandler)
 
     oGui.setEndOfDirectory()
 
@@ -82,7 +85,7 @@ def showMovieYears():
     oOutputParameterHandler = cOutputParameterHandler()
     for i in reversed(xrange(1903, int(now.year))):
         oOutputParameterHandler.addParameter('siteUrl', URL_MAIN + 'search/title?year=' + str(i) + ',' + str(i) + '&title_type=feature&explore=languages')
-        oGui.addDir(SITE_IDENTIFIER, 'showMovies', str(i), 'annees.png', oOutputParameterHandler)
+        oGui.addDir(SITE_IDENTIFIER, 'showMovies', str(i), icons + '/Calendar.png', oOutputParameterHandler)
 
     oGui.setEndOfDirectory()
 
@@ -107,7 +110,7 @@ def showMovies(sSearch=''):
     sPattern = 'img alt="([^"]+).+?loadlate="([^"]+).+?primary">([^<]+).+?unbold">([^<]+).+?(?:|rated this(.+?)\s.+?)muted">([^<]+)'
     aResult = oParser.parse(sHtmlContent, sPattern)
 
-    if aResult[0] :
+    if aResult[0]:
         total = len(aResult[1])
         progress_ = progress().VScreate(SITE_NAME)
         oOutputParameterHandler = cOutputParameterHandler()
@@ -149,7 +152,7 @@ def __checkForNextPage(sHtmlContent):
     sPattern = 'href="([^"]+?)"class="lister-page-next'
     aResult = oParser.parse(sHtmlContent, sPattern)
 
-    if aResult[0] :
+    if aResult[0]:
         sUrl = ('%s/%s') % (URL_MAIN, aResult[1][0])
         return sUrl
 

@@ -17,13 +17,14 @@ from resources.lib.util import cUtil, QuotePlus
 
 SITE_IDENTIFIER = 'cLibrary'
 SITE_NAME = 'Library'
+Addon = addon()
+icons = Addon.getSetting('defaultIcons')
 
 # sources.xml
 
 
 class cLibrary:
     ADDON = addon()
-
     def __init__(self):
         self.__sMovieFolder = self.ADDON.getSetting('Library_folder_Movies')
         self.__sTVFolder = self.ADDON.getSetting('Library_folder_TVs')
@@ -111,11 +112,11 @@ class cLibrary:
 
         folder = self.ADDON.getSetting('Library_folder_Movies')
         oOutputParameterHandler.addParameter('siteUrl', folder)
-        oGui.addDir(SITE_IDENTIFIER, 'openLibrary', self.ADDON.VSlang(30120), 'films.png', oOutputParameterHandler)
+        oGui.addDir(SITE_IDENTIFIER, 'openLibrary', self.ADDON.VSlang(30120), icons + '/Movies.png', oOutputParameterHandler)
 
         folder = self.ADDON.getSetting('Library_folder_TVs')
         oOutputParameterHandler.addParameter('siteUrl', folder)
-        oGui.addDir(SITE_IDENTIFIER, 'openLibrary', self.ADDON.VSlang(30121), 'series.png', oOutputParameterHandler)
+        oGui.addDir(SITE_IDENTIFIER, 'openLibrary', self.ADDON.VSlang(30121), icons + '/TVShows.png', oOutputParameterHandler)
 
         oGui.setEndOfDirectory()
 
@@ -128,7 +129,7 @@ class cLibrary:
             folder = 'special://userdata/addon_data/plugin.video.matrix/Enregistrement"/>'
         oOutputParameterHandler = cOutputParameterHandler()
         oOutputParameterHandler.addParameter('siteUrl', folder)
-        oGui.addDir(SITE_IDENTIFIER, 'openLibrary', self.ADDON.VSlang(30225), 'download.png', oOutputParameterHandler)
+        oGui.addDir(SITE_IDENTIFIER, 'openLibrary', self.ADDON.VSlang(30225), icons + '/Download.png', oOutputParameterHandler)
 
         oGui.setEndOfDirectory()
 
@@ -159,7 +160,7 @@ class cLibrary:
             else:
                 oOutputParameterHandler = cOutputParameterHandler()
                 oOutputParameterHandler.addParameter('siteUrl', sFile + '/' + i)
-                oGui.addDir(SITE_IDENTIFIER, 'openLibrary', sTitle, 'films.png', oOutputParameterHandler)
+                oGui.addDir(SITE_IDENTIFIER, 'openLibrary', sTitle, icons + '/Movies.png', oOutputParameterHandler)
 
         if addon_handle:
             xbmcplugin.endOfDirectory(addon_handle)

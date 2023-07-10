@@ -8,6 +8,8 @@ from resources.lib.handler.inputParameterHandler import cInputParameterHandler
 from resources.lib.handler.outputParameterHandler import cOutputParameterHandler
 from resources.lib.comaddon import dialog, addon, VSlog
 
+ADDON = addon()
+icons = ADDON.getSetting('defaultIcons')
 
 class cHosterGui:
     SITE_NAME = 'cHosterGui'
@@ -15,6 +17,7 @@ class cHosterGui:
 
     # step 1 - bGetRedirectUrl in ein extra optionsObject verpacken
     def showHoster(self, oGui, oHoster, sMediaUrl, sThumbnail, bGetRedirectUrl=False):
+        oHoster.setUrl(sMediaUrl)
         oOutputParameterHandler = cOutputParameterHandler()
         oInputParameterHandler = cInputParameterHandler()
 
@@ -45,6 +48,11 @@ class cHosterGui:
         else:
             sCat = '5'     # Divers
         oGuiElement.setCat(sCat)
+
+        sMediaFile = oHoster.getMediaFile()
+        if sMediaFile:
+            oGuiElement.setMediaUrl(sMediaFile)
+            
         oOutputParameterHandler.addParameter('sCat', sCat)
 
         if (oInputParameterHandler.exist('sMeta')):
@@ -53,7 +61,7 @@ class cHosterGui:
 
         oGuiElement.setFileName(oHoster.getFileName())
         oGuiElement.getInfoLabel()
-        oGuiElement.setIcon('host.png')
+        oGuiElement.setIcon(icons + '/Sources.png')
         if sThumbnail:
             oGuiElement.setThumbnail(sThumbnail)
             oGuiElement.setPoster(sThumbnail)
@@ -313,7 +321,7 @@ class cHosterGui:
         if ('workupload' in sHostName):
             return self.getHoster('workupload')
 
-        if ('upbam' in sHostName) or ('uppom' in sHostName) or ('uppboom' in sHostName):
+        if ('upbaam' in sHostName) or ('upbam' in sHostName) or ('uppom' in sHostName) or ('uppboom' in sHostName):
             return self.getHoster('uppom')
             
         if ('filemoon' in sHostName):

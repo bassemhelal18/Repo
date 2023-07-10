@@ -48,6 +48,18 @@ msgctxt "#30010"
 msgid "Color Text note"
 msgstr ""
 
+msgctxt "#3001099"
+msgid "Icons"
+msgstr ""
+
+msgctxt "#3001091"
+msgid "Classic"
+msgstr ""
+
+msgctxt "#3001092"
+msgid "Modern"
+msgstr ""
+
 msgctxt "#30011"
 msgid "Initialization error"
 msgstr ""
@@ -1026,7 +1038,7 @@ msgid "Movies (Popular)"
 msgstr ""
 
 msgctxt "#30426"
-msgid "Movies (News)"
+msgid "Movies (Recently Added)"
 msgstr ""
 
 msgctxt "#30427"
@@ -1256,6 +1268,10 @@ msgstr ""
 
 msgctxt "#31205"
 msgid "Display"
+msgstr ""
+
+msgctxt "#31206"
+msgid "Use FlareSolverr"
 msgstr ""
 
 msgctxt "#31208"
