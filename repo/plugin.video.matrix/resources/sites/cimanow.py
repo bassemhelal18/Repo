@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 # zombi https://github.com/zombiB/zombi-addons/
 #############################################################
 # Yonn1981 https://github.com/Yonn1981/Repo
@@ -18,6 +18,7 @@ from resources.lib.parser import cParser
 import requests
 import re
 import base64
+from bs4 import BeautifulSoup
 
 ADDON = addon()
 icons = ADDON.getSetting('defaultIcons')
@@ -108,7 +109,7 @@ def showSearch():
     if sSearchText:
         sUrl = URL_MAIN + '?s=%D9%81%D9%8A%D9%84%D9%85+'+sSearchText
         showMovies(sUrl)
-        VSlog(sUrl)
+        
         oGui.setEndOfDirectory()
         return
  
@@ -155,10 +156,9 @@ def showMovies(sSearch = ''):
                 if t_ch:
                     nb = int(t_ch[0])+int(t_int[0])
                     page = page + chr(nb)
-            VSlog(page)
+           
  
             sPattern = '<article aria-label="post"><a href="([^"]+).+?<li aria-label="year">(.+?)</li>.+?<li aria-label="title">([^<]+)<em>.+?data-src="(.+?)" width'
-
             oParser = cParser()
             aResult = oParser.parse(page, sPattern)
             if aResult[0]:
@@ -194,43 +194,45 @@ def showMovies(sSearch = ''):
             
 
   # ([^<]+) .+?
-            sStart = '</section>'
-            sEnd = '</ul>'
-            page = oParser.abParse(page, sStart, sEnd)
+    
+        sStart = '</section>'
+        sEnd = '</ul>'
+        page = oParser.abParse(page, sStart, sEnd)
 
-            sPattern = '<li><a href="(.+?)">(.+?)</a>'
-            oParser = cParser()
-            aResult = oParser.parse(page, sPattern)
-	
-	
-            if aResult[0]:
-                total = len(aResult[1])
-                progress_ = progress().VScreate(SITE_NAME)
-                oOutputParameterHandler = cOutputParameterHandler()  
-                for aEntry in aResult[1]:
-                    progress_.VSupdate(progress_, total)
-                    if progress_.iscanceled():
-                        break
- 
-                    sTitle = aEntry[1]
+        sPattern = '<li><a href="(.+?)">(.+?)</a>'
+        oParser = cParser()
+        aResult = oParser.parse(page, sPattern)
+        
+        soup = BeautifulSoup(page,"html.parser")
+        CurrentPage = int(soup.find("li",{"class":"active"}).text)
+        
+        
+        if aResult[0]:
+            total = len(aResult[1])
+            progress_ = progress().VScreate(SITE_NAME)
+            oOutputParameterHandler = cOutputParameterHandler()  
+            for aEntry in aResult[1]:
+                progress_.VSupdate(progress_, total)
+                if progress_.iscanceled():
+                    break
+                
+                deviation = int(aEntry[1])-CurrentPage
+                if deviation==1:
+                    #sTitle = aEntry[1]
             
-                    sTitle =  "PAGE " + sTitle
-                    sTitle =   '[COLOR red]'+sTitle+'[/COLOR]'
+                    sTitle =  'Next'
+                    #sTitle =   '[COLOR red]'+sTitle+'[/COLOR]'
                     siteUrl = aEntry[0]
-                    sThumb = ""
-
+                    sThumb = icons + '/next.png'
 
                     oOutputParameterHandler.addParameter('siteUrl',siteUrl)
                     oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
                     oOutputParameterHandler.addParameter('sThumb', sThumb)
-			
-                    oGui.addDir(SITE_IDENTIFIER, 'showMovies', sTitle, '', oOutputParameterHandler)
+            
+                    oGui.addDir(SITE_IDENTIFIER, 'showMovies', sTitle, sThumb, oOutputParameterHandler)
 
-                progress_.VSclose(progress_)
- 
-
- 
-    if not sSearch:
+            progress_.VSclose(progress_)
+    if not sSearch:    
         oGui.setEndOfDirectory()
  
 def showSeries(sSearch = ''):
@@ -263,15 +265,14 @@ def showSeries(sSearch = ''):
                 if t_ch:
                     nb = int(t_ch[0])+int(t_int[0])
                     page = page + chr(nb)
-            VSlog(page)
+            
 
-            sPattern = '<article aria-label="post"><a href="([^<]+)">.+?<li aria-label="year">(.+?)</li>.+?<li aria-label="title">([^<]+)<em>.+?data-src="(.+?)" width'
-
+            sPattern = '<article aria-label="post"><a href="([^"]+).+?<li aria-label="year">(.+?)</li>.+?<li aria-label="title">([^<]+)<em>.+?data-src="(.+?)" width'
 
             oParser = cParser()
             aResult = oParser.parse(page, sPattern)
-	
-	
+	        
+            itemList =[]
             if aResult[0]:
                 total = len(aResult[1])
                 progress_ = progress().VScreate(SITE_NAME)
@@ -286,6 +287,7 @@ def showSeries(sSearch = ''):
  
                     sTitle = aEntry[2]
                     sTitle = str(sTitle.encode('latin-1'),'utf-8')
+
                     siteUrl = aEntry[0]
                     sThumb = str(aEntry[3].encode('latin-1'),'utf-8')
                     if sThumb.startswith('//'):
@@ -294,53 +296,57 @@ def showSeries(sSearch = ''):
                     sYear = aEntry[1]
 
 
+                    if sTitle not in itemList:
+                      itemList.append(sTitle)
 
-                    oOutputParameterHandler.addParameter('siteUrl',siteUrl)
-                    oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
-                    oOutputParameterHandler.addParameter('sThumb', sThumb)
-                    oOutputParameterHandler.addParameter('sYear', sYear)
-                    oOutputParameterHandler.addParameter('sDesc', sDesc)
+                      oOutputParameterHandler.addParameter('siteUrl',siteUrl)
+                      oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
+                      oOutputParameterHandler.addParameter('sThumb', sThumb)
+                      
 			
-                    oGui.addTV(SITE_IDENTIFIER, 'showSeasons', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
+                      oGui.addTV(SITE_IDENTIFIER, 'showSeasons', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
 
                 progress_.VSclose(progress_)
 
   # ([^<]+) .+?
-            sStart = '</section>'
-            sEnd = '</ul>'
-            page = oParser.abParse(page, sStart, sEnd)
+    
+        sStart = '</section>'
+        sEnd = '</ul>'
+        page = oParser.abParse(page, sStart, sEnd)
 
-            sPattern = '<li><a href="(.+?)">(.+?)</a>'
-            oParser = cParser()
-            aResult = oParser.parse(page, sPattern)
-	
-	
-            if aResult[0]:
-                total = len(aResult[1])
-                progress_ = progress().VScreate(SITE_NAME)
-                oOutputParameterHandler = cOutputParameterHandler()  
-                for aEntry in aResult[1]:
-                    progress_.VSupdate(progress_, total)
-                    if progress_.iscanceled():
-                        break
- 
-                    sTitle = aEntry[1]
+        sPattern = '<li><a href="(.+?)">(.+?)</a>'
+        oParser = cParser()
+        aResult = oParser.parse(page, sPattern)
+        
+        soup = BeautifulSoup(page,"html.parser")
+        CurrentPage = int(soup.find("li",{"class":"active"}).text)
+        
+        
+        if aResult[0]:
+            total = len(aResult[1])
+            progress_ = progress().VScreate(SITE_NAME)
+            oOutputParameterHandler = cOutputParameterHandler()  
+            for aEntry in aResult[1]:
+                progress_.VSupdate(progress_, total)
+                if progress_.iscanceled():
+                    break
+                
+                deviation = int(aEntry[1])-CurrentPage
+                if deviation==1:
+                    #sTitle = aEntry[1]
             
-                    sTitle =  "PAGE " + sTitle
-                    sTitle =   '[COLOR red]'+sTitle+'[/COLOR]'
+                    sTitle =  'Next'
+                    #sTitle =   '[COLOR red]'+sTitle+'[/COLOR]'
                     siteUrl = aEntry[0]
-                    sThumb = ""
-
+                    sThumb = icons + '/next.png'
 
                     oOutputParameterHandler.addParameter('siteUrl',siteUrl)
                     oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
                     oOutputParameterHandler.addParameter('sThumb', sThumb)
-			
-                    oGui.addDir(SITE_IDENTIFIER, 'showSeries', sTitle, '', oOutputParameterHandler)
-
+            
+                    oGui.addDir(SITE_IDENTIFIER, 'showSeries', sTitle, sThumb, oOutputParameterHandler)
                 progress_.VSclose(progress_)
- 
-    if not sSearch:
+    if not sSearch:    
         oGui.setEndOfDirectory()
  
 def showSeasons():
@@ -381,7 +387,7 @@ def showSeasons():
                 if t_ch:
                     nb = int(t_ch[0])+int(t_int[0])
                     page = page + chr(nb)
-            VSlog(page)
+            
             
             oParser = cParser()
             sStart = '<section aria-label="seasons">'
@@ -453,7 +459,7 @@ def showEps():
                 if t_ch:
                     nb = int(t_ch[0])+int(t_int[0])
                     page = page + chr(nb)
-            VSlog(page)
+            
             
             oParser = cParser()
             sStart = '<section aria-label="seasons">'
@@ -472,10 +478,10 @@ def showEps():
                 for aEntry in aResult[1]:
 
  
-                    sTitle = sMovieTitle+' E'+aEntry[2]
+                    sTitle = sMovieTitle+'E'+aEntry[2]
                     
                     siteUrl = aEntry[0] + 'watching/'
-                    sThumb = str(aEntry[1].encode('latin-1'),'utf-8')
+                    sThumb = ''
                     sDesc = ""
 
                     oOutputParameterHandler.addParameter('siteUrl', siteUrl)
@@ -491,17 +497,18 @@ def showEps():
     oGui.setEndOfDirectory() 
 
   
-def showServer():
+def showServer(oInputParameterHandler = False):
     import requests
     oGui = cGui()
    
-    oInputParameterHandler = cInputParameterHandler()
+    if not oInputParameterHandler:
+        oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
     host = sUrl.split('/')[2]
     URL_MAIN = 'https://' + host
-    VSlog(host)
+   
  
     oRequest = cRequestHandler(sUrl)
     cook = oRequest.GetCookies()
@@ -530,70 +537,12 @@ def showServer():
                 if t_ch:
                     nb = int(t_ch[0])+int(t_int[0])
                     page = page + chr(nb)
-
+                    
 
     # (.+?) .+? ([^<]+)        	
-            sPattern = '<a href="([^"]+)"><i class.+?download.+?</i>(.+?)<p'
-            oParser = cParser()
-            aResult = oParser.parse(page, sPattern)
-
-	
-            if aResult[0]:
-                for aEntry in aResult[1]:
-            
-                    url = aEntry[0]
-                    sTitle = aEntry[1].replace('</i>',"")
-                    sTitle = ('%s  [COLOR coral]%s[/COLOR]') % (sMovieTitle, sTitle)
-                    url = url.replace("cimanow","rrsrr")
-                    sThumb = sThumb
-                    if url.startswith('//'):
-                        url = 'http:' + url
-				
-					
-            
-                    sHosterUrl = url 
-                    if 'userload' in sHosterUrl:
-                        sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
-                    if 'moshahda' in sHosterUrl:
-                        sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
-                    if 'mystream' in sHosterUrl:
-                        sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN  
-                    oHoster = cHosterGui().checkHoster(sHosterUrl)
-                    if oHoster:
-                        oHoster.setDisplayName(sTitle)
-                        oHoster.setFileName(sMovieTitle)
-                        cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
-            
-            sPattern = '<iframe src="([^"]+)" scrolling'
-            oParser = cParser()
-            aResult = oParser.parse(page, sPattern)
-
-	
-            if aResult[0]:
-                for aEntry in aResult[1]:
-                    url = aEntry
-                    sTitle = sMovieTitle
-                    if url.startswith('//'):
-                        url = 'http:' + url
-				
-					
-            
-                    sHosterUrl = url 
-                    if 'userload' in sHosterUrl:
-                        sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
-                    if 'moshahda' in sHosterUrl:
-                        sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
-                    if 'mystream' in sHosterUrl:
-                        sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN  
-                    oHoster = cHosterGui().checkHoster(sHosterUrl)
-                    if oHoster:
-                        oHoster.setDisplayName(sTitle)
-                        oHoster.setFileName(sMovieTitle)
-                        cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
-            
             sPattern = 'data-index="([^"]+)".+?data-id="([^"]+)"' 
             aResult = oParser.parse(page, sPattern)
-            VSlog(aResult)
+            
             if aResult[0]:
                 for aEntry in aResult[1]:
                     sIndex = aEntry[0]
@@ -610,29 +559,34 @@ def showServer():
                     sPattern =  '<iframe.+?src="([^"]+)"'
                     oParser = cParser()
                     aResult = oParser.parse(sHtmlContent, sPattern)
-                    VSlog(aResult)
+                    
                     if aResult[0]:
                         for aEntry in aResult[1]:
             
-                            url = aEntry
+                            url = aEntry.replace("cimanow","rrsrrs")
                             sTitle = sMovieTitle
                             if url.startswith('//'):
                                 url = 'http:' + url
-            
+                            
                             sHosterUrl = url
                             if 'userload' in sHosterUrl:
                                 sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
+                            if 'vidguard'in url:
+                                continue
                             if 'moshahda' in sHosterUrl:
                                 sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
                             if 'mystream' in sHosterUrl:
                                 sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN   
                             oHoster = cHosterGui().checkHoster(sHosterUrl)
                             if oHoster:
-                                oHoster.setDisplayName(sMovieTitle)
+                                oHoster.setDisplayName(sTitle)
                                 oHoster.setFileName(sMovieTitle)
-                                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
+                                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
             
-            sPattern = "<li aria-label=.+?.attr.+?'src','(.+?)'.+?>(.+?)</li>"
+            sStart = '<ul class="tabcontent" id="download">'
+            sEnd = '</section>'
+            page = oParser.abParse( page, sStart, sEnd)
+            sPattern = '<a href="(.+?)".+?class="fas fa-cloud-download-alt"></i>(.+?)<p'
             oParser = cParser()
             aResult = oParser.parse(page, sPattern)
 
@@ -643,7 +597,7 @@ def showServer():
                     url = aEntry[0]
                     sTitle = aEntry[1].replace('</i>',"")
                     sTitle = ('%s  [COLOR coral]%s[/COLOR]') % (sMovieTitle, sTitle)
-                    url = url.replace("cimanow","rrsrr")
+                    url = url
                     sThumb = sThumb
                     if url.startswith('//'):
                         url = 'http:' + url
@@ -653,6 +607,8 @@ def showServer():
                     sHosterUrl = url 
                     if 'userload' in sHosterUrl:
                         sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
+                    if 'vidguard'in url:
+                        continue
                     if 'moshahda' in sHosterUrl:
                         sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
                     if 'mystream' in sHosterUrl:
@@ -661,8 +617,8 @@ def showServer():
                     if oHoster:
                         oHoster.setDisplayName(sTitle)
                         oHoster.setFileName(sMovieTitle)
-                        cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
-
+                        cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+            
             oParser = cParser()
             sStart = '<li aria-label="download">'
             sEnd = '</section>'
@@ -697,7 +653,7 @@ def showServer():
                     if oHoster:
                         oHoster.setDisplayName(sTitle)
                         oHoster.setFileName(sMovieTitle)
-                        cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
+                        cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
             
             
 

@@ -452,10 +452,11 @@ def __checkForNextPage(sHtmlContent):
         return aResult[1][0]
     return False
 	
-def showServer():
+def showServer(oInputParameterHandler = False):
     oGui = cGui()
    
-    oInputParameterHandler = cInputParameterHandler()
+    if not oInputParameterHandler:
+        oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
@@ -491,9 +492,10 @@ def showServer():
            aResult = oParser.parse(sHtmlContent, sPattern)
            if aResult[0] :
                for aEntry in aResult[1]:            
-                   url = aEntry
+                   url = aEntry.replace("%2F","/").replace("%3A",":").replace("https://show.alfajertv.com/jwplayer/?source=","").replace("&type=mp4","").split("&id")[0]
+
                    if 'hadara.ps' in aEntry :
-                       continue
+                        url = url
                    if 'fajer.video' in url:
                       url = url.split('id=')[1]
                       url = "https://fajer.video/hls/"+url+"/"+url+".playlist.m3u8"
@@ -509,14 +511,15 @@ def showServer():
                    if oHoster:
                       oHoster.setDisplayName(sMovieTitle)
                       oHoster.setFileName(sMovieTitle)
-                      cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
+                      cHosterGui.showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
            sPattern = "<iframe.+?src='(.+?)' frameborder"
            aResult = oParser.parse(sHtmlContent, sPattern)
            if aResult[0] :
                for aEntry in aResult[1]:            
-                   url = aEntry
+                   url = aEntry.replace("%2F","/").replace("%3A",":").replace("https://show.alfajertv.com/jwplayer/?source=","").replace("&type=mp4","").split("&id")[0]
+
                    if 'hadara.ps' in aEntry :
-                       continue
+                       url = url + "|Referer=" + aEntry + "| User-Agent= Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
                    if 'fajer.video' in url:
                       url = url.split('id=')[1]
                       url = "https://fajer.video/hls/"+url+"/"+url+".playlist.m3u8"
@@ -532,5 +535,38 @@ def showServer():
                    if oHoster:
                       oHoster.setDisplayName(sMovieTitle)
                       oHoster.setFileName(sMovieTitle)
-                      cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
+                      cHosterGui.showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+        
+           sPattern = 'domain=(.+?)\".+?href=\"(.+?)\".+?quality\">(.+?)</.+?<td>.+?</td><td>(.+?)</td>'
+           oParser = cParser()
+           aResult = oParser.parse(sHtmlContent, sPattern)
+    
+
+           if aResult[0]:
+            for aEntry in aResult[1]: 
+             oRequest = cRequestHandler(aEntry[1])
+             sHtmlContent3 = oRequest.request()
+            
+             oParser = cParser()
+             sPattern = 'rel=\"nofollow\" href=\"(.+?)\" class'
+             aResult = oParser.parse(sHtmlContent3, sPattern)
+            
+            
+             if aResult[0]:
+               for aEntry in aResult[1]:            
+                   url = aEntry[1]
+                   if url.startswith('//'):
+                      url = 'http:' + url
+                    
+                   sHosterUrl = url
+                   VSlog(sHosterUrl)
+                   if 'userload' in sHosterUrl:
+                       sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
+                   if 'mystream' in sHosterUrl:
+                       sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN 
+                   oHoster = cHosterGui().checkHoster(sHosterUrl)
+                   if oHoster:
+                      oHoster.setDisplayName(aEntry[0] +'-' + aEntry[2]+'-' + aEntry[3] )
+                      oHoster.setFileName(sMovieTitle)
+                      cHosterGui.showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
     oGui.setEndOfDirectory()

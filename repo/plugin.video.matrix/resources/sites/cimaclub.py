@@ -291,7 +291,7 @@ def showSeasons():
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
     soup = BeautifulSoup(sHtmlContent,"html.parser") 
-    VSlog(soup)
+    
     
     
     
@@ -404,7 +404,7 @@ def showEpisodes():
             siteUrl = aEntry[0].replace("/episode/","/watch/").replace("/post/","/watch/")
             
             sTitle = sMovieTitle+" E"+aEntry[2]
-            sThumb = sThumb
+            sThumb = ''
             sDesc = ""
 			
 
@@ -429,7 +429,7 @@ def showEpisodes():
             siteUrl = aEntry[0].replace("/episode/","/watch/").replace("/post/","/watch/")
             
             sTitle = sMovieTitle+" E"+aEntry[1]
-            sThumb = sThumb
+            sThumb = ''
             sDesc = ""
 			
 
@@ -455,10 +455,11 @@ def __checkForNextPage(sHtmlContent):
 
     return False
   
-def showServers():
+def showServers(oInputParameterHandler = False):
     oGui = cGui()
    
-    oInputParameterHandler = cInputParameterHandler()
+    if not oInputParameterHandler:
+        oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
@@ -472,10 +473,10 @@ def showServers():
 
    
     oParser = cParser()
-    sId='0'
+    
     #Recuperation infos
 
-    sPattern = '&_post_id=(.+?)",'
+    sPattern = '&_post_id=([^<]+)",'
     aResult = oParser.parse(sHtmlContent, sPattern)
     
     if (aResult[0]):
@@ -508,15 +509,20 @@ def showServers():
                for aEntry in aResult[1]:
         
                    url = str(aEntry)
+                   
                    sTitle = " "
                    sThumb = sThumb
                    if 'govid' in url:
                       url = url.replace("play","down").replace("embed-","")
+                   if 'telvod.site/play/' in url:
+                       continue
                    if url.startswith('//'):
                       url = 'http:' + url
 								            
                    sHosterUrl = url
                    if 'nowvid' in sHosterUrl:
+                       sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
+                   if 'kvid' in sHosterUrl:
                        sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
                    if 'userload' in sHosterUrl:
                        sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
@@ -524,12 +530,16 @@ def showServers():
                        sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
                    if 'mystream' in sHosterUrl:
                        sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN    
+                   if 'darkveed' in sHosterUrl:
+                       sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN 
+                   if 'telvod' in sHosterUrl:
+                       sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN 
                    oHoster = cHosterGui().checkHoster(sHosterUrl)
                    if oHoster:
                       sDisplayTitle = sMovieTitle
                       oHoster.setDisplayName(sDisplayTitle)
                       oHoster.setFileName(sMovieTitle)
-                      cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
+                      cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
        	
     sPattern = 'rel="nofollow" href="(.+?)" class'
     oParser = cParser()
@@ -554,13 +564,17 @@ def showServers():
             if 'moshahda' in sHosterUrl:
                 sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
             if 'mystream' in sHosterUrl:
-                sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN   
+                sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
+            if 'darkveed' in sHosterUrl:
+                sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN 
+            if 'telvod' in sHosterUrl or 'downvol' in sHosterUrl:
+                sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN  
             oHoster = cHosterGui().checkHoster(sHosterUrl)
             if oHoster:
                sDisplayTitle = sTitle
                oHoster.setDisplayName(sDisplayTitle)
                oHoster.setFileName(sMovieTitle)
-               cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
+               cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
 
      
     oGui.setEndOfDirectory()	

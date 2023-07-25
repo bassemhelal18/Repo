@@ -1,18 +1,20 @@
-#-*- coding: utf-8 -*-
-# https://github.com/Kodi-vStream/venom-xbmc-addons
+# -*- coding: utf-8 -*-
+# vStream https://github.com/Kodi-vStream/venom-xbmc-addons
+
 import re
 from resources.lib.util import Unquote
 
 
 class iHoster:
 
-    def __init__(self, pluginIdentifier, displayName, color = 'skyblue'):
+    def __init__(self, pluginIdentifier, displayName, color='skyblue'):
         self._defaultDisplayName = displayName
         self._displayName = self._defaultDisplayName
         self._fileName = displayName
         self._pluginIdentifier = pluginIdentifier
         self.color = color
         self._url = None
+        self._mediaFile = None
 
     def getPluginIdentifier(self):
         return self._pluginIdentifier
@@ -29,6 +31,9 @@ class iHoster:
     def setDisplayName(self, displayName):
         self._displayName = displayName + ' [COLOR ' + self.color + ']' + self._defaultDisplayName + '[/COLOR]'
 
+    def setMediaFile(self, mediaFile):
+        self._mediaFile = mediaFile
+    
     def isDownloadable(self):
         return True
 
@@ -38,17 +43,20 @@ class iHoster:
     def getUrl(self):
         return self._url
 
-    def getMediaLink(self):
-        return self._getMediaLinkForGuest()
-    
+    def getMediaLink(self, autoPlay = False):
+        return self._getMediaLinkForGuest(autoPlay)
+
     # nom du fichier, interessant pour afficher la release
     def getMediaFile(self):
-        if not self._url:
+        mediaFile = self._mediaFile
+        if not mediaFile: 
+            mediaFile = self._url
+            if not mediaFile:
+                return None
+        if mediaFile[-4:] not in '.mkv.avi.mp4.m4v.iso':
             return None
-        if self._url[-4:] not in '.mkv.avi.mp4.m4v.iso':
-            return None
-
-        sMediaFile = self._url[:-4]
+        
+        sMediaFile = mediaFile[:-4]
         sMediaFile = Unquote(sMediaFile.split('/')[-1])
         sMediaFile = re.sub('TM\d+TM', '', sMediaFile)
         sMediaFile = re.sub('RES-.+?-RES', '', sMediaFile)
@@ -56,8 +64,8 @@ class iHoster:
         sMediaFile = sMediaFile.replace('_', ' ')
         return sMediaFile
 
-    def _getMediaLinkForGuest(self):
+    def _getMediaLinkForGuest(self, autoPlay = False):
         raise NotImplementedError()
 
-    def _getMediaLinkByPremiumUser(self):
+    def _getMediaLinkByPremiumUser(self, autoPlay = False):
         pass

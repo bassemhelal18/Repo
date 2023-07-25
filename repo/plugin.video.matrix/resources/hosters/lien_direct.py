@@ -11,18 +11,18 @@ UA = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:68.0) Gecko/20100101 Firefox/6
 class cHoster(iHoster):
 
     def __init__(self):
-        iHoster.__init__(self, 'lien_direct', 'Lien direct')
+        iHoster.__init__(self, 'lien_direct', 'Direct Link')
 
     def setUrl(self, url):
         self._url = str(url).replace('+', '%20') # un lien direct n'est pas forcement urlEncoded
 
-    def _getMediaLinkForGuest(self):
+    def _getMediaLinkForGuest(self, autoPlay = False):
         api_call = self._url
         VSlog(self._url)
 
         api_call = self._url.replace("rrsrr","cimanow")
         if 'ddsdd' in api_call:
-            api_call = self._url.replace("ddsdd","upbam")    
+            api_call = self._url.replace("ddsdd","upbaam")    
             UA = 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36'
             api_call = api_call + '|User-Agent=' + UA + '&Referer=' + self._url
  	   
@@ -55,7 +55,11 @@ class cHoster(iHoster):
         if 'cimanow' in api_call:
             UA = 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36'
             api_call = api_call + '|AUTH=TLS&verifypeer=false' + '&User-Agent=' + UA + '&Referer=' + 'https://en.cimanow.cc'
-       
+        
+        if 'hadara' in api_call:
+            UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+            api_call = api_call + '|AUTH=TLS&verifypeer=false' + '&User-Agent=' + UA
+
         if '?src=' in api_call:
             api_call = api_call.split('?src=')[1]
        

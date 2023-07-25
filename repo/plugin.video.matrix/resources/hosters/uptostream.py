@@ -39,10 +39,10 @@ class cHoster(iHoster):
                 continue
         return files
 
-    def _getMediaLinkForGuest(self):
+    def _getMediaLinkForGuest(self, autoPlay = False):
         pass
 
-    def getMediaLink(self):
+    def getMediaLink(self, autoPlay = False):
         self.oPremiumHandler = cPremiumHandler('uptobox')
         premium = self.oPremiumHandler.isPremiumModeAvailable()
         if not premium:
@@ -101,7 +101,8 @@ class cHoster(iHoster):
                 import pyqrcode
                 qr = pyqrcode.create(r['data']['user_url'])
                 qr.png(VSPath('special://home/userdata/addon_data/plugin.video.vstream/qrcode.png'), scale=5)
-                oSolver = cInputWindowYesNo(captcha='special://home/userdata/addon_data/plugin.video.vstream/qrcode.png', msg="Scanner le QRCode pour acceder au lien d'autorisation", roundnum=1)
+                oSolver = cInputWindowYesNo(captcha='special://home/userdata/addon_data/plugin.video.vstream/qrcode.png',
+                    msg="Scanner le QRCode pour acceder au lien d'autorisation", roundnum=1)
                 retArg = oSolver.get()
                 if retArg == "N":
                     return False

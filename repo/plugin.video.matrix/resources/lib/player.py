@@ -1,6 +1,7 @@
 #-*- coding: utf-8 -*-
 # https://github.com/Kodi-vStream/venom-xbmc-addons
 
+
 import xbmcplugin
 import xbmc
 
@@ -29,7 +30,7 @@ class cPlayer(xbmc.Player):
 
     ADDON = addon()
 
-    def __init__(self, *args):
+    def __init__(self, oInputParameterHandler=False, *args):
 
         sPlayerType = self.__getPlayerType()
         xbmc.Player.__init__(self, sPlayerType)
@@ -37,7 +38,8 @@ class cPlayer(xbmc.Player):
         self.Subtitles_file = []
         self.SubtitleActive = False
 
-        oInputParameterHandler = cInputParameterHandler()
+        if not oInputParameterHandler:
+            oInputParameterHandler = cInputParameterHandler()
         self.sHosterIdentifier = oInputParameterHandler.getValue('sHosterIdentifier')
         self.sTitle = oInputParameterHandler.getValue('sFileName')
         if self.sTitle:
@@ -84,6 +86,8 @@ class cPlayer(xbmc.Player):
         else:
             self.Subtitles_file.append(files)
 
+    
+
     def run(self, oGuiElement, sUrl):
 
         # Lancement d'une vidéo sans avoir arrêté la précédente
@@ -119,7 +123,7 @@ class cPlayer(xbmc.Player):
         player_conf = self.ADDON.getSetting('playerPlay')
         # Si lien dash, methode prioritaire
         if splitext(urlparse(sUrl).path)[-1] in [".mpd", ".m3u8"]:
-            if isKrypton() == True:
+            if isKrypton():
                 addonManager().enableAddon('inputstream.adaptive')
                 item.setProperty('inputstream', 'inputstream.adaptive')
                 if '.m3u8' in sUrl:
@@ -141,6 +145,7 @@ class cPlayer(xbmc.Player):
             VSlog('Player use PlayMedia() method')
         # 3 eme mode (defaut)
         else:
+            
             xbmcplugin.setResolvedUrl(sPluginHandle, True, item)
             VSlog('Player use setResolvedUrl() method')
 
@@ -172,7 +177,8 @@ class cPlayer(xbmc.Player):
 
             except Exception as err:
                 VSlog("Exception run: {0}".format(err))
-
+            
+            
             xbmc.sleep(1000)
 
         if not self.playBackStoppedEventReceived:

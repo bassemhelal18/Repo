@@ -14,12 +14,15 @@ icons = ADDON.getSetting('defaultIcons')
 class cHosterGui:
     SITE_NAME = 'cHosterGui'
     ADDON = addon()
-
+    
+    
     # step 1 - bGetRedirectUrl in ein extra optionsObject verpacken
-    def showHoster(self, oGui, oHoster, sMediaUrl, sThumbnail, bGetRedirectUrl=False):
+    
+    def showHoster(self, oGui, oHoster, sMediaUrl, sThumbnail, bGetRedirectUrl=False, oInputParameterHandler=False):
         oHoster.setUrl(sMediaUrl)
         oOutputParameterHandler = cOutputParameterHandler()
-        oInputParameterHandler = cInputParameterHandler()
+        if not oInputParameterHandler:
+            oInputParameterHandler = cInputParameterHandler()
 
         # Gestion NextUp
         siteUrl = oInputParameterHandler.getValue('siteUrl')
@@ -34,11 +37,14 @@ class cHosterGui:
         sFav = oInputParameterHandler.getValue('sFav')
         if not sFav:
             sFav = oInputParameterHandler.getValue('function')
-
+        searchSiteId = oInputParameterHandler.getValue('searchSiteId')
+        if searchSiteId:
+            oOutputParameterHandler.addParameter('searchSiteId', searchSiteId)
+        oOutputParameterHandler.addParameter('searchSiteName', oInputParameterHandler.getValue('searchSiteName'))
+        oOutputParameterHandler.addParameter('sQual', oInputParameterHandler.getValue('sQual'))
         oGuiElement = cGuiElement()
         oGuiElement.setSiteName(self.SITE_NAME)
         oGuiElement.setFunction('play')
-        oGuiElement.setTitle(oHoster.getDisplayName())
 
         # Catégorie de lecture
         if oInputParameterHandler.exist('sCat'):
@@ -47,12 +53,8 @@ class cHosterGui:
                 sCat = '8'   # ...  On est maintenant au niveau "Episode"
         else:
             sCat = '5'     # Divers
+        
         oGuiElement.setCat(sCat)
-
-        sMediaFile = oHoster.getMediaFile()
-        if sMediaFile:
-            oGuiElement.setMediaUrl(sMediaFile)
-            
         oOutputParameterHandler.addParameter('sCat', sCat)
 
         if (oInputParameterHandler.exist('sMeta')):
@@ -61,7 +63,7 @@ class cHosterGui:
 
         oGuiElement.setFileName(oHoster.getFileName())
         oGuiElement.getInfoLabel()
-        oGuiElement.setIcon(icons + '/Sources.png')
+        oGuiElement.setIcon(icons+'/Sources.png')
         if sThumbnail:
             oGuiElement.setThumbnail(sThumbnail)
             oGuiElement.setPoster(sThumbnail)
@@ -79,6 +81,20 @@ class cHosterGui:
         oOutputParameterHandler.addParameter('sId', 'cHosterGui')
         oOutputParameterHandler.addParameter('siteUrl', siteUrl)
         oOutputParameterHandler.addParameter('sTmdbId', sTmdbId)
+
+
+        sMediaFile = oHoster.getMediaFile()
+        if sMediaFile:  # Afficher le nom du fichier plutot que le titre
+            oGuiElement.setMediaUrl(sMediaFile)
+            if self.ADDON.getSetting('display_info_file') == 'true':
+                oHoster.setDisplayName(sMediaFile)
+                oGuiElement.setRawTitle(oHoster.getDisplayName())
+            else:
+                oGuiElement.setTitle(oHoster.getDisplayName())
+        else:
+            oGuiElement.setTitle(oHoster.getDisplayName())
+
+
 
         # gestion NextUp
         oOutputParameterHandler.addParameter('sourceName', site)    # source d'origine
@@ -250,9 +266,12 @@ class cHosterGui:
             return self.getHoster('mycima')
         if ('weecima' in sHostName):
             return self.getHoster('megavideo')            
-        if ('megaupload.' in sHostName) or ('fansubs' in sHostName) or ('us.archive.' in sHostName) or ('ddsdd' in sHostName) or ('ffsff' in sHostName) or ('rrsrr' in sHostName)or ('fbcdn.net' in sHostName) or ('blogspot.com' in sHostName) or ('videodelivery' in sHostName) or ('bittube' in sHostName) or ('amazonaws.com' in sHostName):
+        if ('megaupload.' in sHostName) or ('fansubs' in sHostName) or ('us.archive.' in sHostName) or ('ddsdd' in sHostName) or ('ffsff' in sHostName) or ('rrsrr.' in sHostName)or ('fbcdn.net' in sHostName) or ('blogspot.com' in sHostName) or ('videodelivery' in sHostName) or ('bittube' in sHostName) or ('amazonaws.com' in sHostName):
             return self.getHoster('lien_direct')
-
+        
+        if ('hadara.ps' in sHostName):
+            return self.getHoster('lien_direct')
+        
         if ('.googleusercontent.com' in sHostName):
             return self.getHoster('lien_direct')
 
@@ -261,7 +280,10 @@ class cHosterGui:
 
         if ('ak-download' in sHostName):
             return self.getHoster('lien_direct')
-
+        
+        if ('rrsrrs' in sHostName):
+            return self.getHoster('cimanow')
+        
         if ('app.box' in sHostName):
             return self.getHoster('lien_direct')
 
@@ -283,8 +305,7 @@ class cHosterGui:
         if ('gcdn' in sHostName):
             return self.getHoster('lien_direct')
 
-        if ('egybest' in sHostName):
-            return self.getHoster('lien_direct')
+        
 
         if ('alarabiya' in sHostName):
             return self.getHoster('lien_direct')
@@ -323,7 +344,13 @@ class cHosterGui:
 
         if ('upbaam' in sHostName) or ('upbam' in sHostName) or ('uppom' in sHostName) or ('uppboom' in sHostName):
             return self.getHoster('uppom')
-            
+        
+        if ('eeggyy' in sHosterUrl):
+            return self.getHoster('egybest')
+
+        if ('shoffree' in sHostName) or ('egy-best' in sHostName) or ('egy.best' in sHostName):
+            return self.getHoster('shoffree')    
+        
         if ('filemoon' in sHostName):
             return self.getHoster('resolver')
             
@@ -347,7 +374,13 @@ class cHosterGui:
             
         if ('myviid' in sHostName) or ('myvid' in sHostName):
             return self.getHoster('myvid')
-            
+       
+        if ('.aflam' in sHosterUrl):
+            return self.getHoster('mixloads')			
+        
+        if ('mixloads' in sHosterUrl):
+            return self.getHoster('mixloads')
+
         if ('streamwire' in sHostName) or ('vup' in sHostName):
             return self.getHoster('resolver')
             
@@ -375,9 +408,9 @@ class cHosterGui:
         if ('goved' in sHostName) or ('govad' in sHostName) or ('govid.me' in sHostName):
             return self.getHoster('govidme')
             
-        if ('govid' in sHostName) or ('gvid.' in sHosterUrl) or ('govid.' in sHostName) or ('kopatube' in sHostName) or ('kobatube' in sHostName):
+        if ('govid' in sHostName) or ('drkvid' in sHosterUrl) or ('gvid.' in sHosterUrl) or ('govid.' in sHostName) or ('kopatube' in sHostName) or ('kobatube' in sHostName) or ('darkveed' in sHostName) or ('downvol' in sHosterUrl) or ('telvod' in sHosterUrl):
             return self.getHoster('govid')
-            
+        
         if ('vid4up' in sHostName):
             return self.getHoster('vidforup')
             
@@ -393,8 +426,11 @@ class cHosterGui:
         if ('sama-share' in sHostName):
             return self.getHoster('samashare')
 
-        if ('anafast' in sHostName):
+        if ('anafast' in sHostName) or ('anamov' in sHostName):
             return self.getHoster('anafasts')
+        
+        if ('akoam' in sHostName):
+            return self.getHoster('lien_direct')
 
         if ('myvi.' in sHostName):
             return self.getHoster('myvi')
@@ -520,18 +556,31 @@ class cHosterGui:
         if ('nitroflare' in sHostName or 'tubeload.' in sHostName or 'Facebook' in sHostName  or 'fastdrive' in sHostName or 'megaup.net' in sHostName  or 'openload' in sHostName or 'doodrive' in sHostName):
             return False
 
-        return False
+        
+        # lien direct ?
+        
+        if any(sHosterUrl.endswith(x) for x in ['.mp4', '.avi', '.flv', '.m3u8', '.webm', '.mkv', '.mpd']):
+            return self.getHoster('lien_direct')
 
+        else:
+            f = self.getHoster('resolver')
+            #mise a jour du nom
+            f.setRealHost(sHostName)
+            return f            
+        
+            
+    
     def getHoster(self, sHosterFileName):
         mod = __import__('resources.hosters.' + sHosterFileName, fromlist=['cHoster'])
         klass = getattr(mod, 'cHoster')
         return klass()
 
-    def play(self):
+    def play(self, oInputParameterHandler = False, autoPlay = False):
         oGui = cGui()
         oDialog = dialog()
-
-        oInputParameterHandler = cInputParameterHandler()
+        
+        if not oInputParameterHandler:
+            oInputParameterHandler = cInputParameterHandler()
         sHosterIdentifier = oInputParameterHandler.getValue('sHosterIdentifier')
         sMediaUrl = oInputParameterHandler.getValue('sMediaUrl')
         bGetRedirectUrl = oInputParameterHandler.getValue('bGetRedirectUrl')
@@ -549,19 +598,20 @@ class cHosterGui:
 
         try:
             mediaDisplay = sMediaUrl.split('/')
-            VSlog('Hoster - play : %s/ ... /%s' % ('/'.join(mediaDisplay[0:3]), mediaDisplay[-1]))
+            VSlog('Hoster %s - play : %s/ ... /%s' % (sHosterIdentifier, '/'.join(mediaDisplay[0:3]), mediaDisplay[-1]))
         except:
-            VSlog('Hoster - play : ' + sMediaUrl)
+            VSlog('Hoster %s - play : ' % (sHosterIdentifier, sMediaUrl))
 
         oHoster = self.getHoster(sHosterIdentifier)
         oHoster.setFileName(sFileName)
 
         sHosterName = oHoster.getDisplayName()
-        oDialog.VSinfo(sHosterName, 'Resolve')
+        if not autoPlay:
+            oDialog.VSinfo(sHosterName, 'Resolve')
 
         try:
             oHoster.setUrl(sMediaUrl)
-            aLink = oHoster.getMediaLink()
+            aLink = oHoster.getMediaLink(autoPlay)
 
             if aLink and (aLink[0] or aLink[1]):  # Le hoster ne sait pas résoudre mais a retourné une autre url
                 if not aLink[0]:  # Voir exemple avec allDebrid qui : return False, URL
@@ -569,10 +619,11 @@ class cHosterGui:
                     if oHoster:
                         oHoster.setFileName(sFileName)
                         sHosterName = oHoster.getDisplayName()
-                        oDialog.VSinfo(sHosterName, 'Resolve')
+                        if not autoPlay:
+                            oDialog.VSinfo(sHosterName, 'Resolve')
 
                         oHoster.setUrl(aLink[1])
-                        aLink = oHoster.getMediaLink()
+                        aLink = oHoster.getMediaLink(autoPlay)
 
                 if aLink[0]:
                     oGuiElement = cGuiElement()
@@ -586,7 +637,7 @@ class cHosterGui:
                     oGuiElement.getInfoLabel()
 
                     from resources.lib.player import cPlayer
-                    oPlayer = cPlayer()
+                    oPlayer = cPlayer(oInputParameterHandler)
 
                     # sous titres ?
                     if len(aLink) > 2:
@@ -594,16 +645,21 @@ class cHosterGui:
 
                     return oPlayer.run(oGuiElement, aLink[1])
 
-            oDialog.VSerror(self.ADDON.VSlang(30020))
-            return
+            if not autoPlay:
+                oDialog.VSerror(self.ADDON.VSlang(30020))
+            return False
 
         except Exception as e:
             oDialog.VSerror(self.ADDON.VSlang(30020))
             import traceback
             traceback.print_exc()
-            return
+            return False
 
-        oGui.setEndOfDirectory()
+        if not autoPlay:
+            oGui.setEndOfDirectory()
+        return False
+    
+    
 
     def addToPlaylist(self):
         oGui = cGui()

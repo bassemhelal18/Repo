@@ -12,7 +12,7 @@ class cHoster(iHoster):
         iHoster.__init__(self, 'vidzstore', 'VidzStore')
 
     #Extraction du lien et decodage si besoin
-    def _getMediaLinkForGuest(self):
+    def _getMediaLinkForGuest(self, autoPlay = False):
         VSlog(self._url)
         api_call = False
 

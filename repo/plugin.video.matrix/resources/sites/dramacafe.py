@@ -14,6 +14,7 @@ from resources.lib.comaddon import progress, VSlog, siteManager, addon
 from resources.lib.parser import cParser
 from resources.lib.util import cUtil, Unquote
 from resources.lib.util import Quote
+from bs4 import BeautifulSoup
 
 ADDON = addon()
 icons = ADDON.getSetting('defaultIcons')
@@ -245,7 +246,7 @@ def showSeries(sSearch = ''):
     oParser = cParser()
     aResult = oParser.parse(sHtmlContent, sPattern)
 	
-	
+    itemList = []
     if aResult[0] :
         total = len(aResult[1])
         progress_ = progress().VScreate(SITE_NAME)
@@ -264,13 +265,16 @@ def showSeries(sSearch = ''):
             
             sTitle = sTitle.split('الحلقة')[0]
             sDesc = ''
+            
+            if sTitle not in itemList:
+                itemList.append(sTitle)
+                
 
-
-            oOutputParameterHandler.addParameter('siteUrl',siteUrl)
-            oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
-            oOutputParameterHandler.addParameter('sThumb', sThumb)
+                oOutputParameterHandler.addParameter('siteUrl',siteUrl)
+                oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
+                oOutputParameterHandler.addParameter('sThumb', sThumb)
 			
-            oGui.addTV(SITE_IDENTIFIER, 'showEpisodes', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
+                oGui.addTV(SITE_IDENTIFIER, 'showEpisodes', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
 
         progress_.VSclose(progress_)
  
@@ -294,7 +298,7 @@ def showEpisodes():
     sHtmlContent = oRequestHandler.request()
 
     oParser = cParser()
-    sPattern = "<a.+?class='.+?' title='.+?' href='([^<]+)'><li><em>([^<]+)</em>"
+    sPattern = "title='.+?' href='([^<]+)'><li><em>([^<]+)</em>"
     aResult = oParser.parse(sHtmlContent, sPattern)
 	
     if aResult[0] :
@@ -323,19 +327,23 @@ def showEpisodes():
 	
 
 def __checkForNextPage(sHtmlContent):
-    sPattern = '<a href="([^<]+)"><i class="fa fa-arrow-left"></i></a>'	 
+
+    soup = BeautifulSoup(sHtmlContent, "html.parser")
+    sHtmlContent = str(soup.find("ul",{"class":"pagination pagination-sm pagination-arrows"}))
+    
+    sPattern = '<a href="([^<]+)">»</a>'
+	
     oParser = cParser()
     aResult = oParser.parse(sHtmlContent, sPattern)
- 
-    if aResult[0] :
-        return aResult[1][0]
+    if aResult[0] is True:
+        return URL_MAIN+aResult[1][0]
 
     return False
 
-
-def showHosters():
+def showHosters(oInputParameterHandler = False):
     oGui = cGui()
-    oInputParameterHandler = cInputParameterHandler()
+    if not oInputParameterHandler:
+        oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
@@ -384,6 +392,6 @@ def showHosters():
                sDisplayTitle = sTitle
                oHoster.setDisplayName(sDisplayTitle)
                oHoster.setFileName(sDisplayTitle)
-               cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
+               cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
 
     oGui.setEndOfDirectory()

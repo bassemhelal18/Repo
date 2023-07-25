@@ -30,3 +30,5 @@ class cInputParameterHandler:
     def exist(self, sParamName):
         if sParamName in self.__aParams:
             return sParamName
+    
+    

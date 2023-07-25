@@ -412,8 +412,16 @@ msgctxt "#30098"
 msgid "Are you sure? This will erase all thumbnails"
 msgstr ""
 
+msgctxt "#300981"
+msgid "Are you sure? This will erase requests cache"
+msgstr ""
+
 msgctxt "#30099"
 msgid "Import/Export Database, Successful"
+msgstr ""
+
+msgctxt "#301001"
+msgid "Error Occured, Cache was not cleared"
 msgstr ""
 
 msgctxt "#30100"
@@ -929,6 +937,14 @@ msgctxt "#31212"
 msgid "Select a list"
 msgstr ""
 
+msgctxt "#31213"
+msgid "Auto play"
+msgstr ""
+
+msgctxt "#31214"
+msgid "Accepted language for auto play"
+msgstr ""
+
 msgctxt "#30361"
 msgid "Activate scrobbling"
 msgstr ""
@@ -1274,6 +1290,10 @@ msgctxt "#31206"
 msgid "Use FlareSolverr"
 msgstr ""
 
+msgctxt "#31207"
+msgid "Display file infos"
+msgstr ""
+
 msgctxt "#31208"
 msgid "Remaining sites: %s"
 msgstr ""
@@ -1344,4 +1364,20 @@ msgstr ""
 
 msgctxt "#70013"
 msgid "Pack"
+msgstr ""
+
+msgctxt "#3042215"
+msgid "Enable request cache"
+msgstr ""
+
+msgctxt "#3042215"
+msgid "Cache online responses"
+msgstr ""
+
+msgctxt "#30422151"
+msgid "Store cache for (hours)"
+msgstr ""
+
+msgctxt "#301271"
+msgid "Matrix Cache"
 msgstr ""

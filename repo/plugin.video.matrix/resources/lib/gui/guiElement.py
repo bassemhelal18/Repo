@@ -304,6 +304,9 @@ class cGuiElement:
             sTitle2 = '%s [COLOR %s](%s)[/COLOR]' % (sTitle2, sDecoColor, self.__Year)
 
         return sTitle2
+    
+    def setRawTitle(self, sTitle):
+        self.__sTitle = sTitle
 
     def setTitle(self, sTitle):
         # Nom en clair sans les langues, qualités, et autres décorations
@@ -335,9 +338,6 @@ class cGuiElement:
 
     def getCleanTitle(self):
         return self.__sCleanTitle
-
-   # def setTitleWatched(self, sTitleWatched):
-       # self.__sTitleWatched = sTitleWatched
 
     def getTitleWatched(self):
         return self.__sTitleWatched
@@ -455,8 +455,7 @@ class cGuiElement:
                 'imdbnumber': xbmc.getInfoLabel('ListItem.IMDBNumber'),
                 'season': xbmc.getInfoLabel('ListItem.season'),
                 'episode': xbmc.getInfoLabel('ListItem.episode'),
-                'tvshowtitle': xbmc.getInfoLabel('ListItem.tvshowtitle'),
-                'HdrType': xbmc.getInfoLabel('ListItem.HdrType')
+                'tvshowtitle': xbmc.getInfoLabel('ListItem.tvshowtitle')
                 }
 
         if 'title' in meta and meta['title']:

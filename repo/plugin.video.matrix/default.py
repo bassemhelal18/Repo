@@ -3,6 +3,7 @@
 
 
 # from resources.lib.statistic import cStatistic
+from resources.lib.handler import rechercheHandler
 from resources.lib.home import cHome
 from resources.lib.gui.gui import cGui
 from resources.lib.handler.pluginHandler import cPluginHandler
@@ -10,6 +11,7 @@ from resources.lib.handler.inputParameterHandler import cInputParameterHandler
 from resources.lib.handler.outputParameterHandler import cOutputParameterHandler
 from resources.lib.comaddon import progress, VSlog, addon, window, siteManager
 from resources.lib.search import cSearch
+from resources.lib.util import Quote
 # http://kodi.wiki/view/InfoLabels
 # http://kodi.wiki/view/List_of_boolean_conditions
 
@@ -121,10 +123,10 @@ class main:
             if isHome(sSiteName, sFunction):
                 return
 
-            if isTrakt(sSiteName, sFunction):
+            if isSearch(sSiteName, sFunction):
                 return
 
-            if isSearch(sSiteName, sFunction):
+            if isTrakt(sSiteName, sFunction):
                 return
 
             if sSiteName == 'globalRun':
@@ -164,8 +166,6 @@ class main:
                 return
             # if isAboutGui(sSiteName, sFunction) == True:
                 # return
-
-            # charge sites
             try:
                 plugins = __import__('resources.sites.%s' % sSiteName, fromlist=[sSiteName])
                 function = getattr(plugins, sFunction)
@@ -176,6 +176,7 @@ class main:
                 import traceback
                 traceback.print_exc()
                 return
+
 
 
 def setSetting(plugin_id, value):
@@ -220,6 +221,8 @@ def isHosterGui(sSiteName, sFunction):
         function()
         return True
     return False
+
+
 
 
 def isGui(sSiteName, sFunction):
@@ -280,6 +283,16 @@ def isHome(sSiteName, sFunction):
         return True
     return False
 
+def isSearch(sSiteName, sFunction):
+    if sSiteName == 'cSearch' or sSiteName == 'globalSearch':
+        oSearch = cSearch()
+        if sSiteName == 'globalSearch':
+            exec("oSearch.searchGlobal()")
+        else:
+            exec("oSearch." + sFunction + "()")
+        return True
+    return False
+
 
 def isTrakt(sSiteName, sFunction):
     if sSiteName == 'cTrakt':
@@ -290,31 +303,7 @@ def isTrakt(sSiteName, sFunction):
     return False
 
 
-def isSearch(sSiteName, sFunction):
-    if sSiteName == 'globalSearch':
-        oSearch = cSearch()
-        exec("oSearch.searchGlobal()")
-        return True
-    return False
 
-
-def _pluginSearch(plugin, sSearchText):
-
-    # Appeler la source en mode Recherche globale
-    window(10101).setProperty('search', 'true')
-
-    try:
-        plugins = __import__('resources.sites.%s' % plugin['identifier'], fromlist=[plugin['identifier']])
-        function = getattr(plugins, plugin['search'][1])
-        sUrl = plugin['search'][0] + str(sSearchText)
-
-        function(sUrl)
-
-        VSlog('Load Search: ' + str(plugin['identifier']))
-    except:
-        VSlog(plugin['identifier'] + ': search failed')
-
-    window(10101).setProperty('search', 'false')
 
 
 main()
