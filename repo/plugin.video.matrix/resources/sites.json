@@ -23,7 +23,12 @@
         "cimaclub": {
             "label": "Cimaclub",
             "active": "True",
-            "url": "https://cima-club.cam/"
+            "url": "https://cmaclb.store/"
+        },
+        "cinematy": {
+            "label": "Cinematy",
+            "active": "True",
+            "url": "https://cinematy.online/"
         },
         "cimanow": {
             "label": "Cimanow",
@@ -53,7 +58,7 @@
         "faselhd": {
             "label": "Faselhd",
             "active": "True",
-            "url": "https://www.faselhd.red/"
+            "url": "https://www.faselhd.bio/"
         },
         "movizland": {
             "label": "Movizland",
