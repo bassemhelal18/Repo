@@ -12,7 +12,7 @@ class cHoster(iHoster):
     def __init__(self):
         iHoster.__init__(self, 'realdebrid', 'RealDebrid', 'violet')
 
-    def _getMediaLinkForGuest(self, autoPlay = False):
+    def _getMediaLinkForGuest(self):
         token = cPremiumHandler(self.getPluginIdentifier()).getToken()
         if not token:
             return False, False

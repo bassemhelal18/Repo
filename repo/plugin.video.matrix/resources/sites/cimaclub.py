@@ -48,7 +48,7 @@ SPORT_NEWS = (URL_MAIN + 'category/%D8%A7%D9%84%D9%85%D8%B5%D8%A7%D8%B1%D8%B9%D9
 REPLAYTV_NEWS = (URL_MAIN + 'category/%D9%85%D8%B3%D8%B1%D8%AD%D9%8A%D8%A7%D8%AA-%D9%88%D8%B9%D8%B1%D9%88%D8%B6-%D8%AA%D9%84%D9%81%D8%B2%D9%8A%D9%88%D9%86%D9%8A%D9%87', 'showSeries')
 URL_SEARCH = (URL_MAIN + 'search?s=', 'showMovies')
 URL_SEARCH_MOVIES = (URL_MAIN + 'search?s=%D9%81%D9%8A%D9%84%D9%85+', 'showMovies')
-URL_SEARCH_SERIES = (URL_MAIN + 'search?s=', 'showSerie')
+URL_SEARCH_SERIES = (URL_MAIN + 'search?s=مسلسل+', 'showSerie')
 URL_SEARCH_MISC = (URL_MAIN + 'search?s=', 'showSerie')
 FUNCTION_SEARCH = 'showMovies'
 
@@ -304,7 +304,7 @@ def showSeasons():
         for aEntry in aResult[1]:
             sTitle = aEntry[1].replace("مشاهدة","").replace("مسلسل","").replace("انمي","").replace("مترجمة","").replace("مترجم","").replace("كامل","").replace("برنامج","").replace("فيلم","").replace("الموسم العاشر","S10").replace("الموسم الحادي عشر","S11").replace("الموسم الثاني عشر","S12").replace("الموسم الثالث عشر","S13").replace("الموسم الرابع عشر","S14").replace("الموسم الخامس عشر","S15").replace("الموسم السادس عشر","S16").replace("الموسم السابع عشر","S17").replace("الموسم الثامن عشر","S18").replace("الموسم التاسع عشر","S19").replace("الموسم العشرون","S20").replace("الموسم الحادي و العشرون","S21").replace("الموسم الثاني و العشرون","S22").replace("الموسم الثالث و العشرون","S23").replace("الموسم الرابع والعشرون","S24").replace("الموسم الخامس و العشرون","S25").replace("الموسم السادس والعشرون","S26").replace("الموسم السابع والعشرون","S27").replace("الموسم الثامن والعشرون","S28").replace("الموسم التاسع والعشرون","S29").replace("الموسم الثلاثون","S30").replace("الموسم الحادي و الثلاثون","S31").replace("الموسم الثاني والثلاثون","S32").replace("الموسم الاول","S1").replace("الموسم الأول","S1").replace("الموسم الثاني","S2").replace("الموسم الثالث","S3").replace("الموسم الثالث","S3").replace("الموسم الرابع","S4").replace("الموسم الخامس","S5").replace("الموسم السادس","S6").replace("الموسم السابع","S7").replace("الموسم الثامن","S8").replace("الموسم التاسع","S9").replace("الموسم","S").replace("موسم","S").replace("S ","S")
             siteUrl = aEntry[0]
-            sThumb = sThumb
+            sThumb = ''
             sDesc = ""
 
             oOutputParameterHandler.addParameter('siteUrl',siteUrl)
@@ -330,7 +330,7 @@ def showSeasons():
              siteUrl = aEntry[0].replace("/episode/","/watch/").replace("/post/","/watch/")
              sSeason = ' S'+aEntry[1]
              sTitle = sMovieTitle + sSeason
-             sThumb =  sThumb
+             sThumb =  ''
              sDesc = ""
              oOutputParameterHandler.addParameter('siteUrl',siteUrl)
              oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
@@ -455,11 +455,10 @@ def __checkForNextPage(sHtmlContent):
 
     return False
   
-def showServers(oInputParameterHandler = False):
+def showServers():
     oGui = cGui()
    
-    if not oInputParameterHandler:
-        oInputParameterHandler = cInputParameterHandler()
+    oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
@@ -539,7 +538,7 @@ def showServers(oInputParameterHandler = False):
                       sDisplayTitle = sMovieTitle
                       oHoster.setDisplayName(sDisplayTitle)
                       oHoster.setFileName(sMovieTitle)
-                      cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+                      cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
        	
     sPattern = 'rel="nofollow" href="(.+?)" class'
     oParser = cParser()
@@ -574,7 +573,7 @@ def showServers(oInputParameterHandler = False):
                sDisplayTitle = sTitle
                oHoster.setDisplayName(sDisplayTitle)
                oHoster.setFileName(sMovieTitle)
-               cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+               cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
 
      
     oGui.setEndOfDirectory()	

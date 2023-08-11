@@ -14,9 +14,9 @@ class cHoster(iHoster):
         iHoster.__init__(self, 'cimanow', 'CimaNow', 'gold')
 			
     def setUrl(self, sUrl):
-        self._url = str(sUrl).replace('rrsrrs','cimanow')
+        self._url = str(sUrl).replace('rrsrrs','newcima')
         VSlog(self._url)
-    def _getMediaLinkForGuest(self, autoPlay = False):
+    def _getMediaLinkForGuest(self):
         
         sReferer = "https://cimanow.cc/"
         host = self._url.split('/e')[0]

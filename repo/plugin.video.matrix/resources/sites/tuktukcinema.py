@@ -34,8 +34,8 @@ SERIE_TR = (URL_MAIN + 'category/series-9/مسلسلات-تركي/', 'showSeries
 ANIM_NEWS = (URL_MAIN + 'category/anime-6/انمي-مترجم/', 'showSeries')
 
 URL_SEARCH = (URL_MAIN + '?s=', 'showMovies')
-URL_SEARCH_MOVIES = (URL_MAIN +'?s=', 'showMovies')
-URL_SEARCH_SERIES = (URL_MAIN +'?s=', 'showSeries')
+URL_SEARCH_MOVIES = (URL_MAIN +'?s=فيلم+', 'showMovies')
+URL_SEARCH_SERIES = (URL_MAIN +'?s=مسلسل+', 'showSeries')
 FUNCTION_SEARCH = 'showMovies'
  
 def load():
@@ -100,9 +100,8 @@ def showSearch():
  
     sSearchText = oGui.showKeyBoard()
     if sSearchText is not False:
-        sUrl = URL_MAIN + '/?s=فيلم+'+sSearchText
+        sUrl = URL_MAIN + '?s=فيلم+'+sSearchText
         showMovies(sUrl)
-        
         oGui.setEndOfDirectory()
         return
  
@@ -111,7 +110,7 @@ def showSearchSeries():
  
     sSearchText = oGui.showKeyBoard()
     if sSearchText is not False:
-        sUrl = URL_MAIN + '?s='+sSearchText
+        sUrl = URL_MAIN + '?s=مسلسل+'+sSearchText
         showSeries(sUrl)
         oGui.setEndOfDirectory()
         return
@@ -196,7 +195,7 @@ def showMovies(sSearch = ''):
  
             if 'مسلسل' in aEntry[1]:
                 continue
-            if 'الحلقة' in aEntry[0]:
+            if 'الحلقة' in aEntry[1]:
                 continue
             sTitle = aEntry[1].replace("مشاهدة","").replace("مسلسل","").replace("انمي","").replace("مترجمة","").replace("مترجم","").replace("فيلم","").replace("والأخيرة","").replace("مدبلج للعربية","مدبلج").replace("والاخيرة","").replace("كاملة","").replace("حلقات كاملة","").replace("اونلاين","").replace("مباشرة","").replace("انتاج ","").replace("جودة عالية","").replace("كامل","").replace("HD","").replace("السلسلة الوثائقية","").replace("الفيلم الوثائقي","").replace("اون لاين","").replace("الموسم العاشر","S10").replace("الموسم الحادي عشر","S11").replace("الموسم الثاني عشر","S12").replace("الموسم الثالث عشر","S13").replace("الموسم الرابع عشر","S14").replace("الموسم الخامس عشر","S15").replace("الموسم السادس عشر","S16").replace("الموسم السابع عشر","S17").replace("الموسم الثامن عشر","S18").replace("الموسم التاسع عشر","S19").replace("الموسم العشرون","S20").replace("الموسم الحادي و العشرون","S21").replace("الموسم الثاني و العشرون","S22").replace("الموسم الثالث و العشرون","S23").replace("الموسم الرابع والعشرون","S24").replace("الموسم الخامس و العشرون","S25").replace("الموسم السادس والعشرون","S26").replace("الموسم السابع والعشرون","S27").replace("الموسم الثامن والعشرون","S28").replace("الموسم التاسع والعشرون","S29").replace("الموسم الثلاثون","S30").replace("الموسم الحادي و الثلاثون","S31").replace("الموسم الثاني والثلاثون","S32").replace("الموسم الاول","S1").replace("الموسم الثاني","S2").replace("الموسم الثالث","S3").replace("الموسم الثالث","S3").replace("الموسم الرابع","S4").replace("الموسم الخامس","S5").replace("الموسم السادس","S6").replace("الموسم السابع","S7").replace("الموسم الثامن","S8").replace("الموسم التاسع","S9").replace("الموسم","S").replace("S ","S").replace("الحلقة "," E")
             siteUrl = aEntry[0]+'/watch'
@@ -234,7 +233,10 @@ def showMovies(sSearch = ''):
             if progress_.iscanceled():
                 break
  
-            
+            if 'مسلسل' in aEntry[1]:
+                continue
+            if 'الحلقة' in aEntry[1]:
+                continue
             sTitle = aEntry[1].replace("مشاهدة","").replace("مسلسل","").replace("انمي","").replace("مترجمة","").replace("مترجم","").replace("فيلم","").replace("والأخيرة","").replace("مدبلج للعربية","مدبلج").replace("والاخيرة","").replace("كاملة","").replace("حلقات كاملة","").replace("اونلاين","").replace("مباشرة","").replace("انتاج ","").replace("جودة عالية","").replace("كامل","").replace("HD","").replace("السلسلة الوثائقية","").replace("الفيلم الوثائقي","").replace("اون لاين","").replace("الموسم العاشر","S10").replace("الموسم الحادي عشر","S11").replace("الموسم الثاني عشر","S12").replace("الموسم الثالث عشر","S13").replace("الموسم الرابع عشر","S14").replace("الموسم الخامس عشر","S15").replace("الموسم السادس عشر","S16").replace("الموسم السابع عشر","S17").replace("الموسم الثامن عشر","S18").replace("الموسم التاسع عشر","S19").replace("الموسم العشرون","S20").replace("الموسم الحادي و العشرون","S21").replace("الموسم الثاني و العشرون","S22").replace("الموسم الثالث و العشرون","S23").replace("الموسم الرابع والعشرون","S24").replace("الموسم الخامس و العشرون","S25").replace("الموسم السادس والعشرون","S26").replace("الموسم السابع والعشرون","S27").replace("الموسم الثامن والعشرون","S28").replace("الموسم التاسع والعشرون","S29").replace("الموسم الثلاثون","S30").replace("الموسم الحادي و الثلاثون","S31").replace("الموسم الثاني والثلاثون","S32").replace("الموسم الاول","S1").replace("الموسم الثاني","S2").replace("الموسم الثالث","S3").replace("الموسم الثالث","S3").replace("الموسم الرابع","S4").replace("الموسم الخامس","S5").replace("الموسم السادس","S6").replace("الموسم السابع","S7").replace("الموسم الثامن","S8").replace("الموسم التاسع","S9").replace("الموسم","S").replace("S ","S").replace("الحلقة "," E")
             siteUrl = aEntry[0]+'/watch'
             sThumb = aEntry[2]
@@ -368,7 +370,7 @@ def showSeries(sSearch = ''):
         progress_.VSclose(progress_)
     if not sSearch:   
         sNextPage = __checkForNextPage(sHtmlContent)
-        
+        VSlog(sNextPage)
         if sNextPage:
             oOutputParameterHandler = cOutputParameterHandler()
             oOutputParameterHandler.addParameter('siteUrl', sNextPage)
@@ -474,7 +476,7 @@ def showEpisodes():
 def __checkForNextPage(sHtmlContent):
 
     soup = BeautifulSoup(sHtmlContent, "html.parser")
-    
+    VSlog(soup)
     sHtmlContent = str(soup.find("ul",{"class":"page-numbers"}))
     
     sPattern = '<a class="next page-numbers" href="(.+?)">'
@@ -486,10 +488,9 @@ def __checkForNextPage(sHtmlContent):
 
     return False
 
-def showHosters(oInputParameterHandler = False):
+def showHosters():
     oGui = cGui()
-    if not oInputParameterHandler:
-        oInputParameterHandler = cInputParameterHandler()
+    oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
@@ -517,6 +518,9 @@ def showHosters(oInputParameterHandler = False):
 			
             sTitle = sMovieTitle					
             sHosterUrl = url 
+            
+            if 'file-upload.org' in sHosterUrl:
+                continue
             if '?download_' in sHosterUrl:
                sHosterUrl = sHosterUrl.replace("moshahda","ffsff")
                sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN 
@@ -530,7 +534,7 @@ def showHosters(oInputParameterHandler = False):
             if oHoster:
                 oHoster.setDisplayName(sTitle)
                 oHoster.setFileName(sMovieTitle)
-                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
     # (.+?) ([^<]+) .+?
 
     sPattern = '<a target="_blank" href="(.+?)" class="download--direct"><i class="fa fa-download"></i><span>(.+?)</span>'
@@ -546,6 +550,8 @@ def showHosters(oInputParameterHandler = False):
 			
             sTitle = sMovieTitle					
             sHosterUrl = url 
+            if 'file-upload.org' in sHosterUrl:
+                continue
             if '?download_' in sHosterUrl:
                sHosterUrl = sHosterUrl.replace("moshahda","ffsff")
                sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN 
@@ -559,7 +565,7 @@ def showHosters(oInputParameterHandler = False):
             if oHoster:
                oHoster.setDisplayName(sTitle)
                oHoster.setFileName(sMovieTitle)
-               cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+               cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
     # (.+?) ([^<]+) .+?
 
     sPattern = '<a target="_NEW" href="(.+?)" class="download--item">'
@@ -575,6 +581,8 @@ def showHosters(oInputParameterHandler = False):
 			
             sTitle = sMovieTitle					
             sHosterUrl = url 
+            if 'file-upload.org' in sHosterUrl:
+                continue
             if '?download_' in sHosterUrl:
               sHosterUrl = sHosterUrl.replace("moshahda","ffsff")
               sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN 
@@ -588,7 +596,7 @@ def showHosters(oInputParameterHandler = False):
             if oHoster:
                oHoster.setDisplayName(sTitle)
                oHoster.setFileName(sMovieTitle)
-               cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+               cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
 				                     
 				               
     oGui.setEndOfDirectory()

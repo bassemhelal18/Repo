@@ -14,20 +14,19 @@ icons = ADDON.getSetting('defaultIcons')
 class cHosterGui:
     SITE_NAME = 'cHosterGui'
     ADDON = addon()
-    
-    
+
     # step 1 - bGetRedirectUrl in ein extra optionsObject verpacken
-    
-    def showHoster(self, oGui, oHoster, sMediaUrl, sThumbnail, bGetRedirectUrl=False, oInputParameterHandler=False):
+    def showHoster(self, oGui, oHoster, sMediaUrl, sThumbnail, bGetRedirectUrl=False):
         oHoster.setUrl(sMediaUrl)
         oOutputParameterHandler = cOutputParameterHandler()
-        if not oInputParameterHandler:
-            oInputParameterHandler = cInputParameterHandler()
+        oInputParameterHandler = cInputParameterHandler()
 
         # Gestion NextUp
         siteUrl = oInputParameterHandler.getValue('siteUrl')
         site = oInputParameterHandler.getValue('site')
         saisonUrl = oInputParameterHandler.getValue('saisonUrl')
+        sSeason = oInputParameterHandler.getValue('sSeason')
+        sEpisode = oInputParameterHandler.getValue('sEpisode')
         nextSaisonFunc = oInputParameterHandler.getValue('nextSaisonFunc')
         movieUrl = oInputParameterHandler.getValue('movieUrl')
         movieFunc = oInputParameterHandler.getValue('movieFunc')
@@ -37,11 +36,7 @@ class cHosterGui:
         sFav = oInputParameterHandler.getValue('sFav')
         if not sFav:
             sFav = oInputParameterHandler.getValue('function')
-        searchSiteId = oInputParameterHandler.getValue('searchSiteId')
-        if searchSiteId:
-            oOutputParameterHandler.addParameter('searchSiteId', searchSiteId)
-        oOutputParameterHandler.addParameter('searchSiteName', oInputParameterHandler.getValue('searchSiteName'))
-        oOutputParameterHandler.addParameter('sQual', oInputParameterHandler.getValue('sQual'))
+
         oGuiElement = cGuiElement()
         oGuiElement.setSiteName(self.SITE_NAME)
         oGuiElement.setFunction('play')
@@ -67,33 +62,37 @@ class cHosterGui:
         if sThumbnail:
             oGuiElement.setThumbnail(sThumbnail)
             oGuiElement.setPoster(sThumbnail)
-            
-        title = oGuiElement.getCleanTitle()
-
-        oOutputParameterHandler.addParameter('sMediaUrl', sMediaUrl)
-        oOutputParameterHandler.addParameter('sHosterIdentifier', oHoster.getPluginIdentifier())
-        oOutputParameterHandler.addParameter('bGetRedirectUrl', bGetRedirectUrl)
-        oOutputParameterHandler.addParameter('sFileName', oHoster.getFileName())
-        oOutputParameterHandler.addParameter('sTitleWatched', oGuiElement.getTitleWatched())
-        oOutputParameterHandler.addParameter('sTitle', title)
-        oOutputParameterHandler.addParameter('sLang', sLang)
-        oOutputParameterHandler.addParameter('sRes', sRes)
-        oOutputParameterHandler.addParameter('sId', 'cHosterGui')
-        oOutputParameterHandler.addParameter('siteUrl', siteUrl)
-        oOutputParameterHandler.addParameter('sTmdbId', sTmdbId)
-
-
+        
         sMediaFile = oHoster.getMediaFile()
         if sMediaFile:  # Afficher le nom du fichier plutot que le titre
             oGuiElement.setMediaUrl(sMediaFile)
             if self.ADDON.getSetting('display_info_file') == 'true':
                 oHoster.setDisplayName(sMediaFile)
-                oGuiElement.setRawTitle(oHoster.getDisplayName())
+                oGuiElement.setTitle(oHoster.getFileName())  # permet de calculer le cleanTitle
+                oGuiElement.setRawTitle(oHoster.getDisplayName())   # remplace le titre par le lien
             else:
                 oGuiElement.setTitle(oHoster.getDisplayName())
         else:
-            oGuiElement.setTitle(oHoster.getDisplayName())
-
+            oGuiElement.setTitle(oHoster.getDisplayName())   
+        
+        
+        title = oGuiElement.getCleanTitle()
+        tvShowTitle = oGuiElement.getItemValue('tvshowtitle')
+        
+        oOutputParameterHandler.addParameter('sMediaUrl', sMediaUrl)
+        oOutputParameterHandler.addParameter('sHosterIdentifier', oHoster.getPluginIdentifier())
+        oOutputParameterHandler.addParameter('bGetRedirectUrl', bGetRedirectUrl)
+        oOutputParameterHandler.addParameter('sFileName', oHoster.getFileName())
+        oOutputParameterHandler.addParameter('sTitleWatched', oGuiElement.getTitleWatched())
+        oOutputParameterHandler.addParameter('tvShowTitle', tvShowTitle)
+        oOutputParameterHandler.addParameter('sTitle', title)
+        oOutputParameterHandler.addParameter('sSeason', sSeason)
+        oOutputParameterHandler.addParameter('sEpisode', sEpisode)
+        oOutputParameterHandler.addParameter('sLang', sLang)
+        oOutputParameterHandler.addParameter('sRes', sRes)
+        oOutputParameterHandler.addParameter('sId', 'cHosterGui')
+        oOutputParameterHandler.addParameter('siteUrl', siteUrl)
+        oOutputParameterHandler.addParameter('sTmdbId', sTmdbId)
 
 
         # gestion NextUp
@@ -333,6 +332,7 @@ class cHosterGui:
             
         if ('linkbox' in sHostName) or ('sharezweb' in sHostName):
             return self.getHoster('resolver')
+        
         if ('vidoba' in sHostName):
              return self.getHoster('vidoba')
             
@@ -575,12 +575,11 @@ class cHosterGui:
         klass = getattr(mod, 'cHoster')
         return klass()
 
-    def play(self, oInputParameterHandler = False, autoPlay = False):
+    def play(self):
         oGui = cGui()
         oDialog = dialog()
-        
-        if not oInputParameterHandler:
-            oInputParameterHandler = cInputParameterHandler()
+
+        oInputParameterHandler = cInputParameterHandler()
         sHosterIdentifier = oInputParameterHandler.getValue('sHosterIdentifier')
         sMediaUrl = oInputParameterHandler.getValue('sMediaUrl')
         bGetRedirectUrl = oInputParameterHandler.getValue('bGetRedirectUrl')
@@ -598,20 +597,19 @@ class cHosterGui:
 
         try:
             mediaDisplay = sMediaUrl.split('/')
-            VSlog('Hoster %s - play : %s/ ... /%s' % (sHosterIdentifier, '/'.join(mediaDisplay[0:3]), mediaDisplay[-1]))
+            VSlog('Hoster - play : %s/ ... /%s' % ('/'.join(mediaDisplay[0:3]), mediaDisplay[-1]))
         except:
-            VSlog('Hoster %s - play : ' % (sHosterIdentifier, sMediaUrl))
+            VSlog('Hoster - play : ' + sMediaUrl)
 
         oHoster = self.getHoster(sHosterIdentifier)
         oHoster.setFileName(sFileName)
 
         sHosterName = oHoster.getDisplayName()
-        if not autoPlay:
-            oDialog.VSinfo(sHosterName, 'Resolve')
+        oDialog.VSinfo(sHosterName, 'Resolve')
 
         try:
             oHoster.setUrl(sMediaUrl)
-            aLink = oHoster.getMediaLink(autoPlay)
+            aLink = oHoster.getMediaLink()
 
             if aLink and (aLink[0] or aLink[1]):  # Le hoster ne sait pas résoudre mais a retourné une autre url
                 if not aLink[0]:  # Voir exemple avec allDebrid qui : return False, URL
@@ -619,11 +617,10 @@ class cHosterGui:
                     if oHoster:
                         oHoster.setFileName(sFileName)
                         sHosterName = oHoster.getDisplayName()
-                        if not autoPlay:
-                            oDialog.VSinfo(sHosterName, 'Resolve')
+                        oDialog.VSinfo(sHosterName, 'Resolve')
 
                         oHoster.setUrl(aLink[1])
-                        aLink = oHoster.getMediaLink(autoPlay)
+                        aLink = oHoster.getMediaLink()
 
                 if aLink[0]:
                     oGuiElement = cGuiElement()
@@ -637,7 +634,7 @@ class cHosterGui:
                     oGuiElement.getInfoLabel()
 
                     from resources.lib.player import cPlayer
-                    oPlayer = cPlayer(oInputParameterHandler)
+                    oPlayer = cPlayer()
 
                     # sous titres ?
                     if len(aLink) > 2:
@@ -645,21 +642,16 @@ class cHosterGui:
 
                     return oPlayer.run(oGuiElement, aLink[1])
 
-            if not autoPlay:
-                oDialog.VSerror(self.ADDON.VSlang(30020))
-            return False
+            oDialog.VSerror(self.ADDON.VSlang(30020))
+            return
 
         except Exception as e:
             oDialog.VSerror(self.ADDON.VSlang(30020))
             import traceback
             traceback.print_exc()
-            return False
+            return
 
-        if not autoPlay:
-            oGui.setEndOfDirectory()
-        return False
-    
-    
+        oGui.setEndOfDirectory()
 
     def addToPlaylist(self):
         oGui = cGui()

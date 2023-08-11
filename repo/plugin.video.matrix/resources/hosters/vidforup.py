@@ -15,7 +15,7 @@ class cHoster(iHoster):
     def __init__(self):
         iHoster.__init__(self, 'vidforup', 'vid4up')
 
-    def _getMediaLinkForGuest(self, autoPlay = False):
+    def _getMediaLinkForGuest(self):
         VSlog(self._url)
     
         sUrl = self._url

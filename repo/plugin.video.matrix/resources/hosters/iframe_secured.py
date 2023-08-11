@@ -27,7 +27,7 @@ class cHoster(iHoster):
         self._url = self._url.replace('//iframe-secured.com/embed/', '')
         self._url = 'http://iframe-secured.com/embed/iframe.php?u=%s' % self._url
 
-    def _getMediaLinkForGuest(self, autoPlay = False):
+    def _getMediaLinkForGuest(self):
         VSlog(self._url)
         api_call = ''
 
@@ -72,7 +72,7 @@ class cHoster(iHoster):
 
                         oHoster = cHosterGui().checkHoster(sHosterUrl)
                         oHoster.setUrl(sHosterUrl)
-                        api_call = oHoster.getMediaLink(autoPlay)
+                        api_call = oHoster.getMediaLink()
 
                         if api_call[0] is True:
                             return True, api_call[1]

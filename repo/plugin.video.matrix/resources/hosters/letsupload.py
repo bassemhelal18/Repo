@@ -24,7 +24,7 @@ class cHoster(iHoster):
             self._url = "https://letsupload.io/plugins/mediaplayer/site/_embed.php?u="+parts
 
 
-    def _getMediaLinkForGuest(self, autoPlay = False):
+    def _getMediaLinkForGuest(self):
         VSlog(self._url)
         api_call = False
 

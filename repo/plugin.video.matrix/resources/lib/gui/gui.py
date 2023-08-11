@@ -36,17 +36,11 @@ class cGui:
     # Gérer les résultats de la recherche
     searchResults = {}
     searchResultsSemaphore = threading.Semaphore()
-    
-    def emptySearchResult(self, siteName):
-        cGui.searchResultsSemaphore.acquire()
-        # VSlog("Set empty result for " + str(siteName))
-        cGui.searchResults[siteName] = []  # vider le tableau de résultats
-        cGui.searchResultsSemaphore.release()
 
     def getEpisodeListing(self):
         return self.episodeListing
 
-    def addNewDir(self, Type, sId, sFunction, sLabel, sIcon, sThumbnail='', sDesc='', oOutputParameterHandler='',sMeta=0, sCat=None):
+    def addNewDir(self, Type, sId, sFunction, sLabel, sIcon, sThumbnail='', sDesc='', oOutputParameterHandler='', sMeta=0, sCat=None):
         oGuiElement = cGuiElement()
         # dir ou link => CONTENT par défaut = files
         if Type != 'dir' and Type != 'link':
@@ -175,10 +169,9 @@ class cGui:
     def addDir(self, sId, sFunction, sLabel, sIcon, oOutputParameterHandler='', sDesc=""):
         return self.addNewDir('dir', sId, sFunction, sLabel, sIcon, '', sDesc, oOutputParameterHandler, 0, None)
 
-    def addLink(self, sId, sFunction, sLabel, sThumbnail, sDesc, oOutputParameterHandler='', oInputParameterHandler = False):
+    def addLink(self, sId, sFunction, sLabel, sThumbnail, sDesc, oOutputParameterHandler=''):
         # Pour gérer l'enchainement des épisodes
-        if not oInputParameterHandler:
-            oInputParameterHandler = cInputParameterHandler()
+        oInputParameterHandler = cInputParameterHandler()
         oOutputParameterHandler.addParameter('saisonUrl', oInputParameterHandler.getValue('saisonUrl'))
         oOutputParameterHandler.addParameter('nextSaisonFunc', oInputParameterHandler.getValue('nextSaisonFunc'))
         oOutputParameterHandler.addParameter('movieUrl', oInputParameterHandler.getValue('movieUrl'))
@@ -271,7 +264,7 @@ class cGui:
         if window(10101).getProperty('search') == 'true':
             self.addSearchResult(oGuiElement, oOutputParameterHandler)
             return
-        
+
         # Des infos a rajouter ?
         params = {'siteUrl': oGuiElement.setSiteUrl,
                   'sTmdbId': oGuiElement.setTmdbId,
@@ -624,8 +617,6 @@ class cGui:
         return sItemUrl
 
     def setEndOfDirectory(self, forceViewMode=False):
-        if window(10101).getProperty('playVideo') == 'true':
-            return
         iHandler = cPluginHandler().getPluginHandle()
 
         if not self.listing:
@@ -738,7 +729,7 @@ class cGui:
 
         # Si lancé depuis la page Home de Kodi, il faut d'abord en sortir pour lancer la recherche
         if xbmc.getCondVisibility('Window.IsVisible(home)'):
-            xbmc.executebuiltin('ActivateWindow(%d)' % 10025)
+            xbmc.executebuiltin('ActivateWindow(%d)' % 10028)
 
         xbmc.executebuiltin('Container.Update(%s)' % sTest)
         return True

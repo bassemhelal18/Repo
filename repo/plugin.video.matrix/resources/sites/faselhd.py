@@ -11,6 +11,8 @@ from resources.lib.handler.requestHandler import cRequestHandler
 from resources.lib.comaddon import progress, VSlog, isMatrix, siteManager, addon
 from resources.lib.parser import cParser
 from bs4 import BeautifulSoup
+
+
 ADDON = addon()
 icons = ADDON.getSetting('defaultIcons')
 
@@ -22,6 +24,9 @@ SITE_NAME = 'Faselhd'
 SITE_DESC = 'arabic vod'
  
 URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
+
+
+
 
 MOVIE_EN = (URL_MAIN + '/movies', 'showMovies')
 MOVIE_HI = (URL_MAIN + '/hindi', 'showMovies')
@@ -459,7 +464,9 @@ def showEpisodes1():
         sHtmlContent1 = aResult[1][0]
 	
      # (.+?) ([^<]+) .+?
-    sPattern = '<a href="([^<]+)>([^<]+)</a>'
+    sPattern = '<a href="([^<]+)".+?>([^<]+)</a>'
+    sPattern2 = '<a href="([^<]+)" class="active">([^<]+)</a>'
+
     oParser = cParser()
     aResult = oParser.parse(sHtmlContent1, sPattern)
 	
@@ -471,7 +478,7 @@ def showEpisodes1():
             sTitle = aEntry[1].replace("الحلقة "," E")
             sTitle = sMovieTitle+sTitle
             siteUrl = aEntry[0].replace('" class="active',"")
-            sThumb = ''
+            sThumb = sThumb
             sDesc = sNote
 			
 
@@ -480,21 +487,40 @@ def showEpisodes1():
             oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
             oOutputParameterHandler.addParameter('sThumb', sThumb)
             oGui.addEpisode(SITE_IDENTIFIER, 'showLink', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
-        
+
+    oParser = cParser()
+    aResult = oParser.parse(sHtmlContent1, sPattern2)
+	
+	
+    if aResult[0]:  
+        oOutputParameterHandler = cOutputParameterHandler()                     
+        for aEntry in aResult[1]:
+ 
+            sTitle = aEntry[1].replace("الحلقة "," E")
+            sTitle = sMovieTitle+sTitle
+            siteUrl = aEntry[0].replace('" class="active',"")
+            sThumb = sThumb
+            sDesc = sNote
+			
+
+
+            oOutputParameterHandler.addParameter('siteUrl',siteUrl)
+            oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
+            oOutputParameterHandler.addParameter('sThumb', sThumb)
+            oGui.addEpisode(SITE_IDENTIFIER, 'showLink', sTitle, '', sThumb, sDesc, oOutputParameterHandler)        
  
         sNextPage = __checkForNextPage(sHtmlContent)
         if sNextPage:
             oOutputParameterHandler = cOutputParameterHandler()
             oOutputParameterHandler.addParameter('siteUrl', sNextPage)
-            oGui.addDir(SITE_IDENTIFIER, 'showEpisodes', '[COLOR teal]Next >>>[/COLOR]', icons + '/next.png', oOutputParameterHandler)
+            oGui.addDir(SITE_IDENTIFIER, 'showEpisodes', '[COLOR teal]Next >>>[/COLOR]', 'next.png', oOutputParameterHandler)
        
     oGui.setEndOfDirectory()
 	
-def showLink(oInputParameterHandler = False):
+def showLink():
     oGui = cGui()
    
-    if not oInputParameterHandler:
-        oInputParameterHandler = cInputParameterHandler()
+    oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
@@ -540,7 +566,7 @@ def showLink(oInputParameterHandler = False):
             
 
  
-            oGui.addLink(SITE_IDENTIFIER, 'showHosters', sTitle, sThumb, sNote, oOutputParameterHandler, oInputParameterHandler)
+            oGui.addLink(SITE_IDENTIFIER, 'showHosters', sTitle, sThumb, sNote, oOutputParameterHandler)
 
     # (.+?)
 
@@ -565,7 +591,7 @@ def showLink(oInputParameterHandler = False):
             if oHoster:
                oHoster.setDisplayName(sMovieTitle)
                oHoster.setFileName(sMovieTitle)
-               cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+               cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
 				
 
     oGui.setEndOfDirectory()       
@@ -581,10 +607,9 @@ def __checkForNextPage(sHtmlContent):
 
     return False
 
-def showHosters(oInputParameterHandler = False):
+def showHosters():
     oGui = cGui()
-    if not oInputParameterHandler:
-        oInputParameterHandler = cInputParameterHandler()
+    oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
@@ -613,7 +638,7 @@ def showHosters(oInputParameterHandler = False):
                sDisplayTitle = sMovieTitle+sTitle
                oHoster.setDisplayName(sDisplayTitle)
                oHoster.setFileName(sMovieTitle)
-               cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+               cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
 				
                
         
@@ -636,7 +661,7 @@ def showHosters(oInputParameterHandler = False):
                sDisplayTitle = sMovieTitle+sTitle
                oHoster.setDisplayName(sDisplayTitle)
                oHoster.setFileName(sMovieTitle)
-               cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+               cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
 				
                
         
@@ -659,7 +684,7 @@ def showHosters(oInputParameterHandler = False):
                 sDisplayTitle = sMovieTitle+sTitle
                 oHoster.setDisplayName(sDisplayTitle)
                 oHoster.setFileName(sMovieTitle)
-                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
 				                        
     sPattern = '<a href="(.+?)" class="download-btn" '
     oParser = cParser()
@@ -680,7 +705,7 @@ def showHosters(oInputParameterHandler = False):
                sDisplayTitle = sMovieTitle+sTitle
                oHoster.setDisplayName(sDisplayTitle)
                oHoster.setFileName(sMovieTitle)
-               cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+               cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
 				
 
                 

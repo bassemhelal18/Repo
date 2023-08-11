@@ -14,7 +14,7 @@ class cHoster(iHoster):
     def __init__(self):
         iHoster.__init__(self, 'detectiveconanar', 'detectiveconanar')
 
-    def _getMediaLinkForGuest(self, autoPlay = False):
+    def _getMediaLinkForGuest(self):
         VSlog(self._url)
         sReferer = self._url
         url = self._url

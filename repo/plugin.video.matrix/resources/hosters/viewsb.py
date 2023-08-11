@@ -27,7 +27,7 @@ class cHoster(iHoster):
         url = url.split('/')[-1]
         return url.split('.')[0]
 
-    def _getMediaLinkForGuest(self, autoPlay = False):
+    def _getMediaLinkForGuest(self):
         api_call = ''
         
         host = self.__getHost(self._url)

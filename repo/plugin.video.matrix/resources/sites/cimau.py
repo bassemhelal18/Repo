@@ -23,24 +23,24 @@ SITE_DESC = 'arabic vod'
 URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
 
 
-RAMADAN_SERIES = (URL_MAIN + '/category/%d9%85%d8%b3%d9%84%d8%b3%d9%84%d8%a7%d8%aa-7series/%d9%85%d8%b3%d9%84%d8%b3%d9%84%d8%a7%d8%aa-%d8%b1%d9%85%d8%b6%d8%a7%d9%86-2023/', 'showSeries')
+RAMADAN_SERIES = (URL_MAIN + '/category/series/مسلسلات-رمضان-2023/', 'showSeries')
 MOVIE_EN = (URL_MAIN + '/category/افلام-اجنبي-movies7-english/', 'showMovies')
-MOVIE_AR = (URL_MAIN + '/category/افلام-عربي-arabic5-movies/', 'showMovies')
-MOVIE_HI = (URL_MAIN + '/category/افلام-هندي-indian/', 'showMovies')
-MOVIE_ASIAN = (URL_MAIN + '/category/افلام-اجنبي-movies7-english/افلام-asian-movies/', 'showMovies')
-KID_MOVIES = (URL_MAIN + '/category/افلام-كرتون-movies5-anime/', 'showMovies')
-MOVIE_NETFLIX = (URL_MAIN + '/category/%d8%a7%d9%81%d9%84%d8%a7%d9%85-%d8%a7%d8%ac%d9%86%d8%a8%d9%8a-movies7-english/netflix-movie/', 'showMovies')
+MOVIE_AR = (URL_MAIN + '/category/arabic-movies/', 'showMovies')
+MOVIE_HI = (URL_MAIN + '/category/indian-movies/', 'showMovies')
+MOVIE_ASIAN = (URL_MAIN + '/category/افلام-اجنبي-movies7-english/asian-movies/', 'showMovies')
+KID_MOVIES = (URL_MAIN + '/category/movies-anime/', 'showMovies')
+MOVIE_NETFLIX = (URL_MAIN + '/category/افلام-اجنبي-movies7-english/netflix-movie/', 'showMovies')
 
-SERIE_TR = (URL_MAIN + '/category/مسلسلات-7series/مسلسلات-تركية-series1-turkish/', 'showSeries')
-SERIE_EN = (URL_MAIN + '/category/مسلسلات-7series/مسلسلات-اجنبي-english/', 'showSeries')
-SERIE_AR = (URL_MAIN + '/category/مسلسلات-7series/مسلسلات-عربية-arabic-series/', 'showSeries')
-SERIE_ASIA = (URL_MAIN + '/category/مسلسلات-7series/مسلسلات-اسيوية-series1-asian/', 'showSeries')
-SERIE_HEND = (URL_MAIN + '/category/مسلسلات-7series/مسلسلات-هندية-series-indian/', 'showSeries')
-SERIE_LATIN = (URL_MAIN + '/category/مسلسلات-7series/latino-mexico/', 'showSeries')
-SERIE_RAMADAN = (URL_MAIN + '/category/series/%d9%85%d8%b3%d9%84%d8%b3%d9%84%d8%a7%d8%aa-%d8%b1%d9%85%d8%b6%d8%a7%d9%86-2023/', 'showSeries')
-WWE = (URL_MAIN + '/category/%d8%a7%d8%ae%d8%b1%d9%89-1other/wwe/', 'showSeries')
-SERIE_ANIME = (URL_MAIN + '/category/series/%d9%85%d8%b3%d9%84%d8%b3%d9%84%d8%a7%d8%aa-%d9%83%d8%b1%d8%aa%d9%88%d9%86-anime-series/', 'showSeries')
-PROGRAMS = (URL_MAIN + '/category/series/%d8%a8%d8%b1%d8%a7%d9%85%d8%ac-%d8%aa%d9%84%d9%8a%d9%81%d8%b2%d9%8a%d9%88%d9%86%d9%8a%d8%a9-tv1-shows/', 'showSeries')
+SERIE_TR = (URL_MAIN + '/category/series/مسلسلات-تركية-series1-turkish/', 'showSeries')
+SERIE_EN = (URL_MAIN + '/category/series/مسلسلات-اجنبي-english/', 'showSeries')
+SERIE_AR = (URL_MAIN + '/category/series/مسلسلات-عربية-arabic-series/', 'showSeries')
+SERIE_ASIA = (URL_MAIN + '/category/series/مسلسلات-اسيوية-series1-asian/', 'showSeries')
+SERIE_HEND = (URL_MAIN + '/category/series/مسلسلات-هندية-series-indian/', 'showSeries')
+SERIE_LATIN = (URL_MAIN + '/category/series/latino-mexico/', 'showSeries')
+SERIE_RAMADAN = (URL_MAIN + '/category/series/مسلسلات-رمضان-2023/', 'showSeries')
+WWE = (URL_MAIN + '/category/اخرى-1other/wwe/', 'showSeries')
+SERIE_ANIME = (URL_MAIN + '/category/series/مسلسلات-كرتون-anime-series/', 'showSeries')
+PROGRAMS = (URL_MAIN + '/category/series/برامج-تليفزيونية-tv1-shows/', 'showSeries')
 SERIE_NETFLIX = (URL_MAIN + '/category/series/series-netflix/', 'showSeries')
 
 MOVIE_PACK = (URL_MAIN , '/category/%d8%a7%d9%81%d9%84%d8%a7%d9%85-%d8%a7%d8%ac%d9%86%d8%a8%d9%8a-movies7-english/full-pack/')
@@ -491,11 +491,10 @@ def showEpisodes():
        
     oGui.setEndOfDirectory()
 
-def showLinks(oInputParameterHandler = False):
+def showLinks():
     oGui = cGui()
    
-    if not oInputParameterHandler:
-        oInputParameterHandler = cInputParameterHandler()
+    oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
@@ -555,7 +554,7 @@ def showLinks(oInputParameterHandler = False):
                    oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
                    oOutputParameterHandler.addParameter('sThumb', sThumb)
                    
-                   oGui.addLink(SITE_IDENTIFIER, 'showLinks', sTitle, sThumb, sDesc, oOutputParameterHandler, oInputParameterHandler)
+                   oGui.addLink(SITE_IDENTIFIER, 'showLinks', sTitle, sThumb, sDesc, oOutputParameterHandler)
         
  
                
@@ -623,7 +622,7 @@ def showLinks(oInputParameterHandler = False):
                     if oHoster:
                        oHoster.setDisplayName(sTitle)
                        oHoster.setFileName(sMovieTitle)
-                       cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+                       cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
     # (.+?) ([^<]+)
 
     sPattern = 'href="([^<]+)" target="_blank" class="download_link">'
@@ -655,7 +654,7 @@ def showLinks(oInputParameterHandler = False):
             if oHoster:
                oHoster.setDisplayName(sTitle)
                oHoster.setFileName(sMovieTitle)
-               cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+               cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
      
     oGui.setEndOfDirectory()  
 
@@ -671,11 +670,10 @@ def __checkForNextPage(sHtmlContent):
 
     return False
 
-def showLinks2(oInputParameterHandler = False):
+def showLinks2():
     oGui = cGui()
    
-    if not oInputParameterHandler:
-        oInputParameterHandler = cInputParameterHandler()
+    oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
@@ -734,7 +732,7 @@ def showLinks2(oInputParameterHandler = False):
                    oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
                    oOutputParameterHandler.addParameter('sThumb', sThumb)
                    
-                   oGui.addLink(SITE_IDENTIFIER, 'showLinks', sTitle, sThumb, sDesc, oOutputParameterHandler, oInputParameterHandler)
+                   oGui.addLink(SITE_IDENTIFIER, 'showLinks', sTitle, sThumb, sDesc, oOutputParameterHandler)
         
  
                
@@ -803,7 +801,7 @@ def showLinks2(oInputParameterHandler = False):
                     if oHoster:
                        oHoster.setDisplayName(sTitle)
                        oHoster.setFileName(sMovieTitle)
-                       cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+                       cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
     # (.+?) ([^<]+)
 
     sPattern = 'href="([^<]+)" target="_blank" class="download_link">'
@@ -835,7 +833,7 @@ def showLinks2(oInputParameterHandler = False):
             if oHoster:
                oHoster.setDisplayName(sTitle)
                oHoster.setFileName(sMovieTitle)
-               cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+               cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
      
     oGui.setEndOfDirectory()  
 

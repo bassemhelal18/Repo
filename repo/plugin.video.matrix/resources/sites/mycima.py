@@ -578,10 +578,9 @@ def showEps():
        
     oGui.setEndOfDirectory() 
 	 
-def showHosters(oInputParameterHandler = False):
+def showHosters():
     oGui = cGui()
-    if not oInputParameterHandler:
-        oInputParameterHandler = cInputParameterHandler()
+    oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
@@ -623,7 +622,7 @@ def showHosters(oInputParameterHandler = False):
             if oHoster:
                 oHoster.setDisplayName(sTitle)
                 oHoster.setFileName(sMovieTitle)
-                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
 				
     # ([^<]+) .+?
     sPattern = 'class="hoverable activable" target="_blank" href="([^<]+)"><quality>([^<]+)</quality><resolution><i class=".+?"></i>([^<]+)</resolution>'
@@ -648,7 +647,7 @@ def showHosters(oInputParameterHandler = False):
             if oHoster:
                 oHoster.setDisplayName(sTitle)
                 oHoster.setFileName(sMovieTitle)
-                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
 				
 
                 

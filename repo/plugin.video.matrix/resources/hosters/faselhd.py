@@ -17,7 +17,7 @@ class cHoster(iHoster):
     def isDownloadable(self):
         return True
 
-    def _getMediaLinkForGuest(self, autoPlay = False):
+    def _getMediaLinkForGuest(self):
         api_call = ''
         VSlog(self._url)
         oRequest = cRequestHandler(self._url)

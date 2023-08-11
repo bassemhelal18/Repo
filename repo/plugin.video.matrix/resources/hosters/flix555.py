@@ -12,7 +12,7 @@ class cHoster(iHoster):
     def __init__(self):
         iHoster.__init__(self, 'flix555', 'Flix555')
 
-    def _getMediaLinkForGuest(self, autoPlay = False):
+    def _getMediaLinkForGuest(self):
         api_call = False
         VSlog(self._url)
 

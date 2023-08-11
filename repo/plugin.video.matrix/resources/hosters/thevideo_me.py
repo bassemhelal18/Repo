@@ -47,7 +47,7 @@ class cHoster(iHoster):
             self._url = "https://vev.io/embed/" + sId
 
 
-    def _getMediaLinkForGuest(self, autoPlay = False):
+    def _getMediaLinkForGuest(self):
         VSlog(self._url)
         api_call = False
         aResult = False

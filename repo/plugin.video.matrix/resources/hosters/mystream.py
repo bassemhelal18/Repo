@@ -17,7 +17,7 @@ class cHoster(iHoster):
     def setUrl(self, url):
         self._url = str(url).replace('https://mystream.to/watch/', 'https://embed.mystream.to/')
 
-    def _getMediaLinkForGuest(self, autoPlay = False):
+    def _getMediaLinkForGuest(self):
         VSlog(self._url)
         oRequest = cRequestHandler(self._url)
         oRequest.addHeaderEntry('User-Agent', UA)

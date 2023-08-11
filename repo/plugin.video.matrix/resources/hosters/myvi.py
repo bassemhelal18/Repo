@@ -14,7 +14,7 @@ class cHoster(iHoster):
     def __init__(self):
         iHoster.__init__(self, 'myvi', 'Myvi')
 
-    def _getMediaLinkForGuest(self, autoPlay = False):
+    def _getMediaLinkForGuest(self):
         
         api_call = ''
         oParser = cParser()

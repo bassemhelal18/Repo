@@ -452,11 +452,10 @@ def __checkForNextPage(sHtmlContent):
         return aResult[1][0]
     return False
 	
-def showServer(oInputParameterHandler = False):
+def showServer():
     oGui = cGui()
    
-    if not oInputParameterHandler:
-        oInputParameterHandler = cInputParameterHandler()
+    oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
@@ -495,7 +494,9 @@ def showServer(oInputParameterHandler = False):
                    url = aEntry.replace("%2F","/").replace("%3A",":").replace("https://show.alfajertv.com/jwplayer/?source=","").replace("&type=mp4","").split("&id")[0]
 
                    if 'hadara.ps' in aEntry :
-                        url = url
+                        continue
+                   if 'youtube' in aEntry :
+                        continue
                    if 'fajer.video' in url:
                       url = url.split('id=')[1]
                       url = "https://fajer.video/hls/"+url+"/"+url+".playlist.m3u8"
@@ -511,7 +512,7 @@ def showServer(oInputParameterHandler = False):
                    if oHoster:
                       oHoster.setDisplayName(sMovieTitle)
                       oHoster.setFileName(sMovieTitle)
-                      cHosterGui.showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+                      cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
            sPattern = "<iframe.+?src='(.+?)' frameborder"
            aResult = oParser.parse(sHtmlContent, sPattern)
            if aResult[0] :
@@ -519,7 +520,9 @@ def showServer(oInputParameterHandler = False):
                    url = aEntry.replace("%2F","/").replace("%3A",":").replace("https://show.alfajertv.com/jwplayer/?source=","").replace("&type=mp4","").split("&id")[0]
 
                    if 'hadara.ps' in aEntry :
-                       url = url + "|Referer=" + aEntry + "| User-Agent= Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+                        continue
+                   if 'youtube' in aEntry :
+                        continue
                    if 'fajer.video' in url:
                       url = url.split('id=')[1]
                       url = "https://fajer.video/hls/"+url+"/"+url+".playlist.m3u8"
@@ -535,7 +538,7 @@ def showServer(oInputParameterHandler = False):
                    if oHoster:
                       oHoster.setDisplayName(sMovieTitle)
                       oHoster.setFileName(sMovieTitle)
-                      cHosterGui.showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+                      cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
         
            sPattern = 'domain=(.+?)\".+?href=\"(.+?)\".+?quality\">(.+?)</.+?<td>.+?</td><td>(.+?)</td>'
            oParser = cParser()
@@ -559,7 +562,10 @@ def showServer(oInputParameterHandler = False):
                       url = 'http:' + url
                     
                    sHosterUrl = url
-                   VSlog(sHosterUrl)
+                   if 'hadara.ps' in aEntry :
+                        continue
+                   if 'youtube' in aEntry :
+                        continue
                    if 'userload' in sHosterUrl:
                        sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
                    if 'mystream' in sHosterUrl:
@@ -568,5 +574,5 @@ def showServer(oInputParameterHandler = False):
                    if oHoster:
                       oHoster.setDisplayName(aEntry[0] +'-' + aEntry[2]+'-' + aEntry[3] )
                       oHoster.setFileName(sMovieTitle)
-                      cHosterGui.showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+                      cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
     oGui.setEndOfDirectory()

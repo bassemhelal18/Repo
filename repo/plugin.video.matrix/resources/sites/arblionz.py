@@ -319,7 +319,8 @@ def showMovies(sSearch = ''):
  
             if "فيلم" not in aEntry[1] and "عرض" not in aEntry[1]:
                 continue
- 
+            if "سيرفر"  in aEntry[1]:
+                continue
             sTitle = aEntry[1].replace("مشاهدة","").replace("مسلسل","").replace("انمي","").replace("مترجمة","").replace("مترجم","").replace("برنامج","").replace("فيلم","").replace("والأخيرة","").replace("مدبلج للعربية","مدبلج").replace("والاخيرة","").replace("كاملة","").replace("حلقات كاملة","").replace("اونلاين","").replace("مباشرة","").replace("انتاج ","").replace("جودة عالية","").replace("كامل","").replace("HD","").replace("السلسلة الوثائقية","").replace("الفيلم الوثائقي","").replace("اون لاين","").replace("عرض","").replace("الرو","").replace("بالتعليق العربي","[COLOR gold]- تعليق عربي -[/COLOR]")
             siteUrl = aEntry[0]
             s1Thumb = aEntry[2]
@@ -542,10 +543,9 @@ def showEps():
        
     oGui.setEndOfDirectory() 
  
-def showHosters(oInputParameterHandler = False):
+def showHosters():
     oGui = cGui()
-    if not oInputParameterHandler:
-        oInputParameterHandler = cInputParameterHandler()
+    oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
@@ -621,7 +621,7 @@ def showHosters(oInputParameterHandler = False):
                    if oHoster:
                        oHoster.setDisplayName(sTitle)
                        oHoster.setFileName(sMovieTitle)
-                       cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+                       cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
 					   
     siteUrl = URL_MAIN + '/PostServersDownload/'+sId
 
@@ -649,6 +649,10 @@ def showHosters(oInputParameterHandler = False):
             sTitle = sMovieTitle+'('+aEntry[1]+')'
             
             sHosterUrl = url
+            if 'mdiaload'in url:
+                continue
+            if 'uploadbank'in url:
+                continue
             if '?download_' in sHosterUrl:
                 sHosterUrl = sHosterUrl.replace("moshahda","ffsff")
                 sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN 
@@ -660,7 +664,7 @@ def showHosters(oInputParameterHandler = False):
             if oHoster:
                 oHoster.setDisplayName(sTitle)
                 oHoster.setFileName(sMovieTitle)
-                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
 				
 				
                 

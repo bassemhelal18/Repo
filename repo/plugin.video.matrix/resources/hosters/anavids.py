@@ -21,7 +21,7 @@ class cHoster(iHoster):
         if not 'embed-' in self._url:
              self._url = self._url.replace(".com/",".com/embed-")
 
-    def _getMediaLinkForGuest(self, autoPlay = False):
+    def _getMediaLinkForGuest(self):
         
         oRequest = cRequestHandler(self._url)
         sHtmlContent = oRequest.request()

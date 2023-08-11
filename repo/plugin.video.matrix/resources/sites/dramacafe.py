@@ -60,9 +60,7 @@ REPLAYTV_NEWS = (URL_MAIN + 'category.php?cat=tv-programs', 'showSeries')
 
 
 
-URL_SEARCH = (URL_MAIN + 'search.php?keywords=', 'showSeries')
-URL_SEARCH_MOVIES = (URL_MAIN + 'search.php?keywords=', 'showMovies')
-URL_SEARCH_SERIES = (URL_MAIN + 'search.php?keywords=', 'showSeries')
+
 
 FUNCTION_SEARCH = 'showSeries'
 	
@@ -340,10 +338,9 @@ def __checkForNextPage(sHtmlContent):
 
     return False
 
-def showHosters(oInputParameterHandler = False):
+def showHosters():
     oGui = cGui()
-    if not oInputParameterHandler:
-        oInputParameterHandler = cInputParameterHandler()
+    oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
@@ -392,6 +389,6 @@ def showHosters(oInputParameterHandler = False):
                sDisplayTitle = sTitle
                oHoster.setDisplayName(sDisplayTitle)
                oHoster.setFileName(sDisplayTitle)
-               cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+               cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
 
     oGui.setEndOfDirectory()

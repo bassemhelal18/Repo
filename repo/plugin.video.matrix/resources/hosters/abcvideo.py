@@ -18,7 +18,7 @@ class cHoster(iHoster):
     def __init__(self):
         iHoster.__init__(self, 'abcvideo', 'Abcvideo')
 
-    def _getMediaLinkForGuest(self, autoPlay = False):
+    def _getMediaLinkForGuest(self):
         api_call = ''
         key = "6LcOeuUUAAAAANS5Gb3oKwWkBjOdMXxqbj_2cPCy"
         co = "aHR0cHM6Ly9hYmN2aWRlby5jYzo0NDM."

@@ -29,7 +29,7 @@ class cHoster(iHoster):
             return aResult[1][0]
         return ''
 
-    def _getMediaLinkForGuest(self, autoPlay = False):
+    def _getMediaLinkForGuest(self):
         VSlog(self._url)
         v = self.getHostAndIdFromUrl(self._url)
         sId = v[1]

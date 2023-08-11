@@ -937,14 +937,6 @@ msgctxt "#31212"
 msgid "Select a list"
 msgstr ""
 
-msgctxt "#31213"
-msgid "Auto play"
-msgstr ""
-
-msgctxt "#31214"
-msgid "Accepted language for auto play"
-msgstr ""
-
 msgctxt "#30361"
 msgid "Activate scrobbling"
 msgstr ""

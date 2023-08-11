@@ -22,7 +22,7 @@ class cHoster(iHoster):
     def __init__(self):
         iHoster.__init__(self, 'vidbull', 'VidBull')
 
-    def _getMediaLinkForGuest(self, autoPlay = False):
+    def _getMediaLinkForGuest(self):
         VSlog(self._url)
 
         url_stream = ''

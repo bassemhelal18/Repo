@@ -14,7 +14,7 @@ class cHoster(iHoster):
     def __init__(self):
         iHoster.__init__(self, 'voe', 'voe')
 
-    def _getMediaLinkForGuest(self, autoPlay = False):
+    def _getMediaLinkForGuest(self):
         
         oRequest = cRequestHandler(self._url)
         sHtmlContent = oRequest.request()

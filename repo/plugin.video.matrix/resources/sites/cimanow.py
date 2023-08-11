@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 # zombi https://github.com/zombiB/zombi-addons/
 #############################################################
 # Yonn1981 https://github.com/Yonn1981/Repo
@@ -497,12 +497,11 @@ def showEps():
     oGui.setEndOfDirectory() 
 
   
-def showServer(oInputParameterHandler = False):
+def showServer():
     import requests
     oGui = cGui()
    
-    if not oInputParameterHandler:
-        oInputParameterHandler = cInputParameterHandler()
+    oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
@@ -563,7 +562,7 @@ def showServer(oInputParameterHandler = False):
                     if aResult[0]:
                         for aEntry in aResult[1]:
             
-                            url = aEntry.replace("cimanow","rrsrrs")
+                            url = aEntry.replace("newcima","rrsrrs")
                             sTitle = sMovieTitle
                             if url.startswith('//'):
                                 url = 'http:' + url
@@ -571,7 +570,10 @@ def showServer(oInputParameterHandler = False):
                             sHosterUrl = url
                             if 'userload' in sHosterUrl:
                                 sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
-                            if 'vidguard'in url:
+                            
+                            if 'mdiaload'in url:
+                                continue
+                            if 'uploading.vn'in url:
                                 continue
                             if 'moshahda' in sHosterUrl:
                                 sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
@@ -581,7 +583,7 @@ def showServer(oInputParameterHandler = False):
                             if oHoster:
                                 oHoster.setDisplayName(sTitle)
                                 oHoster.setFileName(sMovieTitle)
-                                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+                                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
             
             sStart = '<ul class="tabcontent" id="download">'
             sEnd = '</section>'
@@ -607,7 +609,10 @@ def showServer(oInputParameterHandler = False):
                     sHosterUrl = url 
                     if 'userload' in sHosterUrl:
                         sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
-                    if 'vidguard'in url:
+                    
+                    if 'mdiaload'in url:
+                        continue
+                    if 'uploading.vn'in url:
                         continue
                     if 'moshahda' in sHosterUrl:
                         sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
@@ -617,7 +622,7 @@ def showServer(oInputParameterHandler = False):
                     if oHoster:
                         oHoster.setDisplayName(sTitle)
                         oHoster.setFileName(sMovieTitle)
-                        cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+                        cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
             
             oParser = cParser()
             sStart = '<li aria-label="download">'
@@ -642,7 +647,14 @@ def showServer(oInputParameterHandler = False):
 				
 					
             
-                    sHosterUrl = url 
+                    sHosterUrl = url
+                    
+
+                    
+                    if 'mdiaload'in url:
+                        continue
+                    if 'uploading.vn'in url:
+                        continue 
                     if 'userload' in sHosterUrl:
                         sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
                     if 'moshahda' in sHosterUrl:
@@ -653,7 +665,7 @@ def showServer(oInputParameterHandler = False):
                     if oHoster:
                         oHoster.setDisplayName(sTitle)
                         oHoster.setFileName(sMovieTitle)
-                        cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+                        cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
             
             
 

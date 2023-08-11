@@ -339,6 +339,9 @@ class cGuiElement:
     def getCleanTitle(self):
         return self.__sCleanTitle
 
+   # def setTitleWatched(self, sTitleWatched):
+       # self.__sTitleWatched = sTitleWatched
+
     def getTitleWatched(self):
         return self.__sTitleWatched
 
@@ -455,7 +458,8 @@ class cGuiElement:
                 'imdbnumber': xbmc.getInfoLabel('ListItem.IMDBNumber'),
                 'season': xbmc.getInfoLabel('ListItem.season'),
                 'episode': xbmc.getInfoLabel('ListItem.episode'),
-                'tvshowtitle': xbmc.getInfoLabel('ListItem.tvshowtitle')
+                'tvshowtitle': xbmc.getInfoLabel('ListItem.tvshowtitle'),
+                'HdrType': xbmc.getInfoLabel('ListItem.HdrType')
                 }
 
         if 'title' in meta and meta['title']:

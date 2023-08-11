@@ -22,7 +22,7 @@ class cHoster(iHoster):
         self._url = self._url.replace('.html', '')
         self._url = 'https://vidzi.tv/' + str(self._url) + '.html'
 
-    def _getMediaLinkForGuest(self, autoPlay = False):
+    def _getMediaLinkForGuest(self):
         VSlog(self._url)
         api_call = ''
 

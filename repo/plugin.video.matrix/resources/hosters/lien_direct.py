@@ -16,7 +16,7 @@ class cHoster(iHoster):
     def setUrl(self, url):
         self._url = str(url).replace('+', '%20') # un lien direct n'est pas forcement urlEncoded
 
-    def _getMediaLinkForGuest(self, autoPlay = False):
+    def _getMediaLinkForGuest(self):
         api_call = self._url
         VSlog(self._url)
 
@@ -52,7 +52,7 @@ class cHoster(iHoster):
         if 'beintube' in api_call:
             UA = 'Mozilla/5.0 (iPad; CPU OS 13_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/87.0.4280.77 Mobile/15E148 Safari/604.1'
             api_call = api_call + '|AUTH=TLS&verifypeer=false&Referer=' + 'https://beinmatch.site'
-        if 'cimanow' in api_call:
+        if 'newcima' in api_call:
             UA = 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36'
             api_call = api_call + '|AUTH=TLS&verifypeer=false' + '&User-Agent=' + UA + '&Referer=' + 'https://en.cimanow.cc'
         

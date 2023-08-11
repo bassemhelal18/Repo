@@ -18,7 +18,7 @@ class cHoster(iHoster):
     def __init__(self):
         iHoster.__init__(self, 'soundcloud', 'Soundcloud')
 
-    def _getMediaLinkForGuest(self, autoPlay = False):
+    def _getMediaLinkForGuest(self):
         url2 = ''
         VSlog(self._url)
 

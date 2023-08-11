@@ -18,7 +18,7 @@ class cHoster(iHoster):
     def __init__(self):
         iHoster.__init__(self, 'youtube', 'Youtube')
 
-    def _getMediaLinkForGuest(self, autoPlay = False):
+    def _getMediaLinkForGuest(self):
         VSlog(self._url)
         if 'youtu.be' in self._url:
             self._url = self._url.replace("youtu.be/","www.youtube.com/watch?v=")

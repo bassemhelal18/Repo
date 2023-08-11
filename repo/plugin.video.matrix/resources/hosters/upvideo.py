@@ -16,7 +16,7 @@ class cHoster(iHoster):
     def __init__(self):
         iHoster.__init__(self, 'upvideo', 'UpVideo')
 
-    def _getMediaLinkForGuest(self, autoPlay = False):
+    def _getMediaLinkForGuest(self):
         api_call = False
         VSlog(self._url)
         oParser = cParser()

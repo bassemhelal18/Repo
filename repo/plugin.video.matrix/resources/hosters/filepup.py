@@ -11,7 +11,7 @@ class cHoster(iHoster):
     def __init__(self):
         iHoster.__init__(self, 'filepup', 'FilePup')
 
-    def _getMediaLinkForGuest(self, autoPlay = False):
+    def _getMediaLinkForGuest(self):
         VSlog(self._url)
         oRequestHandler = cRequestHandler(self._url)
         #oRequestHandler.addParameters('login', '1')

@@ -17,7 +17,7 @@ class cHoster(iHoster):
         url = url.replace('embed-dlox.me/','embed-')
         self._url = str(url)
 
-    def _getMediaLinkForGuest(self, autoPlay = False):
+    def _getMediaLinkForGuest(self):
         VSlog(self._url)
         oParser = cParser()
         oRequest = cRequestHandler(self._url)

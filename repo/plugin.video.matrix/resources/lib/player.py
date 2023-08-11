@@ -1,7 +1,6 @@
 #-*- coding: utf-8 -*-
 # https://github.com/Kodi-vStream/venom-xbmc-addons
 
-
 import xbmcplugin
 import xbmc
 
@@ -30,7 +29,7 @@ class cPlayer(xbmc.Player):
 
     ADDON = addon()
 
-    def __init__(self, oInputParameterHandler=False, *args):
+    def __init__(self, *args):
 
         sPlayerType = self.__getPlayerType()
         xbmc.Player.__init__(self, sPlayerType)
@@ -38,8 +37,7 @@ class cPlayer(xbmc.Player):
         self.Subtitles_file = []
         self.SubtitleActive = False
 
-        if not oInputParameterHandler:
-            oInputParameterHandler = cInputParameterHandler()
+        oInputParameterHandler = cInputParameterHandler()
         self.sHosterIdentifier = oInputParameterHandler.getValue('sHosterIdentifier')
         self.sTitle = oInputParameterHandler.getValue('sFileName')
         if self.sTitle:
@@ -47,7 +45,7 @@ class cPlayer(xbmc.Player):
         self.sCat = oInputParameterHandler.getValue('sCat')
         self.sSaison = oInputParameterHandler.getValue('sSeason')
         self.sEpisode = oInputParameterHandler.getValue('sEpisode')
-
+        self.tvShowTitle = oInputParameterHandler.getValue('tvShowTitle')
         self.sSite = oInputParameterHandler.getValue('siteUrl')
         self.sSource = oInputParameterHandler.getValue('sourceName')
         self.sFav = oInputParameterHandler.getValue('sourceFav')
@@ -60,7 +58,7 @@ class cPlayer(xbmc.Player):
         self.playBackEventReceived = False
         self.playBackStoppedEventReceived = False
         self.forcestop = False
-        self.multi = False  # Plusieurs vidéos se sont enchainées
+        
 
         VSlog('player initialized')
 
@@ -86,12 +84,10 @@ class cPlayer(xbmc.Player):
         else:
             self.Subtitles_file.append(files)
 
-    
-
     def run(self, oGuiElement, sUrl):
 
         # Lancement d'une vidéo sans avoir arrêté la précédente
-        self.tvShowTitle = oGuiElement.getItemValue('tvshowtitle')
+        
         if self.isPlaying():
             sEpisode = str(oGuiElement.getEpisode())
             if sEpisode:
@@ -123,7 +119,7 @@ class cPlayer(xbmc.Player):
         player_conf = self.ADDON.getSetting('playerPlay')
         # Si lien dash, methode prioritaire
         if splitext(urlparse(sUrl).path)[-1] in [".mpd", ".m3u8"]:
-            if isKrypton():
+            if isKrypton() == True:
                 addonManager().enableAddon('inputstream.adaptive')
                 item.setProperty('inputstream', 'inputstream.adaptive')
                 if '.m3u8' in sUrl:
@@ -145,7 +141,6 @@ class cPlayer(xbmc.Player):
             VSlog('Player use PlayMedia() method')
         # 3 eme mode (defaut)
         else:
-            
             xbmcplugin.setResolvedUrl(sPluginHandle, True, item)
             VSlog('Player use setResolvedUrl() method')
 
@@ -177,8 +172,7 @@ class cPlayer(xbmc.Player):
 
             except Exception as err:
                 VSlog("Exception run: {0}".format(err))
-            
-            
+
             xbmc.sleep(1000)
 
         if not self.playBackStoppedEventReceived:
@@ -237,9 +231,13 @@ class cPlayer(xbmc.Player):
                         # Marquer VU dans la BDD matrix
                         sTitleWatched = self.infotag.getOriginalTitle()
                         if sTitleWatched:
+                            if sEpisode :   # changement d'épisode suite à un enchainement automatique
+                                sTitle = sTitleWatched  # l'épisode vu et non pas le nouveau qui vient de démarrer
+                            else:
+                                sTitle = self.sTitle
                             meta = {}
                             meta['cat'] = self.sCat
-                            meta['title'] = self.sTitle
+                            meta['title'] = sTitle
                             meta['titleWatched'] = sTitleWatched
                             if self.movieUrl and self.movieFunc:
                                 meta['siteurl'] = self.movieUrl
@@ -309,14 +307,14 @@ class cPlayer(xbmc.Player):
                     if saisonViewing:
                         meta['cat'] = '4'  # saison
                         meta['sTmdbId'] = self.sTmdbId
-                        tvShowTitle = cUtil().titleWatched(self.tvShowTitle).replace(' ', '')
+                        tvShowTitleWatched = cUtil().titleWatched(self.tvShowTitle).replace(' ', '')
                         if self.sSaison:
                             meta['season'] = self.sSaison
                             meta['title'] = self.tvShowTitle + " S" + self.sSaison
-                            meta['titleWatched'] = tvShowTitle + "_S" + self.sSaison
+                            meta['titleWatched'] = tvShowTitleWatched + "_S" + self.sSaison
                         else:
                             meta['title'] = self.tvShowTitle
-                            meta['titleWatched'] = tvShowTitle
+                            meta['titleWatched'] = tvShowTitleWatched
                         meta['site'] = self.sSource
                         meta['siteurl'] = self.saisonUrl
                         meta['fav'] = self.nextSaisonFunc

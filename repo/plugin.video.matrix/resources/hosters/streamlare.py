@@ -11,7 +11,7 @@ class cHoster(iHoster):
     def __init__(self):
         iHoster.__init__(self, 'streamlare', 'Streamlare')
 
-    def _getMediaLinkForGuest(self, autoPlay = False):
+    def _getMediaLinkForGuest(self):
         VSlog(self._url)
         api_call = False
 

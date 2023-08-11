@@ -24,7 +24,7 @@ class cHoster(iHoster):
     def checkUrl(self, sUrl):
         return True
 
-    def getMediaLink(self, autoPlay = False):
+    def getMediaLink(self):
         self.oPremiumHandler = cPremiumHandler(self.getPluginIdentifier())
         if self.oPremiumHandler.isPremiumModeAvailable():
             ADDON = addon()
@@ -43,18 +43,18 @@ class cHoster(iHoster):
 
             # mode stream
             if ret == 0:
-                return self._getMediaLinkForGuest(autoPlay)
+                return self._getMediaLinkForGuest()
             # mode DL
             if ret == 1:
-                return self._getMediaLinkByPremiumUser(autoPlay)
+                return self._getMediaLinkByPremiumUser()
 
             return False
 
         else:
             VSlog('UPTOBOX - no premium')
-            return self._getMediaLinkForGuest(autoPlay)
+            return self._getMediaLinkForGuest()
 
-    def _getMediaLinkForGuest(self, autoPlay = False):
+    def _getMediaLinkForGuest(self):
         self._url = self._url.replace('uptobox.com/', 'uptostream.eu/')
         self._url = self._url.replace('uptobox.eu/', 'uptostream.eu/')
 
@@ -63,11 +63,11 @@ class cHoster(iHoster):
         oHoster.setUrl(self._url)
         return oHoster.getMediaLink()
 
-    def _getMediaLinkByPremiumUser(self, autoPlay = False):
+    def _getMediaLinkByPremiumUser(self):
 
         token = self.oPremiumHandler.getToken()
         if not token:
-            return self._getMediaLinkForGuest(autoPlay)
+            return self._getMediaLinkForGuest()
 
         fileCode = self._url.split('/')[-1].split('?')[0]
         url1 = "https://uptobox.eu/api/link?token=%s&file_code=%s" % (token, fileCode)

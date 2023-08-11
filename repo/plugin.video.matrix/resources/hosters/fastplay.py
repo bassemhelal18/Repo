@@ -22,7 +22,7 @@ class cHoster(iHoster):
         if not "http" in sUrl:
         	self._url = 'https://'+self._url
 
-    def _getMediaLinkForGuest(self, autoPlay = False):
+    def _getMediaLinkForGuest(self):
         VSlog(self._url)
         
         oRequest = cRequestHandler(self._url)

@@ -363,12 +363,11 @@ def showEpisodes():
 
 
 	 
-def showServers(oInputParameterHandler = False):
+def showServers():
     oGui = cGui()
     import requests
    
-    if not oInputParameterHandler:
-        oInputParameterHandler = cInputParameterHandler()
+    oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
@@ -425,7 +424,7 @@ def showServers(oInputParameterHandler = False):
                     if oHoster:
                        oHoster.setDisplayName(sTitle)
                        oHoster.setFileName(sTitle)
-                       cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler) 
+                       cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)  
 				
    
     # (.+?) ([^<]+) .+?
@@ -445,7 +444,7 @@ def showServers(oInputParameterHandler = False):
             if oHoster:
                oHoster.setDisplayName(sTitle)
                oHoster.setFileName(sTitle)
-               cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+               cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
 	    
   # ([^<]+) .+?
     
