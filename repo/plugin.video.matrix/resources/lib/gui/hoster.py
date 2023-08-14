@@ -408,7 +408,7 @@ class cHosterGui:
         if ('goved' in sHostName) or ('govad' in sHostName) or ('govid.me' in sHostName):
             return self.getHoster('govidme')
             
-        if ('govid' in sHostName) or ('drkvid' in sHosterUrl) or ('gvid.' in sHosterUrl) or ('govid.' in sHostName) or ('kopatube' in sHostName) or ('kobatube' in sHostName) or ('darkveed' in sHostName) or ('downvol' in sHosterUrl) or ('telvod' in sHosterUrl):
+        if ('govid' in sHostName) or ('drkvid' in sHosterUrl) or ('gvid.' in sHosterUrl) or ('govid.' in sHostName) or ('kopatube' in sHostName) or ('kobatube' in sHostName) or ('darkveed' in sHostName) or ('downvol' in sHosterUrl) or ('rbrb' in sHosterUrl):
             return self.getHoster('govid')
         
         if ('vid4up' in sHostName):

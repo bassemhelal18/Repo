@@ -364,6 +364,7 @@ def showSeries(sSearch = ''):
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
  # ([^<]+) .+? (.+?)
+    
     sPattern = '<div class="Posts--Single--Box"> <a href="([^<]+)" title="([^<]+)">.+?data-image="([^<]+)" alt='
 
     oParser = cParser()

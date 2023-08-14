@@ -14,7 +14,8 @@ class cHoster(iHoster):
         iHoster.__init__(self, 'govid', 'CimaClub', 'gold')
 			
     def setUrl(self, sUrl):
-        self._url = str(sUrl)
+        self._url = str(sUrl).replace('rbrb.site','telvod.site')
+        VSlog(self._url)
 
     def _getMediaLinkForGuest(self):
         sReferer = ""
@@ -26,6 +27,7 @@ class cHoster(iHoster):
             sReferer = self._url.split('|Referer=')[1]
         else:
             sReferer = self._url
+        
 
         oRequest = cRequestHandler(surl)
         oRequest.addHeaderEntry('Referer', sReferer)
@@ -37,7 +39,7 @@ class cHoster(iHoster):
         sPattern =  '"playbackUrl": "(.+?)"' 
         aResult = oParser.parse(sHtmlContent,sPattern)
         if aResult[0]:
-            url2 = aResult[1][0].replace("hhttps","https").replace('api.govid.co/api','go.telvod.site/api')
+            url2 = aResult[1][0].replace("hhttps","https").replace('api.govid.co/api','go3.telvod.site/api')
 
             oRequest = cRequestHandler(url2)
             oRequest.addHeaderEntry('Referer', surl)
@@ -65,7 +67,7 @@ class cHoster(iHoster):
                 api_call = aEntry
 
                 if api_call:
-                   return True, api_call+ '|User-Agent=' + UA+'&AUTH=TLS&verifypeer=false' + '&Referer=' + surl
+                   return True, api_call+ '|User-Agent=' + UA+'&AUTH=TLS&verifypeer=false' + '&Referer=' + 'cima-club.cam'
 
         sPattern =  'sources: (.+?),' 
         aResult = oParser.parse(sHtmlContent,sPattern)

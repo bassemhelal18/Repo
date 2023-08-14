@@ -392,104 +392,75 @@ def __checkForNextPage(sHtmlContent):
 
 def showHosters():
     oGui = cGui()
-    
     oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
+    Referer = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
-    
-
-    #print sHtmlContent 
 
     oRequestHandler = cRequestHandler(sUrl)
+    cook = oRequestHandler.GetCookies()  
     sHtmlContent = oRequestHandler.request()
-    VSlog(sHtmlContent)
-      
-    
-    
-    sPattern = '<iframe src="(.+?)" scrolling'
+
     oParser = cParser()
-    aResult = oParser.parse(sHtmlContent, sPattern)
+    sPattern =  'data-content-id="([^"]+)' 
+    aResult = oParser.parse(sHtmlContent,sPattern)
+    if aResult[0]:
+        sID = aResult[1][0] 
+
+    ## Watch Servers
+    sPattern = 'id="s_.+?onClick="([^"]+)'
+    oParser = cParser()
+    aResult = oParser.parse(sHtmlContent,sPattern)
     if aResult[0]:
         for aEntry in aResult[1]:
-            
-            url = aEntry.replace('e//','e/')
-            sTitle = sMovieTitle
-            if url.startswith('//'):
-               url = 'http:' + url
-            
-            sHosterUrl = url 
-            oHoster = cHosterGui().checkHoster(sHosterUrl)
-            if oHoster:
-               oHoster.setDisplayName(sTitle)
-               oHoster.setFileName(sTitle)
-               cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
+            ServerIDs = aEntry.replace('getServer2(this.id,','').replace(');','') 
+            sHosterID = ServerIDs.split(',')[0]
+            serverId = ServerIDs.split(',')[1]
 
+            url = URL_MAIN + 'wp-content/themes/vo2022/temp/ajax/iframe2.php?id=' + sID + '&video=' + sHosterID + '&serverId=' + serverId
+            oRequestHandler = cRequestHandler(url)
+            cook = oRequestHandler.GetCookies()
+            oRequestHandler.addHeaderEntry('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'.encode('utf-8'))
+            oRequestHandler.addHeaderEntry('Referer', Referer.encode('utf-8'))
+            oRequestHandler.addHeaderEntry('Cookie', cook.encode('utf-8'))
+            oRequestHandler.addHeaderEntry('authority', 'cinematy.online'.encode('utf-8'))
+            oRequestHandler.addHeaderEntry('sec-fetch-dest', 'empty'.encode('utf-8'))
+            oRequestHandler.addHeaderEntry('sec-fetch-mode', 'cors'.encode('utf-8'))
+            oRequestHandler.addHeaderEntry('x-requested-with', 'XMLHttpRequest')
+            sHtmlContent2 = oRequestHandler.request()
+
+            sPattern = 'iframe.+?src=\"(.+?)\"'
+            oParser = cParser()
+            aResult = oParser.parse(sHtmlContent2.lower(), sPattern)
+            if aResult[0]:
+                sHosterUrl = aResult[1][0]
+
+                if 'mystream' in sHosterUrl:
+                    sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN    
+                oHoster = cHosterGui().checkHoster(sHosterUrl)
+                if oHoster != False:
+                    oHoster.setDisplayName(sMovieTitle)
+                    oHoster.setFileName(sMovieTitle)
+                    cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler)
+
+    ## Download Servers
     sPattern = 'target="_blank" href="(.+?)"><i class="icon-download">'
     oParser = cParser()
     aResult = oParser.parse(sHtmlContent, sPattern)
     if aResult[0]:
         for aEntry in aResult[1]:
-            
+
             url = aEntry
             sTitle = sMovieTitle
             if url.startswith('//'):
                url = 'http:' + url
-            
+
             sHosterUrl = url 
             oHoster = cHosterGui().checkHoster(sHosterUrl)
             if oHoster:
                oHoster.setDisplayName(sTitle)
                oHoster.setFileName(sTitle)
-               cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
-	
-    oParser = cParser()
-    vo_postID = ''
+               cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler)
 
-    sPattern = 'vo_postID = "(.+?)";'
-    aResult = oParser.parse(sHtmlContent, sPattern)
-    
-    if (aResult[0]):
-        vo_postID = aResult[1][0]
-        VSlog(vo_postID)
-    
-    sPattern = 'getServer2(.*?,(.*?),(.*?));' 
-    oParser = cParser()
-    aResult = oParser.parse(sHtmlContent, sPattern)
-            
-    if aResult[0]:
-        for aEntry in aResult[1]:
-            video = aEntry[1]
-            VSlog(video)
-            sId = aEntry[2].replace(')','')
-            VSlog(sId)
-     # (.+?) ([^<]+) .+?
-
-            sTitle = 'server '
-            siteUrl = URL_MAIN+'/wp-content/themes/vo2022/temp/ajax/iframe2.php?id='+vo_postID+'&video='+video+'&id='+sId
-            hdr = {'User-Agent' : 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:66.0) Gecko/20100101 Firefox/66.0'}
-            params = {"id=":vo_postID,"&video=":video,'&id':sId}                
-            import requests
-            St=requests.Session()
-            sHtmlContent = St.get(siteUrl,headers=hdr,params=params)
-            sHtmlContent = sHtmlContent.content.decode('utf8',errors='ignore')
-            VSlog(sHtmlContent)
-            sPattern =  '<iframe src="(.+?)" scrolling'
-            oParser = cParser()
-            aResult = oParser.parse(sHtmlContent, sPattern)
-                    
-            if aResult[0]:
-                for aEntry in aResult[1]:
-            
-                    url = aEntry
-                    sTitle = sMovieTitle
-                    if url.startswith('//'):
-                       url = 'http:' + url
-            
-                    sHosterUrl = url 
-                    oHoster = cHosterGui().checkHoster(sHosterUrl)
-                    if oHoster:
-                       oHoster.setDisplayName(sTitle)
-                       oHoster.setFileName(sTitle)
-                       cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
-    oGui.setEndOfDirectory()                   
+    oGui.setEndOfDirectory()

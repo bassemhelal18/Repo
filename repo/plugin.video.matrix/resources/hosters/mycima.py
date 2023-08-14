@@ -33,6 +33,8 @@ class cHoster(iHoster):
         list_url=[]
         list_q=[]
         for aEntry in aResult[1]:
+                if 'auto' in aEntry[0]:
+                      continue
                 list_q.append(aEntry[0])
                 list_url.append(aEntry[1]) 
 				

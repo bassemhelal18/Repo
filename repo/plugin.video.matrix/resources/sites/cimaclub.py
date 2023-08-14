@@ -24,6 +24,22 @@ SITE_DESC = 'arabic vod'
  
 
 URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
+oParser = cParser()
+ 
+oRequestHandler = cRequestHandler(URL_MAIN)
+sHtmlContent = oRequestHandler.request()
+
+    # (.+?) ([^<]+)
+
+sPattern = '<form action="(.+?)" method="GET"'
+aResult = oParser.parse(sHtmlContent, sPattern)
+if (aResult[0]):
+    URL_MAIN = aResult[1][0].split('search')[0]
+    
+
+
+
+
 MOVIE_FAM = (URL_MAIN + 'getposts?genre=%D8%B9%D8%A7%D8%A6%D9%84%D9%8A&category=1', 'showMovies')
 MOVIE_TOP = (URL_MAIN + 'getposts?type=one&data=rating', 'showMovies')
 MOVIE_EN = (URL_MAIN + 'category/%D8%A7%D9%81%D9%84%D8%A7%D9%85-%D8%A7%D8%AC%D9%86%D8%A8%D9%89-aflam-onilne15', 'showMovies')
@@ -514,7 +530,7 @@ def showServers():
                    if 'govid' in url:
                       url = url.replace("play","down").replace("embed-","")
                    if 'telvod.site/play/' in url:
-                       continue
+                       url = url.replace("telvod.site","rbrb.site")
                    if url.startswith('//'):
                       url = 'http:' + url
 								            
@@ -531,8 +547,9 @@ def showServers():
                        sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN    
                    if 'darkveed' in sHosterUrl:
                        sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN 
-                   if 'telvod' in sHosterUrl:
-                       sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN 
+                   if 'rbrb' in sHosterUrl or 'downvol' in sHosterUrl:
+                      sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN 
+                    
                    oHoster = cHosterGui().checkHoster(sHosterUrl)
                    if oHoster:
                       sDisplayTitle = sMovieTitle
