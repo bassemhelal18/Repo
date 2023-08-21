@@ -931,32 +931,32 @@ class cTrakt:
 
         try:
             if sHtmlContent['added']['movies'] == 1 or sHtmlContent['added']['episodes'] > 0 or sHtmlContent['added']['shows'] > 0:
-                sText = 'Ajouté avec succès'
+                sText = 'Added successfully'
         except:
             pass
 
         try:
             if sHtmlContent['updated']['movies'] == 1 or sHtmlContent['updated']['episodes'] > 0 or sHtmlContent['updated']['shows'] > 0:
-                sText = 'Mise à jour avec succès'
+                sText = 'Update successfully'
         except:
             pass
 
         try:
             if sHtmlContent['deleted']['movies'] == 1 or sHtmlContent['deleted']['episodes'] > 0:
-                sText = 'Supprimé avec succès'
+                sText = 'Successfully deleted'
         except:
             pass
 
         try:
             if sHtmlContent['existing']['movies'] > 0 or sHtmlContent['existing']['episodes'] > 0 or sHtmlContent['existing']['seasons'] > 0 or sHtmlContent['existing']['shows'] > 0:
-                sText = 'Entrée déjà présente'
+                sText = 'Entrance already present'
         except:
             pass
 
         try:
             self.DIALOG.VSinfo(sText, 'trakt')
         except UnboundLocalError:
-            self.DIALOG.VSinfo("Erreur")
+            self.DIALOG.VSinfo("Error")
 
         if (oInputParameterHandler.exist('sReload')):
             xbmc.executebuiltin('Container.Refresh')

@@ -116,7 +116,10 @@ def showMovies(sSearch = ''):
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
       # (.+?) ([^<]+) .+?
-    sPattern = 'href="([^<]+)" alt="(.+?)">.+?<img src="(.+?)"><.+?/release-year/(.+?)/">'
+    soup = BeautifulSoup(sHtmlContent, "html.parser")
+    sHtmlContent = str(soup.find("ul",{"class":"masterUlIn"}))
+    
+    sPattern = 'href="([^<]+)" title="(.*?)".+?<.+?/release-year/(.+?)/">'
 
     oParser = cParser()
     aResult = oParser.parse(sHtmlContent, sPattern)
@@ -133,16 +136,12 @@ def showMovies(sSearch = ''):
  
             if "فيلم"  not in aEntry[1]:
                 continue
- 
- 
-            
+
             sTitle = aEntry[1].replace("مشاهدة","").replace("مشاهده","").replace("مترجم","").replace("فيلم","").replace("اون لاين","").replace("برنامج","").replace("WEB-DL","").replace("BRRip","").replace("720p","").replace("HD-TC","").replace("HDRip","").replace("HD-CAM","").replace("DVDRip","").replace("BluRay","").replace("1080p","").replace("WEBRip","").replace("WEB-dl","").replace("4K","").replace("All","").replace("BDRip","").replace("HDCAM","").replace("HDTC","").replace("HDTV","").replace("HD","").replace("720","").replace("HDCam","").replace("Full HD","").replace("1080","").replace("HC","").replace("Web-dl","").replace("انمي","").replace("كامل","").replace("اون لاين","")
- 
- 
             siteUrl = aEntry[0]
             sDesc = ''
-            sThumb = str(aEntry[2])
-            sYear = aEntry[3]
+            sThumb = ''
+            sYear = aEntry[2]
             m = re.search('([0-9]{4})', sTitle)
             if m:
                 sYear = str(m.group(0))
@@ -156,17 +155,12 @@ def showMovies(sSearch = ''):
             oOutputParameterHandler.addParameter('sDesc', sDesc)
 
             oGui.addMovie(SITE_IDENTIFIER, 'showHosters', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
-        
         progress_.VSclose(progress_)
-        
-  # ([^<]+) .+?
-
         sNextPage = __checkForNextPage(sHtmlContent)
         if sNextPage != False:
             oOutputParameterHandler = cOutputParameterHandler()
             oOutputParameterHandler.addParameter('siteUrl', sNextPage)
             oGui.addDir(SITE_IDENTIFIER, 'showMovies', '[COLOR teal]Next >>>[/COLOR]', icons + '/next.png', oOutputParameterHandler)
- 
     if not sSearch:
         oGui.setEndOfDirectory()
 
@@ -295,7 +289,7 @@ def showSeasons():
           for aEntry in aResult[1]:
  
             sTitle = ' E'+aEntry[0]
-            sTitle = sMovieTitle+sTitle
+            sTitle = sMovieTitle+' S1'+sTitle
             siteUrl = str(aEntry[1])
             sThumb = sThumb
             sDesc = ""

@@ -370,7 +370,7 @@ def showSeries(sSearch = ''):
         progress_.VSclose(progress_)
     if not sSearch:   
         sNextPage = __checkForNextPage(sHtmlContent)
-        VSlog(sNextPage)
+        
         if sNextPage:
             oOutputParameterHandler = cOutputParameterHandler()
             oOutputParameterHandler.addParameter('siteUrl', sNextPage)
@@ -476,7 +476,7 @@ def showEpisodes():
 def __checkForNextPage(sHtmlContent):
 
     soup = BeautifulSoup(sHtmlContent, "html.parser")
-    VSlog(soup)
+    
     sHtmlContent = str(soup.find("ul",{"class":"page-numbers"}))
     
     sPattern = '<a class="next page-numbers" href="(.+?)">'

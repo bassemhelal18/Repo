@@ -75,6 +75,12 @@
             "active": "True",
             "url": "https://r.shooflive.co/"
         },
+        "shahidu": {
+            "label": "Shahid4u",
+            "active": "True",
+            "cloudflare": "False",
+            "url": "https://shhahed4u.com/"
+        },
         "shoofvod": {
             "label": "Shoofvod",
             "active": "True",
@@ -84,6 +90,11 @@
             "label": "The Movie Database",
             "active": "True",
             "url": "https://www.themoviedb.org/"
+        },
+        "topcinema": {
+            "label": "TopCinema",
+            "active": "True",
+            "url": "https://topcinema.cam/"
         },
         "topimdb": {
             "label": "Top IMDB",

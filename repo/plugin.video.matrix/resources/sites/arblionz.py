@@ -139,14 +139,14 @@ def load():
         oOutputParameterHandler = cOutputParameterHandler()
         for aEntry in aResult[1]:
             sTitle = aEntry[1]
-            #VSlog("Checking if " + sTitle + " is in [" + okCats +"]")
+            
             sSubTitle = sTitle.split(" ")
             for Sub in sSubTitle:
                 if Sub in okCats:
                     sThumb = getThumb(sTitle.replace("ة","ه").replace("أ","ا").replace("آ","ا")) #"icons + '/Movies.png'"
                                     
                     siteUrl = aEntry[0]+'/page/1'
-                    #VSlog(siteUrl)
+                    
                     sDesc = ''
                     
                     oOutputParameterHandler = cOutputParameterHandler()
@@ -392,7 +392,7 @@ def showSeries(sSearch = ''):
             sDesc = ''
             sYear = ''
             sDisplayTitle = sTitle.replace("الموسم العاشر","S10").replace("الموسم الحادي عشر","S11").replace("الموسم الثاني عشر","S12").replace("الموسم الثالث عشر","S13").replace("الموسم الرابع عشر","S14").replace("الموسم الخامس عشر","S15").replace("الموسم السادس عشر","S16").replace("الموسم السابع عشر","S17").replace("الموسم الثامن عشر","S18").replace("الموسم التاسع عشر","S19").replace("الموسم العشرون","S20").replace("الموسم الحادي و العشرون","S21").replace("الموسم الثاني و العشرون","S22").replace("الموسم الثالث و العشرون","S23").replace("الموسم الرابع والعشرون","S24").replace("الموسم الخامس و العشرون","S25").replace("الموسم السادس والعشرون","S26").replace("الموسم السابع والعشرون","S27").replace("الموسم الثامن والعشرون","S28").replace("الموسم التاسع والعشرون","S29").replace("الموسم الثلاثون","S30").replace("الموسم الحادي و الثلاثون","S31").replace("الموسم الثاني والثلاثون","S32").replace("الموسم الاول","S1").replace(" الثانى","2").replace("الموسم الثاني","S2").replace("الموسم الثالث","S3").replace("الموسم الثالث","S3").replace("الموسم الرابع","S4").replace("الموسم الخامس","S5").replace("الموسم السادس","S6").replace("الموسم السابع","S7").replace("الموسم الثامن","S8").replace("الموسم التاسع","S9").split('الموسم')[0].split('الحلقة')[0].strip()
-            VSlog(sDisplayTitle)
+            
 
             if sDisplayTitle not in itemList:
                 itemList.append(sDisplayTitle)
@@ -404,7 +404,7 @@ def showSeries(sSearch = ''):
                 oOutputParameterHandler.addParameter('sDesc', sDesc)
 
                 oGui.addTV(SITE_IDENTIFIER, 'showSeasons', sDisplayTitle, '', sThumb, sDesc, oOutputParameterHandler)
-        #VSlog(itemList)
+      
         
         progress_.VSclose(progress_)
         
@@ -444,7 +444,7 @@ def showSeasons():
             siteUrl = aEntry[0]
             sThumb = ''
             sDesc = ""
-            VSlog(sTitle)
+           
             oOutputParameterHandler.addParameter('siteUrl',siteUrl)
             oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
             oOutputParameterHandler.addParameter('sThumb', sThumb)
@@ -464,7 +464,7 @@ def showSeasons():
                 siteUrl = aEntry[0]
                 sThumb = ''
                 sDesc = ''
-                VSlog(sTitle)
+                
                 oOutputParameterHandler.addParameter('siteUrl', siteUrl)
                 oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
                 oOutputParameterHandler.addParameter('sThumb', sThumb)
@@ -481,7 +481,7 @@ def __checkForNextPage(sHtmlContent):
     current = '<li class=\"active\"><a href=\".+?\">(.+?)</a></li>'
     oParser = cParser()
     currentpage = oParser.parse(sHtmlContent, current)
-    #VSlog('currentpage : ' + str(currentpage))
+    
     sPattern = '<li><a href=\"(.+?)\">(.+?)</a></li>'
 	
     
@@ -490,7 +490,7 @@ def __checkForNextPage(sHtmlContent):
     if aResult[0]:
         for res in aResult[1]:
             if res[1] == '»':
-                #VSlog(res[0])
+               
                 return res[0]
 
     return False
@@ -533,7 +533,7 @@ def showEps():
             sThumb = ""
             sDesc = ""
 			
-            VSlog(sTitle)
+            
 
 
             oOutputParameterHandler.addParameter('siteUrl',siteUrl)

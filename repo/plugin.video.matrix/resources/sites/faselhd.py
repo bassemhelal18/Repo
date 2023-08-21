@@ -201,7 +201,7 @@ def showSeries(sSearch = ''):
     
     soup = BeautifulSoup(sHtmlContent, "html.parser")
     sHtmlContent = str(soup.find("div",{"id":"postList"}))
-    #VSlog(sHtmlContent)
+    
 
     sPattern = '<div class=\"postDiv\">.*\s*<a href=\"(.+?)\".*\s*.*\s*.*alt=\"(.+?)\".*data-src=\"(.+?)(\?resize|\")'
 	
@@ -268,7 +268,7 @@ def showAnimes(sSearch = ''):
  
     soup = BeautifulSoup(sHtmlContent, "html.parser")
     sHtmlContent = str(soup.find("div",{"id":"postList"}))
-    #VSlog(sHtmlContent)
+    
 
     sPattern = '<div class=\"postDiv\">.*\s*<a href=\"(.+?)\".*\s*.*\s*.*alt=\"(.+?)\".*data-src=\"(.+?)(\?resize|\")'
 	

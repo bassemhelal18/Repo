@@ -186,7 +186,7 @@ def showMovies(sSearch = ''):
                     break
      
                 siteUrl = aEntry[0].replace('"',"")
-                VSlog("Check for next Movies : " + siteUrl)
+                
                 sThumb = icons + '/next.png'
 
                 oOutputParameterHandler.addParameter('siteUrl',siteUrl)
@@ -264,7 +264,7 @@ def showSeries(sSearch = ''):
                     break
      
                 siteUrl = aEntry[0].replace('"',"")
-                VSlog("Check for next Movies : " + siteUrl)
+                
                 sThumb = icons + '/next.png'
 
                 oOutputParameterHandler.addParameter('siteUrl',siteUrl)

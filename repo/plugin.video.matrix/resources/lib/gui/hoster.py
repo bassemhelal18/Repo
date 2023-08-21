@@ -180,7 +180,7 @@ class cHosterGui:
                     tmp = self.getHoster('resolver')
                     RH = sHosterUrl.split('/')[2]
                     RH = RH.replace('www.', '')
-                    tmp.setRealHost(RH.split('.')[0].upper())
+                    tmp.setRealHost(RH.split('.')[-2].upper())
                     return tmp
 
 
@@ -270,6 +270,12 @@ class cHosterGui:
         
         if ('hadara.ps' in sHostName):
             return self.getHoster('lien_direct')
+        
+        if ('vidtube' in sHostName):
+            return self.getHoster('vidtube')
+
+        if ('updown' in sHostName):
+            return self.getHoster('updown')
         
         if ('.googleusercontent.com' in sHostName):
             return self.getHoster('lien_direct')

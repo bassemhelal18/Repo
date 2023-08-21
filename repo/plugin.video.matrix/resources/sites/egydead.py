@@ -424,7 +424,7 @@ def showSeasons():
     sHtmlContent = oRequestHandler.request()
     
     soup = BeautifulSoup(sHtmlContent,"html.parser") 
-    #VSlog(soup)
+    
     sHtmlContent = soup.find("div",{"class":"seasons-list"})
     
     
@@ -466,7 +466,7 @@ def showSeasons():
          
          
          soup = BeautifulSoup(sHtmlContent,"html.parser") 
-        #VSlog(soup)
+     
          sHtmlContent = soup.find("div",{"class":"seasons-list"})
          
     
@@ -511,7 +511,7 @@ def showSeasons():
               
               oRequest = cRequestHandler(murl)
               sHtmlContent = oRequest.request()
-              VSlog(sHtmlContent) 
+              
            sPattern = '<a href="([^<]+)" title="([^<]+)">([^<]+)</a>'
     
            oParser = cParser()
