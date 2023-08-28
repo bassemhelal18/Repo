@@ -511,7 +511,7 @@ def showHosters():
 
     if aResult[0]:
         for aEntry in aResult[1]:           
-            url = aEntry
+            url = aEntry.replace('https://http://','https://')
             sTitle = " " 
             if url.startswith('//'):
                url = 'http:' + url
@@ -543,7 +543,7 @@ def showHosters():
 
     if aResult[0]:
         for aEntry in aResult[1]:           
-            url = aEntry[0]
+            url = aEntry[0].replace('https://http://','https://')
             sTitle = sMovieTitle+'('+aEntry[1]+')' 
             if url.startswith('//'):
                url = 'http:' + url
@@ -574,7 +574,7 @@ def showHosters():
 
     if aResult[0]:
         for aEntry in aResult[1]:           
-            url = aEntry
+            url = aEntry.replace('https://http://','https://')
             sTitle = " " 
             if url.startswith('//'):
                url = 'http:' + url

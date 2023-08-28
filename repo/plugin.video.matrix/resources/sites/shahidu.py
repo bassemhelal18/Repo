@@ -515,7 +515,7 @@ def showHosters():
                     sHosterUrl = url
                     oHoster = cHosterGui().checkHoster(sHosterUrl)
                     if oHoster:
-                        sDisplayTitle = ('[COLOR coral](%sp)[/COLOR]') % (sQual)
+                        sDisplayTitle = sMovieTitle+('[COLOR coral](%sp)[/COLOR]') % (sQual)
                         oHoster.setDisplayName(sDisplayTitle)
                         oHoster.setFileName(sMovieTitle)
                         cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)

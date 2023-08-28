@@ -324,37 +324,42 @@ def showSeries(sSearch = ''):
         oGui.setEndOfDirectory()
 
 def showSeasons():
-	oGui = cGui()
-    
-	oInputParameterHandler = cInputParameterHandler()
-	sUrl = oInputParameterHandler.getValue('siteUrl')
-	sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
-	sThumb = oInputParameterHandler.getValue('sThumb')
+    oGui = cGui()
+    oInputParameterHandler = cInputParameterHandler()
+    sUrl = oInputParameterHandler.getValue('siteUrl')
+    sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
+    sThumb = oInputParameterHandler.getValue('sThumb')
  
-	oRequestHandler = cRequestHandler(sUrl)
-	sHtmlContent = oRequestHandler.request()
+    oRequestHandler = cRequestHandler(sUrl)
+    sHtmlContent = oRequestHandler.request()
     # .+? ([^<]+)
-	sPattern = '<div class="Small--Box Season">.+?href="([^"]+)" title.+?<span>الموسم</span>(.+?)</div>'
-	sPattern += '.+?data-src(.+?)</div>'
+    oParser = cParser()
+    
+    sStart = '<section class="allseasonss"'
+    sEnd = '<div class="row">'
+    sHtmlContent = oParser.abParse(sHtmlContent, sStart, sEnd)
+    
+    sPattern = 'href="([^"]+)" title.+?<span>الموسم</span>(.+?)</div>'
+    sPattern += '.+?data-src(.+?)</div>'
 
-	oParser = cParser()
-	aResult = oParser.parse(sHtmlContent, sPattern)
+    oParser = cParser()
+    aResult = oParser.parse(sHtmlContent, sPattern)
 		
-	if aResult[0] is True:
-		oOutputParameterHandler = cOutputParameterHandler()
-		for aEntry in aResult[1]:
+    if aResult[0] is True:
+       oOutputParameterHandler = cOutputParameterHandler()
+       for aEntry in aResult[1]:
  
-			sTitle = sMovieTitle + ' S'+aEntry[1]
-			siteUrl = aEntry[0]
-			sThumb = aEntry[2].replace('=','')
-			sDesc = ""
+           sTitle = sMovieTitle + ' S'+aEntry[1]
+           siteUrl = aEntry[0]
+           sThumb = aEntry[2].replace('=','')
+           sDesc = ""
 			
-			oOutputParameterHandler.addParameter('siteUrl',siteUrl)
-			oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
-			oOutputParameterHandler.addParameter('sThumb', sThumb)
-			oGui.addSeason(SITE_IDENTIFIER, 'showEpisodes', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
+           oOutputParameterHandler.addParameter('siteUrl',siteUrl)
+           oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
+           oOutputParameterHandler.addParameter('sThumb', sThumb)
+           oGui.addSeason(SITE_IDENTIFIER, 'showEpisodes', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
         
-	oGui.setEndOfDirectory()
+    oGui.setEndOfDirectory()
 
 
 def showEpisodes():
@@ -370,10 +375,9 @@ def showEpisodes():
 
 	oParser = cParser()
 
-	sStart = '<section class="tabContents">'
+	sStart = '<div class="row">'
 	sEnd = '</section>'
-	sHtmlContent = oParser.abParse(sHtmlContent, sStart, sEnd)   
-
+	sHtmlContent = oParser.abParse(sHtmlContent, sStart, sEnd)
 	sPattern = 'href="([^"]+)".+?class="epnum">.+?<span>الحلقة</span>(.+?)</div>'
 
 	oParser = cParser()
@@ -493,7 +497,7 @@ def showHosters():
             if url.startswith('//'):
                url = 'http:' + url
             if 'ddownload' in url :
-                            continue 
+                            continue  
             if 'bowfile' in url :
                             continue 	
             if 'mdiaload' in url :
@@ -502,7 +506,7 @@ def showHosters():
 
             oHoster = cHosterGui().checkHoster(sHosterUrl)
             if oHoster:
-                sDisplayTitle = ('[COLOR coral](%s)[/COLOR]') % (sQual)
+                sDisplayTitle = sMovieTitle +('[COLOR coral](%s)[/COLOR]') % (sQual)
                 oHoster.setDisplayName(sDisplayTitle)
                 oHoster.setFileName(sMovieTitle)
                 cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
