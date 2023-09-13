@@ -12,9 +12,9 @@ UA = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:72.0) Gecko/20100101 Firefox/7
 class cHoster(iHoster):
 
     def __init__(self):
-        iHoster.__init__(self, 'vk', 'Vk')
+        iHoster.__init__(self, 'vk', '-[Vk]')
 
-    def _getMediaLinkForGuest(self):
+    def _getMediaLinkForGuest(self, autoPlay = False):
         VSlog(self._url)
         url = []
         qua = []
@@ -26,8 +26,19 @@ class cHoster(iHoster):
 
         oParser = cParser()
         aResult = oParser.parse(sHtmlContent, sPattern)
-        if aResult[0] :
-            api_call = aResult[1][0]+ '|User-Agent=' + UA + '&Referer=' + self._url 
+        if aResult[0]:
+            api_call = aResult[1][0]
+            VSlog(api_call)
+
+            if api_call:
+                return True, api_call
+            
+        sPattern = ',"hls_ondemand":"(.+?)",'
+
+        oParser = cParser()
+        aResult = oParser.parse(sHtmlContent, sPattern)
+        if aResult[0]:
+            api_call = aResult[1][0] 
             VSlog(api_call)
 
             if api_call:
@@ -37,7 +48,7 @@ class cHoster(iHoster):
 
         oParser = cParser()
         aResult = oParser.parse(sHtmlContent, sPattern)
-        if aResult[0] :
+        if aResult[0]:
             url=[]
             qua=[]
             for i in aResult[1]:

@@ -233,6 +233,8 @@ def showMovies(sSearch = ''):
                 break
  
             sTitle = aEntry[3].replace("مشاهدة","").replace("مسلسل","").replace("انمي","").replace("مترجمة","").replace("مترجم","").replace("فيلم","").replace("والأخيرة","").replace("مدبلج للعربية","مدبلج").replace("برنامج","").replace("والاخيرة","").replace("كاملة","").replace("حلقات كاملة","").replace("اونلاين","").replace("مباشرة","").replace("انتاج ","").replace("جودة عالية","").replace("كامل","").replace("HD","").replace("السلسلة الوثائقية","").replace("الفيلم الوثائقي","").replace("اون لاين","")
+            if 'مدبلج' in sTitle:
+              continue
             siteUrl = aEntry[1]
             s1Thumb = aEntry[2]
             sThumb = re.sub(r'thumb\/\d*x\d*\/','',s1Thumb)
@@ -611,9 +613,11 @@ def __checkForNextPage(sHtmlContent):
     return False
 
 
-def showHosters():
+def showHosters(oInputParameterHandler = False):
     oGui = cGui()
-    oInputParameterHandler = cInputParameterHandler()
+    
+    if not oInputParameterHandler:
+        oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
@@ -623,7 +627,7 @@ def showHosters():
 
     oParser = cParser()
             
-# ([^<]+) .+? (.+?)<a href="http://noon.khsm.io/link/126002"
+    # ([^<]+) .+? (.+?)<a href="http://noon.khsm.io/link/126002"
     sPattern =  'href="(http[^<]+/watch/.+?)"' 
     aResult = oParser.parse(sHtmlContent,sPattern)
     if aResult[0]:
@@ -631,7 +635,7 @@ def showHosters():
         
         oRequest = cRequestHandler(murl)
         sHtmlContent = oRequest.request()
-# ([^<]+) .+? (.+?)
+    # ([^<]+) .+? (.+?)
     sPattern =  'href="(http[^<]+/watch/.+?)"' 
     aResult = oParser.parse(sHtmlContent,sPattern)
     if aResult[0]:
@@ -640,8 +644,8 @@ def showHosters():
         oRequest = cRequestHandler(murl)
         sHtmlContent = oRequest.request()
             
-# ([^<]+) .+? (.+?)
-    sPattern =  '>Click here</span> to go for your link...</a>.+?<a href="(.+?)"'
+    # ([^<]+) .+? (.+?)
+    sPattern =  '>Click here</span>.+?<a href="(.+?)"'
     aResult = oParser.parse(sHtmlContent,sPattern)
     if aResult[0]:
         murl =  aResult[1][0]
@@ -659,57 +663,13 @@ def showHosters():
        for aEntry1 in aResult[1]:
            sHosterUrl = aEntry1[0]
            sHost = aEntry1[1] 
-           sTitle = ('%s  [COLOR coral](%sp)[/COLOR]') % (sMovieTitle, sHost)  
+           sTitle = ('%s  -[%sp]') % (sMovieTitle, sHost)  
            oHoster = cHosterGui().checkHoster(sHosterUrl)
            if oHoster:
               oHoster.setDisplayName(sTitle)
               oHoster.setFileName(sMovieTitle)
-              cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
+              cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+
                 
     oGui.setEndOfDirectory()
 
-def showHosters2():
-    oGui = cGui()
-    oInputParameterHandler = cInputParameterHandler()
-    sUrl = oInputParameterHandler.getValue('siteUrl')
-    sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
-    sThumb = oInputParameterHandler.getValue('sThumb')
-    
-    oRequestHandler = cRequestHandler(sUrl)
-    sHtmlContent = oRequestHandler.request()
-
-    oParser = cParser()
-            
-    sPattern =  '<a href="([^<]+)" class="download-link"' 
-    aResult = oParser.parse(sHtmlContent,sPattern)
-    if aResult[0]:
-        murl =  aResult[1][0]
-        
-        oRequest = cRequestHandler(murl)
-        sHtmlContent2 = oRequest.request()
-
-
-    # (.+?) .+? ([^<]+)
-               
-    sPattern = 'href="([^<]+)" download.+?style=".+?">(.+?)</a>'
-    oParser = cParser()
-    aResult = oParser.parse(sHtmlContent2, sPattern)
-
-
-	
-    if aResult[0]: 
-       for aEntry in aResult[1]:      
-           url = aEntry[0]
-           sHost = aEntry[1]				
-           sTitle = ('%s  [COLOR coral]%sp[/COLOR]') % (sMovieTitle, sHost)
-				
-					
-            
-       sHosterUrl = url
-       oHoster = cHosterGui().checkHoster(sHosterUrl)
-       if oHoster:
-          oHoster.setDisplayName(sTitle)
-          oHoster.setFileName(sMovieTitle)
-          cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
-                
-    oGui.setEndOfDirectory()

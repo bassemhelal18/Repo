@@ -345,9 +345,10 @@ def showEps():
        
     oGui.setEndOfDirectory() 
 
-def showHosters():
+def showHosters(oInputParameterHandler = False):
     oGui = cGui()
-    oInputParameterHandler = cInputParameterHandler()
+    if not oInputParameterHandler:
+        oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
@@ -356,11 +357,17 @@ def showHosters():
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request() 
     
+    sURL_MAIN =''
+    
     oParser = cParser()         
-
+    
+    sPattern = "HomeURL   = '([^']+)"
+    aResult = oParser.parse(sHtmlContent, sPattern)    
+    if (aResult[0]):
+        sURL_MAIN = aResult[1][0]
     
 			
-    sPattern =  'data-id="(.+?)"' 
+    sPattern = 'data-id="([^"]+)"'
     aResult = oParser.parse(sHtmlContent,sPattern)
     if aResult[0] :
         mId = aResult[1][0] 
@@ -368,10 +375,10 @@ def showHosters():
     s = requests.Session()            
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:65.0) Gecko/20100101 Firefox/65.0'}
     data = {'id':mId,'action':'getpostServers'}
-    r = s.post(URL_MAIN +'/wp-admin/admin-ajax.php', headers=headers,data = data)
+    r = s.post(sURL_MAIN +'/wp-admin/admin-ajax.php', headers=headers,data = data)
     sHtmlContent = r.content.decode('utf8')
             
-    sPattern =  '<a class="watchNow" href="([^<]+)" target=' 
+    sPattern =  '<a class="watchNow" href="([^"]+)' 
     aResult = oParser.parse(sHtmlContent,sPattern)
     m3url=''
     if aResult[0] :
@@ -381,7 +388,7 @@ def showHosters():
     import requests
     s = requests.Session()            
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:65.0) Gecko/20100101 Firefox/65.0',
-							'Referer': URL_MAIN }
+							'Referer': sURL_MAIN }
     r = s.get(m3url, headers=headers)
     sHtmlContent = r.content.decode('utf8')
     
@@ -410,7 +417,7 @@ def showHosters():
             if oHoster:
                 oHoster.setDisplayName(sMovieTitle)
                 oHoster.setFileName(sMovieTitle)
-                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
+                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
 
                
 				

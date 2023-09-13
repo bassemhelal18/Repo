@@ -13,39 +13,39 @@ UA = 'Mozilla/5.0 (iPad; CPU OS 13_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML,
 class cHoster(iHoster):
 
     def __init__(self):
-        iHoster.__init__(self, 'vidlo', 'vidlo')
+        iHoster.__init__(self, 'vidlo', '-[vidlook]')
 
-    def _getMediaLinkForGuest(self):
-        VSlog(self._url)
-
+    def _getMediaLinkForGuest(self, autoPlay = False):
         oRequest = cRequestHandler(self._url)
         sHtmlContent = oRequest.request()
-
-            # (.+?) .+? ([^<]+)
         oParser = cParser()
-        #test pour voir si code
-        sPattern = '(eval\(function\(p,a,c,k,e(?:.|\s)+?\))<\/script>'
-        aResult = oParser.parse(sHtmlContent, sPattern)
-        if aResult[0] :
-            sHtmlContent = cPacker().unpack(aResult[1][0])
-        sPattern = ',{file:"(.+?)",label:"(.+?)"}'
-        aResult = oParser.parse(sHtmlContent, sPattern)
+
         api_call = False
 
-        if aResult[0] :
-            
-            #initialisation des tableaux
-            url=[]
-            qua=[]
-            
-            #Replissage des tableaux
-            for i in aResult[1]:
-                url.append(str(i[0]))
-                qua.append(str(i[1]))
+        sPattern = '(eval\(function\(p,a,c,k,e(?:.|\s)+?)</script>'
+        aResult = oParser.parse(sHtmlContent, sPattern)
+        if aResult[0]:
+            sHtmlContent = cPacker().unpack(aResult[1][0])
+            sPattern = 'file:"(.+?)"'
+            aResult = oParser.parse(sHtmlContent, sPattern)
+            if aResult[0]:
+                api_call = aResult[1][0]
 
-            api_call = dialog().VSselectqual(qua, url)
+        else:
+            sPattern = 'file:"([^"]+)",label:"[0-9]+"}'
+            aResult = oParser.parse(sHtmlContent, sPattern)
+            if aResult[0]:
+                # initialisation des tableaux
+                url = []
+                qua = []
+                for i in aResult[1]:
+                    url.append(str(i[0]))
+                    qua.append(str(i[1]))
 
-            if api_call:
-                return True, api_call + '|User-Agent=' + UA + '&Referer=https://www.vidlo.us/' 
+                api_call = dialog().VSselectqual(qua, url + '|User-Agent=' + UA)
+
+
+        if api_call:
+            return True, api_call
 
         return False, False

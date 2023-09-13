@@ -16,9 +16,7 @@ from resources.lib.gui.guiElement import cGuiElement
 from resources.lib.handler.inputParameterHandler import cInputParameterHandler
 from resources.lib.handler.outputParameterHandler import cOutputParameterHandler
 from resources.lib.handler.pluginHandler import cPluginHandler
-
 from resources.lib.util import QuotePlus
-import re
 
 Addon = addon()
 icons = Addon.getSetting('defaultIcons')
@@ -32,15 +30,20 @@ class cGui:
     episodeListing = []  # Pour gérer l'enchainement des episodes
     ADDON = addon()
     displaySeason = addon().getSetting('display_season_title')
-
     # Gérer les résultats de la recherche
     searchResults = {}
     searchResultsSemaphore = threading.Semaphore()
 
+    def emptySearchResult(self, siteName):
+        cGui.searchResultsSemaphore.acquire()
+        cGui.searchResults[siteName] = []  # vider le tableau de résultats
+        cGui.searchResultsSemaphore.release()
+
     def getEpisodeListing(self):
         return self.episodeListing
 
-    def addNewDir(self, Type, sId, sFunction, sLabel, sIcon, sThumbnail='', sDesc='', oOutputParameterHandler='', sMeta=0, sCat=None):
+    def addNewDir(self, Type, sId, sFunction, sLabel, sIcon, sThumbnail='', sDesc='', oOutputParameterHandler='',
+            sMeta=0, sCat=None):
         oGuiElement = cGuiElement()
         # dir ou link => CONTENT par défaut = files
         if Type != 'dir' and Type != 'link':
@@ -169,9 +172,10 @@ class cGui:
     def addDir(self, sId, sFunction, sLabel, sIcon, oOutputParameterHandler='', sDesc=""):
         return self.addNewDir('dir', sId, sFunction, sLabel, sIcon, '', sDesc, oOutputParameterHandler, 0, None)
 
-    def addLink(self, sId, sFunction, sLabel, sThumbnail, sDesc, oOutputParameterHandler=''):
+    def addLink(self, sId, sFunction, sLabel, sThumbnail, sDesc, oOutputParameterHandler='', oInputParameterHandler = False):
         # Pour gérer l'enchainement des épisodes
-        oInputParameterHandler = cInputParameterHandler()
+        if not oInputParameterHandler:
+            oInputParameterHandler = cInputParameterHandler()
         oOutputParameterHandler.addParameter('saisonUrl', oInputParameterHandler.getValue('saisonUrl'))
         oOutputParameterHandler.addParameter('nextSaisonFunc', oInputParameterHandler.getValue('nextSaisonFunc'))
         oOutputParameterHandler.addParameter('movieUrl', oInputParameterHandler.getValue('movieUrl'))
@@ -386,17 +390,16 @@ class cGui:
             except:
                 data['title'] = itemTitle
                 pass
-
+            
             # release du lien
             if sMediaUrl:
                 data['plot'] = sMediaUrl
         else:
             # Permet d'afficher toutes les informations pour les films.
             data['title'] = itemTitle
-
             if sMediaUrl:   # release du lien
                 data['tagline'] = sMediaUrl
-
+            
         if ":" in str(data.get('duration')):
             # Convertion en seconde, utile pour le lien final.
             data['duration'] = (sum(x * int(t) for x, t in zip([1, 60, 3600], reversed(data.get('duration', '').split(":")))))
@@ -617,6 +620,10 @@ class cGui:
         return sItemUrl
 
     def setEndOfDirectory(self, forceViewMode=False):
+        # On n'affiche pas si on fait une recherche
+        if window(10101).getProperty('playVideo') == 'true':
+            return
+
         iHandler = cPluginHandler().getPluginHandle()
 
         if not self.listing:
@@ -716,6 +723,7 @@ class cGui:
         else:
             sCleanTitle = oInputParameterHandler.getValue('sTitle') if oInputParameterHandler.exist('sTitle') else xbmc.getInfoLabel('ListItem.Title')
             # sCleanTitle = cUtil().titleWatched(sCleanTitle)
+            
         sCat = oInputParameterHandler.getValue('sCat') if oInputParameterHandler.exist('sCat') else xbmc.getInfoLabel('ListItem.Property(sCat)')
 
         oOutputParameterHandler = cOutputParameterHandler()

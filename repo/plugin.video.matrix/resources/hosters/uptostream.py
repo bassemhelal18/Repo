@@ -18,7 +18,7 @@ from resources.lib.parser import cParser
 class cHoster(iHoster):
 
     def __init__(self):
-        iHoster.__init__(self, 'uptostream', 'UpToStream')
+        iHoster.__init__(self, 'uptostream', '-[UpToStream]')
         self.oPremiumHandler = None
 
     def setUrl(self, url):
@@ -39,14 +39,16 @@ class cHoster(iHoster):
                 continue
         return files
 
-    def _getMediaLinkForGuest(self):
+    def _getMediaLinkForGuest(self, autoPlay = False):
         pass
 
-    def getMediaLink(self):
+    def getMediaLink(self, autoPlay = False):
         self.oPremiumHandler = cPremiumHandler('uptobox')
         premium = self.oPremiumHandler.isPremiumModeAvailable()
         if not premium:
-            dialog().VSok('Ce hoster necessite un compte, meme gratuit.')
+            if not autoPlay:
+                dialog().VSok('This hoster requires an account, even free.')
+            
             return False, False
 
         api_call = False
@@ -101,7 +103,8 @@ class cHoster(iHoster):
                 import pyqrcode
                 qr = pyqrcode.create(r['data']['user_url'])
                 qr.png(VSPath('special://home/userdata/addon_data/plugin.video.vstream/qrcode.png'), scale=5)
-                oSolver = cInputWindowYesNo(captcha='special://home/userdata/addon_data/plugin.video.vstream/qrcode.png', msg="Scanner le QRCode pour acceder au lien d'autorisation", roundnum=1)
+                oSolver = cInputWindowYesNo(captcha='special://home/userdata/addon_data/plugin.video.vstream/qrcode.png',
+                    msg="Scanner le QRCode pour acceder au lien d'autorisation", roundnum=1)
                 retArg = oSolver.get()
                 if retArg == "N":
                     return False

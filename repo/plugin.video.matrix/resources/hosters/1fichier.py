@@ -17,7 +17,7 @@ UA = 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:39.0) Gecko/20100101 Firefox/39.0'
 
 class cHoster(iHoster):
     def __init__(self):
-        iHoster.__init__(self, '1fichier', '1FIchier', 'violet')
+        iHoster.__init__(self, '1fichier', '-[1FIchier]')
 
     def __getIdFromUrl(self, url):
         # http://kzu0y3.1fichier.com/
@@ -30,21 +30,22 @@ class cHoster(iHoster):
 
         return sId
 
-    def getMediaLink(self):
+    def getMediaLink(self, autoPlay = False):
         self.oPremiumHandler = cPremiumHandler(self.getPluginIdentifier())
         print(self.oPremiumHandler.isPremiumModeAvailable())
 
         if ('site=cDownload&function' not in sys.argv[2]) and not (self.oPremiumHandler.isPremiumModeAvailable()):
-            oDialog = dialog().VSok("Pas de streaming sans premium.\n" + \
+            if not autoPlay:
+                oDialog = dialog().VSok("Pas de streaming sans premium.\n" +
                     "Pour voir le film passer par l'option 'Télécharger et Lire' du menu contextuel.")
             return False, False
 
         if self.oPremiumHandler.isPremiumModeAvailable():
             return self._getMediaLinkByPremiumUser()
         else:
-            return self._getMediaLinkForGuest()
+            return self._getMediaLinkForGuest(autoPlay)
 
-    def _getMediaLinkForGuest(self):
+    def _getMediaLinkForGuest(self, autoPlay = False):
 
         api_call = False
         url = 'https://1fichier.com/?' + self.__getIdFromUrl(self._url)
@@ -98,7 +99,7 @@ class cHoster(iHoster):
 
         return False
 
-    def _getMediaLinkByPremiumUser(self):
+    def _getMediaLinkByPremiumUser(self, autoPlay = False):
         VSlog(self._url)
         api_call = False
 

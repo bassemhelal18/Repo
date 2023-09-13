@@ -12,9 +12,9 @@ UA = 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:39.0) Gecko/20100101 Firefox/39.0'
 class cHoster(iHoster):
 
     def __init__(self):
-        iHoster.__init__(self, 'filemoon', 'filemoon')
+        iHoster.__init__(self, 'filemoon', '-[filemoon]')
 
-    def _getMediaLinkForGuest(self):
+    def _getMediaLinkForGuest(self, autoPlay = False):
         VSlog(self._url)
         oRequest = cRequestHandler(self._url)
         sHtmlContent = oRequest.request()

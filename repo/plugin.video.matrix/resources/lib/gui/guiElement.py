@@ -304,10 +304,11 @@ class cGuiElement:
             sTitle2 = '%s [COLOR %s](%s)[/COLOR]' % (sTitle2, sDecoColor, self.__Year)
 
         return sTitle2
-    
+
+    # Permet de forcer le titre sans aucun traitement
     def setRawTitle(self, sTitle):
         self.__sTitle = sTitle
-
+        
     def setTitle(self, sTitle):
         # Nom en clair sans les langues, qualités, et autres décorations
         self.__sCleanTitle = re.sub('\[.*\]|\(.*\)', '', sTitle)
@@ -369,7 +370,6 @@ class cGuiElement:
 
     def setPoster(self, sPoster):
         self.__sPoster = sPoster
-        
 
     def getPoster(self):
         return self.__sPoster

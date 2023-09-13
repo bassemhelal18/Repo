@@ -11,12 +11,12 @@ UA = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:68.0) Gecko/20100101 Firefox/6
 class cHoster(iHoster):
 
     def __init__(self):
-        iHoster.__init__(self, 'lien_direct', 'Direct Link')
+        iHoster.__init__(self, 'lien_direct', '-[Direct Link]')
 
     def setUrl(self, url):
         self._url = str(url).replace('+', '%20') # un lien direct n'est pas forcement urlEncoded
 
-    def _getMediaLinkForGuest(self):
+    def _getMediaLinkForGuest(self, autoPlay = False):
         api_call = self._url
         VSlog(self._url)
 

@@ -25,7 +25,7 @@ MOVIE_TOP = (URL_MAIN + 'category/افلام/movies-english-افلام-اجنب�
 MOVIE_POP = (URL_MAIN + 'category/افلام/movies-english-افلام-اجنبي/list/top/', 'showMovies')
 MOVIE_CLASSIC = (URL_MAIN + 'category/افلام/arabic-movies-افلام-عربي/list/old/', 'showMovies')
 MOVIE_FAM = (URL_MAIN + 'mpaa/pg/', 'showMovies')
-MOVIE_EN = (URL_MAIN + 'category/افلام/10-movies-english-افلام-اجنبي/', 'showMovies')
+MOVIE_EN = (URL_MAIN + 'category/أفلام/10-movies-english-افلام-اجنبي/list/recent/', 'showMovies')
 
 RAMADAN_SERIES = (URL_MAIN + '/category/مسلسلات/مسلسلات-رمضان-2023-series-ramadan-2023/', 'showSeries')
 MOVIE_AR = (URL_MAIN + '/category/افلام/افلام-عربي-arabic-movies/', 'showMovies')
@@ -163,7 +163,8 @@ def showMovies(sSearch = ''):
             
             sTitle = aEntry[1].replace("مشاهدة","").replace("مشاهده","").replace("مترجم","").replace("فيلم","").replace("اون لاين","").replace("برنامج","").replace("WEB-DL","").replace("BRRip","").replace("720p","").replace("HD-TC","").replace("HDRip","").replace("HD-CAM","").replace("DVDRip","").replace("BluRay","").replace("1080p","").replace("WEBRip","").replace("WEB-dl","").replace("4K","").replace("All","").replace("BDRip","").replace("HDCAM","").replace("HDTC","").replace("HDTV","").replace("HD","").replace("720","").replace("HDCam","").replace("Full HD","").replace("1080","").replace("HC","").replace("Web-dl","").replace("انمي","")
  
- 
+            if 'مدبلج' in sTitle:
+              continue
             siteUrl = aEntry[0]
             sDesc = ''
             sThumb = aEntry[2].replace("(","").replace(")","")
@@ -404,7 +405,7 @@ def showSeasons():
         for aEntry in aResult:
  
             sTitle = aEntry[1].replace("موسم","").replace("مشاهدة","").replace("مسلسل","").replace("انمي","").replace("مترجمة","").replace("مترجم","").replace("مشاهده","").replace("برنامج","").replace("مترجمة","").replace("فيلم","").replace("اون لاين","").replace("WEB-DL","").replace("BRRip","").replace("720p","").replace("HD-TC","").replace("HDRip","").replace("HD-CAM","").replace("DVDRip","").replace("BluRay","").replace("1080p","").replace("WEBRip","").replace("WEB-dl","").replace("مترجم ","").replace("مشاهدة وتحميل","").replace("اون لاين","")
-            sSeason =  "S" + sTitle
+            sSeason =  " S" + sTitle
             sTitle = sMovieTitle+sSeason
             siteUrl = aEntry[0]
             sThumb = sThumb
@@ -425,7 +426,7 @@ def showSeasons():
         for aEntry in aResult:
  
             sTitle = aEntry[1].replace("موسم","").replace("مشاهدة","").replace("مسلسل","").replace("انمي","").replace("مترجمة","").replace("مترجم","").replace("مشاهده","").replace("برنامج","").replace("مترجمة","").replace("فيلم","").replace("اون لاين","").replace("WEB-DL","").replace("BRRip","").replace("720p","").replace("HD-TC","").replace("HDRip","").replace("HD-CAM","").replace("DVDRip","").replace("BluRay","").replace("1080p","").replace("WEBRip","").replace("WEB-dl","").replace("مترجم ","").replace("مشاهدة وتحميل","").replace("اون لاين","")
-            sSeason =  "S" + sTitle
+            sSeason =  " S" + sTitle
             sTitle = sMovieTitle+sSeason
             siteUrl = aEntry[0]
             
@@ -450,7 +451,7 @@ def showSeasons():
         for aEntry in aResult:
  
             sTitle = aEntry[1].replace("موسم","").replace("مشاهدة","").replace("مسلسل","").replace("انمي","").replace("مترجمة","").replace("مترجم","").replace("مشاهده","").replace("برنامج","").replace("مترجمة","").replace("فيلم","").replace("اون لاين","").replace("WEB-DL","").replace("BRRip","").replace("720p","").replace("HD-TC","").replace("HDRip","").replace("HD-CAM","").replace("DVDRip","").replace("BluRay","").replace("1080p","").replace("WEBRip","").replace("WEB-dl","").replace("مترجم ","").replace("مشاهدة وتحميل","").replace("اون لاين","")
-            sSeason =  "S1" + sTitle
+            sSeason =  " S1" + sTitle
             sTitle = sMovieTitle+sSeason
             siteUrl = aEntry[0]
             if'/series/'  not in aEntry[0]:
@@ -578,9 +579,10 @@ def showEps():
        
     oGui.setEndOfDirectory() 
 	 
-def showHosters():
+def showHosters(oInputParameterHandler = False):
     oGui = cGui()
-    oInputParameterHandler = cInputParameterHandler()
+    if not oInputParameterHandler:
+        oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
@@ -622,7 +624,7 @@ def showHosters():
             if oHoster:
                 oHoster.setDisplayName(sTitle)
                 oHoster.setFileName(sMovieTitle)
-                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
+                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
 				
     # ([^<]+) .+?
     sPattern = 'class="hoverable activable" target="_blank" href="([^<]+)"><quality>([^<]+)</quality><resolution><i class=".+?"></i>([^<]+)</resolution>'
@@ -647,7 +649,7 @@ def showHosters():
             if oHoster:
                 oHoster.setDisplayName(sTitle)
                 oHoster.setFileName(sMovieTitle)
-                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
+                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
 				
 
                 

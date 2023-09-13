@@ -584,6 +584,14 @@ msgctxt "#30138"
 msgid "Sources"
 msgstr ""
 
+msgctxt "#30140"
+msgid "Loading"
+msgstr ""
+
+msgctxt "#30141"
+msgid "Loading infos"
+msgstr ""
+
 msgctxt "#30145"
 msgid "Download folder"
 msgstr ""
@@ -796,7 +804,6 @@ msgctxt "#30321"
 msgid "my viewing history"
 msgstr ""
 
-
 msgctxt "#30324"
 msgid "Library"
 msgstr ""
@@ -933,14 +940,6 @@ msgctxt "#31211"
 msgid "Add to existing list"
 msgstr ""
 
-msgctxt "#31212"
-msgid "Select a list"
-msgstr ""
-
-msgctxt "#30361"
-msgid "Activate scrobbling"
-msgstr ""
-
 msgctxt "#30400"
 msgid "Premium/Login"
 msgstr ""
@@ -1034,11 +1033,11 @@ msgid "Enable log records"
 msgstr ""
 
 msgctxt "#30423"
-msgid "Search a Movie"
+msgid "Search (Movies)"
 msgstr ""
 
 msgctxt "#30424"
-msgid "Search a Serie"
+msgid "Search (TV Shows)"
 msgstr ""
 
 msgctxt "#30425"
@@ -1206,7 +1205,7 @@ msgid "Minute"
 msgstr ""
 
 msgctxt "#30469"
-msgid "Hoster Direct"
+msgid "Direct link"
 msgstr ""
 
 msgctxt "#30470"
@@ -1241,6 +1240,7 @@ msgstr ""
 msgctxt "#31102"
 msgid "Use the skin display for the information windows"
 msgstr ""
+
 
 msgctxt "#31103"
 msgid "Allow adult content"
@@ -1294,13 +1294,27 @@ msgctxt "#31209"
 msgid "Results: %s"
 msgstr "Results: [COLOR deepskyblue]%s[/COLOR]"
 
-msgctxt "#30140"
-msgid "Loading"
+
+msgctxt "#31210"
+msgid "Add to new list"
+msgstr "Add to new list"
+
+msgctxt "#31211"
+msgid "Add to existing list"
+msgstr "Add to existing list"
+
+msgctxt "#31212"
+msgid "Select a list"
+msgstr "Select a list"
+
+msgctxt "#31213"
+msgid "Auto play"
 msgstr ""
 
-msgctxt "#30141"
-msgid "Loading infos"
+msgctxt "#31214"
+msgid "Accepted language for auto play"
 msgstr ""
+
 
 msgctxt "#70001"
 msgid "TOP"

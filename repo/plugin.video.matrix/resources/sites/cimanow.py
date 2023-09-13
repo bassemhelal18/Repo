@@ -172,6 +172,8 @@ def showMovies(sSearch = ''):
  
                     sTitle = aEntry[2].replace("مشاهدة","").replace("مسلسل","").replace("مسرحية","").replace("انمي","").replace("مترجمة","").replace("مترجم","").replace("برنامج","").replace("فيلم","").replace("والأخيرة","").replace("مدبلج للعربية","مدبلج").replace("والاخيرة","").replace("كاملة","").replace("حلقات كاملة","").replace("اونلاين","").replace("مباشرة","").replace("انتاج ","").replace("جودة عالية","").replace("كامل","").replace("HD","").replace("السلسلة الوثائقية","").replace("الفيلم الوثائقي","").replace("اون لاين","")
                     sTitle = str(sTitle.encode('latin-1'),'utf-8')
+                    if 'مدبلج' in sTitle:
+                        continue
                     siteUrl = aEntry[0] + '/watching/'
                     sThumb = str(aEntry[3].encode('latin-1'),'utf-8')
                     
@@ -497,11 +499,12 @@ def showEps():
     oGui.setEndOfDirectory() 
 
   
-def showServer():
+def showServer(oInputParameterHandler = False):
     import requests
     oGui = cGui()
    
-    oInputParameterHandler = cInputParameterHandler()
+    if not oInputParameterHandler:
+        oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
@@ -583,7 +586,7 @@ def showServer():
                             if oHoster:
                                 oHoster.setDisplayName(sTitle)
                                 oHoster.setFileName(sMovieTitle)
-                                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
+                                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
             
             sStart = '<ul class="tabcontent" id="download">'
             sEnd = '</section>'
@@ -598,7 +601,7 @@ def showServer():
             
                     url = aEntry[0]
                     sTitle = aEntry[1].replace('</i>',"")
-                    sTitle = ('%s  [COLOR coral]%s[/COLOR]') % (sMovieTitle, sTitle)
+                    sTitle = ('%s  -[%s]') % (sMovieTitle, sTitle)
                     url = url
                     sThumb = sThumb
                     if url.startswith('//'):
@@ -622,7 +625,7 @@ def showServer():
                     if oHoster:
                         oHoster.setDisplayName(sTitle)
                         oHoster.setFileName(sMovieTitle)
-                        cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
+                        cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
             
             oParser = cParser()
             sStart = '<li aria-label="download">'
@@ -639,7 +642,7 @@ def showServer():
             
                     url = aEntry[0]
                     sTitle = aEntry[1].replace('</i>',"")
-                    sTitle = ('%s  [COLOR coral]%s[/COLOR]') % (sMovieTitle, sTitle)
+                    sTitle = sMovieTitle
                     url = url.replace("cimanow","rrsrr")
                     sThumb = sThumb
                     if url.startswith('//'):
@@ -665,7 +668,7 @@ def showServer():
                     if oHoster:
                         oHoster.setDisplayName(sTitle)
                         oHoster.setFileName(sMovieTitle)
-                        cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
+                        cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
             
             
 

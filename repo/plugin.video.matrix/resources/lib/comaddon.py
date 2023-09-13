@@ -492,6 +492,7 @@ class siteManager:
     # site identifié par la team comme étant protégé par Cloudflare, false par défaut si non renseigné
     def isCloudFlare(self, sourceName):
         return self.getDefaultProperty(sourceName, self.CLOUDFLARE) == 'True'
+
     
     # sites désactivé par l'utilisateur
     def isActive(self, sourceName):

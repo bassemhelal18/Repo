@@ -19,17 +19,19 @@ from resources.lib.comaddon import VSlog
 
 class cHoster(iHoster):
     def __init__(self):
-        iHoster.__init__(self, 'ok_ru', 'Ok.ru')
+        iHoster.__init__(self, 'ok_ru', '-[Ok]')
+
+    
 
     def getHostAndIdFromUrl(self, sUrl):
         sPattern = 'https*:\/\/.*?((?:(?:ok)|(?:odnoklassniki))\.ru)\/.+?\/([0-9]+)'
         oParser = cParser()
         aResult = oParser.parse(sUrl, sPattern)
-        if aResult[0] :
+        if aResult[0]:
             return aResult[1][0]
         return ''
 
-    def _getMediaLinkForGuest(self):
+    def _getMediaLinkForGuest(self, autoPlay = False):
         VSlog(self._url)
         v = self.getHostAndIdFromUrl(self._url)
         sId = v[1]

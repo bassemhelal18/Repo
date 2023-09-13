@@ -7,8 +7,8 @@ from resources.lib.util import Unquote
 
 class iHoster:
 
-    def __init__(self, pluginIdentifier, displayName, color='skyblue'):
-        self._defaultDisplayName = displayName
+    def __init__(self, pluginIdentifier, displayName, color='lightgray'):
+        self._defaultDisplayName = displayName.upper()
         self._displayName = self._defaultDisplayName
         self._fileName = displayName
         self._pluginIdentifier = pluginIdentifier
@@ -43,8 +43,8 @@ class iHoster:
     def getUrl(self):
         return self._url
 
-    def getMediaLink(self):
-        return self._getMediaLinkForGuest()
+    def getMediaLink(self, autoPlay = False):
+        return self._getMediaLinkForGuest(autoPlay)
 
     # nom du fichier, interessant pour afficher la release
     def getMediaFile(self):
@@ -64,8 +64,8 @@ class iHoster:
         sMediaFile = sMediaFile.replace('_', ' ')
         return sMediaFile
 
-    def _getMediaLinkForGuest(self):
+    def _getMediaLinkForGuest(self, autoPlay = False):
         raise NotImplementedError()
 
-    def _getMediaLinkByPremiumUser(self):
+    def _getMediaLinkByPremiumUser(self, autoPlay = False):
         pass

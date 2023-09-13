@@ -1,8 +1,0 @@
-{
-    "name" : "[COLORblue]Matrix[/COLOR]",
-    "plugin" : "plugin.video.matrix",
-    "priority" : 101,
-    "is_resolvable" : "false",
-    "search_movie": "plugin://plugin.video.matrix/?function=quickSearch&site=cSearch&title={title}&year={year}&cat=1",
-    "play_movie" : "plugin://plugin.video.matrix/?function=playVideo&site=cSearch&title={title}&year={year}&cat=1"
-}

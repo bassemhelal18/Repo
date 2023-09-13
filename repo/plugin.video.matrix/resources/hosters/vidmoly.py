@@ -11,9 +11,9 @@ UA = 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:68.0) Gecko/20100101 Firefox/68.0'
 class cHoster(iHoster):
 
     def __init__(self):
-        iHoster.__init__(self, 'vidmoly', 'vidmoly')
+        iHoster.__init__(self, 'vidmoly', '-[vidmoly]')
 
-    def _getMediaLinkForGuest(self):
+    def _getMediaLinkForGuest(self, autoPlay = False):
         VSlog(self._url)
  
         api_call = ''

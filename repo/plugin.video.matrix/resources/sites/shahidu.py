@@ -220,7 +220,7 @@ def showMovies(sSearch = ''):
     sHtmlContent1 = oParser.abParse(sHtmlContent, sStart, sEnd)
     
     sPattern = 'href="([^"]+)".+?style="background-image: url\((.+?)\);.+?class="title">(.+?)</h4>'
-    sPattern += '<h5 class="description">(.+?)</h5>'
+    
     oParser = cParser()
     aResult = oParser.parse(sHtmlContent1, sPattern)
 	
@@ -240,15 +240,22 @@ def showMovies(sSearch = ''):
                 continue
 
             sTitle = aEntry[2].replace("مشاهدة","").replace("مترجمة","").replace("مترجم","").replace("فيلم","").replace("يلم","").replace("اون لاين","").replace("برنامج","").replace("WEB-DL","").replace("BRRip","").replace("720p","").replace("HD-TC","").replace("HDRip","").replace("HD-CAM","").replace("DVDRip","").replace("BluRay","").replace("1080p","").replace("WEBRip","").replace("WEB-dl","").replace("مترجم ","").replace("مشاهدة وتحميل","").replace("اون لاين","").replace("HD","").replace("كامل","")
-            sThumb = aEntry[1]
-            
-            siteUrl = aEntry[0].replace('film/','download/')
+            if 'مدبلج' in sTitle:
+              continue
+            if 'http' not in aEntry[1]:
+                sThumb = URL_MAIN+aEntry[1]
+            else:
+                sThumb = aEntry[1]
+            if 'http' not in aEntry[0]:
+                siteUrl = URL_MAIN+aEntry[0].replace('film/','download/')
+            else:
+                siteUrl = aEntry[0].replace('film/','download/')
             sYear = ''
             m = re.search('([0-9]{4})', sTitle)
             if m:
                 sYear = str(m.group(0))
                 sTitle = sTitle.replace(sYear,'')
-            sDesc = str(aEntry[3])
+            sDesc = ''
 
 
             oOutputParameterHandler.addParameter('siteUrl',siteUrl)
@@ -279,14 +286,15 @@ def showSeries(sSearch = ''):
  
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
+    
        # (.+?) ([^<]+) .+?
     oParser = cParser()
-    sStart = '<div class="container my-3">'
-    sEnd = '<nav aria-label="Page navigation"'
+    sStart = '<div class="shows-container row">'
+    sEnd = '<ul class="pagination">'
     sHtmlContent1 = oParser.abParse(sHtmlContent, sStart, sEnd)
     
     sPattern = 'href="([^"]+)".+?style="background-image: url\((.+?)\);.+?class="title">(.+?)</h4>'
-    sPattern += '<h5 class="description">(.+?)</h5>'    
+       
     oParser = cParser()
     aResult = oParser.parse(sHtmlContent1, sPattern)
 	
@@ -309,9 +317,15 @@ def showSeries(sSearch = ''):
                 continue
             
             sTitle = aEntry[2].replace("مشاهدة","").replace("مسلسل","").replace("انمي","").replace("مترجمة","").replace("مترجم","").replace("برنامج","").replace("مترجمة","").replace("فيلم","").replace("اون لاين","").replace("WEB-DL","").replace("BRRip","").replace("720p","").replace("HD-TC","").replace("HDRip","").replace("HD-CAM","").replace("DVDRip","").replace("BluRay","").replace("1080p","").replace("WEBRip","").replace("WEB-dl","").replace("مترجم ","").replace("مشاهدة وتحميل","").replace("اون لاين","").replace("كامل","")
-            siteUrl = aEntry[0]
-            sThumb = aEntry[1]
-            sDesc = str(aEntry[3])
+            if 'http' not in aEntry[1]:
+                sThumb = URL_MAIN+aEntry[1]
+            else:
+                sThumb = aEntry[1]
+            if 'http' not in aEntry[0]:
+                siteUrl = URL_MAIN+aEntry[0].replace('film/','download/')
+            else:
+                siteUrl = aEntry[0].replace('film/','download/')
+            sDesc = ''
             sYear = ''
             sTitle = sTitle.split('الحلقة')[0].split('الموسم')[0]
             
@@ -369,8 +383,11 @@ def showSeasons():
 
             sTitle =  " S" + aEntry[1]
             sTitle =  sMovieTitle+sTitle
-            siteUrl = aEntry[0]
-            sThumb = sThumb
+            if 'http' not in aEntry[0]:
+                siteUrl = URL_MAIN+aEntry[0].replace('episode/','download/')
+            else:
+                siteUrl = aEntry[0].replace('episode/','download/')
+            sThumb = ''
             sDesc = ''
 			
             oOutputParameterHandler.addParameter('siteUrl',siteUrl)
@@ -397,8 +414,11 @@ def showSeasons():
  
                 sTitle = " E"+aEntry[1]
                 sTitle = sMovieTitle+sTitle
-                siteUrl = aEntry[0].replace('episode/','download/')
-                sThumb = sThumb
+                if 'http' not in aEntry[0]:
+                   siteUrl = URL_MAIN+aEntry[0].replace('episode/','download/')
+                else:
+                   siteUrl = aEntry[0].replace('episode/','download/')
+                sThumb = ''
                 sDesc = ''
 			
 
@@ -437,8 +457,11 @@ def showEpisodes():
                 continue 
             sTitle = " E"+aEntry[1]
             sTitle = sMovieTitle+sTitle
-            siteUrl = aEntry[0].replace('episode/','download/')
-            sThumb = sThumb
+            if 'http' not in aEntry[0]:
+                siteUrl = URL_MAIN+aEntry[0].replace('episode/','download/')
+            else:
+                siteUrl = aEntry[0].replace('episode/','download/')
+            sThumb = ''
             sDesc = ''
 			
 
@@ -450,11 +473,12 @@ def showEpisodes():
     oGui.setEndOfDirectory()	
     # .+? ([^<]+)	
  
-def showHosters():
+def showHosters(oInputParameterHandler = False):
     oGui = cGui()
     import requests
    
-    oInputParameterHandler = cInputParameterHandler()
+    if not oInputParameterHandler:
+        oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
@@ -480,7 +504,7 @@ def showHosters():
                     if oHoster:
                        oHoster.setDisplayName(sTitle)
                        oHoster.setFileName(sTitle)
-                       cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
+                       cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
 
 
     
@@ -515,18 +539,23 @@ def showHosters():
                     sHosterUrl = url
                     oHoster = cHosterGui().checkHoster(sHosterUrl)
                     if oHoster:
-                        sDisplayTitle = sMovieTitle+('[COLOR coral](%sp)[/COLOR]') % (sQual)
+                        sDisplayTitle = sMovieTitle+('-[%sp]') % (sQual)
                         oHoster.setDisplayName(sDisplayTitle)
                         oHoster.setFileName(sMovieTitle)
-                        cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
+                        cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
 
     oGui.setEndOfDirectory()
 
 def __checkForNextPage(sHtmlContent, sUrl):
     
-    sPattern = '<button class="page-link cursor-pointer" type="button" aria-label="Page Button" onclick="(.*?)">(.*?)</button>' 
     oParser = cParser()
-    aResult = oParser.parse(sHtmlContent, sPattern)
+    sStart = '<ul class="pagination">'
+    sEnd = '<div class="footer">'
+    sHtmlContent0 = oParser.abParse(sHtmlContent, sStart, sEnd)
+    
+    sPattern = '<li class="page-item">.*?<button class="page-link cursor-pointer" type="button" aria-label="Page Button".*?onclick="(.*?)">(.*?)</button>' 
+    oParser = cParser()
+    aResult = oParser.parse(sHtmlContent0, sPattern)
 
     if aResult[0]:
         for aEntry in aResult[1]:

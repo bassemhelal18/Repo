@@ -11,12 +11,12 @@ UA = 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 
 class cHoster(iHoster):
 
     def __init__(self):
-        iHoster.__init__(self, 'cimanow', 'CimaNow', 'gold')
+        iHoster.__init__(self, 'cimanow', '-[CimaNow]')
 			
     def setUrl(self, sUrl):
         self._url = str(sUrl).replace('rrsrrs','newcima')
         VSlog(self._url)
-    def _getMediaLinkForGuest(self):
+    def _getMediaLinkForGuest(self, autoPlay = False):
         
         sReferer = "https://cimanow.cc/"
         host = self._url.split('/e')[0]

@@ -11,13 +11,13 @@ UA = 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:61.0) Gecko/20100101 Firefox/61.0'
 class cHoster(iHoster):
 
     def __init__(self):
-        iHoster.__init__(self, 'govid', 'CimaClub', 'gold')
+        iHoster.__init__(self, 'govid', '-[CimaClub]')
 			
     def setUrl(self, sUrl):
         self._url = str(sUrl).replace('rbrb.site','telvod.site')
         VSlog(self._url)
 
-    def _getMediaLinkForGuest(self):
+    def _getMediaLinkForGuest(self, autoPlay = False):
         sReferer = ""
         if '|Referer=' in self._url:
             surl = self._url.split('|Referer=')[0]
@@ -57,7 +57,7 @@ class cHoster(iHoster):
 
 
             if api_call:
-                return True, api_call+ '|User-Agent=' + UA+'&AUTH=TLS&verifypeer=false' + '&Referer=' + surl
+                return True, api_call+ '|User-Agent=' + UA+'&AUTH=TLS&verifypeer=false' + '&Referer=' + 'cima-club.cam'
 
         sPattern =  '<a target="_blank".+?href="([^"]+)' 
         aResult = oParser.parse(sHtmlContent,sPattern)
@@ -70,6 +70,7 @@ class cHoster(iHoster):
                    return True, api_call+ '|User-Agent=' + UA+'&AUTH=TLS&verifypeer=false' + '&Referer=' + 'cima-club.cam'
 
         sPattern =  'sources: (.+?),' 
+        
         aResult = oParser.parse(sHtmlContent,sPattern)
         if aResult[0]:
             for aEntry in aResult[1]:
@@ -78,6 +79,6 @@ class cHoster(iHoster):
 
 
                 if api_call:
-                   return True, api_call+ '|User-Agent=' + UA+'&AUTH=TLS&verifypeer=false' + '&Referer=' + surl
+                   return True, api_call+ '|User-Agent=' + UA+'&AUTH=TLS&verifypeer=false' + '&Referer=' + 'cima-club.cam'
 
         return False, False

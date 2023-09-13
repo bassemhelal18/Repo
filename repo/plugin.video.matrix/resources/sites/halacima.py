@@ -145,9 +145,10 @@ def showMovies(sSearch = ''):
  
             if "حلقة"  in aEntry[1]:
                 continue
- 
+       
             sTitle = aEntry[1].replace("مشاهدة","").replace("بجودة","").replace("مترجمة","").replace("مترجم","").replace("مترجمة","").replace("فيلم","").replace("اون لاين","").replace("WEB-DL","").replace("BRRip","").replace("720p","").replace("HD-TC","").replace("HDRip","").replace("HD-CAM","").replace("DVDRip","").replace("BluRay","").replace("1080p","").replace("WEBRip","").replace("WEB-dl","").replace("مترجم ","").replace("مشاهدة وتحميل","").replace("اون لاين","").replace("مدبلج للعربية","مدبلج").replace("مدبلج","").replace("كامله","").replace("بجودة عالية","").replace("كاملة","").replace("جودة عالية","").replace("كامل","").replace("اونلاين","").replace("اون لاين","").replace("انمي","") 
-            
+            if 'مدبلج' in sTitle:
+              continue
             sTitle = sTitle
             sThumb = aEntry[2]
             siteUrl = aEntry[0]
@@ -363,11 +364,12 @@ def showEpisodes():
 
 
 	 
-def showServers():
+def showServers(oInputParameterHandler = False):
     oGui = cGui()
     import requests
    
-    oInputParameterHandler = cInputParameterHandler()
+    if not oInputParameterHandler:
+        oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
@@ -424,7 +426,7 @@ def showServers():
                     if oHoster:
                        oHoster.setDisplayName(sTitle)
                        oHoster.setFileName(sTitle)
-                       cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)  
+                       cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)  
 				
    
     # (.+?) ([^<]+) .+?
@@ -444,7 +446,7 @@ def showServers():
             if oHoster:
                oHoster.setDisplayName(sTitle)
                oHoster.setFileName(sTitle)
-               cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
+               cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
 	    
   # ([^<]+) .+?
     

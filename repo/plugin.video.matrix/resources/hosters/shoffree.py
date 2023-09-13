@@ -19,7 +19,7 @@ class cHoster(iHoster):
     def setUrl(self, url):
         self._url = str(url)
 
-    def _getMediaLinkForGuest(self):
+    def _getMediaLinkForGuest(self, autoPlay = False):
         VSlog(self._url)
         sReferer = ""
         url = self._url.split('|Referer=')[0]

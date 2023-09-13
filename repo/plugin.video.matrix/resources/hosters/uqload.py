@@ -10,9 +10,9 @@ UA = 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrom
 class cHoster(iHoster):
 
     def __init__(self):
-        iHoster.__init__(self, 'uqload', 'Uqload')
+        iHoster.__init__(self, 'uqload', '-[Uqload]')
 
-    def _getMediaLinkForGuest(self):
+    def _getMediaLinkForGuest(self, autoPlay = False):
         VSlog(self._url)
         api_call = ''
         oParser = cParser()

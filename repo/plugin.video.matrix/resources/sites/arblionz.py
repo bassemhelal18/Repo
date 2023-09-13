@@ -322,6 +322,8 @@ def showMovies(sSearch = ''):
             if "سيرفر"  in aEntry[1]:
                 continue
             sTitle = aEntry[1].replace("مشاهدة","").replace("مسلسل","").replace("انمي","").replace("مترجمة","").replace("مترجم","").replace("برنامج","").replace("فيلم","").replace("والأخيرة","").replace("مدبلج للعربية","مدبلج").replace("والاخيرة","").replace("كاملة","").replace("حلقات كاملة","").replace("اونلاين","").replace("مباشرة","").replace("انتاج ","").replace("جودة عالية","").replace("كامل","").replace("HD","").replace("السلسلة الوثائقية","").replace("الفيلم الوثائقي","").replace("اون لاين","").replace("عرض","").replace("الرو","").replace("بالتعليق العربي","[COLOR gold]- تعليق عربي -[/COLOR]")
+            if 'مدبلج' in sTitle:
+              continue
             siteUrl = aEntry[0]
             s1Thumb = aEntry[2]
             sThumb = re.sub(r'-\d*x\d*.','.', s1Thumb)
@@ -334,7 +336,6 @@ def showMovies(sSearch = ''):
 
             oOutputParameterHandler.addParameter('siteUrl',siteUrl)
             oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
-            oOutputParameterHandler.addParameter('sMovieTitle2', sTitle)
             oOutputParameterHandler.addParameter('sYear', sYear)
             oOutputParameterHandler.addParameter('sThumb', sThumb)
 			
@@ -386,6 +387,7 @@ def showSeries(sSearch = ''):
                 continue
  
             sTitle = aEntry[1].replace("مشاهدة","").replace("مسلسل","").replace("انمي","").replace("مترجمة","").replace("مترجم","").replace("برنامج","").replace("فيلم","").replace("والأخيرة","").replace("مدبلج للعربية","مدبلج").replace("والاخيرة","").replace("كاملة","").replace("حلقات كاملة","").replace("اونلاين","").replace("مباشرة","").replace("انتاج ","").replace("جودة عالية","").replace("كامل","").replace("HD","").replace("السلسلة الوثائقية","").replace("الفيلم الوثائقي","").replace("اون لاين","")
+            sTitle = sTitle.split("الموسم")[0].split("الحلقة")[0].split("موسم")[0].split("حلقة")[0]
             siteUrl = aEntry[0]
             s1Thumb = aEntry[2]
             sThumb = re.sub(r'-\d*x\d*.','.', s1Thumb)
@@ -544,9 +546,10 @@ def showEps():
        
     oGui.setEndOfDirectory() 
  
-def showHosters():
+def showHosters(oInputParameterHandler = False):
     oGui = cGui()
-    oInputParameterHandler = cInputParameterHandler()
+    if not oInputParameterHandler:
+        oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
@@ -610,7 +613,7 @@ def showHosters():
             if aResult[0]:
                for aEntry in aResult[1]:
             
-                   url = aEntry
+                   url = aEntry.replace('player.html?id=','file/')
                    sTitle = sMovieTitle
             
                    sHosterUrl = url
@@ -622,7 +625,7 @@ def showHosters():
                    if oHoster:
                        oHoster.setDisplayName(sTitle)
                        oHoster.setFileName(sMovieTitle)
-                       cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
+                       cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
 					   
     siteUrl = URL_MAIN + '/PostServersDownload/'+sId
 
@@ -647,7 +650,7 @@ def showHosters():
         for aEntry in aResult:
             
             url = aEntry[0]
-            sTitle = sMovieTitle+'('+aEntry[1]+')'
+            sTitle = sMovieTitle
             
             sHosterUrl = url
             if 'mdiaload'in url:
@@ -665,7 +668,7 @@ def showHosters():
             if oHoster:
                 oHoster.setDisplayName(sTitle)
                 oHoster.setFileName(sMovieTitle)
-                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
+                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
 				
 				
                 

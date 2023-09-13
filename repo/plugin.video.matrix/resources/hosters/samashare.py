@@ -13,7 +13,7 @@ UA = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:68.0) Gecko/20100101 Firefox/6
 class cHoster(iHoster):
 
     def __init__(self):
-        iHoster.__init__(self, 'samashare', 'samashare')
+        iHoster.__init__(self, 'samashare', '-[Vidpro]')
 			
     def setUrl(self, sUrl):
         self._url = str(sUrl)
@@ -22,7 +22,7 @@ class cHoster(iHoster):
             self._url = self._url.rsplit('/', 1)[0] + '/embed-' + self._url.rsplit('/', 1)[1]
             self._url = self._url+'-750x455.html'
 
-    def _getMediaLinkForGuest(self):
+    def _getMediaLinkForGuest(self, autoPlay = False):
         VSlog(self._url)
         api_call = False
 

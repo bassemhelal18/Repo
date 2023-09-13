@@ -7,7 +7,7 @@ import resolveurl
 class cHoster(iHoster):
 
     def __init__(self):
-        iHoster.__init__(self, 'resolver','-')
+        iHoster.__init__(self, 'resolver',' ')
         self.__sRealHost = '???'
 
     def setDisplayName(self, displayName):
@@ -16,7 +16,7 @@ class cHoster(iHoster):
     def setRealHost(self, sName):
         self.__sRealHost = sName
 
-    def _getMediaLinkForGuest(self):
+    def _getMediaLinkForGuest(self, autoPlay = False):
         VSlog(self._url)
         hmf = resolveurl.HostedMediaFile(url = self._url)
         if hmf.valid_url():
@@ -25,5 +25,7 @@ class cHoster(iHoster):
                 return True, stream_url
 
         return False, False
+
+
 
 

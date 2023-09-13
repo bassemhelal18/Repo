@@ -11,9 +11,9 @@ UA = 'Mozilla/5.0 (iPad; CPU OS 13_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML,
 class cHoster(iHoster):
 
     def __init__(self):
-        iHoster.__init__(self, 'vidbom', 'Vidbom')
+        iHoster.__init__(self, 'vidbom', '-[Vidbom]')
 
-    def _getMediaLinkForGuest(self):
+    def _getMediaLinkForGuest(self, autoPlay = False):
         VSlog(self._url)
         api_call = ''
         oParser = cParser()
@@ -28,6 +28,6 @@ class cHoster(iHoster):
             VSlog(api_call)
 
         if api_call:
-            return True, api_call+ '|User-Agent=' + UA + '&Referer=https://vedbam.xyz/' 
+            return True, api_call+ '|User-Agent=' + UA + '&Referer=' +  self._url
 
         return False, False

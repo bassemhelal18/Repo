@@ -10,12 +10,12 @@ UA = 'Android'
 class cHoster(iHoster):
 
     def __init__(self):
-        iHoster.__init__(self, 'govidme', 'govid')
+        iHoster.__init__(self, 'govidme', '-[govid]')
 
     def isDownloadable(self):
         return True
 
-    def _getMediaLinkForGuest(self):
+    def _getMediaLinkForGuest(self, autoPlay = False):
         VSlog(self._url)
 
         oRequest = cRequestHandler(self._url)
@@ -26,11 +26,11 @@ class cHoster(iHoster):
         api_call = ''
         #type1/([^"]+)/
         oParser = cParser()
-
+        VSlog(sHtmlContent)
        # (.+?) .+? ([^<]+)
         sPattern =  'file:"([^<]+)",label:"([^<]+)"}' 
         aResult = oParser.parse(sHtmlContent,sPattern)
-        if aResult[0] :
+        if aResult[0]:
             #initialisation des tableaux
             url=[]
             qua=[]
@@ -43,5 +43,7 @@ class cHoster(iHoster):
 
             if api_call:
                 return True, api_call + '|User-Agent=' + UA+'&AUTH=TLS&verifypeer=false' + '&Referer=' + self._url
+        else:
+            return True, self._url
 
         return False, False

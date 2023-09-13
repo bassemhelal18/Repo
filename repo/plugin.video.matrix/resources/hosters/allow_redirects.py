@@ -9,7 +9,7 @@ class cHoster(iHoster):
     def __init__(self):
         iHoster.__init__(self, 'allow_redirects', 'Allow_redirects')
 
-    def _getMediaLinkForGuest(self):
+    def _getMediaLinkForGuest(self, autoPlay = False):
         VSlog(self._url)
         oRequestHandler = cRequestHandler(self._url)
         sHtmlContent = oRequestHandler.request()
@@ -21,7 +21,7 @@ class cHoster(iHoster):
         elif sHosterUrl:
             oHoster = cHosterGui().checkHoster(sHosterUrl)
             oHoster.setUrl(sHosterUrl)
-            api_call = oHoster.getMediaLink()
+            api_call = oHoster.getMediaLink(autoPlay)
 
             if api_call[0] is True:
                 return True, api_call[1]

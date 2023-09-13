@@ -12,12 +12,12 @@ UA = 'ipad'
 class cHoster(iHoster):
 
     def __init__(self):
-        iHoster.__init__(self, 'faselhd', 'faselhd')
+        iHoster.__init__(self, 'faselhd', '-[faselHD]')
 
     def isDownloadable(self):
         return True
 
-    def _getMediaLinkForGuest(self):
+    def _getMediaLinkForGuest(self, autoPlay = False):
         api_call = ''
         VSlog(self._url)
         oRequest = cRequestHandler(self._url)

@@ -11,7 +11,7 @@ UA = 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 
 class cHoster(iHoster):
 
     def __init__(self):
-        iHoster.__init__(self, 'arabseed', 'arabseed','reviewtech')
+        iHoster.__init__(self, 'arabseed', '-[arabseed]','reviewtech')
 
     def isDownloadable(self):
         return True
@@ -19,7 +19,7 @@ class cHoster(iHoster):
     def setUrl(self, sUrl):
         self._url = str(sUrl)
 
-    def _getMediaLinkForGuest(self):
+    def _getMediaLinkForGuest(self, autoPlay = False):
         VSlog(self._url)
         sUrl = self._url
 

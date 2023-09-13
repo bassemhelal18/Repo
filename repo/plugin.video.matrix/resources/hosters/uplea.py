@@ -20,14 +20,15 @@ class cHoster(iHoster):
     def __init__(self):
         iHoster.__init__(self, 'uplea', 'Uplea', 'violet')
 
-    def getMediaLink(self):
+    def getMediaLink(self, autoPlay = False):
         if 'site=cDownload&function' not in sys.argv[2]:
-            oDialog = dialog().VSok("ATTENTION, Pas de streaming sans premium\n" + \
-                "Pour voir le film passer par l'option 'Télécharger et Lire' du menu contextuel.")
+            if not autoPlay:
+                oDialog = dialog().VSok("Pas de streaming sans premium.\n" +
+                    "Pour voir le film passer par l'option 'Télécharger et Lire' du menu contextuel.")
             return False, False
-        return self._getMediaLinkForGuest()
+        return self._getMediaLinkForGuest(autoPlay)
 
-    def _getMediaLinkForGuest(self):
+    def _getMediaLinkForGuest(self, autoPlay = False):
         VSlog(self._url)
         # http:///dl/12345XXYEEEEREERERE
 
