@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 # zombi https://github.com/zombiB/zombi-addons/
 
 import re
@@ -653,10 +653,12 @@ def showHosters(oInputParameterHandler = False):
             sTitle = sMovieTitle
             
             sHosterUrl = url
-            if 'mdiaload'in url:
-                continue
-            if 'uploadbank'in url:
-                continue
+            if 'mdiaload' in sHosterUrl:
+                     continue
+            if 'uploading.vn' in sHosterUrl:
+                     continue
+            if 'uploadbank' in sHosterUrl:
+                     continue
             if '?download_' in sHosterUrl:
                 sHosterUrl = sHosterUrl.replace("moshahda","ffsff")
                 sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN 

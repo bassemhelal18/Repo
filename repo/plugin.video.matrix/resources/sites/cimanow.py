@@ -574,10 +574,7 @@ def showServer(oInputParameterHandler = False):
                             if 'userload' in sHosterUrl:
                                 sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
                             
-                            if 'mdiaload'in url:
-                                continue
-                            if 'uploading.vn'in url:
-                                continue
+                            
                             if 'moshahda' in sHosterUrl:
                                 sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
                             if 'mystream' in sHosterUrl:
@@ -613,10 +610,7 @@ def showServer(oInputParameterHandler = False):
                     if 'userload' in sHosterUrl:
                         sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
                     
-                    if 'mdiaload'in url:
-                        continue
-                    if 'uploading.vn'in url:
-                        continue
+                    
                     if 'moshahda' in sHosterUrl:
                         sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
                     if 'mystream' in sHosterUrl:
@@ -653,11 +647,10 @@ def showServer(oInputParameterHandler = False):
                     sHosterUrl = url
                     
 
-                    
-                    if 'mdiaload'in url:
-                        continue
-                    if 'uploading.vn'in url:
-                        continue 
+                    if 'mdiaload' in sHosterUrl:
+                     continue
+                    if 'uploading.vn' in sHosterUrl:
+                     continue
                     if 'userload' in sHosterUrl:
                         sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
                     if 'moshahda' in sHosterUrl:

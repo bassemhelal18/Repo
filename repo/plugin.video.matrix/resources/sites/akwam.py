@@ -10,7 +10,7 @@ from resources.lib.handler.outputParameterHandler import cOutputParameterHandler
 from resources.lib.handler.requestHandler import cRequestHandler
 from resources.lib.parser import cParser
 from resources.lib.comaddon import progress, VSlog, siteManager, dialog, addon
-from resources.lib.util import cUtil, Unquote, urlEncode, Quote
+from resources.lib.util import cUtil, Unquote
 
 try:  # Python 2
     import urllib2
@@ -28,8 +28,17 @@ SITE_NAME = 'Akwam'
 SITE_DESC = 'arabic vod'
 
 URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
+oParser = cParser()
+ 
+oRequestHandler = cRequestHandler(URL_MAIN)
+sHtmlContent = oRequestHandler.request()
+    # (.+?) ([^<]+)
 
-
+sPattern = '<meta property="og:url" content="(.+?)"/>'
+aResult = oParser.parse(sHtmlContent, sPattern)
+    
+if (aResult[0]):
+    URL_MAIN = aResult[1][0]
 
 MOVIE_FAM = (URL_MAIN + '/movies?section=0&category=33&rating=0&year=0&language=0&formats=0&quality=0', 'showMovies')
 MOVIE_AR = (URL_MAIN + '/movies?section=29', 'showMovies')
@@ -615,44 +624,64 @@ def __checkForNextPage(sHtmlContent):
 
 def showHosters(oInputParameterHandler = False):
     oGui = cGui()
-    
+    oHosterGui = cHosterGui()
+
     if not oInputParameterHandler:
         oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
-    
+
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
 
     oParser = cParser()
-            
-    # ([^<]+) .+? (.+?)<a href="http://noon.khsm.io/link/126002"
     sPattern =  'href="(http[^<]+/watch/.+?)"' 
     aResult = oParser.parse(sHtmlContent,sPattern)
     if aResult[0]:
         murl =  aResult[1][0]
-        
-        oRequest = cRequestHandler(murl)
-        sHtmlContent = oRequest.request()
-    # ([^<]+) .+? (.+?)
-    sPattern =  'href="(http[^<]+/watch/.+?)"' 
-    aResult = oParser.parse(sHtmlContent,sPattern)
-    if aResult[0]:
-        murl =  aResult[1][0]
-        
-        oRequest = cRequestHandler(murl)
-        sHtmlContent = oRequest.request()
-            
-    # ([^<]+) .+? (.+?)
-    sPattern =  '>Click here</span>.+?<a href="(.+?)"'
-    aResult = oParser.parse(sHtmlContent,sPattern)
-    if aResult[0]:
-        murl =  aResult[1][0]
-        
         oRequest = cRequestHandler(murl)
         sHtmlContent = oRequest.request()
 
+    sPattern =  'href="(http[^<]+/watch/.+?)"'  
+    aResult = oParser.parse(sHtmlContent,sPattern)
+    
+    if aResult[0]:
+        murl =  aResult[1][0]
+
+        oRequest = cRequestHandler(murl)
+        sHtmlContent = oRequest.request()
+
+    
+
+    sPattern =  '>Click here</span>.+?<a href="([^"]+)' 
+    aResult = oParser.parse(sHtmlContent,sPattern)
+    
+    if aResult[0]:
+        murl =  aResult[1][0]
+  
+        oRequest = cRequestHandler(murl)
+        oRequest.disableSSL()
+        sHtmlContent = oRequest.request()
+    
+    import requests
+    s = requests.Session() 
+    from resources.lib import librecaptcha
+    from resolveurl import common
+    test = librecaptcha.get_token(api_key="6LdMb-QZAAAAAPpUMcYZSn9CpIgBqDVAfTx_SAao", site_url=murl, user_agent=common.RAND_UA,
+                                      gui=False, debug=False)
+    data = {'g-recaptcha-response':test}
+    url = URL_MAIN+'/verify'
+    headers = {'User-Agent': common.RAND_UA,
+                    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+                    'Accept-Language': 'en-US,en;q=0.9',
+                    'Accept-Encoding': 'gzip, deflate, br',
+                    'Referer': murl,
+                    'Content-Type': 'application/x-www-form-urlencoded'}
+    r = s.post(url,data=data,headers=headers)
+    rt = s.get(murl)
+    sHtmlContent = rt.text+r.text
+    
     oParser = cParser()           
     sPattern =  '<source.+?src="(.+?)".+?type="video/mp4".+?size="(.+?)"' 
 	
@@ -673,3 +702,5 @@ def showHosters(oInputParameterHandler = False):
                 
     oGui.setEndOfDirectory()
 
+    
+    

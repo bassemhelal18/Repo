@@ -340,6 +340,9 @@ class cHosterGui:
         if ('ak-download' in sHostName):
             return self.getHoster('lien_direct')
         
+        if ('newcima' in sHostName):
+            return self.getHoster('lien_direct')
+        
         if ('rrsrrs' in sHostName):
             return self.getHoster('cimanow')
         

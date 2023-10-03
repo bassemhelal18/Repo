@@ -19,7 +19,7 @@ SITE_DESC = 'arabic vod'
  
 URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
 
-MOVIE_EN = (URL_MAIN+'/category/english-movies/', 'showMovies')
+MOVIE_EN = (URL_MAIN+'/category/%D8%A7%D9%81%D9%84%D8%A7%D9%85-%D8%A7%D8%AC%D9%86%D8%A8%D9%8A/', 'showMovies')
 MOVIE_PACK = (URL_MAIN+'/assembly/', 'showPack')
 MOVIE_DUBBED = (URL_MAIN+'/category/english-movies-dub/', 'showMovies')
 MOVIE_TURK = (URL_MAIN+'/category/turkish-movies/', 'showMovies')
@@ -703,7 +703,7 @@ def showHosters2(oInputParameterHandler = False):
 					
             
             sHosterUrl = url
-            if 'mirrorace.org' in sHosterUrl:
+            if 'mirrorace' in sHosterUrl:
                 continue
             if 'userload' in sHosterUrl:
                sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN

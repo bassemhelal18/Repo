@@ -1,6 +1,10 @@
+
+
 import xbmcaddon
 import xbmcvfs
 import xbmcgui
+import os
+from resolveurl import common
 
 from resources.lib.comaddon import VSlog
 
@@ -10,25 +14,30 @@ class cInputWindow(xbmcgui.WindowDialog):
     chkbutton = []
 
     def __init__(self, *args, **kwargs):
-        self.cptloc = kwargs.get('captcha')
+        
 
         DimTab = kwargs.get('dimtab')
         self.DimTabTotal = DimTab[0] * DimTab[1]
+
+        bg_image = os.path.join(common.addon_path, 'resources', 'images', 'DialogBack2.png')
+        check_image = os.path.join(common.addon_path, 'resources', 'images', 'checked.png')
+        button_fo = os.path.join(common.kodi.get_path(), 'resources', 'skins', 'Default', 'media', 'button-fo.png')
+        button_nofo = os.path.join(common.kodi.get_path(), 'resources', 'skins', 'Default', 'media', 'button-nofo.png')
         
-        # ADDON = addon()
-        # icons = ADDON.getSetting('defaultIcons')
+        
+        
+        
 
-        bg_image = 'special://home/addons/plugin.video.vstream/resources/art/background.png'
-        check_image = 'special://home/addons/plugin.video.vstream/resources/art/trans_checked.png'
-
-        self.ctrlBackground = xbmcgui.ControlImage(0, 0, 1280, 720, bg_image)
+        self.ctrlBackground = xbmcgui.ControlImage(250, 110, 780, 499, bg_image)
         self.cancelled = False
         self.addControl(self.ctrlBackground)
+        
+        self.msg = '[COLOR red]%s[/COLOR]' % (kwargs.get('msg'))
 
-        self.strActionInfo = xbmcgui.ControlLabel(250, 20, 724, 400, 'Le theme est : ' + kwargs.get('msg'), 'font40', '0xFFFF00FF')
+        self.strActionInfo = xbmcgui.ControlLabel(250, 20, 724, 400, self.msg, 'font13')
         self.addControl(self.strActionInfo)
 
-        self.img = xbmcgui.ControlImage(250, 110, 780, 499, str(self.cptloc))
+        self.img = xbmcgui.ControlImage(250, 110, 780, 499,  kwargs.get('captcha'))
         self.addControl(self.img)
 
         self.chk = [0] * self.DimTabTotal
@@ -46,7 +55,7 @@ class cInputWindow(xbmcgui.WindowDialog):
             for x in range(DimTab[0]):
 
                 self.chk[c] = xbmcgui.ControlImage(ox + cx * x, oy + cy * y, cx, cy, check_image)
-                self.chkbutton[c] = xbmcgui.ControlButton(ox + cx * x, oy + cy * y, cx, cy, str(c + 1), font='font1')
+                self.chkbutton[c] = xbmcgui.ControlButton(ox + cx * x, oy + cy * y, cx, cy, str(c + 1), font='font1', focusTexture=button_fo, noFocusTexture=button_nofo)
                 c += 1
 
         for obj in self.chk:
@@ -55,8 +64,8 @@ class cInputWindow(xbmcgui.WindowDialog):
         for obj in self.chkbutton:
             self.addControl(obj)
 
-        self.cancelbutton = xbmcgui.ControlButton(250 + 260 - 70, 620, 140, 50, 'Cancel', alignment=2)
-        self.okbutton = xbmcgui.ControlButton(250 + 520 - 50, 620, 100, 50, 'OK', alignment=2)
+        self.cancelbutton = xbmcgui.ControlButton(250 + 260 - 70, 620, 140, 50, common.i18n('cancel'), focusTexture=button_fo, noFocusTexture=button_nofo, alignment=2)
+        self.okbutton = xbmcgui.ControlButton(250 + 520 - 50, 620, 100, 50, common.i18n('ok'), focusTexture=button_fo, noFocusTexture=button_nofo, alignment=2)
         self.addControl(self.okbutton)
         self.addControl(self.cancelbutton)
 
@@ -147,22 +156,38 @@ class cInputWindow(xbmcgui.WindowDialog):
 
 class cInputWindowYesNo(xbmcgui.WindowDialog):
     def __init__(self, *args, **kwargs):
-        self.cptloc = kwargs.get('captcha')
+        
 
-        bg_image = 'special://home/addons/plugin.video.vstream/resources/art/background.png'
+        imgX, imgY, imgw, imgh = 436, 210, 408, 300
+        ph, pw = imgh / 3, imgw / 3
+        x_gap = 70
+        y_gap = 70
+        button_gap = 40
+        button_h = 40
+        button_y = imgY + imgh + button_gap
+        middle = imgX + (imgw / 2)
+        win_x = imgX - x_gap
+        win_y = imgY - y_gap
+        win_h = imgh + 2 * y_gap + button_h + button_gap
+        win_w = imgw + 2 * x_gap
 
-        self.ctrlBackground = xbmcgui.ControlImage(0, 0, 1280, 720, bg_image)
+        bg_image = os.path.join(common.addon_path, 'resources', 'images', 'DialogBack2.png')
+        button_fo = os.path.join(common.kodi.get_path(), 'resources', 'skins', 'Default', 'media', 'button-fo.png')
+        button_nofo = os.path.join(common.kodi.get_path(), 'resources', 'skins', 'Default', 'media', 'button-nofo.png')
+
+        self.ctrlBackground = xbmcgui.ControlImage(win_x, win_y, win_w, win_h, bg_image)
         self.cancelled = False
         self.addControl(self.ctrlBackground)
-
-        self.strActionInfo = xbmcgui.ControlLabel(250, 20, 724, 400, kwargs.get('msg'), 'font40', '0xFFFF00FF')
+        
+        self.msg = '[COLOR red]%s[/COLOR]' % (kwargs.get('msg'))
+        self.strActionInfo = xbmcgui.ControlLabel(250, 20, 724, 400, self.msg, 'font13')
         self.addControl(self.strActionInfo)
 
-        self.img = xbmcgui.ControlImage(500, 250, 280, 280, str(self.cptloc))
+        self.img = xbmcgui.ControlImage(500, 250, 280, 280, kwargs.get('captcha') )
         self.addControl(self.img)
 
-        self.Yesbutton = xbmcgui.ControlButton(250 + 520 - 50, 620, 100, 50, 'Yes', alignment=2)
-        self.Nobutton = xbmcgui.ControlButton(250 + 260 - 70, 620, 140, 50, 'No', alignment=2)
+        self.Yesbutton = xbmcgui.ControlButton(250 + 520 - 50, 620, 100, 50, common.i18n('Yes'), focusTexture=button_fo, noFocusTexture=button_nofo, alignment=2)
+        self.Nobutton = xbmcgui.ControlButton(250 + 260 - 70, 620, 140, 50,  common.i18n('No'), focusTexture=button_fo, noFocusTexture=button_nofo, alignment=2)
         self.addControl(self.Yesbutton)
         self.addControl(self.Nobutton)
         self.setFocus(self.Yesbutton)

@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 #############################################################
 # Yonn1981 https://github.com/Yonn1981/Repo
 #############################################################
@@ -21,6 +21,17 @@ ADDON = addon()
 icons = ADDON.getSetting('defaultIcons')
 
 URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
+oParser = cParser()
+ 
+oRequestHandler = cRequestHandler(URL_MAIN)
+sHtmlContent = oRequestHandler.request()
+    # (.+?) ([^<]+)
+
+sPattern = '<a class="Logo--Area" href="([^"]+)'
+aResult = oParser.parse(sHtmlContent, sPattern)
+    
+if (aResult[0]):
+    URL_MAIN = aResult[1][0]+'/'
 
 MOVIE_EN = (URL_MAIN + 'category/افلام-اجنبي/', 'showMovies')
 MOVIE_ASIAN = (URL_MAIN + 'category/افلام-اسيوي/', 'showMovies')
@@ -463,12 +474,7 @@ def showHosters(oInputParameterHandler = False):
 
                     if url.startswith('//'):
                         url = 'http:' + url
-                    if 'ddownload' in url :
-                            continue 
-                    if 'bowfile' in url :
-                            continue 	
-                    if 'mdiaload' in url :
-                            continue 		
+                     		
             sHosterUrl = url 
 
             oHoster = cHosterGui().checkHoster(sHosterUrl)
@@ -499,14 +505,16 @@ def showHosters(oInputParameterHandler = False):
             sTitle = sMovieTitle
             if url.startswith('//'):
                url = 'http:' + url
-            if 'ddownload' in url :
-                            continue  
-            if 'bowfile' in url :
-                            continue 	
-            if 'mdiaload' in url :
-                            continue 					
+             					
             sHosterUrl = url 
-
+            if 'mdiaload' in sHosterUrl:
+                     continue
+            if 'uploading.vn' in sHosterUrl:
+                     continue
+            if 'bowfile' in sHosterUrl:
+                     continue
+            if 'ddownload' in sHosterUrl:
+                     continue
             oHoster = cHosterGui().checkHoster(sHosterUrl)
             if oHoster:
                 sDisplayTitle = sMovieTitle +('[%s]') % (sQual)

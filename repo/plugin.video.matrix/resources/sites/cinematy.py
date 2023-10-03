@@ -314,7 +314,7 @@ def showSeasons():
                 sTitle = sTitle.replace("الحلقة","E")
                 siteUrl = aEntry[0]+'?do=views'
                 
-                sThumb = sThumb
+                sThumb = ''
                 sDesc = ''
                 sHost = ''
 
@@ -365,7 +365,7 @@ def showEpisodes():
                 sTitle = sTitle.replace("الحلقة","E")
                 siteUrl = aEntry[0]+'?do=views'
                
-                sThumb = sThumb
+                sThumb = ''
                 sDesc = ''
                 sHost = ''
 
