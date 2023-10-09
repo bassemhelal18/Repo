@@ -18,6 +18,17 @@ SITE_NAME = 'Halacima'
 SITE_DESC = 'arabic vod'
  
 URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
+oParser = cParser()
+ 
+oRequestHandler = cRequestHandler(URL_MAIN)
+sHtmlContent = oRequestHandler.request()
+    # (.+?) ([^<]+)
+
+sPattern = '<div id="logo">.*?<a href="(.+?)/" title="هلا سيما">'
+aResult = oParser.parse(sHtmlContent, sPattern)
+    
+if (aResult[0]):
+    URL_MAIN = aResult[1][0]
 
 SERIE_TR_AR = (URL_MAIN + '/category/%D9%85%D8%B3%D9%84%D8%B3%D9%84%D8%A7%D8%AA-%D8%AA%D8%B1%D9%83%D9%8A%D8%A9-%D9%85%D8%AF%D8%A8%D9%84%D8%AC%D8%A9.html', 'showSeries')
 MOVIE_EN = (URL_MAIN + '/category/%D8%A3%D9%81%D9%84%D8%A7%D9%85-%D8%A3%D8%AC%D9%86%D8%A8%D9%8A%D8%A9', 'showMovies')
@@ -151,7 +162,7 @@ def showMovies(sSearch = ''):
               continue
             sTitle = sTitle
             sThumb = aEntry[2]
-            siteUrl = aEntry[0]
+            siteUrl = aEntry[0].replace("/movies/","/watch_movies/")
             sDesc = ''
             sYear = ''
             m = re.search('([0-9]{4})', sTitle)
@@ -379,40 +390,43 @@ def showServers(oInputParameterHandler = False):
 
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
-
-   
-    oParser = cParser()
+    
     sId2 = ''
-
+    sId = ''
+    
+    oParser=cParser()
     sPattern = 'postID = "(.+?)",'
     aResult = oParser.parse(sHtmlContent, sPattern)
     
     if (aResult[0]):
         sId2 = aResult[1][0]
-    #Recuperation infos
-    sId = ''
-     # (.+?) ([^<]+) .+?
-    sPattern = 'onclick="getPlayer(.+?)">'
+        
+
+    
+    sPattern = '''onclick="getPlayer(.+?)">'''
     aResult = oParser.parse(sHtmlContent, sPattern)
     
     if (aResult[0]):
         for aEntry in aResult[1]:
-            
-            headers = {'Host': 'halacima.online',
-							'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:65.0) Gecko/20100101 Firefox/65.0',
+           
+    
+            headers = {     'Origin': URL_MAIN,
+							'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36',
 							'Accept': '*/*',
-							'Accept-Language': 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3',
+							'Accept-Encoding':'gzip, deflate, br',
+                            'Accept-Language': 'en-US,en;q=0.9',
 							'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
 							'X-Requested-With': 'XMLHttpRequest',
-							'Referer': sUrl,
-							'Connection': 'keep-alive'}
+							'Referer': sUrl}
+    
             sId = aEntry.replace("('","").replace("')","")
             data = {'server':sId,'postID':sId2,'Ajax':'1'}
             s = requests.Session()			
             r = s.post(URL_MAIN+'/ajax/getPlayer',data = data)
             sHtmlContent1 = r.content.decode('utf8',errors='ignore')  
-            
-            sPattern = "src='(.+?)' frameborder"
+            VSlog(sHtmlContent1)       
+    
+            sPattern = "SRC='(.+?)' FRAMEBORDER"
             oParser = cParser()
             aResult = oParser.parse(sHtmlContent1, sPattern)
             if aResult[0]:
@@ -426,12 +440,11 @@ def showServers(oInputParameterHandler = False):
                     if oHoster:
                        oHoster.setDisplayName(sTitle)
                        oHoster.setFileName(sTitle)
-                       cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)  
-				
-   
-    # (.+?) ([^<]+) .+?
-    sPattern = '<a target="_blank" href="(.+?)" title='
+                       cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+    
     oParser = cParser()
+    sPattern = '<a target="_blank" href="(.+?)" title='
+    
     aResult = oParser.parse(sHtmlContent, sPattern)
     if aResult[0]:
         for aEntry in aResult[1]:
@@ -447,11 +460,7 @@ def showServers(oInputParameterHandler = False):
                oHoster.setDisplayName(sTitle)
                oHoster.setFileName(sTitle)
                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
-	    
-  # ([^<]+) .+?
     
-   
+    oGui.setEndOfDirectory()           
     
     
-                
-    oGui.setEndOfDirectory()
