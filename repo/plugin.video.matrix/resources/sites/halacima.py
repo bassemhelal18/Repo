@@ -426,7 +426,7 @@ def showServers(oInputParameterHandler = False):
             sHtmlContent1 = r.content.decode('utf8',errors='ignore')  
             VSlog(sHtmlContent1)       
     
-            sPattern = "SRC='(.+?)' FRAMEBORDER"
+            sPattern = "SRC='(.+?)'"
             oParser = cParser()
             aResult = oParser.parse(sHtmlContent1, sPattern)
             if aResult[0]:
