@@ -24,17 +24,7 @@ SITE_DESC = 'arabic vod'
  
 
 URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
-oParser = cParser()
- 
-oRequestHandler = cRequestHandler(URL_MAIN)
-sHtmlContent = oRequestHandler.request()
 
-    # (.+?) ([^<]+)
-
-sPattern = '<form action="(.+?)" method="GET"'
-aResult = oParser.parse(sHtmlContent, sPattern)
-if (aResult[0]):
-    URL_MAIN = aResult[1][0].split('search')[0]
     
 
 
@@ -549,7 +539,8 @@ def showServers(oInputParameterHandler = False):
                    if 'mystream' in sHosterUrl:
                        sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN    
                    if 'darkveed' in sHosterUrl:
-                       sHosterUrl = sHosterUrl + "|Referer=" + sReferer
+                       sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
+                   
                    if 'rbrb' in sHosterUrl or 'downvol' in sHosterUrl:
                       sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN 
                     
@@ -585,7 +576,7 @@ def showServers(oInputParameterHandler = False):
             if 'mystream' in sHosterUrl:
                 sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
             if 'darkveed' in sHosterUrl:
-                sHosterUrl = sHosterUrl + "|Referer=" + sReferer
+                     sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
             if 'telvod' in sHosterUrl or 'downvol' in sHosterUrl:
                 sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN  
             oHoster = cHosterGui().checkHoster(sHosterUrl)

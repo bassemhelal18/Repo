@@ -21,6 +21,17 @@ ADDON = addon()
 icons = ADDON.getSetting('defaultIcons')
 
 URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
+oParser = cParser()
+ 
+oRequestHandler = cRequestHandler(URL_MAIN)
+sHtmlContent = oRequestHandler.request()
+    # (.+?) ([^<]+)
+
+sPattern = '<meta property="og:url" content="(.+?)"/>'
+aResult = oParser.parse(sHtmlContent, sPattern)
+    
+if (aResult[0]):
+    URL_MAIN = aResult[1][0]
 
 RAMADAN_SERIES = (URL_MAIN + '/category/مسلسلات-رمضان-2023', 'showSeries')
 

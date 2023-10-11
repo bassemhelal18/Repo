@@ -45,8 +45,8 @@ class cInputWindow(xbmcgui.WindowDialog):
         self.chkstate = [False] * self.DimTabTotal
 
         c = 0
-        cx = int((780) / DimTab[0])  # 260
-        cy = int((499) / DimTab[1])  # 166
+        cx = int((780) // DimTab[0])  # 260
+        cy = int((499) // DimTab[1])  # 166
 
         ox = 250  # 250
         oy = 110  # 110
@@ -159,13 +159,13 @@ class cInputWindowYesNo(xbmcgui.WindowDialog):
         
 
         imgX, imgY, imgw, imgh = 436, 210, 408, 300
-        ph, pw = imgh / 3, imgw / 3
+        ph, pw = imgh // 3, imgw // 3
         x_gap = 70
         y_gap = 70
         button_gap = 40
         button_h = 40
         button_y = imgY + imgh + button_gap
-        middle = imgX + (imgw / 2)
+        middle = imgX + (imgw // 2)
         win_x = imgX - x_gap
         win_y = imgY - y_gap
         win_h = imgh + 2 * y_gap + button_h + button_gap

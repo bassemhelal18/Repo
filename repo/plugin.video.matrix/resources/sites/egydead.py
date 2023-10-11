@@ -18,6 +18,17 @@ SITE_NAME = 'Egydead'
 SITE_DESC = 'arabic vod'
  
 URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
+oParser = cParser()
+ 
+oRequestHandler = cRequestHandler(URL_MAIN)
+sHtmlContent = oRequestHandler.request()
+    # (.+?) ([^<]+)
+
+sPattern = '<meta property="og:url" content="(.+?)" />'
+aResult = oParser.parse(sHtmlContent, sPattern)
+    
+if (aResult[0]):
+    URL_MAIN = aResult[1][0]
 
 MOVIE_EN = (URL_MAIN+'/category/%D8%A7%D9%81%D9%84%D8%A7%D9%85-%D8%A7%D8%AC%D9%86%D8%A8%D9%8A/', 'showMovies')
 MOVIE_PACK = (URL_MAIN+'/assembly/', 'showPack')

@@ -57,7 +57,7 @@ class cHoster(iHoster):
 
 
             if api_call:
-                return True, api_call+ '|User-Agent=' + UA+'&AUTH=TLS&verifypeer=false' + '&Referer=' + 'cima-club.cam'
+                return True, api_call+ '|User-Agent=' + UA+'&AUTH=TLS&verifypeer=false' + '&Referer=' + 'cimacllb.shop'
 
         sPattern =  '<a target="_blank".+?href="([^"]+)' 
         aResult = oParser.parse(sHtmlContent,sPattern)
@@ -67,7 +67,7 @@ class cHoster(iHoster):
                 api_call = aEntry
 
                 if api_call:
-                   return True, api_call+ '|User-Agent=' + UA+'&AUTH=TLS&verifypeer=false' + '&Referer=' + 'cima-club.cam'
+                   return True, api_call+ '|User-Agent=' + UA+'&AUTH=TLS&verifypeer=false' + '&Referer=' + 'cimacllb.shop'
 
         sPattern =  'sources: (.+?),' 
         
@@ -79,6 +79,6 @@ class cHoster(iHoster):
 
 
                 if api_call:
-                   return True, api_call+ '|User-Agent=' + UA+'&AUTH=TLS&verifypeer=false' + '&Referer=' + 'cima-club.cam'
+                   return True, api_call+ '|User-Agent=' + UA+'&AUTH=TLS&verifypeer=false' + '&Referer=' + 'cimacllb.shop'
 
         return False, False

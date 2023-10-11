@@ -20,12 +20,23 @@ SITE_NAME = 'Mycima'
 SITE_DESC = 'arabic vod'
  
 URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
+oParser = cParser()
  
+oRequestHandler = cRequestHandler(URL_MAIN)
+sHtmlContent = oRequestHandler.request()
+    # (.+?) ([^<]+)
+
+sPattern = '<a href="(.+?)"><div class="HeaderLogo">'
+aResult = oParser.parse(sHtmlContent, sPattern)
+    
+if (aResult[0]):
+    URL_MAIN = aResult[1][0]+'/'
+
 MOVIE_TOP = (URL_MAIN + 'category/افلام/movies-english-افلام-اجنبي/list/best/', 'showMovies')
 MOVIE_POP = (URL_MAIN + 'category/افلام/movies-english-افلام-اجنبي/list/top/', 'showMovies')
 MOVIE_CLASSIC = (URL_MAIN + 'category/افلام/arabic-movies-افلام-عربي/list/old/', 'showMovies')
 MOVIE_FAM = (URL_MAIN + 'mpaa/pg/', 'showMovies')
-MOVIE_EN = (URL_MAIN + 'category/أفلام/10-movies-english-افلام-اجنبي/list/recent/', 'showMovies')
+MOVIE_EN = (URL_MAIN + 'category/أفلام/10-movies-english-افلام-اجنبي/', 'showMovies')
 
 RAMADAN_SERIES = (URL_MAIN + '/category/مسلسلات/مسلسلات-رمضان-2023-series-ramadan-2023/', 'showSeries')
 MOVIE_AR = (URL_MAIN + '/category/افلام/افلام-عربي-arabic-movies/', 'showMovies')
@@ -377,6 +388,7 @@ def __checkForNextPage(sHtmlContent):
     if aResult[0] :
         
         return aResult[1][0]
+      
 
     return False
   
