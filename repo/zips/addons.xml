@@ -33,7 +33,7 @@
         </assets>
     </extension>
 
-</addon><addon id="plugin.video.matrix" name="matrix" version="5.6.2" provider-name="zombi">
+</addon><addon id="plugin.video.matrix" name="matrix" version="999.0.0" provider-name="bassemhelal">
     <requires>
 
         <trycatch>
@@ -45,7 +45,7 @@
                 <import addon="xbmc.python" version="2.24.0" />
             </catch>
         </trycatch>
-        <import addon="Yonn1981_Repo" />
+        <import addon="bassemhelal18_Repo" />
         <import addon="script.module.pyqrcode" />
         <import addon="script.kodi.loguploader" />
         <import addon="script.module.requests" />
