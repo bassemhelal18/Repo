@@ -211,7 +211,7 @@ def showMovies(sSearch = ''):
     sHtmlContent = soup.find("div",{"class":"PageContent"})
  # ([^<]+) .+?
 
-    sPattern = '<li class="MovieBlock"><a href="([^<]+)"><div.+?image:url([^<]+);"></div>.+?</div></div>([^<]+)</div>'
+    sPattern = '<li class="MovieBlock"><a href="([^<]+)">.+?image:url([^<]+)"></div>.+?</div></div>([^<]+)</div>'
 		
     oParser = cParser()
     aResult = oParser.parse(sHtmlContent, sPattern)
@@ -295,7 +295,7 @@ def showSeries(sSearch = ''):
     
  
       # (.+?) ([^<]+) .+?
-    sPattern = '<li class="MovieBlock"><a href="([^<]+)"><div.+?image:url([^<]+);"></div>.+?</div></div>([^<]+)</div>'
+    sPattern = '<li class="MovieBlock"><a href="([^<]+)">.+?image:url([^<]+)"></div>.+?</div></div>([^<]+)</div>'
 
     oParser = cParser()
     aResult = oParser.parse(sHtmlContent, sPattern)
