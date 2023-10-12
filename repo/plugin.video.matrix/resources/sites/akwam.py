@@ -683,7 +683,7 @@ def showHosters(oInputParameterHandler = False):
     sHtmlContent = rt.text+r.text
     
     oParser = cParser()           
-    sPattern =  '<source.+?src="(.+?)".+?type="video/mp4".+?size="(.+?)"' 
+    sPattern =  '<source.+?src="(.+?)".+?size="(.+?)"' 
 	
                                                                  
     aResult = oParser.parse(sHtmlContent,sPattern)
