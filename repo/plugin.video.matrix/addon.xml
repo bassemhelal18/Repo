@@ -2,7 +2,7 @@
 <addon id="plugin.video.matrix" name="matrix" version="999.0.1" provider-name="bassemhelal">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
-        <import addon="repository.zombi"/>
+        <import addon="Bassemhelal18_Repo"/>
         <import addon="script.module.pyqrcode"/>
         <import addon="script.kodi.loguploader"/>
         <import addon="script.module.requests"/>
