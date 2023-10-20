@@ -261,7 +261,7 @@ def showSeries(sSearch = ''):
             
             sThumb = aEntry[2]
             
-            sTitle = sTitle.split('الحلقة')[0]
+            sTitle = sTitle.split("الموسم")[0].split("الحلقة")[0].split("موسم")[0].split("حلقة")[0]
             sDesc = ''
             
             if sTitle not in itemList:
@@ -296,7 +296,7 @@ def showEpisodes():
     sHtmlContent = oRequestHandler.request()
 
     oParser = cParser()
-    sPattern = "title='.+?' href='([^<]+)'><li><em>([^<]+)</em>"
+    sPattern = "title='(.+?)' href='([^<]+)'><li><em>([^<]+)</em>"
     aResult = oParser.parse(sHtmlContent, sPattern)
 	
     if aResult[0] :
@@ -304,14 +304,18 @@ def showEpisodes():
         for aEntry in aResult[1]:
  
             
-            
-            sTitle = sMovieTitle+'E'+aEntry[1]
-            siteUrl = URL_MAIN+aEntry[0]
+            sSeason= aEntry[0].replace(sMovieTitle,'').replace('مسلسل','').split('الحلقة')[0].replace("الموسم العاشر","S10").replace("الموسم الحادي عشر","S11").replace("الموسم الثاني عشر","S12").replace("الموسم الثالث عشر","S13").replace("الموسم الرابع عشر","S14").replace("الموسم الخامس عشر","S15").replace("الموسم السادس عشر","S16").replace("الموسم السابع عشر","S17").replace("الموسم الثامن عشر","S18").replace("الموسم التاسع عشر","S19").replace("الموسم العشرون","S20").replace("الموسم الحادي و العشرون","S21").replace("الموسم الثاني و العشرون","S22").replace("الموسم الثالث و العشرون","S23").replace("الموسم الرابع والعشرون","S24").replace("الموسم الخامس و العشرون","S25").replace("الموسم السادس والعشرون","S26").replace("الموسم السابع و العشرون","S27").replace("الموسم الثامن والعشرون","S28").replace("الموسم التاسع والعشرون","S29").replace("الموسم الثلاثون","S30").replace("الموسم الحادي و الثلاثون","S31").replace("الموسم الثاني والثلاثون","S32").replace("الموسم الثالث و الثلاثون","S33").replace("الموسم الأول","S1").replace("الموسم الاول","S1").replace("الموسم الثاني","S2").replace("الموسم الثالث","S3").replace("الموسم الثالث","S3").replace("الموسم الرابع","S4").replace("الموسم الخامس","S5").replace("الموسم السادس","S6").replace("الموسم السابع","S7").replace("الموسم الثامن","S8").replace("الموسم التاسع","S9")
+            if 'الموسم' not in aEntry[0]:
+                sSeason ='S1'
+            sTitle = sSeason+'E'+aEntry[2]
+            if sMovieTitle not in sTitle:
+                sTitle = sMovieTitle+sSeason+'E'+aEntry[2]
+            siteUrl = URL_MAIN+aEntry[1]
             import base64
             if '?post=' in siteUrl:
                 url_tmp = siteUrl.split('?post=')[-1].replace('%3D','=')
                 siteUrl = base64.b64decode(url_tmp).decode('utf8',errors='ignore')
-            sThumb = sThumb
+            sThumb = ''
             sDesc = ''
 			
 
