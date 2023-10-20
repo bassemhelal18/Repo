@@ -363,7 +363,36 @@ def showHosters(oInputParameterHandler = False):
     
     
     # (.+?) .+? ([^<]+)        	
-    sPattern = '''data-embed="<iframe src='(.+?)' scrolling''' 
+    sPattern = '''data-embed-url="(.+?)"''' 
+    oParser = cParser()
+    aResult = oParser.parse(sHtmlContent, sPattern)
+    
+	
+    if aResult[0]:
+        for aEntry in aResult[1]:
+            
+            url = str(aEntry)
+            sTitle =  sMovieTitle
+            if url.startswith('//'):
+               url = 'http:' + url
+				
+					
+            
+            sHosterUrl = url 
+            if 'userload' in sHosterUrl:
+               sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
+            if 'moshahda' in sHosterUrl:
+               sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN 
+            if 'mystream' in sHosterUrl:
+               sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN  
+            oHoster = cHosterGui().checkHoster(sHosterUrl)
+            if oHoster:
+               sDisplayTitle = sTitle
+               oHoster.setDisplayName(sDisplayTitle)
+               oHoster.setFileName(sDisplayTitle)
+               cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+
+    sPattern = '''data-download-url="(.+?)"''' 
     oParser = cParser()
     aResult = oParser.parse(sHtmlContent, sPattern)
     
