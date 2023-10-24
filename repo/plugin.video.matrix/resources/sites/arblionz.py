@@ -322,8 +322,6 @@ def showMovies(sSearch = ''):
             if "سيرفر"  in aEntry[1]:
                 continue
             sTitle = aEntry[1].replace("مشاهدة","").replace("مسلسل","").replace("انمي","").replace("مترجمة","").replace("مترجم","").replace("برنامج","").replace("فيلم","").replace("والأخيرة","").replace("مدبلج للعربية","مدبلج").replace("والاخيرة","").replace("كاملة","").replace("حلقات كاملة","").replace("اونلاين","").replace("مباشرة","").replace("انتاج ","").replace("جودة عالية","").replace("كامل","").replace("HD","").replace("السلسلة الوثائقية","").replace("الفيلم الوثائقي","").replace("اون لاين","").replace("عرض","").replace("الرو","").replace("بالتعليق العربي","[COLOR gold]- تعليق عربي -[/COLOR]")
-            if 'مدبلج' in sTitle:
-              continue
             siteUrl = aEntry[0]
             s1Thumb = aEntry[2]
             sThumb = re.sub(r'-\d*x\d*.','.', s1Thumb)
@@ -653,12 +651,10 @@ def showHosters(oInputParameterHandler = False):
             sTitle = sMovieTitle
             
             sHosterUrl = url
-            if 'mdiaload' in sHosterUrl:
-                     continue
-            if 'uploading.vn' in sHosterUrl:
-                     continue
-            if 'uploadbank' in sHosterUrl:
-                     continue
+            if 'mdiaload'in url:
+                continue
+            if 'uploadbank'in url:
+                continue
             if '?download_' in sHosterUrl:
                 sHosterUrl = sHosterUrl.replace("moshahda","ffsff")
                 sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN 

@@ -459,7 +459,7 @@ def showEpisodes():
         oOutputParameterHandler = cOutputParameterHandler()
         for aEntry in aResult[1]:
              sTitle = aEntry[2]
-             sTitle = 'E'+sTitle
+             sTitle = ' E'+sTitle
              if "مدبلج" in sMovieTitle:
                      sMovieTitle = sMovieTitle.replace("مدبلج","")
                      sMovieTitle = "مدبلج"+sMovieTitle
@@ -508,7 +508,6 @@ def showEpisodes():
 
 def showLinks(oInputParameterHandler = False):
     oGui = cGui()
-   
     if not oInputParameterHandler:
         oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
@@ -607,7 +606,7 @@ def showLinks(oInputParameterHandler = False):
             sDesc = sDesc
 
             oRequestHandler = cRequestHandler(siteUrl)
-            sData = oRequestHandler.request();
+            sData = oRequestHandler.request()
     # (.+?)
                
 
