@@ -8,6 +8,7 @@ from resources.lib.handler.requestHandler import cRequestHandler
 from resources.lib.comaddon import progress, VSlog, siteManager, addon, isMatrix
 from resources.lib.parser import cParser
 import re
+import requests
 from bs4 import BeautifulSoup
 ADDON = addon()
 icons = ADDON.getSetting('defaultIcons')
@@ -428,7 +429,6 @@ def __checkForNextPage(sHtmlContent):
   
 def showSeasons():
     oGui = cGui()
-    import requests
     oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
@@ -540,21 +540,15 @@ def showSeasons():
               sDesc = ''
               
               sTitle = sTitle.replace("الموسم العاشر","S10").replace("الموسم الحادي عشر","S11").replace("الموسم الثاني عشر","S12").replace("الموسم الثالث عشر","S13").replace("الموسم الرابع عشر","S14").replace("الموسم الخامس عشر","S15").replace("الموسم السادس عشر","S16").replace("الموسم السابع عشر","S17").replace("الموسم الثامن عشر","S18").replace("الموسم التاسع عشر","S19").replace("الموسم العشرون","S20").replace("الموسم الحادي و العشرون","S21").replace("الموسم الثاني و العشرون","S22").replace("الموسم الثالث و العشرون","S23").replace("الموسم الرابع والعشرون","S24").replace("الموسم الخامس و العشرون","S25").replace("الموسم السادس والعشرون","S26").replace("الموسم السابع والعشرون","S27").replace("الموسم الثامن والعشرون","S28").replace("الموسم التاسع والعشرون","S29").replace("الموسم الثلاثون","S30").replace("الموسم الحادي و الثلاثون","S31").replace("الموسم الثاني والثلاثون","S32").replace("الموسم الاول","S1").replace(" الثانى","2").replace("الموسم الثاني","S2").replace("الموسم الثالث","S3").replace("الموسم الثالث","S3").replace("الموسم الرابع","S4").replace("الموسم الخامس","S5").replace("الموسم السادس","S6").replace("الموسم السابع","S7").replace("الموسم الثامن","S8").replace("الموسم التاسع","S9").replace("الحلقة "," E").replace("الموسم","S").replace("S ","S")
-              VSlog(sTitle)
+              
               oOutputParameterHandler.addParameter('siteUrl', siteUrl)
               oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
               oOutputParameterHandler.addParameter('sThumb', sThumb)
-             
-            
               oGui.addSeason(SITE_IDENTIFIER, 'showEps', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
-              
-
-             
     oGui.setEndOfDirectory() 
   
 def showEps():
     oGui = cGui()
-    import requests
     oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
@@ -590,10 +584,6 @@ def showEps():
             oOutputParameterHandler.addParameter('siteUrl', siteUrl)
             oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
             oOutputParameterHandler.addParameter('sThumb', sThumb)
-             
-            
-       
- 
             oGui.addEpisode(SITE_IDENTIFIER, 'showHosters2', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
     else:
         s = requests.Session()
@@ -632,18 +622,12 @@ def showEps():
                  oOutputParameterHandler.addParameter('siteUrl', siteUrl)
                  oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
                  oOutputParameterHandler.addParameter('sThumb', sThumb)
-                 
-            
-
- 
                  oGui.addEpisode(SITE_IDENTIFIER, 'showHosters2', sTitle, '', sThumb, sDesc, oOutputParameterHandler) 
        
     oGui.setEndOfDirectory() 
  
 def showHosters2(oInputParameterHandler = False):
     oGui = cGui()
-    import requests
-    
     if not oInputParameterHandler:
         oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
@@ -655,7 +639,7 @@ def showHosters2(oInputParameterHandler = False):
 
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
-
+    sTitle = sMovieTitle
     s = requests.Session()
     data = {'View':'1'}
     r = s.post(sUrl, data = data)
@@ -677,12 +661,9 @@ def showHosters2(oInputParameterHandler = False):
         for aEntry in aResult[1]:
             
             url = str(aEntry)
-            sTitle =  sMovieTitle
+            sTitle = sMovieTitle
             if url.startswith('//'):
                url = 'http:' + url
-				
-					
-            
             sHosterUrl = url 
             if 'userload' in sHosterUrl:
                sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
@@ -707,12 +688,9 @@ def showHosters2(oInputParameterHandler = False):
         for aEntry in aResult[1]:
             
             url = str(aEntry)
-            sTitle =  sMovieTitle
+            sTitle = sMovieTitle
             if url.startswith('//'):
                url = 'http:' + url
-				
-					
-            
             sHosterUrl = url
             if 'mirrorace' in sHosterUrl:
                 continue

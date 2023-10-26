@@ -363,12 +363,11 @@ def showSeries(sSearch = ''):
 
 def showSeasons():
     oGui = cGui()
-   
     oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
-    oParser = cParser()
+    
  
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
@@ -392,7 +391,7 @@ def showSeasons():
                 break
 
 
-            sTitle =  " S" + aEntry[1]
+            sTitle =  "S" + aEntry[1]
             sTitle =  sMovieTitle+sTitle
             if 'http' not in aEntry[0]:
                 siteUrl = URL_MAIN+aEntry[0].replace('episode/','download/')
@@ -400,7 +399,7 @@ def showSeasons():
                 siteUrl = aEntry[0].replace('episode/','download/')
             sThumb = ''
             sDesc = ''
-			
+            VSlog(sTitle)
             oOutputParameterHandler.addParameter('siteUrl',siteUrl)
             oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
             oOutputParameterHandler.addParameter('sThumb', sThumb)
@@ -431,7 +430,7 @@ def showSeasons():
                    siteUrl = aEntry[0].replace('episode/','download/')
                 sThumb = ''
                 sDesc = ''
-			
+                VSlog(sTitle)
 
                 oOutputParameterHandler.addParameter('siteUrl',siteUrl)
                 oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
@@ -474,7 +473,7 @@ def showEpisodes():
                 siteUrl = aEntry[0].replace('episode/','download/')
             sThumb = ''
             sDesc = ''
-			
+            VSlog(sTitle)
 
             oOutputParameterHandler.addParameter('siteUrl',siteUrl)
             oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
@@ -486,8 +485,6 @@ def showEpisodes():
  
 def showHosters(oInputParameterHandler = False):
     oGui = cGui()
-    import requests
-   
     if not oInputParameterHandler:
         oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
@@ -514,7 +511,7 @@ def showHosters(oInputParameterHandler = False):
                     oHoster = cHosterGui().checkHoster(sHosterUrl)
                     if oHoster:
                        oHoster.setDisplayName(sTitle)
-                       oHoster.setFileName(sTitle)
+                       oHoster.setFileName(sMovieTitle)
                        cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
 
 
@@ -544,14 +541,14 @@ def showHosters(oInputParameterHandler = False):
             if aResult[0] :
                 for aEntry in aResult[1]:            
                     url = aEntry
-                    sTitle = " "
+                    sTitle = sMovieTitle
                     if url.startswith('//'):
                         url = 'http:' + url		         
                     sHosterUrl = url
                     oHoster = cHosterGui().checkHoster(sHosterUrl)
                     if oHoster:
-                        sDisplayTitle = sMovieTitle+('-[%sp]') % (sQual)
-                        oHoster.setDisplayName(sDisplayTitle)
+                        sDisplayTitle =('-[%sp]') % (sQual)
+                        oHoster.setDisplayName(sTitle+sDisplayTitle)
                         oHoster.setFileName(sMovieTitle)
                         cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
 

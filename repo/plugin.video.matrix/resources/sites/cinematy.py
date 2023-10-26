@@ -242,8 +242,13 @@ def showSeries(sSearch = ''):
             sTitle = sTitle.split("الموسم")[0].split("الحلقة")[0].split("موسم")[0].split("حلقة")[0]
             siteUrl = aEntry[0]+'?do=views'
             
-            sThumb = aEntry[2]
+            sThumb = aEntry[2].replace("(","").replace(")","")
             sDesc=''
+            m = re.search('([0-9]{4})', sTitle)
+            if m:
+               sYear = str(m.group(0))
+               sTitle = sTitle.replace(sYear,'')
+            
             if sTitle not in itemList:
                 itemList.append(sTitle)
                 oOutputParameterHandler.addParameter('siteUrl',siteUrl)
@@ -322,6 +327,11 @@ def showSeasons():
                 sTitle = aEntry[1].replace("مشاهدة","").replace("مسلسل","").replace("انمي","").replace("مترجمة","").replace("مترجم","").replace("برنامج","").replace("فيلم","").replace("والأخيرة","").replace("مدبلج للعربية","مدبلج").replace("والاخيرة","").replace("كاملة","").replace("حلقات كاملة","").replace("اونلاين","").replace("مباشرة","").replace("انتاج ","").replace("جودة عالية","").replace("كامل","").replace("HD","").replace("السلسلة الوثائقية","").replace("الفيلم الوثائقي","").replace("اون لاين","")
                 sTitle = sTitle.replace("الموسم العاشر","S10").replace("الموسم الحادي عشر","S11").replace("الموسم الثاني عشر","S12").replace("الموسم الثالث عشر","S13").replace("الموسم الرابع عشر","S14").replace("الموسم الخامس عشر","S15").replace("الموسم السادس عشر","S16").replace("الموسم السابع عشر","S17").replace("الموسم الثامن عشر","S18").replace("الموسم التاسع عشر","S19").replace("الموسم العشرون","S20").replace("الموسم الحادي و العشرون","S21").replace("الموسم الثاني و العشرون","S22").replace("الموسم الثالث و العشرون","S23").replace("الموسم الرابع والعشرون","S24").replace("الموسم الخامس و العشرون","S25").replace("الموسم السادس والعشرون","S26").replace("الموسم السابع و العشرون","S27").replace("الموسم الثامن والعشرون","S28").replace("الموسم التاسع والعشرون","S29").replace("الموسم الثلاثون","S30").replace("الموسم الحادي و الثلاثون","S31").replace("الموسم الثاني والثلاثون","S32").replace("الموسم الثالث و الثلاثون","S33").replace("الموسم الأول","S1").replace("الموسم الاول","S1").replace("الموسم الثاني","S2").replace("الموسم الثالث","S3").replace("الموسم الثالث","S3").replace("الموسم الرابع","S4").replace("الموسم الخامس","S5").replace("الموسم السادس","S6").replace("الموسم السابع","S7").replace("الموسم الثامن","S8").replace("الموسم التاسع","S9")
                 sTitle = sTitle.replace("الحلقة","E")
+                
+                m = re.search('([0-9]{4})', sTitle)
+                if m:
+                   sYear = str(m.group(0))
+                   sTitle = sTitle.replace(sYear,'S1')
                 siteUrl = aEntry[0]+'?do=views'
                 
                 sThumb = ''
@@ -330,7 +340,6 @@ def showSeasons():
 
                 oOutputParameterHandler.addParameter('siteUrl', siteUrl)
                 oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
-                oOutputParameterHandler.addParameter('sHost', sHost)
                 oOutputParameterHandler.addParameter('sThumb', sThumb)
             
 
@@ -346,7 +355,6 @@ def showSeasons():
 
 def showEpisodes():
     oGui = cGui()
-    
     oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
@@ -371,17 +379,21 @@ def showEpisodes():
  
                 
                 sTitle = aEntry[1].replace("مشاهدة","").replace("الاخيره","").replace("الاخيرة","").replace("مسلسل","").replace("انمي","").replace("مترجمة","").replace("مترجم","").replace("برنامج","").replace("فيلم","").replace("والأخيرة","").replace("مدبلج للعربية","مدبلج").replace("والاخيرة","").replace("كاملة","").replace("حلقات كاملة","").replace("اونلاين","").replace("مباشرة","").replace("انتاج ","").replace("جودة عالية","").replace("كامل","").replace("HD","").replace("السلسلة الوثائقية","").replace("الفيلم الوثائقي","").replace("اون لاين","")
+                
                 sTitle = sTitle.replace("الموسم العاشر","S10").replace("الموسم الحادي عشر","S11").replace("الموسم الثاني عشر","S12").replace("الموسم الثالث عشر","S13").replace("الموسم الرابع عشر","S14").replace("الموسم الخامس عشر","S15").replace("الموسم السادس عشر","S16").replace("الموسم السابع عشر","S17").replace("الموسم الثامن عشر","S18").replace("الموسم السابع والعشرون","S27").replace("الموسم التاسع عشر","S19").replace("الموسم العشرون","S20").replace("الموسم الحادي و العشرون","S21").replace("الموسم الثاني و العشرون","S22").replace("الموسم الثالث و العشرون","S23").replace("الموسم الرابع والعشرون","S24").replace("الموسم الخامس و العشرون","S25").replace("الموسم السادس والعشرون","S26").replace("الموسم السابع والعشرون","S27").replace("الموسم الثامن والعشرون","S28").replace("الموسم التاسع والعشرون","S29").replace("الموسم الثلاثون","S30").replace("الموسم الحادي و الثلاثون","S31").replace("الموسم الثاني والثلاثون","S32").replace("الموسم الثالث و الثلاثون","S33").replace("الموسم الأول","S1").replace("الموسم الاول","S1").replace("الموسم الثاني","S2").replace("الموسم الثالث","S3").replace("الموسم الثالث","S3").replace("الموسم الرابع","S4").replace("الموسم الخامس","S5").replace("الموسم السادس","S6").replace("الموسم السابع","S7").replace("الموسم الثامن","S8").replace("الموسم التاسع","S9").replace("الموسم","S").replace("S ","S")
                 sTitle = sTitle.replace("الحلقة","E")
+                m = re.search('([0-9]{4})', sTitle)
+                if m:
+                   sYear = str(m.group(0))
+                   sTitle = sTitle.replace(sYear,'S1')
                 siteUrl = aEntry[0]+'?do=views'
                
                 sThumb = ''
                 sDesc = ''
-                sHost = ''
+                
 
                 oOutputParameterHandler.addParameter('siteUrl', siteUrl)
                 oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
-                oOutputParameterHandler.addParameter('sHost', sHost)
                 oOutputParameterHandler.addParameter('sThumb', sThumb)
 			    
                 oGui.addEpisode(SITE_IDENTIFIER, 'showHosters', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
@@ -407,7 +419,6 @@ def showHosters(oInputParameterHandler = False):
     if not oInputParameterHandler:
         oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
-    Referer = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
 
@@ -435,7 +446,7 @@ def showHosters(oInputParameterHandler = False):
             oRequestHandler = cRequestHandler(url)
             cook = oRequestHandler.GetCookies()
             oRequestHandler.addHeaderEntry('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'.encode('utf-8'))
-            oRequestHandler.addHeaderEntry('Referer', Referer.encode('utf-8'))
+            oRequestHandler.addHeaderEntry('Referer', sUrl.encode('utf-8'))
             oRequestHandler.addHeaderEntry('Cookie', cook.encode('utf-8'))
             oRequestHandler.addHeaderEntry('authority', 'cinematy.online'.encode('utf-8'))
             oRequestHandler.addHeaderEntry('sec-fetch-dest', 'empty'.encode('utf-8'))
@@ -448,12 +459,12 @@ def showHosters(oInputParameterHandler = False):
             aResult = oParser.parse(sHtmlContent2.lower(), sPattern)
             if aResult[0]:
                 sHosterUrl = aResult[1][0]
-
+                sTitle = sMovieTitle
                 if 'mystream' in sHosterUrl:
                     sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN    
                 oHoster = cHosterGui().checkHoster(sHosterUrl)
-                if oHoster != False:
-                    oHoster.setDisplayName(sMovieTitle)
+                if oHoster:
+                    oHoster.setDisplayName(sTitle)
                     oHoster.setFileName(sMovieTitle)
                     cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
 
@@ -473,7 +484,7 @@ def showHosters(oInputParameterHandler = False):
             oHoster = cHosterGui().checkHoster(sHosterUrl)
             if oHoster:
                oHoster.setDisplayName(sTitle)
-               oHoster.setFileName(sTitle)
+               oHoster.setFileName(sMovieTitle)
                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
 
     oGui.setEndOfDirectory()

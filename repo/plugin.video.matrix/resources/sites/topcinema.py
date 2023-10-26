@@ -362,7 +362,7 @@ def showSeasons():
        oOutputParameterHandler = cOutputParameterHandler()
        for aEntry in aResult[1]:
  
-           sTitle = sMovieTitle + ' S'+aEntry[1]
+           sTitle = sMovieTitle + 'S'+aEntry[1]
            siteUrl = aEntry[0]
            sThumb = aEntry[2].replace('=','')
            sDesc = ""
@@ -401,12 +401,12 @@ def showEpisodes():
 		oOutputParameterHandler = cOutputParameterHandler()
 		for aEntry in aResult[1]:
  
-			sTitle = "E"+aEntry[1].replace("E ","E")
-			sTitle = sMovieTitle+sTitle
+			sTitle = " E"+aEntry[1]
+			sTitle = sMovieTitle+sTitle.replace('E ','E')
 			siteUrl = aEntry[0]+'/watch/'
 			sThumb = ""
 			sDesc = ""
-			
+			VSlog(sTitle)
 			oOutputParameterHandler.addParameter('siteUrl',siteUrl)
 			oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
 			oOutputParameterHandler.addParameter('sThumb', sThumb)
@@ -474,12 +474,12 @@ def showHosters(oInputParameterHandler = False):
 
                     if url.startswith('//'):
                         url = 'http:' + url
-                     		
+            sTitle = sMovieTitle         		
             sHosterUrl = url 
 
             oHoster = cHosterGui().checkHoster(sHosterUrl)
             if oHoster:
-                oHoster.setDisplayName(sMovieTitle)
+                oHoster.setDisplayName(sTitle)
                 oHoster.setFileName(sMovieTitle)
                 cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
 
@@ -517,8 +517,8 @@ def showHosters(oInputParameterHandler = False):
                      continue
             oHoster = cHosterGui().checkHoster(sHosterUrl)
             if oHoster:
-                sDisplayTitle = sMovieTitle +('[%s]') % (sQual)
-                oHoster.setDisplayName(sDisplayTitle)
+                sDisplayTitle = ('[%s]') % (sQual)
+                oHoster.setDisplayName(sTitle+sDisplayTitle)
                 oHoster.setFileName(sMovieTitle)
                 cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
 			               

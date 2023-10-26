@@ -398,9 +398,7 @@ def showSeries(sSearch = ''):
 
 
 def showSeasons():
-	
     oGui = cGui()
-    
     oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
@@ -416,43 +414,26 @@ def showSeasons():
     sHtmlContent = oParser.abParse(sHtmlContent, sStart, sEnd)
     
     sPattern = 'href="(.+?)".+?<img src=".+?" alt="([^<]+)" data-srccs="([^<]+)"'
-
     oParser = cParser()
-	
     aResult = oParser.parse(sHtmlContent, sPattern)
-		
-	
     if aResult[0] is True:
-		
         oOutputParameterHandler = cOutputParameterHandler()
-		
         for aEntry in aResult[1]:
- 
-			
-            sTitle = sMovieTitle + aEntry[1].replace("الموسم","S").replace("S ","S").replace("S","Season ")
-			
+            sTitle = sMovieTitle + aEntry[1].replace("الموسم","S").replace("S ","S")
+            sTitle = sTitle.replace("  S","S")
             siteUrl = aEntry[0]
-			
             sThumb = aEntry[2]
-			
-            sDesc = ""
-			
-			
+            sDesc = ''
+            
             oOutputParameterHandler.addParameter('siteUrl',siteUrl)
-			
             oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
-			
             oOutputParameterHandler.addParameter('sThumb', sThumb)
-			
             oGui.addSeason(SITE_IDENTIFIER, 'showEpisodes', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
-        
-	
     oGui.setEndOfDirectory()
 
 
 def showEpisodes():
     oGui = cGui()
-    
     oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
@@ -474,13 +455,12 @@ def showEpisodes():
     if aResult[0]:
         oOutputParameterHandler = cOutputParameterHandler()
         for aEntry in aResult[1]:
-            
-            sTitle = "E"+aEntry[1].replace("E ","E")
+            sTitle = " E"+aEntry[1].replace("E ","E")
             sTitle = sMovieTitle+sTitle
             siteUrl = aEntry[0]
-            sThumb = ""
-            sDesc = ""
-			
+            sThumb = ''
+            sDesc = ''
+            
             oOutputParameterHandler.addParameter('siteUrl',siteUrl)
             oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
             oOutputParameterHandler.addParameter('sThumb', sThumb)
@@ -535,7 +515,7 @@ def showHosters(oInputParameterHandler = False):
     oRequestHandler.addHeaderEntry('Accept-Encoding','gzip, deflate, br')
     oRequestHandler.addHeaderEntry('Referer',sReferer)
     sHtmlContent = oRequestHandler.request()
-    
+    sTitle = sMovieTitle
 
               
     
@@ -546,7 +526,7 @@ def showHosters(oInputParameterHandler = False):
     if aResult[0]:
         for aEntry in aResult[1]:           
             url = aEntry.replace('https://http://','https://')
-            sTitle = " " 
+            
             if url.startswith('//'):
                url = 'http:' + url
 			
@@ -577,7 +557,7 @@ def showHosters(oInputParameterHandler = False):
     if aResult[0]:
         for aEntry in aResult[1]:           
             url = aEntry[0].replace('https://http://','https://')
-            sTitle = sMovieTitle+'('+aEntry[1]+')' 
+            
             if url.startswith('//'):
                url = 'http:' + url
 			
@@ -607,7 +587,7 @@ def showHosters(oInputParameterHandler = False):
     if aResult[0]:
         for aEntry in aResult[1]:           
             url = aEntry.replace('https://http://','https://')
-            sTitle = " " 
+            
             if url.startswith('//'):
                url = 'http:' + url
 			
