@@ -417,12 +417,13 @@ def showSeasons():
         for aEntry in aResult:
  
             sTitle = aEntry[1].replace("موسم","").replace("مشاهدة","").replace("مسلسل","").replace("انمي","").replace("مترجمة","").replace("مترجم","").replace("مشاهده","").replace("برنامج","").replace("مترجمة","").replace("فيلم","").replace("اون لاين","").replace("WEB-DL","").replace("BRRip","").replace("720p","").replace("HD-TC","").replace("HDRip","").replace("HD-CAM","").replace("DVDRip","").replace("BluRay","").replace("1080p","").replace("WEBRip","").replace("WEB-dl","").replace("مترجم ","").replace("مشاهدة وتحميل","").replace("اون لاين","")
-            sSeason =  " S" + sTitle
+            sSeason =  "S" + sTitle
+            sSeason = sSeason.replace('S ','S')
             sTitle = sMovieTitle+sSeason
             siteUrl = aEntry[0].replace('https://cdn1.myciiiima.cfd/',URL_MAIN)
-            sThumb = sThumb
-            sDesc = ""
- 
+            sThumb = ''
+            sDesc = ''
+            
             oOutputParameterHandler.addParameter('siteUrl', siteUrl)
             oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
             oOutputParameterHandler.addParameter('sThumb', sThumb)
@@ -438,13 +439,14 @@ def showSeasons():
         for aEntry in aResult:
  
             sTitle = aEntry[1].replace("موسم","").replace("مشاهدة","").replace("مسلسل","").replace("انمي","").replace("مترجمة","").replace("مترجم","").replace("مشاهده","").replace("برنامج","").replace("مترجمة","").replace("فيلم","").replace("اون لاين","").replace("WEB-DL","").replace("BRRip","").replace("720p","").replace("HD-TC","").replace("HDRip","").replace("HD-CAM","").replace("DVDRip","").replace("BluRay","").replace("1080p","").replace("WEBRip","").replace("WEB-dl","").replace("مترجم ","").replace("مشاهدة وتحميل","").replace("اون لاين","")
-            sSeason =  " S" + sTitle
+            sSeason =  "S" + sTitle
+            sSeason = sSeason.replace('S ','S')
             sTitle = sMovieTitle+sSeason
             siteUrl = aEntry[0].replace('https://cdn1.myciiiima.cfd/',URL_MAIN)
             
-            sThumb = sThumb
-            sDesc = ""
- 
+            sThumb = ''
+            sDesc = ''
+            
             oOutputParameterHandler.addParameter('siteUrl', siteUrl)
             oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
             oOutputParameterHandler.addParameter('sThumb', sThumb)
@@ -463,14 +465,14 @@ def showSeasons():
         for aEntry in aResult:
  
             sTitle = aEntry[1].replace("موسم","").replace("مشاهدة","").replace("مسلسل","").replace("انمي","").replace("مترجمة","").replace("مترجم","").replace("مشاهده","").replace("برنامج","").replace("مترجمة","").replace("فيلم","").replace("اون لاين","").replace("WEB-DL","").replace("BRRip","").replace("720p","").replace("HD-TC","").replace("HDRip","").replace("HD-CAM","").replace("DVDRip","").replace("BluRay","").replace("1080p","").replace("WEBRip","").replace("WEB-dl","").replace("مترجم ","").replace("مشاهدة وتحميل","").replace("اون لاين","")
-            sSeason =  " S1" + sTitle
+            sSeason =  "S1" + sTitle
             sTitle = sMovieTitle+sSeason
             siteUrl = aEntry[0].replace('https://cdn1.myciiiima.cfd/',URL_MAIN)
             if'/series/'  not in aEntry[0]:
                 continue
-            sThumb = sThumb
-            sDesc = ""
- 
+            sThumb = ''
+            sDesc = ''
+          
             oOutputParameterHandler.addParameter('siteUrl', siteUrl)
             oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
             oOutputParameterHandler.addParameter('sThumb', sThumb)
@@ -505,12 +507,12 @@ def showEps():
         oOutputParameterHandler = cOutputParameterHandler()
         for aEntry in aResult[1]:
  
-            sEp = aEntry[1].replace("الحلقة ","E")
+            sEp = aEntry[1].replace("الحلقة "," E")
             sTitle = sMovieTitle+sEp
             siteUrl = aEntry[0]
             sThumb = ''
-            sDesc = ""
- 
+            sDesc = ''
+            
             oOutputParameterHandler.addParameter('siteUrl', siteUrl)
             oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
             oOutputParameterHandler.addParameter('sThumb', sThumb) 
@@ -579,7 +581,7 @@ def showEps():
                     sTitle = sMovieTitle+sEp
                     
                     sThumb = ''
-                    sDesc = ""
+                    sDesc = ''
 			
 
 
