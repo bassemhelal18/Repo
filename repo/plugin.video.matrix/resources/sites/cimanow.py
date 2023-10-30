@@ -130,86 +130,65 @@ def showMovies(sSearch = ''):
     else:
         oInputParameterHandler = cInputParameterHandler()
         sUrl = oInputParameterHandler.getValue('siteUrl')
-      
-
-
-    oParser = cParser()
-    oRequest = cRequestHandler(sUrl)
-    oRequest.addHeaderEntry('User-Agent', UA)
-    data = oRequest.request()
     
-
-     # (.+?) ([^<]+) .+?
-
-    if 'adilbo' in data:
-        t_script = re.findall('<script.*?;.*?\'(.*?);', data, re.S)
-        t_int = re.findall('/g.....(.*?)\)', data, re.S)
-        if t_script and t_int:
-            script = t_script[0].replace("'",'')
-            script = script.replace("+",'')
-            script = script.replace("\n",'')
-            sc = script.split('.')
-            page = ''
-            for elm in sc:
-                c_elm = base64.b64decode(elm+'==').decode('utf-8')
-                t_ch = re.findall('\d+', c_elm, re.S)
-                if t_ch:
-                    nb = int(t_ch[0])+int(t_int[0])
-                    page = page + chr(nb)
-           
+    oParser = cParser()
+    oRequestHandler = cRequestHandler(sUrl)
+    data = oRequestHandler.request()
+    
+    page = prase_function(data)
+    page =str(page.encode('latin-1'),'utf-8')
+   
+    sPattern = '<article aria-label="post">.*?<a href="([^"]+).+?<li aria-label="year">(.+?)</li>.+?<li aria-label="title">([^<]+)<em>.+?data-src="(.+?)" width'
+    aResult = oParser.parse(page, sPattern)
+    if aResult[0]:
+        total = len(aResult[1])
+        progress_ = progress().VScreate(SITE_NAME)
+        oOutputParameterHandler = cOutputParameterHandler()  
+        for aEntry in aResult[1]:
+            progress_.VSupdate(progress_, total)
+            if progress_.iscanceled():
+                break
  
-            sPattern = '<article aria-label="post"><a href="([^"]+).+?<li aria-label="year">(.+?)</li>.+?<li aria-label="title">([^<]+)<em>.+?data-src="(.+?)" width'
-            oParser = cParser()
-            aResult = oParser.parse(page, sPattern)
-            if aResult[0]:
-                total = len(aResult[1])
-                progress_ = progress().VScreate(SITE_NAME)
-                oOutputParameterHandler = cOutputParameterHandler()  
-                for aEntry in aResult[1]:
-                    progress_.VSupdate(progress_, total)
-                    if progress_.iscanceled():
-                        break
- 
-                    sTitle = aEntry[2].replace("مشاهدة","").replace("مسلسل","").replace("مسرحية","").replace("انمي","").replace("مترجمة","").replace("مترجم","").replace("برنامج","").replace("فيلم","").replace("والأخيرة","").replace("مدبلج للعربية","مدبلج").replace("والاخيرة","").replace("كاملة","").replace("حلقات كاملة","").replace("اونلاين","").replace("مباشرة","").replace("انتاج ","").replace("جودة عالية","").replace("كامل","").replace("HD","").replace("السلسلة الوثائقية","").replace("الفيلم الوثائقي","").replace("اون لاين","")
-                    sTitle = str(sTitle.encode('latin-1'),'utf-8')
-                    if 'مدبلج' in sTitle:
-                        continue
-                    siteUrl = aEntry[0] + '/watching/'
-                    sThumb = str(aEntry[3].encode('latin-1'),'utf-8')
+            sTitle = aEntry[2].replace("مشاهدة","").replace("مسلسل","").replace("مسرحية","").replace("انمي","").replace("مترجمة","").replace("مترجم","").replace("برنامج","").replace("فيلم","").replace("والأخيرة","").replace("مدبلج للعربية","مدبلج").replace("والاخيرة","").replace("كاملة","").replace("حلقات كاملة","").replace("اونلاين","").replace("مباشرة","").replace("انتاج ","").replace("جودة عالية","").replace("كامل","").replace("HD","").replace("السلسلة الوثائقية","").replace("الفيلم الوثائقي","").replace("اون لاين","")
+            
+            if 'مدبلج' in sTitle:
+                continue
+            siteUrl = aEntry[0] + '/watching/'
+            sThumb = aEntry[3]
                     
-                    if sThumb.startswith('//'):
-                        sThumb = 'http:' + sThumb
-                    sYear = aEntry[1]
-                    sDesc = ''
+            if sThumb.startswith('//'):
+                sThumb = 'http:' + sThumb
+            sYear = aEntry[1]
+            sDesc = ''
 
 
-                    oOutputParameterHandler.addParameter('siteUrl',siteUrl)
-                    oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
-                    oOutputParameterHandler.addParameter('sThumb', sThumb)
-                    oOutputParameterHandler.addParameter('sYear', sYear)
-                    oOutputParameterHandler.addParameter('sDesc', sDesc)
+            oOutputParameterHandler.addParameter('siteUrl',siteUrl)
+            oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
+            oOutputParameterHandler.addParameter('sThumb', sThumb)
+            oOutputParameterHandler.addParameter('sYear', sYear)
+            oOutputParameterHandler.addParameter('sDesc', sDesc)
 			
-                    oGui.addMovie(SITE_IDENTIFIER, 'showServer', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
+            oGui.addMovie(SITE_IDENTIFIER, 'showServer', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
 
-                progress_.VSclose(progress_)
+        progress_.VSclose(progress_)
             
             
 
   # ([^<]+) .+?
     
-        sStart = '</section>'
-        sEnd = '</ul>'
-        page = oParser.abParse(page, sStart, sEnd)
+    sStart = '</section>'
+    sEnd = '</ul>'
+    page = oParser.abParse(page, sStart, sEnd)
 
-        sPattern = '<li><a href="(.+?)">(.+?)</a>'
-        oParser = cParser()
-        aResult = oParser.parse(page, sPattern)
+    sPattern = '<li><a href="(.+?)">(.+?)</a>'
+    oParser = cParser()
+    aResult = oParser.parse(page, sPattern)
         
-        soup = BeautifulSoup(page,"html.parser")
-        CurrentPage = int(soup.find("li",{"class":"active"}).text)
+    soup = BeautifulSoup(page,"html.parser")
+    CurrentPage = int(soup.find("li",{"class":"active"}).text)
         
         
-        if aResult[0]:
+    if aResult[0]:
             total = len(aResult[1])
             progress_ = progress().VScreate(SITE_NAME)
             oOutputParameterHandler = cOutputParameterHandler()  
@@ -234,8 +213,8 @@ def showMovies(sSearch = ''):
                     oGui.addDir(SITE_IDENTIFIER, 'showMovies', sTitle, sThumb, oOutputParameterHandler)
 
             progress_.VSclose(progress_)
-    if not sSearch:    
-        oGui.setEndOfDirectory()
+       
+    oGui.setEndOfDirectory()
  
 def showSeries(sSearch = ''):
     oGui = cGui()
@@ -244,87 +223,70 @@ def showSeries(sSearch = ''):
     else:
         oInputParameterHandler = cInputParameterHandler()
         sUrl = oInputParameterHandler.getValue('siteUrl')
+    
+    oParser = cParser()
+    oRequestHandler = cRequestHandler(sUrl)
+    data = oRequestHandler.request()
+    
+    page = prase_function(data)
+    page =str(page.encode('latin-1'),'utf-8')
+
+    sPattern = '<article aria-label="post"><a href="([^"]+).+?<li aria-label="year">(.+?)</li>.+?<li aria-label="title">([^<]+)<em>.+?data-src="(.+?)" width'
+
+    oParser = cParser()
+    aResult = oParser.parse(page, sPattern)
+	        
+    itemList =[]
+    if aResult[0]:
+        total = len(aResult[1])
+        progress_ = progress().VScreate(SITE_NAME)
+        oOutputParameterHandler = cOutputParameterHandler()  
+        for aEntry in aResult[1]:
+            progress_.VSupdate(progress_, total)
+            if progress_.iscanceled():
+                break
  
-    oRequest = cRequestHandler(sUrl)
-    oRequest.addHeaderEntry('User-Agent', UA)
-    data = oRequest.request()
-
-
-     # (.+?) ([^<]+) .+?
-
-    if 'adilbo' in data:
-        t_script = re.findall('<script.*?;.*?\'(.*?);', data, re.S)
-        t_int = re.findall('/g.....(.*?)\)', data, re.S)
-        if t_script and t_int:
-            script = t_script[0].replace("'",'')
-            script = script.replace("+",'')
-            script = script.replace("\n",'')
-            sc = script.split('.')
-            page = ''
-            for elm in sc:
-                c_elm = base64.b64decode(elm+'==').decode()
-                t_ch = re.findall('\d+', c_elm, re.S)
-                if t_ch:
-                    nb = int(t_ch[0])+int(t_int[0])
-                    page = page + chr(nb)
+            if "فيلم" in aEntry[2]:
+                continue
+ 
+            sTitle = aEntry[2]
             
 
-            sPattern = '<article aria-label="post"><a href="([^"]+).+?<li aria-label="year">(.+?)</li>.+?<li aria-label="title">([^<]+)<em>.+?data-src="(.+?)" width'
-
-            oParser = cParser()
-            aResult = oParser.parse(page, sPattern)
-	        
-            itemList =[]
-            if aResult[0]:
-                total = len(aResult[1])
-                progress_ = progress().VScreate(SITE_NAME)
-                oOutputParameterHandler = cOutputParameterHandler()  
-                for aEntry in aResult[1]:
-                    progress_.VSupdate(progress_, total)
-                    if progress_.iscanceled():
-                        break
- 
-                    if "فيلم" in aEntry[2]:
-                        continue
- 
-                    sTitle = aEntry[2]
-                    sTitle = str(sTitle.encode('latin-1'),'utf-8')
-
-                    siteUrl = aEntry[0]
-                    sThumb = str(aEntry[3].encode('latin-1'),'utf-8')
-                    if sThumb.startswith('//'):
-                        sThumb = 'http:' + sThumb
-                    sDesc = ''
-                    sYear = aEntry[1]
+            siteUrl = aEntry[0]
+            sThumb = aEntry[3]
+            if sThumb.startswith('//'):
+                sThumb = 'http:' + sThumb
+            sDesc = ''
+            sYear = aEntry[1]
 
 
-                    if sTitle not in itemList:
-                      itemList.append(sTitle)
+            if sTitle not in itemList:
+                itemList.append(sTitle)
 
-                      oOutputParameterHandler.addParameter('siteUrl',siteUrl)
-                      oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
-                      oOutputParameterHandler.addParameter('sThumb', sThumb)
-                      
+                oOutputParameterHandler.addParameter('siteUrl',siteUrl)
+                oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
+                oOutputParameterHandler.addParameter('sThumb', sThumb)
+                oOutputParameterHandler.addParameter('sYear', sYear)      
 			
-                      oGui.addTV(SITE_IDENTIFIER, 'showSeasons', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
+                oGui.addTV(SITE_IDENTIFIER, 'showSeasons', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
 
-                progress_.VSclose(progress_)
+        progress_.VSclose(progress_)
 
   # ([^<]+) .+?
     
-        sStart = '</section>'
-        sEnd = '</ul>'
-        page = oParser.abParse(page, sStart, sEnd)
+    sStart = '</section>'
+    sEnd = '</ul>'
+    page = oParser.abParse(page, sStart, sEnd)
 
-        sPattern = '<li><a href="(.+?)">(.+?)</a>'
-        oParser = cParser()
-        aResult = oParser.parse(page, sPattern)
+    sPattern = '<li><a href="(.+?)">(.+?)</a>'
+    oParser = cParser()
+    aResult = oParser.parse(page, sPattern)
         
-        soup = BeautifulSoup(page,"html.parser")
-        CurrentPage = int(soup.find("li",{"class":"active"}).text)
+    soup = BeautifulSoup(page,"html.parser")
+    CurrentPage = int(soup.find("li",{"class":"active"}).text)
         
         
-        if aResult[0]:
+    if aResult[0]:
             total = len(aResult[1])
             progress_ = progress().VScreate(SITE_NAME)
             oOutputParameterHandler = cOutputParameterHandler()  
@@ -347,322 +309,239 @@ def showSeries(sSearch = ''):
                     oOutputParameterHandler.addParameter('sThumb', sThumb)
             
                     oGui.addDir(SITE_IDENTIFIER, 'showSeries', sTitle, sThumb, oOutputParameterHandler)
-                progress_.VSclose(progress_)
-    if not sSearch:    
-        oGui.setEndOfDirectory()
+            progress_.VSclose(progress_)
+       
+    oGui.setEndOfDirectory()
  
 def showSeasons():
     oGui = cGui()
-   
     oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
  
     # (.+?) .+?  ([^<]+)
+    oParser = cParser()
     oRequestHandler = cRequestHandler(sUrl)
-    sHtmlContent = oRequestHandler.request()
+    data = oRequestHandler.request()
+    
+    page = prase_function(data)
+    page =str(page.encode('latin-1'),'utf-8')
+            
+            
     oParser = cParser()
     sStart = '<section aria-label="seasons">'
     sEnd = '<ul class="tabcontent" id="related">'
-    sHtmlContent = oParser.abParse(sHtmlContent, sStart, sEnd)
-
-    oRequest = cRequestHandler(sUrl)
-    oRequest.addHeaderEntry('User-Agent', UA)
-    data = oRequest.request()
+    page = oParser.abParse(page, sStart, sEnd)
+            
+    sPattern = '<a href="([^<]+)">([^<]+)<em>'
     
-
-     # (.+?) ([^<]+) .+?
-
-    if 'adilbo' in data:
-        t_script = re.findall('<script.*?;.*?\'(.*?);', data, re.S)
-        t_int = re.findall('/g.....(.*?)\)', data, re.S)
-        if t_script and t_int:
-            script = t_script[0].replace("'",'')
-            script = script.replace("+",'')
-            script = script.replace("\n",'')
-            sc = script.split('.')
-            page = ''
-            for elm in sc:
-                c_elm = base64.b64decode(elm+'==').decode()
-                t_ch = re.findall('\d+', c_elm, re.S)
-                if t_ch:
-                    nb = int(t_ch[0])+int(t_int[0])
-                    page = page + chr(nb)
-            
-            
-            oParser = cParser()
-            sStart = '<section aria-label="seasons">'
-            sEnd = '<ul class="tabcontent" id="related">'
-            page = oParser.abParse(page, sStart, sEnd)
-            
-            sPattern = '<a href="([^<]+)">([^<]+)<em>'
-    
-            oParser = cParser()
-            aResult = oParser.parse(page, sPattern)
+    oParser = cParser()
+    aResult = oParser.parse(page, sPattern)
     
    
-            if aResult[0]:
-                oOutputParameterHandler = cOutputParameterHandler()  
-                for aEntry in aResult[1]:
+    if aResult[0]:
+        oOutputParameterHandler = cOutputParameterHandler()  
+        for aEntry in aResult[1]:
 
-                    sSeason = str(aEntry[1].encode('latin-1'),'utf-8')
-                    sTitle = sMovieTitle+sSeason.replace("الموسم"," S").replace("S ","S")
+            sSeason = aEntry[1]
+            sTitle = sMovieTitle+sSeason.replace("الموسم","S").replace("S ","S")
                     
-                    siteUrl = aEntry[0]
-                    sThumb = sThumb
-                    sDesc = ""
- 
-
-                    oOutputParameterHandler.addParameter('siteUrl', siteUrl)
-                    oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
-                    oOutputParameterHandler.addParameter('sThumb', sThumb)
+            siteUrl = aEntry[0]
+            sThumb = ''
+            sDesc = ''
             
 
- 
-                    oGui.addSeason(SITE_IDENTIFIER, 'showEps', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
+            oOutputParameterHandler.addParameter('siteUrl', siteUrl)
+            oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
+            oOutputParameterHandler.addParameter('sThumb', sThumb)
+            oGui.addSeason(SITE_IDENTIFIER, 'showEps', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
        
     oGui.setEndOfDirectory() 
  
 def showEps():
     oGui = cGui()
-   
     oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
 
+    oParser = cParser()
     oRequestHandler = cRequestHandler(sUrl)
-    sHtmlContent = oRequestHandler.request()
+    data = oRequestHandler.request()
+    
+    page = prase_function(data)
+    page =str(page.encode('latin-1'),'utf-8')
+            
+            
     oParser = cParser()
     sStart = '<section aria-label="seasons">'
     sEnd = '<ul class="tabcontent" id="related">'
-    sHtmlContent = oParser.abParse(sHtmlContent, sStart, sEnd)
-    
-    oRequest = cRequestHandler(sUrl)
-    oRequest.addHeaderEntry('User-Agent', UA)
-    data = oRequest.request()
-
-
-     # (.+?) ([^<]+) .+?
-
-    if 'adilbo' in data:
-        t_script = re.findall('<script.*?;.*?\'(.*?);', data, re.S)
-        t_int = re.findall('/g.....(.*?)\)', data, re.S)
-        if t_script and t_int:
-            script = t_script[0].replace("'",'')
-            script = script.replace("+",'')
-            script = script.replace("\n",'')
-            sc = script.split('.')
-            page = ''
-            for elm in sc:
-                c_elm = base64.b64decode(elm+'==').decode()
-                t_ch = re.findall('\d+', c_elm, re.S)
-                if t_ch:
-                    nb = int(t_ch[0])+int(t_int[0])
-                    page = page + chr(nb)
+    page = oParser.abParse(page, sStart, sEnd)
             
-            
-            oParser = cParser()
-            sStart = '<section aria-label="seasons">'
-            sEnd = '<ul class="tabcontent" id="related">'
-            page = oParser.abParse(page, sStart, sEnd)
-            
-            sPattern = '<li><a href="(.+?)"><img  src="(.+?)" alt="logo" />.+?<em>(.+?)</em>'
+    sPattern = '<li><a href="(.+?)"><img  src="(.+?)" alt="logo" />.+?<em>(.+?)</em>'
 
-            oParser = cParser()
-            aResult = oParser.parse(page, sPattern)
-    
-
-   
-            if aResult[0]:
-                oOutputParameterHandler = cOutputParameterHandler()  
-                for aEntry in aResult[1]:
+    oParser = cParser()
+    aResult = oParser.parse(page, sPattern)
+    if aResult[0]:
+        oOutputParameterHandler = cOutputParameterHandler()  
+        for aEntry in aResult[1]:
 
  
-                    sTitle = sMovieTitle+'E'+aEntry[2]
-                    
-                    siteUrl = aEntry[0] + 'watching/'
-                    sThumb = ''
-                    sDesc = ""
-
-                    oOutputParameterHandler.addParameter('siteUrl', siteUrl)
-                    oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
-                    oOutputParameterHandler.addParameter('sThumb', sThumb)
+            sTitle = sMovieTitle+'E'+aEntry[2]
+            sTitle = sTitle.replace('E0','E')
+            siteUrl = aEntry[0] + 'watching/'
+            sThumb = ''
+            sDesc = ''
             
-
- 
-                    oGui.addEpisode(SITE_IDENTIFIER, 'showServer', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
- 
-
-       
+            oOutputParameterHandler.addParameter('siteUrl', siteUrl)
+            oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
+            oOutputParameterHandler.addParameter('sThumb', sThumb)
+            oGui.addEpisode(SITE_IDENTIFIER, 'showServer', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
     oGui.setEndOfDirectory() 
 
   
 def showServer(oInputParameterHandler = False):
-    import requests
     oGui = cGui()
-   
     if not oInputParameterHandler:
         oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
-    host = sUrl.split('/')[2]
-    URL_MAIN = 'https://' + host
-   
- 
-    oRequest = cRequestHandler(sUrl)
-    cook = oRequest.GetCookies()
-    hdr = {'User-Agent' : UA,'Accept-Encoding' : 'gzip','cookie' : cook,'host' : host,'referer' : URL_MAIN}
-    St=requests.Session()
-    data = St.get(sUrl,headers=hdr)
-    data = data.content.decode('utf8')  
+    
+      
     oParser = cParser()
-    
+    oRequestHandler = cRequestHandler(sUrl)
+    data = oRequestHandler.request()
 
     
-     # (.+?) ([^<]+) .+?
-
-    if 'adilbo' in data:
-        t_script = re.findall('<script.*?;.*?\'(.*?);', data, re.S)
-        t_int = re.findall('/g.....(.*?)\)', data, re.S)
-        if t_script and t_int:
-            script = t_script[0].replace("'",'')
-            script = script.replace("+",'')
-            script = script.replace("\n",'')
-            sc = script.split('.')
-            page = ''
-            for elm in sc:
-                c_elm = base64.b64decode(elm+'==').decode()
-                t_ch = re.findall('\d+', c_elm, re.S)
-                if t_ch:
-                    nb = int(t_ch[0])+int(t_int[0])
-                    page = page + chr(nb)
+    page = prase_function(data)
+    page =str(page.encode('latin-1'),'utf-8')
                     
 
     # (.+?) .+? ([^<]+)        	
-            sPattern = 'data-index="([^"]+)".+?data-id="([^"]+)"' 
-            aResult = oParser.parse(page, sPattern)
+    sPattern = 'data-index="([^"]+)".+?data-id="([^"]+)"' 
+    aResult = oParser.parse(page, sPattern)
             
-            if aResult[0]:
-                for aEntry in aResult[1]:
-                    sIndex = aEntry[0]
-                    sId = aEntry[1]
-     # (.+?) ([^<]+) .+?
+    if aResult[0]:
+        for aEntry in aResult[1]:
+            sIndex = aEntry[0]
+            sId = aEntry[1]
 
-                    sTitle = 'server '
-                    siteUrl = URL_MAIN + '/wp-content/themes/Cima%20Now%20New/core.php?action=switch&index='+sIndex+'&id='+sId
-                    hdr = {'User-Agent' : 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:66.0) Gecko/20100101 Firefox/66.0','referer' : URL_MAIN}
-                    params = {'action':'switch','index':sIndex,'id':sId}                
-                    St=requests.Session()
-                    sHtmlContent = St.get(siteUrl,headers=hdr,params=params)
-                    sHtmlContent = sHtmlContent.content
-                    sPattern =  '<iframe.+?src="([^"]+)"'
-                    oParser = cParser()
-                    aResult = oParser.parse(sHtmlContent, sPattern)
-                    
-                    if aResult[0]:
-                        for aEntry in aResult[1]:
+
             
-                            url = aEntry.replace("newcima","rrsrrs")
-                            sTitle = sMovieTitle
-                            if url.startswith('//'):
-                                url = 'http:' + url
-                            
-                            sHosterUrl = url
-                            if 'userload' in sHosterUrl:
-                                sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
-                            
-                            
-                            if 'moshahda' in sHosterUrl:
-                                sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
-                            if 'mystream' in sHosterUrl:
-                                sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN   
-                            oHoster = cHosterGui().checkHoster(sHosterUrl)
-                            if oHoster:
-                                oHoster.setDisplayName(sTitle)
-                                oHoster.setFileName(sMovieTitle)
-                                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
-            
-            sStart = '<ul class="tabcontent" id="download">'
-            sEnd = '</section>'
-            page = oParser.abParse( page, sStart, sEnd)
-            sPattern = '<a href="(.+?)".+?class="fas fa-cloud-download-alt"></i>(.+?)<p'
+            siteUrl = URL_MAIN + '/wp-content/themes/Cima%20Now%20New/core.php?action=switch&index='+sIndex+'&id='+sId
+            hdr = {'User-Agent' : 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:66.0) Gecko/20100101 Firefox/66.0','referer' : URL_MAIN}
+            params = {'action':'switch','index':sIndex,'id':sId}                
+            St=requests.Session()
+            sHtmlContent = St.get(siteUrl,headers=hdr,params=params)
+            sHtmlContent = sHtmlContent.content
+            sPattern =  '<iframe.+?src="([^"]+)"'
             oParser = cParser()
-            aResult = oParser.parse(page, sPattern)
-
-	
+            aResult = oParser.parse(sHtmlContent, sPattern)
+                    
             if aResult[0]:
                 for aEntry in aResult[1]:
             
-                    url = aEntry[0]
-                    sTitle = aEntry[1].replace('</i>',"")
-                    sTitle = ('%s  -[%s]') % (sMovieTitle, sTitle)
-                    url = url
-                    sThumb = sThumb
-                    if url.startswith('//'):
-                        url = 'http:' + url
-				
-					
-            
-                    sHosterUrl = url 
-                    if 'userload' in sHosterUrl:
-                        sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
-                    
-                    
-                    if 'moshahda' in sHosterUrl:
-                        sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
-                    if 'mystream' in sHosterUrl:
-                        sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN  
-                    oHoster = cHosterGui().checkHoster(sHosterUrl)
-                    if oHoster:
-                        oHoster.setDisplayName(sTitle)
-                        oHoster.setFileName(sMovieTitle)
-                        cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
-            
-            oParser = cParser()
-            sStart = '<li aria-label="download">'
-            sEnd = '</section>'
-            page = oParser.abParse( page, sStart, sEnd)
-            
-            sPattern = '<a href="([^"]+)"><i class="fa fa-download"></i>(.+?)</a>'
-            oParser = cParser()
-            aResult = oParser.parse( page, sPattern)
-
-	
-            if aResult[0]:
-                for aEntry in aResult[1]:
-            
-                    url = aEntry[0]
-                    sTitle = aEntry[1].replace('</i>',"")
+                    url = aEntry.replace("newcima","rrsrrs")
                     sTitle = sMovieTitle
-                    url = url.replace("cimanow","rrsrr")
-                    sThumb = sThumb
                     if url.startswith('//'):
                         url = 'http:' + url
-				
-					
-            
+                            
                     sHosterUrl = url
-                    
-
-                    if 'mdiaload' in sHosterUrl:
-                     continue
-                    if 'uploading.vn' in sHosterUrl:
-                     continue
                     if 'userload' in sHosterUrl:
                         sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
                     if 'moshahda' in sHosterUrl:
                         sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
                     if 'mystream' in sHosterUrl:
-                        sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN  
+                        sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN   
                     oHoster = cHosterGui().checkHoster(sHosterUrl)
                     if oHoster:
                         oHoster.setDisplayName(sTitle)
                         oHoster.setFileName(sMovieTitle)
                         cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
             
-            
+    sStart = '<ul class="tabcontent" id="download">'
+    sEnd = '</section>'
+    page = oParser.abParse( page, sStart, sEnd)
+    sPattern = '<a href="(.+?)".+?class="fas fa-cloud-download-alt"></i>(.+?)<p'
+    oParser = cParser()
+    aResult = oParser.parse(page, sPattern)
 
+	
+    if aResult[0]:
+        for aEntry in aResult[1]:
+            
+            url = aEntry[0]
+            sDisplayTitle = aEntry[1].replace('</i>',"")
+            sDisplayTitle = ('-[%s]') % (sDisplayTitle)
+            if url.startswith('//'):
+                url = 'http:' + url
+            sHosterUrl = url 
+            if 'userload' in sHosterUrl:
+                sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
+            if 'moshahda' in sHosterUrl:
+                sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
+            if 'mystream' in sHosterUrl:
+                sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN  
+            oHoster = cHosterGui().checkHoster(sHosterUrl)
+            if oHoster:
+                oHoster.setDisplayName(sTitle+sDisplayTitle)
+                oHoster.setFileName(sMovieTitle)
+                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+            
+    oParser = cParser()
+    sStart = '<li aria-label="download">'
+    sEnd = '</section>'
+    page = oParser.abParse( page, sStart, sEnd)
+            
+    sPattern = '<a href="([^"]+)"><i class="fa fa-download"></i>(.+?)</a>'
+    oParser = cParser()
+    aResult = oParser.parse( page, sPattern)
+
+	
+    if aResult[0]:
+        for aEntry in aResult[1]:
+            
+            url = aEntry[0]
+            sTitle = aEntry[1].replace('</i>',"")
+            sTitle = sMovieTitle
+            url = url.replace("cimanow","rrsrr")
+            if url.startswith('//'):
+                url = 'http:' + url
+            sHosterUrl = url
+            if 'mdiaload' in sHosterUrl:
+                continue
+            if 'uploading.vn' in sHosterUrl:
+                continue
+            if 'userload' in sHosterUrl:
+                sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
+            if 'moshahda' in sHosterUrl:
+                sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
+            if 'mystream' in sHosterUrl:
+                sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN  
+            oHoster = cHosterGui().checkHoster(sHosterUrl)
+            if oHoster:
+                oHoster.setDisplayName(sTitle)
+                oHoster.setFileName(sMovieTitle)
+                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+            
     oGui.setEndOfDirectory()
+
+def prase_function(data):
+    if 'adilbo' in data:
+     t_script = re.findall('<script.*?;.*?\'(.*?);', data, re.S)
+     t_int = re.findall('/g.....(.*?)\)', data, re.S)
+     if t_script and t_int:
+         script = t_script[0].replace("'",'')
+         script = script.replace("+",'')
+         script = script.replace("\n",'')
+         sc = script.split('.')
+         page = ''
+         for elm in sc:
+             c_elm = base64.b64decode(elm+'==').decode()
+             t_ch = re.findall('\d+', c_elm, re.S)
+             if t_ch:
+                nb = int(t_ch[0])+int(t_int[0])
+                page = page + chr(nb)
+    return page

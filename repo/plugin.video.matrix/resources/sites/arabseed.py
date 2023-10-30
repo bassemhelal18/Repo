@@ -535,7 +535,7 @@ def showEps():
         for aEntry in aResult[1]:
 
  
-            sEp = "E"+aEntry[2].replace(" ","")
+            sEp = " E"+aEntry[2]
             if "مدبلج" in sMovieTitle:
                 sMovieTitle = sMovieTitle.replace("مدبلج","")
                 sMovieTitle = "مدبلج"+sMovieTitle
