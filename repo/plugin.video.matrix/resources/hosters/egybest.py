@@ -23,7 +23,7 @@ class cHoster(iHoster):
 
     def setUrl(self, url):
         self._url = str(url).replace("eeggyy","")
-        
+
     def _getMediaLinkForGuest(self, autoPlay = False):
 
         sReferer = ""
@@ -34,21 +34,48 @@ class cHoster(iHoster):
         oRequest.addHeaderEntry('user-agent',UA)
         oRequest.addHeaderEntry('Referer',sReferer)
         sHtmlContent = oRequest.request()
-        
+       
         oParser = cParser()
         
+        sPattern = '(eval\(function\(p,a,c,k,e(?:.|\s)+?\))<\/script>'
+        aResult = oParser.parse(sHtmlContent, sPattern)
+        if aResult[0]:
+            sHtmlContent = cPacker().unpack(aResult[1][0])
         
-        sPattern = 'file: "([^"]+)".*?label: "([^"]+)",'
+        sPattern = 'file:"(.+?)"'
+        aResult = oParser.parse(sHtmlContent, sPattern)
+        if aResult[0]:
+                api_call = aResult[1][0]
+
+                url = []
+                qua = []
+                oRequest = cRequestHandler(api_call)
+                oRequest.addHeaderEntry('User-Agent', UA)
+                sHtmlContent = oRequest.request()
+
+                sPattern = 'RESOLUTION=(\d+x\d+)(.+?.m3u8)'
+                aResult = oParser.parse(sHtmlContent, sPattern)
+                if aResult[0] is True:
+                    for aEntry in aResult[1]:
+                        url.append(aEntry[1])
+                        qua.append(aEntry[0])
+
+                    if url:
+                        api_call = api_call + dialog().VSselectqual(qua, url)
+
+        url=[]
+        qua=[]
+        sPattern = 'file:\s*"([^"]+)".+?label:\s*"([^"]+)'
         aResult = oParser.parse(sHtmlContent,sPattern)
-        list_url=[]
-        list_q=[]
-        for aEntry in aResult[1]:
-                
-                list_url.append(aEntry[0])
-                list_q.append(aEntry[1]) 
-				
-        api_call = dialog().VSselectqual(list_q,list_url)
+        if aResult[0] is True:
+            for aEntry in aResult[1]:
+
+                url.append(aEntry[0])
+                qua.append(aEntry[1]) 
+            if url:
+                api_call = dialog().VSselectqual(qua,url)
+
         if api_call:
-                    return True, api_call+ '|User-Agent=' + UA
+            return True, api_call.replace(' ','%20') 
 
         return False, False

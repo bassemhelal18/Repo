@@ -176,7 +176,7 @@ def showMovies(sSearch = ''):
  
             if 'مدبلج' in sTitle:
               continue
-            siteUrl = aEntry[0].replace('https://cdn1.myciiiima.cfd/',URL_MAIN)
+            siteUrl = aEntry[0].replace('.site/','.shop/')
             sDesc = ''
             sThumb = aEntry[2].replace("(","").replace(")","")
             sYear = ''
@@ -241,8 +241,8 @@ def showSeries(sSearch =''):
  
             if "فيلم"  in aEntry[1]:
                 continue
- 
-            siteUrl = aEntry[0].replace('https://cdn1.myciiiima.cfd/',URL_MAIN)
+            
+            siteUrl = aEntry[0].replace('.site/','.shop/')
             
             sTitle = aEntry[1].replace("مشاهدة","").replace("مسلسل","").replace("انمي","").replace("مترجمة","").replace("مترجم","").replace("مشاهده","").replace("برنامج","").replace("مترجمة","").replace("فيلم","").replace("اون لاين","").replace("WEB-DL","").replace("BRRip","").replace("720p","").replace("HD-TC","").replace("HDRip","").replace("HD-CAM","").replace("DVDRip","").replace("BluRay","").replace("1080p","").replace("WEBRip","").replace("WEB-dl","").replace("مترجم ","").replace("مشاهدة وتحميل","").replace("اون لاين","")
             sThumb = aEntry[2].replace("(","").replace(")","")
@@ -420,7 +420,7 @@ def showSeasons():
             sSeason =  "S" + sTitle
             sSeason = sSeason.replace('S ','S')
             sTitle = sMovieTitle+sSeason
-            siteUrl = aEntry[0].replace('https://cdn1.myciiiima.cfd/',URL_MAIN)
+            siteUrl = aEntry[0].replace('.site/','.shop/')
             sThumb = ''
             sDesc = ''
             
@@ -442,7 +442,7 @@ def showSeasons():
             sSeason =  "S" + sTitle
             sSeason = sSeason.replace('S ','S')
             sTitle = sMovieTitle+sSeason
-            siteUrl = aEntry[0].replace('https://cdn1.myciiiima.cfd/',URL_MAIN)
+            siteUrl = aEntry[0].replace('.site/','.shop/')
             
             sThumb = ''
             sDesc = ''
@@ -467,7 +467,7 @@ def showSeasons():
             sTitle = aEntry[1].replace("موسم","").replace("مشاهدة","").replace("مسلسل","").replace("انمي","").replace("مترجمة","").replace("مترجم","").replace("مشاهده","").replace("برنامج","").replace("مترجمة","").replace("فيلم","").replace("اون لاين","").replace("WEB-DL","").replace("BRRip","").replace("720p","").replace("HD-TC","").replace("HDRip","").replace("HD-CAM","").replace("DVDRip","").replace("BluRay","").replace("1080p","").replace("WEBRip","").replace("WEB-dl","").replace("مترجم ","").replace("مشاهدة وتحميل","").replace("اون لاين","")
             sSeason =  "S1" + sTitle
             sTitle = sMovieTitle+sSeason
-            siteUrl = aEntry[0].replace('https://cdn1.myciiiima.cfd/',URL_MAIN)
+            siteUrl = aEntry[0].replace('.site/','.shop/')
             if'/series/'  not in aEntry[0]:
                 continue
             sThumb = ''
