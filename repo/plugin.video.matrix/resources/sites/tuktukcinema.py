@@ -20,17 +20,7 @@ SITE_NAME = 'Tuktukcinema'
 SITE_DESC = 'arabic vod'
  
 URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
-oParser = cParser()
- 
-oRequestHandler = cRequestHandler(URL_MAIN)
-sHtmlContent = oRequestHandler.request()
-    # (.+?) ([^<]+)
 
-sPattern = '<link rel="canonical" href="(.+?)" />'
-aResult = oParser.parse(sHtmlContent, sPattern)
-    
-if (aResult[0]):
-    URL_MAIN = aResult[1][0]
 
 MOVIE_EN = (URL_MAIN + 'category/movies-33/افلام-اجنبي/', 'showMovies')
 MOVIE_HI = (URL_MAIN + 'category/movies-33/افلام-هندى/', 'showMovies')
