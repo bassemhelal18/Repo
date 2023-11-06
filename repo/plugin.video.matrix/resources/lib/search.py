@@ -49,7 +49,7 @@ class cSearch:
             self._finishSearch(listThread)
 
             oGui = cGui()
-            oGui.addText('globalSearch', self.addons.VSlang(30081) % sSearchText, 'search.png')
+            oGui.addText('globalSearch', self.addons.VSlang(30081) % sSearchText, icons+'/search.png')
 
             count = 0
             searchResults = cGui().getSearchResult()
@@ -416,7 +416,7 @@ class cSearch:
     def _displayAllResult(self, searchInfo):
         searchGui = cGui()
         allSearchInfo = searchInfo['title'] + ' ' + searchInfo['year']
-        searchGui.addText('globalSearch', self.addons.VSlang(30081) % allSearchInfo, 'search.png')
+        searchGui.addText('globalSearch', self.addons.VSlang(30081) % allSearchInfo, icons+'/search.png')
 
         if len(self.allVideoLink) == 0:
             searchGui.addText('globalSearch')  # "Aucune information"

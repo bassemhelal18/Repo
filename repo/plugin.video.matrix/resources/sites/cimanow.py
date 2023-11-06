@@ -120,6 +120,7 @@ def showSeriesSearch():
     if sSearchText:
         sUrl = URL_MAIN + '?s=%D9%85%D8%B3%D9%84%D8%B3%D9%84+'+sSearchText
         showSeries(sUrl)
+        
         oGui.setEndOfDirectory()
         return
 		
@@ -231,7 +232,7 @@ def showSeries(sSearch = ''):
     page = prase_function(data)
     page =str(page.encode('latin-1'),'utf-8')
 
-    sPattern = '<article aria-label="post"><a href="([^"]+).+?<li aria-label="year">(.+?)</li>.+?<li aria-label="title">([^<]+)<em>.+?data-src="(.+?)" width'
+    sPattern = '<article aria-label="post">.*?<a href="([^"]+).+?<li aria-label="year">(.+?)</li>.+?<li aria-label="title">([^<]+)<em>.+?data-src="(.+?)" width'
 
     oParser = cParser()
     aResult = oParser.parse(page, sPattern)
@@ -310,8 +311,8 @@ def showSeries(sSearch = ''):
             
                     oGui.addDir(SITE_IDENTIFIER, 'showSeries', sTitle, sThumb, oOutputParameterHandler)
             progress_.VSclose(progress_)
-       
-    oGui.setEndOfDirectory()
+    if not sSearch:   
+       oGui.setEndOfDirectory()
  
 def showSeasons():
     oGui = cGui()
