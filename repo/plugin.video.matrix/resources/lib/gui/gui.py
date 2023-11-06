@@ -198,7 +198,6 @@ class cGui:
     def addEpisode(self, sId, sFunction, sLabel, sIcon, sThumbnail, sDesc, oOutputParameterHandler=''):
         # Pour gérer l'enchainement des épisodes, l'URL de la saison
         oInputParameterHandler = cInputParameterHandler()
-        sThumbnail = ''
         saisonUrl = oInputParameterHandler.getValue('saisonUrl')
         if saisonUrl:   # Retenu depuis "addSeason"
             oOutputParameterHandler.addParameter('saisonUrl', saisonUrl)

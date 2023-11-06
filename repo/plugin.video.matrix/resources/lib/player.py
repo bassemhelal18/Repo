@@ -119,9 +119,7 @@ class cPlayer(xbmc.Player):
 
         player_conf = self.ADDON.getSetting('playerPlay')
         # Si lien dash, methode prioritaire
-        mpd = splitext(urlparse(sUrl).path)[-1] in [".mpd", ".m3u8"]
-        mpd |= '&ct=6&' in sUrl     # mpd venant de ok.ru, n'a pas d'extension
-        if mpd:
+        if splitext(urlparse(sUrl).path)[-1] in [".mpd", ".m3u8"]:
             if isKrypton():
                 addonManager().enableAddon('inputstream.adaptive')
                 item.setProperty('inputstream', 'inputstream.adaptive')
@@ -168,7 +166,7 @@ class cPlayer(xbmc.Player):
                 self.currentTime = self.getTime()
 
                 waitingNext += 1
-                if waitingNext == 10:  # attendre un peu avant de chercher le prochain épisode d'une série
+                if waitingNext == 8:  # attendre un peu avant de chercher le prochain épisode d'une série
                     self.totalTime = self.getTotalTime()
                     self.infotag = self.getVideoInfoTag()
                     UpNext().nextEpisode(oGuiElement)
