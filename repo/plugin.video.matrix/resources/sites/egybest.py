@@ -500,7 +500,7 @@ def showSeries(sSearch = ''):
             if m:
                 sYear = str(m.group(0))
                 sTitle = sTitle.replace(sYear,'')
-
+            
             if sTitle not in itemList:
                 itemList.append(sTitle)	
                 oOutputParameterHandler.addParameter('siteUrl',siteUrl)
@@ -559,8 +559,9 @@ def showSeasons():
             m = re.search('([0-9]{4})', sTitle)
             if m:
                 sYear = str(m.group(0))
-                sTitle = sTitle.replace(sYear,'')
-
+                sTitle = sTitle.replace(sYear,'').replace('     -','')
+            sTitle = sTitle.replace('     -','')
+            
             oOutputParameterHandler.addParameter('siteUrl',siteUrl)
             oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
             oOutputParameterHandler.addParameter('sThumb', sThumb)
@@ -622,7 +623,7 @@ def showEpisodes():
             siteUrl = aEntry[0].encode('utf-8').decode('utf-8')
             sThumb = aEntry[1]
             sDesc = ''
-			
+            
             oOutputParameterHandler.addParameter('siteUrl',siteUrl)
             oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
             oOutputParameterHandler.addParameter('sThumb', sThumb)

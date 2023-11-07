@@ -218,7 +218,6 @@ def showMovies(sSearch = ''):
 
 def showassemblies():
     oGui = cGui()
-    
     oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
@@ -312,6 +311,7 @@ def showSeries(sSearch = ''):
             sThumb = aEntry[2]
             sDesc = ''
             sDisplayTitle = sTitle.replace("الموسم العاشر","").replace("الموسم الحادي عشر","").replace("الموسم الثاني عشر","").replace("الموسم الثالث عشر","").replace("الموسم الرابع عشر","").replace("الموسم الخامس عشر","").replace("الموسم السادس عشر","").replace("الموسم السابع عشر","").replace("الموسم الثامن عشر","").replace("الموسم التاسع عشر","").replace("الموسم العشرون","").replace("الموسم الحادي و العشرون","").replace("الموسم الثاني و العشرون","").replace("الموسم الثالث و العشرون","S23").replace("الموسم الرابع والعشرون","").replace("الموسم الخامس و العشرون","").replace("الموسم السادس والعشرون","").replace("الموسم السابع والعشرون","").replace("الموسم الثامن والعشرون","").replace("الموسم التاسع والعشرون","").replace("الموسم الثلاثون","").replace("الموسم الحادي و الثلاثون","").replace("الموسم الثاني والثلاثون","").replace("الموسم الاول","").replace("الموسم الثاني","").replace("الموسم الثالث","").replace("الموسم الثالث","").replace("الموسم الرابع","").replace("الموسم الخامس","").replace("الموسم السادس","").replace("الموسم السابع","").replace("الموسم الثامن","").replace("الموسم التاسع","").replace("الموسم","").replace("S ","").replace("الحلقة","").replace("1","").replace("2","").replace("3","").replace("4","").replace("5","").replace("6","").replace("7","").replace("8","").replace("9","").replace("10","").replace("11","").replace("12","").replace("13","").replace("14","").replace("15","").replace("16","").replace("17","").replace("18","").replace("19","").replace("20","").replace("21","").replace("22","").replace("23","").replace("24","").replace("25","").replace("26","").replace("27","").replace("28","").replace("29","").replace("30","").replace("0","").replace("season","")
+            sDisplayTitle = sDisplayTitle.strip()
             
             if sDisplayTitle not in itemList:
                 itemList.append(sDisplayTitle)
@@ -362,11 +362,11 @@ def showSeasons():
        oOutputParameterHandler = cOutputParameterHandler()
        for aEntry in aResult[1]:
  
-           sTitle = sMovieTitle + 'S'+aEntry[1]
+           sTitle = sMovieTitle + ' S'+aEntry[1]
            siteUrl = aEntry[0]
            sThumb = aEntry[2].replace('=','')
            sDesc = ""
-			
+           
            oOutputParameterHandler.addParameter('siteUrl',siteUrl)
            oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
            oOutputParameterHandler.addParameter('sThumb', sThumb)
@@ -376,43 +376,43 @@ def showSeasons():
 
 
 def showEpisodes():
-	oGui = cGui()
-    
-	oInputParameterHandler = cInputParameterHandler()
-	sUrl = oInputParameterHandler.getValue('siteUrl')
-	sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
-	sThumb = oInputParameterHandler.getValue('sThumb')
+    oGui = cGui()
+    oInputParameterHandler = cInputParameterHandler()
+    sUrl = oInputParameterHandler.getValue('siteUrl')
+    sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
+    sThumb = oInputParameterHandler.getValue('sThumb')
  
-	oRequestHandler = cRequestHandler(sUrl)
-	sHtmlContent = oRequestHandler.request()
+    oRequestHandler = cRequestHandler(sUrl)
+    sHtmlContent = oRequestHandler.request()
 
-	oParser = cParser()
+    oParser = cParser()
 
-	sStart = '<div class="row">'
-	sEnd = '</section>'
-	sHtmlContent = oParser.abParse(sHtmlContent, sStart, sEnd)
-	sPattern = 'href="([^"]+)".+?class="epnum">.+?<span>الحلقة</span>(.+?)</div>'
+    sStart = '<div class="row">'
+    sEnd = '</section>'
+    sHtmlContent = oParser.abParse(sHtmlContent, sStart, sEnd)
+    sPattern = 'href="([^"]+)".+?class="epnum">.+?<span>الحلقة</span>(.+?)</div>'
 
-	oParser = cParser()
-	aResult = oParser.parse(sHtmlContent, sPattern)
+    oParser = cParser()
+    aResult = oParser.parse(sHtmlContent, sPattern)
 	
 	
-	if aResult[0] is True:
-		oOutputParameterHandler = cOutputParameterHandler()
-		for aEntry in aResult[1]:
+    if aResult[0] is True:
+       oOutputParameterHandler = cOutputParameterHandler()
+       for aEntry in aResult[1]:
  
-			sTitle = " E"+aEntry[1]
-			sTitle = sMovieTitle+sTitle.replace('E ','E')
-			siteUrl = aEntry[0]+'/watch/'
-			sThumb = ""
-			sDesc = ""
-			VSlog(sTitle)
-			oOutputParameterHandler.addParameter('siteUrl',siteUrl)
-			oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
-			oOutputParameterHandler.addParameter('sThumb', sThumb)
-			oGui.addEpisode(SITE_IDENTIFIER, 'showHosters', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
+            sTitle = " E"+aEntry[1]
+            sTitle = sTitle.strip()
+            sTitle = sMovieTitle+' '+sTitle.replace('E ','E')
+            siteUrl = aEntry[0]+'/watch/'
+            sThumb = ""
+            sDesc = ""
+            
+            oOutputParameterHandler.addParameter('siteUrl',siteUrl)
+            oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
+            oOutputParameterHandler.addParameter('sThumb', sThumb)
+            oGui.addEpisode(SITE_IDENTIFIER, 'showHosters', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
         
-	oGui.setEndOfDirectory()
+    oGui.setEndOfDirectory()
   
      # (.+?)
 def __checkForNextPage(sHtmlContent):
