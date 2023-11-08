@@ -351,6 +351,7 @@ def showSeasons():
             sTitle = sMovieTitle+' '+sSeason
                     
             siteUrl = aEntry[0]
+            siteUrl = siteUrl.strip()
             sThumb = ''
             sDesc = ''
             
