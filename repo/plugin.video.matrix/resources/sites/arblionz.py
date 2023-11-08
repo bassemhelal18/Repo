@@ -56,8 +56,8 @@ REPLAYTV_NEWS = (URL_MAIN + '/category/tv-show/', 'showSeries')
 # SPORT_FOOT = (URL_MAIN + '/category/other-shows/sport/', 'showMovies')
 SPORT_WWE = (URL_MAIN + '/category/other-shows/wrestling/', 'showMovies')
 URL_SEARCH = (URL_MAIN + '/search/', 'showMovies')
-URL_SEARCH_MOVIES = (URL_MAIN + '/search/', 'showMovies')
-URL_SEARCH_SERIES = (URL_MAIN + '/search/', 'showSeries')
+URL_SEARCH_MOVIES = (URL_MAIN + '/search/فيلم+', 'showMovies')
+URL_SEARCH_SERIES = (URL_MAIN + '/search/مسلسل+', 'showSeries')
 FUNCTION_SEARCH = 'showMovies'
  
 def load():
@@ -273,7 +273,7 @@ def showSearch():
  
     sSearchText = oGui.showKeyBoard()
     if sSearchText:
-        sUrl = URL_MAIN + '/search/'+sSearchText
+        sUrl = URL_MAIN + '/search/فيلم+'+sSearchText
         showMovies(sUrl)
         oGui.setEndOfDirectory()
         return 
@@ -283,7 +283,7 @@ def showSearchSeries():
  
     sSearchText = oGui.showKeyBoard()
     if sSearchText:
-        sUrl = URL_MAIN + '/search/'+sSearchText
+        sUrl = URL_MAIN + '/search/مسلسل+'+sSearchText
         showSeries(sUrl)
         oGui.setEndOfDirectory()
         return
