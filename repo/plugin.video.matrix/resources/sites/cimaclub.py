@@ -265,6 +265,7 @@ def showSerie(sSearch = ''):
             siteUrl = aEntry[0]
             sThumb = aEntry[1]
             sDesc = ''
+            sTitle = sTitle.strip()
             
             if sTitle not in itemList:
                 itemList.append(sTitle)
@@ -314,7 +315,8 @@ def showSeasons():
             siteUrl = aEntry[0]
             sThumb = ''
             sDesc = ""
-
+            sTitle = sTitle.strip()
+            
             oOutputParameterHandler.addParameter('siteUrl',siteUrl)
             oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
             oOutputParameterHandler.addParameter('sMovieUrl', sUrl)
@@ -340,6 +342,8 @@ def showSeasons():
              sTitle = sMovieTitle + sSeason
              sThumb =  ''
              sDesc = ""
+             sTitle = sTitle.strip()
+             
              oOutputParameterHandler.addParameter('siteUrl',siteUrl)
              oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
              oOutputParameterHandler.addParameter('sMovieUrl', sUrl)
@@ -367,7 +371,8 @@ def showSeasons():
                 sTitle =sTitle+' S1'
             sThumb =  aEntry[1]
             sDesc = ""
-			
+            sTitle = sTitle.strip()
+            
 
 
             oOutputParameterHandler.addParameter('siteUrl',siteUrl)
@@ -414,7 +419,7 @@ def showEpisodes():
             sTitle = sMovieTitle+" E"+aEntry[2]
             sThumb = ''
             sDesc = ""
-			
+            
 
 
             oOutputParameterHandler.addParameter('siteUrl',siteUrl)
@@ -439,7 +444,7 @@ def showEpisodes():
             sTitle = sMovieTitle+" E"+aEntry[1]
             sThumb = ''
             sDesc = ""
-			
+            
 
 
             oOutputParameterHandler.addParameter('siteUrl',siteUrl)
