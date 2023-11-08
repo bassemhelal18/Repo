@@ -169,7 +169,7 @@ class cHosterGui:
         sHosterUrl = sHosterUrl.lower()
 
         # lien direct ?
-        if any(sHosterUrl.endswith(x) for x in ['.avi', '.flv', '.m3u8', '.webm', '.mkv', '.mpd']):
+        if any(sHosterUrl.endswith(x) for x in ['.avi', '.flv', '.m3u8', '.webm', '.mpd']):
             return self.getHoster('lien_direct')
         # Recuperation du host
         try:

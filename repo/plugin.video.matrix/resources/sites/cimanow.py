@@ -120,6 +120,7 @@ def showSeriesSearch():
     if sSearchText:
         sUrl = URL_MAIN + '?s=%D9%85%D8%B3%D9%84%D8%B3%D9%84+'+sSearchText
         showSeries(sUrl)
+        
         oGui.setEndOfDirectory()
         return
 		
@@ -231,7 +232,7 @@ def showSeries(sSearch = ''):
     page = prase_function(data)
     page =str(page.encode('latin-1'),'utf-8')
 
-    sPattern = '<article aria-label="post"><a href="([^"]+).+?<li aria-label="year">(.+?)</li>.+?<li aria-label="title">([^<]+)<em>.+?data-src="(.+?)" width'
+    sPattern = '<article aria-label="post">.*?<a href="([^"]+).+?<li aria-label="year">(.+?)</li>.+?<li aria-label="title">([^<]+)<em>.+?data-src="(.+?)" width'
 
     oParser = cParser()
     aResult = oParser.parse(page, sPattern)
@@ -258,7 +259,8 @@ def showSeries(sSearch = ''):
                 sThumb = 'http:' + sThumb
             sDesc = ''
             sYear = aEntry[1]
-
+            sTitle = sTitle.strip()
+            
 
             if sTitle not in itemList:
                 itemList.append(sTitle)
@@ -310,8 +312,8 @@ def showSeries(sSearch = ''):
             
                     oGui.addDir(SITE_IDENTIFIER, 'showSeries', sTitle, sThumb, oOutputParameterHandler)
             progress_.VSclose(progress_)
-       
-    oGui.setEndOfDirectory()
+    if not sSearch:   
+       oGui.setEndOfDirectory()
  
 def showSeasons():
     oGui = cGui()
@@ -344,8 +346,9 @@ def showSeasons():
         oOutputParameterHandler = cOutputParameterHandler()  
         for aEntry in aResult[1]:
 
-            sSeason = aEntry[1]
-            sTitle = sMovieTitle+sSeason.replace("الموسم","S").replace("S ","S")
+            sSeason = aEntry[1].replace("الموسم","S").replace("S ","S")
+            sSeason = sSeason.strip()
+            sTitle = sMovieTitle+' '+sSeason
                     
             siteUrl = aEntry[0]
             sThumb = ''
@@ -388,12 +391,13 @@ def showEps():
         for aEntry in aResult[1]:
 
  
-            sTitle = sMovieTitle+'E'+aEntry[2]
+            sTitle = sMovieTitle+' E'+aEntry[2]
             sTitle = sTitle.replace('E0','E')
             siteUrl = aEntry[0] + 'watching/'
             sThumb = ''
             sDesc = ''
             
+
             oOutputParameterHandler.addParameter('siteUrl', siteUrl)
             oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
             oOutputParameterHandler.addParameter('sThumb', sThumb)

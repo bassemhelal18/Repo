@@ -339,6 +339,7 @@ def showSeries(sSearch = ''):
             sDesc = ''
             sYear = ''
             sTitle = sTitle.split('الحلقة')[0].split('الموسم')[0]
+            sTitle = sTitle.strip()
             
             if sTitle not in itemList:
                 itemList.append(sTitle)
@@ -392,14 +393,14 @@ def showSeasons():
 
 
             sTitle =  "S" + aEntry[1]
-            sTitle =  sMovieTitle+sTitle
+            sTitle =  sMovieTitle+' '+sTitle
             if 'http' not in aEntry[0]:
                 siteUrl = URL_MAIN+aEntry[0].replace('episode/','download/')
             else:
                 siteUrl = aEntry[0].replace('episode/','download/')
             sThumb = ''
             sDesc = ''
-            VSlog(sTitle)
+            
             oOutputParameterHandler.addParameter('siteUrl',siteUrl)
             oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
             oOutputParameterHandler.addParameter('sThumb', sThumb)
@@ -423,14 +424,14 @@ def showSeasons():
                     break
  
                 sTitle = " E"+aEntry[1]
-                sTitle = sMovieTitle+sTitle
+                sTitle = sMovieTitle+' '+sTitle
                 if 'http' not in aEntry[0]:
                    siteUrl = URL_MAIN+aEntry[0].replace('episode/','download/')
                 else:
                    siteUrl = aEntry[0].replace('episode/','download/')
                 sThumb = ''
                 sDesc = ''
-                VSlog(sTitle)
+                
 
                 oOutputParameterHandler.addParameter('siteUrl',siteUrl)
                 oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
@@ -443,7 +444,6 @@ def showSeasons():
 
 def showEpisodes():
     oGui = cGui()
-    
     oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')

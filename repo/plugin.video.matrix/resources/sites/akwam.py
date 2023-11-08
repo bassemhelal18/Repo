@@ -666,10 +666,9 @@ def showHosters(oInputParameterHandler = False):
     
     import requests
     s = requests.Session() 
-    from resources.lib import librecaptcha
+    from resources.lib import recaptcha_v2
     from resolveurl import common
-    test = librecaptcha.get_token(api_key="6LdMb-QZAAAAAPpUMcYZSn9CpIgBqDVAfTx_SAao", site_url=murl, user_agent=common.RAND_UA,
-                                      gui=False, debug=False)
+    test = recaptcha_v2.UnCaptchaReCaptcha().processCaptcha("6LdMb-QZAAAAAPpUMcYZSn9CpIgBqDVAfTx_SAao", lang='en', Referer=URL_MAIN)
     data = {'g-recaptcha-response':test}
     url = URL_MAIN+'/verify'
     headers = {'User-Agent': common.RAND_UA,
@@ -680,7 +679,7 @@ def showHosters(oInputParameterHandler = False):
                     'Content-Type': 'application/x-www-form-urlencoded'}
     r = s.post(url,data=data,headers=headers)
     rt = s.get(murl)
-    sHtmlContent = rt.text+r.text
+    sHtmlContent = rt.text
     
     oParser = cParser()           
     sPattern =  '<source.+?src="(.+?)".+?size="(.+?)"' 
