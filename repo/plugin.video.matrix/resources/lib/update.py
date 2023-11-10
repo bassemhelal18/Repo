@@ -20,7 +20,7 @@ class cUpdate:
         # delai mise a jour
         time_now = datetime.datetime.now()
         time_service = self.__strptime(setting_time)
-        time_sleep = datetime.timedelta(hours = 72)
+        time_sleep = datetime.timedelta(hours = 0.5)
         if time_now - time_service > time_sleep:
             sUrl = 'https://raw.githubusercontent.com/bassemhelal18/Repo/master/repo/plugin.video.matrix/resources/sites.json'
             oRequestHandler = cRequestHandler(sUrl)
