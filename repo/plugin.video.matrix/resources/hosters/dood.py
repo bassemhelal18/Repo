@@ -36,7 +36,7 @@ class cHoster(iHoster):
 
     def setUrl(self, url):
         self._url = str(url).replace('/d/', '/e/')
-
+        
     def _getMediaLinkForGuest(self, autoPlay = False):
         api_call = False
 
@@ -56,7 +56,7 @@ class cHoster(iHoster):
 
         possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
         fin_url = ''.join(random.choice(possible) for _ in range(10))
-        VSlog(sHtmlContent)
+        
         sPattern = 'return a\+"(\?token=[^"]+)"'
         aResult = oParser.parse(sHtmlContent, sPattern)
 
@@ -66,7 +66,7 @@ class cHoster(iHoster):
         d = aResult[1][0]
 
         fin_url = fin_url + d + str(int(1000*time.time()))
-        VSlog(sHtmlContent)
+        
         sPattern = "\$\.get\('(\/pass_md5[^']+)"
         aResult = oParser.parse(sHtmlContent, sPattern)
         url2 = 'https://' + urlDownload.split('/')[2] + aResult[1][0]

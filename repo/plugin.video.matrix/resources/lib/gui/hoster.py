@@ -553,8 +553,8 @@ class cHosterGui:
         if ('hd-stream' in sHostName):
             return self.getHoster('hd_stream')
         
-        if ('dooood.com' in sHostName) or('dood' in sHostName) :
-            return self.getHoster('resolver')
+        if ('dooood.com' in sHostName) or('dood' in sHostName)or('ds2play' in sHostName) :
+            return self.getHoster('dood')
         
         if ('livestream' in sHostName):
             return self.getHoster('lien_direct')
