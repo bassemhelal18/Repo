@@ -14,17 +14,14 @@ class cHoster(iHoster):
         iHoster.__init__(self, 'streamtape', '-[Streamtape]')
 
     def _getMediaLinkForGuest(self, autoPlay = False):
-        api_call = ''
-        oParser = cParser()
+        
 
         oRequest = cRequestHandler(self._url)
         sHtmlContent = oRequest.request()
 
-        
-
         src = re.findall(r'''ById\('.+?=\s*(["']//[^;<]+)''', sHtmlContent)
         if src:
-            src_url = ''
+            api_call = ''
             parts = src[-1].replace("'", '"').split('+')
             for part in parts:
                 p1 = re.findall(r'"([^"]*)', part)[0]
@@ -33,10 +30,9 @@ class cHoster(iHoster):
                     subs = re.findall(r'substring\((\d+)', part)
                     for sub in subs:
                         p2 += int(sub)
-                src_url += p1[p2:]
-            src_url += '&stream=1'
-            src_url = 'https:' + src_url if src_url.startswith('//') else src_url
-            api_call = src_url
+                api_call += p1[p2:]
+            api_call += '&stream=1'
+            api_call = 'https:' + api_call if api_call.startswith('//') else api_call
         if api_call:
             return True, api_call + '|User-Agent=' + UA + '&Referer=' + self._url
 

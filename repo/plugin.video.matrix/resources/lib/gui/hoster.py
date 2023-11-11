@@ -219,16 +219,15 @@ class cHosterGui:
                     return self.getHoster("lien_direct")
 
                 
-        supported_player = ['hdup', 'streamable', 'stardima', 'filescdn', 'vidgot', 'videott', 'vidlo', 'sendit', 'thevid', 'vidmoly', 'fastplay', 'cloudy', 'hibridvod', 'arabveturk', 'extremenow', 'yourupload', 'vidspeeds', 'moshahda', 'voe', 'faselhd', 'streamz', 'streamax', 'gounlimited', 'xdrive', 'mixdrop', 'mixloads', 'vidoza',
-                            'rutube', 'megawatch', 'vidzi', 'filetrip', 'uptostream', 'speedvid', 'netu', 
-                            'onevideo', 'playreplay', 'prostream', 'vidfast', 'uqload', 'letwatch',
+        supported_player = ['hdup', 'streamable', 'stardima', 'filescdn', 'vidgot', 'videott', 'vidlo', 'sendit', 'thevid', 'vidmoly', 'fastplay', 'cloudy', 'hibridvod', 'arabveturk', 'extremenow', 'yourupload', 'vidspeeds', 'moshahda', 'voe', 'faselhd', 'streamz', 'streamax', 'gounlimited', 'xdrive', 'mixloads', 'vidoza',
+                            'rutube', 'megawatch', 'vidzi', 'filetrip', 'speedvid', 'netu', 
+                            'onevideo', 'playreplay', 'prostream', 'vidfast', 'uptostream', 'uqload', 'letwatch',
                             'filepup', 'vimple', 'wstream', 'watchvideo', 'vidwatch', 'up2stream', 'tune', 'playtube',
-                            'vidup', 'vidbull', 'vidlox', 'megaup', '33player' 'easyload', 'ninjastream', 'cloudhost',
+                            'vidup', 'vidbull', 'vidlox', '33player' 'easyload', 'ninjastream', 'cloudhost',
                             'videobin', 'stagevu', 'gorillavid', 'daclips', 'hdvid', 'vshare', 'streamlare', 'vidload',
                             'giga', 'megadrive', 'downace', 'clickopen', 'supervideo',
                             'jawcloud', 'soundcloud', 'mixcloud', 'ddlfr', 'vupload', 'dwfull', 'vidzstore',
-                            'pdj', 'rapidstream', 'jetload', 'dustreaming', 'viki', 'flix555', 'onlystream',
-                            'upstream', 'pstream', 'vudeo', 'vidia', 'uptobox', 'uplea',
+                            'pdj', 'rapidstream', 'jetload', 'dustreaming', 'viki', 'flix555', 'onlystream', 'vudeo', 'vidia', 'uptobox', 'uplea',
                             'sibnet', 'vidplayer', 'userload', 'aparat', 'evoload', 'abcvideo', 'plynow', '33player', 'filerio', 'videoraj', 'brightcove', 'detectiveconanar']
 
         val = next((x for x in supported_player if x in sHostName), None)
@@ -239,11 +238,17 @@ class cHosterGui:
         if ('vadshar' in sHostName) or ('vidshar' in sHostName) or ('vedshaar' in sHostName) or ('viidshar' in sHostName) or  ('vedsharr' in sHostName) or ('vedshar' in sHostName) or ('vidshare' in sHostName):
             return self.getHoster('vidshare')
         if ('streamtape' in sHostName):
-            return self.getHoster('resolver')
+            return self.getHoster('streamtape')
+        if ('mixdrop' in sHostName)or ('mdy48tn97' in sHostName):
+            return self.getHoster('mixdrop')
         if ('sbfull' in sHostName):
             return self.getHoster('resolver')
         if ('sbbrisk' in sHostName):
             return self.getHoster('resolver')
+        
+        if ('upstream' in sHostName):
+            return self.getHoster('upstream')
+        
         if ('highload' in sHostName):
             return self.getHoster('resolver')
         if ('videa' in sHostName):
@@ -307,19 +312,15 @@ class cHosterGui:
         if ('rumble' in sHostName):
             return self.getHoster('rumble')
 
-        if ('streamwish' in sHostName)or ('ankrzkz' in sHostName):
-           return self.getHoster('resolver')
+        if ('streamwish' in sHostName)or ('ankrzkz' in sHostName) or ('cilootv' in sHostName):
+           return self.getHoster('streamwish')
         
         if ('rabbitstream' in sHostName) or ('dokicloud' in sHostName):
             return self.getHoster('streamrapid')
         
-        if ('cilootv' in sHostName):
-            return self.getHoster('resolver')
-        if ('motvy55' in sHostName):
+        if ('motvy55' in sHostName) or ('filelions' in sHostName) or ('fviplions' in sHostName):
             return self.getHoster('filelions')
-        if ('filelions' in sHostName):
-            return self.getHoster('filelions')
-
+        
         if ('workupload' in sHostName):
             return self.getHoster('workupload')
         
@@ -388,7 +389,7 @@ class cHosterGui:
         if ('kingfoot' in sHostName):
             return self.getHoster('lien_direct')
             
-        if ('vidbm' in sHostName) or ('vadbam' in sHostName) or ('vedbom' in sHostName) or ('vadbom' in sHostName) or ('vidbam' in sHostName) or ('viidshar' in sHostName) or ('allviid' in sHostName) or ('vidspeed' in sHostName):
+        if ('vidbm' in sHostName) or ('vadbam' in sHostName) or ('vedbom' in sHostName) or ('vadbom' in sHostName) or ('vidbam' in sHostName) or ('viidshar' in sHostName) or ('allviid' in sHostName) or ('vidspeed' in sHostName)or ('vedbam' in sHostName):
             return self.getHoster('vidbom')
 				
         if ('mail.ru' in sHostName):
@@ -405,7 +406,10 @@ class cHosterGui:
 				
         if ('megaup.' in sHostName):
             return self.getHoster('megaup')
-            
+        
+        if ('vidguard' in sHostName) or ('vembed' in sHostName) or ('vgfplay' in sHostName)or ('vgembed' in sHostName)or ('vid-guard' in sHostName)or ('v6embed' in sHostName):
+            return self.getHoster('vidguard')
+
         if ('linkbox' in sHostName) or ('sharezweb' in sHostName):
             return self.getHoster('resolver')
         
@@ -419,7 +423,7 @@ class cHosterGui:
             return self.getHoster('workupload')
 
         if ('upbaam' in sHostName) or ('upbam' in sHostName) or ('uppom' in sHostName) or ('uppboom' in sHostName):
-            return self.getHoster('uppom')
+            return self.getHoster('resolver')
         
         if ('eeggyy' in sHosterUrl):
             return self.getHoster('egybest')
@@ -463,9 +467,6 @@ class cHosterGui:
         if ('vidhd' in sHostName) or ('oktube' in sHostName):
             return self.getHoster('vidhd')
             
-        if ('nowvid' in sHostName)or ('vegaasvid' in sHostName)or ('drkvid' in sHostName):
-            return self.getHoster('govid')
-            
         if ('skyvid' in sHostName)or ('gvadz' in sHostName):
             return self.getHoster('skyvid')
             
@@ -481,10 +482,10 @@ class cHosterGui:
         if ('fajer.live' in sHostName):
             return self.getHoster('fajerlive')
             
-        if ('goved' in sHostName) or ('govad' in sHostName) or ('govid.me' in sHostName):
+        if ('goved' in sHostName) or ('govad' in sHostName) or ('govid.me' in sHostName)or ('goveed' in sHosterUrl):
             return self.getHoster('govidme')
             
-        if ('govid' in sHostName) or ('drkvid' in sHosterUrl) or ('gvid.' in sHosterUrl) or ('govid.' in sHostName) or ('kopatube' in sHostName) or ('kobatube' in sHostName) or ('darkveed' in sHostName) or ('downvol' in sHosterUrl) or ('rbrb' in sHosterUrl)or ('telvod' in sHosterUrl):
+        if ('nowvid' in sHostName) or ('vegaasvid' in sHostName)or('govid' in sHostName) or ('drkvid' in sHosterUrl) or ('gvid.' in sHosterUrl) or ('govid.' in sHostName) or ('kopatube' in sHostName) or ('kobatube' in sHostName) or ('darkveed' in sHostName) or ('downvol' in sHosterUrl) or ('rbrb' in sHosterUrl)or ('telvod' in sHosterUrl) :
             return self.getHoster('govid')
         
         if ('volvovideo' in sHostName):

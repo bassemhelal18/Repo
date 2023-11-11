@@ -9,14 +9,14 @@ import re
 class cHoster(iHoster):
 
     def __init__(self):
-        iHoster.__init__(self, 'streamwish', 'streamwish')
+        iHoster.__init__(self, 'streamwish', '-[streamwish]')
 			
     def isDownloadable(self):
         return True
 
     def _getMediaLinkForGuest(self, autoPlay = False):
         api_call = ''
-
+        self._url = self._url.replace('/f/','/e/').replace('/e//','/e/')
         oRequest = cRequestHandler(self._url)
         sHtmlContent = oRequest.request()
         oParser = cParser()
@@ -30,16 +30,17 @@ class cHoster(iHoster):
         if aResult[0]:
             data = aResult[1][0]
             data = unicodedata.normalize('NFD', data).encode('ascii', 'ignore').decode('unicode_escape')
-            sHtmlContent2 = cPacker().unpack(data)
+            sHtmlContent = cPacker().unpack(data)
       # (.+?) ([^<]+) .+?
 
-            sPattern = 'file:"(.+?)"'
-            aResult = oParser.parse(sHtmlContent2, sPattern)
-            VSlog(aResult)
-            if aResult[0]:
-                api_call = aResult[1][0] 
+        sPattern = 'file:"(.+?)"'
+        aResult = oParser.parse(sHtmlContent, sPattern)
+        if aResult[0]:
+            api_call = aResult[1][0] 
 
         if api_call:
             return True, api_call
+
+        return False, False
 
         return False, False

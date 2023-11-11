@@ -14,7 +14,7 @@ UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/
 class cHoster(iHoster):
 
     def __init__(self):
-        iHoster.__init__(self, 'megaup', 'Megaup')
+        iHoster.__init__(self, 'megaup', '-[Megaup]')
 
     def _getMediaLinkForGuest(self, autoPlay = False):
         VSlog(self._url)

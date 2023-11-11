@@ -17,10 +17,10 @@ class cHoster(iHoster):
 
     def setUrl(self, url):
         self._url = str(url)
-        self._url = self._url.replace("/f/","/e/")
+        self._url = self._url.replace("/f/","/e/").replace("mixdrop.co","mixdrop.to")
 
     def _getMediaLinkForGuest(self, autoPlay = False):
-        VSlog(self._url)
+        
         api_call = ''
 
         oParser = cParser()

@@ -14,9 +14,11 @@ class cHoster(iHoster):
         iHoster.__init__(self, 'vidspeeds', '-[vidspeeds]')
 
     def _getMediaLinkForGuest(self, autoPlay = False):
-        VSlog(self._url)
+        sReferer = self._url
         
         oRequest = cRequestHandler(self._url)
+        oRequest.addHeaderEntry('user-agent',UA)
+        oRequest.addHeaderEntry('Referer',sReferer)
         sHtmlContent = oRequest.request()
         
         oParser = cParser()
