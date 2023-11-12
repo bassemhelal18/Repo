@@ -9,7 +9,7 @@ import re
 class cHoster(iHoster):
 
     def __init__(self):
-        iHoster.__init__(self, 'updown', 'UPdown')
+        iHoster.__init__(self, 'updown', '-[UPdown]')
 			
     def isDownloadable(self):
         return True

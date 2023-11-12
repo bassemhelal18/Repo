@@ -14,7 +14,7 @@ class cHoster(iHoster):
         iHoster.__init__(self, 'vidbom', '-[Vidbom]')
 
     def _getMediaLinkForGuest(self, autoPlay = False):
-        VSlog(self._url)
+        
         api_call = ''
         oParser = cParser()
 
@@ -25,7 +25,7 @@ class cHoster(iHoster):
         aResult = oParser.parse(sHtmlContent, sPattern)
         if aResult[0] :
             api_call = aResult[1][0]
-            VSlog(api_call)
+            
 
         if api_call:
             return True, api_call+ '|User-Agent=' + UA + '&Referer=' +  self._url
