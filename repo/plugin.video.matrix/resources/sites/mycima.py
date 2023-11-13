@@ -177,6 +177,8 @@ def showMovies(sSearch = ''):
             if 'مدبلج' in sTitle:
               continue
             siteUrl = aEntry[0]
+            siteUrl = siteUrl.split('/')[-2]
+            siteUrl = URL_MAIN+siteUrl
             sDesc = ''
             sThumb = aEntry[2].replace("(","").replace(")","")
             sYear = ''
@@ -243,6 +245,8 @@ def showSeries(sSearch =''):
                 continue
             
             siteUrl = aEntry[0]
+            siteUrl = siteUrl.split('/')[-2]
+            siteUrl = URL_MAIN+siteUrl
             
             sTitle = aEntry[1].replace("مشاهدة","").replace("مسلسل","").replace("انمي","").replace("مترجمة","").replace("مترجم","").replace("مشاهده","").replace("برنامج","").replace("مترجمة","").replace("فيلم","").replace("اون لاين","").replace("WEB-DL","").replace("BRRip","").replace("720p","").replace("HD-TC","").replace("HDRip","").replace("HD-CAM","").replace("DVDRip","").replace("BluRay","").replace("1080p","").replace("WEBRip","").replace("WEB-dl","").replace("مترجم ","").replace("مشاهدة وتحميل","").replace("اون لاين","")
             sThumb = aEntry[2].replace("(","").replace(")","")
@@ -314,7 +318,8 @@ def showAnimes(sSearch = ''):
                 continue
  
             siteUrl = aEntry[0]
-            
+            siteUrl = siteUrl.split('/')[-2]
+            siteUrl = URL_MAIN+siteUrl
             sTitle = aEntry[1].replace("مشاهدة","").replace("مسلسل","").replace("انمي","").replace("مترجمة","").replace("مترجم","").replace("مشاهده","").replace("برنامج","").replace("مترجمة","").replace("فيلم","").replace("اون لاين","").replace("WEB-DL","").replace("BRRip","").replace("720p","").replace("HD-TC","").replace("HDRip","").replace("HD-CAM","").replace("DVDRip","").replace("BluRay","").replace("1080p","").replace("WEBRip","").replace("WEB-dl","").replace("مترجم ","").replace("مشاهدة وتحميل","").replace("اون لاين","")
             sThumb = aEntry[2].replace("(","").replace(")","")
             sDesc = ''
