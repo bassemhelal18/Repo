@@ -239,16 +239,22 @@ class cHosterGui:
             return self.getHoster('vidshare')
         if ('streamtape' in sHostName) or ('streamnoads' in sHostName):
             return self.getHoster('streamtape')
-        if ('mixdrop' in sHostName)or ('mdy48tn97' in sHostName):
+        if ('mixdrop' in sHostName)or ('mdy48tn97' in sHostName)or ('mixdroop'in sHostName):
             return self.getHoster('mixdrop')
         if ('sbfull' in sHostName):
             return self.getHoster('resolver')
         if ('sbbrisk' in sHostName):
             return self.getHoster('resolver')
         if ('luluvdo' in sHostName):
-            return self.getHoster('resolver')
+            f = self.getHoster('resolver')
+            #mise a jour du nom
+            f.setRealHost('[LULUVDO]')
+            return f
         if ('streamhub' in sHostName):
-            return self.getHoster('resolver')
+            f = self.getHoster('resolver')
+            #mise a jour du nom
+            f.setRealHost('[STREAMHUB]')
+            return f
         if ('upstream' in sHostName):
             return self.getHoster('upstream')
         
@@ -271,7 +277,10 @@ class cHosterGui:
         if ('allviid' in sHostName):
             return self.getHoster('allvid')
         if ('gofile' in sHostName):
-            return self.getHoster('resolver')
+            f = self.getHoster('resolver')
+            #mise a jour du nom
+            f.setRealHost('[GOFILE]')
+            return f
         if ('drop.download' in sHostName):
             return self.getHoster('resolver')
 
@@ -396,7 +405,10 @@ class cHosterGui:
             return self.getHoster('vidbom')
 				
         if ('mail.ru' in sHostName):
-            return self.getHoster('resolver')
+            f = self.getHoster('resolver')
+            #mise a jour du nom
+            f.setRealHost('[MAIL.RU]')
+            return f
 				
         if ('streamcherry' in sHostName):
             return self.getHoster('resolver')
@@ -406,15 +418,15 @@ class cHosterGui:
 			
         if ('clicknupload' in sHostName):
             return self.getHoster('resolver')
-				
-        if ('megaup.' in sHostName):
-            return self.getHoster('megaup')
         
         if ('vidguard' in sHostName) or ('vembed' in sHostName) or ('vgfplay' in sHostName)or ('vgembed' in sHostName)or ('vid-guard' in sHostName)or ('v6embed' in sHostName):
             return self.getHoster('vidguard')
 
         if ('linkbox' in sHostName) or ('sharezweb' in sHostName):
-            return self.getHoster('resolver')
+            f = self.getHoster('resolver')
+            #mise a jour du nom
+            f.setRealHost('[LINKBOX]')
+            return f
         
         if ('vidoba' in sHostName):
              return self.getHoster('vidoba')
@@ -425,7 +437,7 @@ class cHosterGui:
         if ('workupload' in sHostName):
             return self.getHoster('workupload')
 
-        if ('upbaam' in sHostName) or ('upbam' in sHostName) or ('uppom' in sHostName) or ('uppboom' in sHostName) or ('upgobom' in sHostName):
+        if ('upbaam' in sHostName) or ('upbam' in sHostName) or ('uppom' in sHostName) or ('uppboom' in sHostName) or ('upgobom' in sHostName)or ('uupbom' in sHostName):
             return self.getHoster('uppom')
         
         if ('eeggyy' in sHosterUrl):
@@ -547,7 +559,10 @@ class cHosterGui:
             return self.getHoster('vidbem')
 
         if ('vk.com' in sHostName) or ('vkontakte' in sHostName) or ('vkcom' in sHostName):
-            return self.getHoster('vk')
+            f = self.getHoster('resolver')
+            #mise a jour du nom
+            f.setRealHost('[VK]')
+            return f
 
         if ('playvidto' in sHostName):
             return self.getHoster('vidto')
@@ -657,7 +672,8 @@ class cHosterGui:
             return self.getHoster('lien_direct')
         
 				
-        if ('nitroflare' in sHostName or 'tubeload.' in sHostName or 'Facebook' in sHostName  or 'fastdrive' in sHostName or 'megaup.net' in sHostName  or 'openload' in sHostName or 'doodrive' in sHostName):
+        if ('nitroflare' in sHostName or 'tubeload.' in sHostName or 'Facebook' in sHostName  or 'fastdrive' in sHostName or 'megaup.net' in sHostName  or 'openload' in sHostName or 'doodrive' in sHostName or 'fikper' in sHostName or 'turbobit' in sHostName
+            or 'rapidgator' in sHostName or 'katfile' in sHostName or 'mega4upload.com' in sHostName or 'megamax' in sHostName):
             return False
 
         

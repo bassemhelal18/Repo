@@ -7,7 +7,7 @@ import resolveurl
 class cHoster(iHoster):
 
     def __init__(self):
-        iHoster.__init__(self, 'resolver','-[resolver]')
+        iHoster.__init__(self, 'resolver',' ')
         self.__sRealHost = ''
 
     def setDisplayName(self, displayName):

@@ -261,7 +261,10 @@ def showMovies(sSearch = ''):
                 sId = idResult[1][0]
             else:
                 sId = ''
-
+            m = re.search('([0-9]{4})', sTitle)
+            if m:
+               sYear = str(m.group(0))
+               sTitle = sTitle.replace(sYear,'')
 
             oOutputParameterHandler.addParameter('siteUrl',siteUrl)
             oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
@@ -269,7 +272,7 @@ def showMovies(sSearch = ''):
             oOutputParameterHandler.addParameter('sDesc', sDesc)
             oOutputParameterHandler.addParameter('sId', sId)
             oOutputParameterHandler.addParameter('IMDBNumber', sId)
-			
+            oOutputParameterHandler.addParameter('sYear', sYear)
             oGui.addMovie(SITE_IDENTIFIER, 'showHosters', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
 
         progress_.VSclose(progress_)
