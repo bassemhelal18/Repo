@@ -235,7 +235,7 @@ class cHosterGui:
             return self.getHoster(val.replace('.', ''))
 
         # Gestion classique
-        if ('vadshar' in sHostName) or ('vidshar' in sHostName) or ('vedshaar' in sHostName) or ('viidshar' in sHostName) or  ('vedsharr' in sHostName) or ('vedshar' in sHostName) or ('vidshare' in sHostName):
+        if ('vadshar' in sHostName) or ('vidshar' in sHostName) or ('vedshaar' in sHostName) or ('viidshar' in sHostName) or  ('vedsharr' in sHostName) or ('vedshar' in sHostName) or ('vidshare' in sHostName) or ('vid1shar' in sHostName):
             return self.getHoster('vidshare')
         if ('streamtape' in sHostName) or ('streamnoads' in sHostName):
             return self.getHoster('streamtape')
