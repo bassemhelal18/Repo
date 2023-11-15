@@ -324,7 +324,8 @@ class cHosterGui:
         if ('rumble' in sHostName):
             return self.getHoster('rumble')
 
-        if ('streamwish' in sHostName)or ('ankrzkz' in sHostName) or ('cilootv' in sHostName)or ('sfastwish' in sHostName)or ('egtpgrvh' in sHostName) or ('volvovideo' in sHostName):
+        if (('streamwish' in sHostName)or ('ankrzkz' in sHostName) or ('cilootv' in sHostName)or ('sfastwish' in sHostName)or ('egtpgrvh' in sHostName)
+        or ('volvovideo' in sHostName) or ('wishfast.top'in sHostName)):
            return self.getHoster('streamwish')
         
         if ('rabbitstream' in sHostName) or ('dokicloud' in sHostName):
