@@ -251,10 +251,7 @@ class cHosterGui:
             f.setRealHost('[LULUVDO]')
             return f
         if ('streamhub' in sHostName):
-            f = self.getHoster('resolver')
-            #mise a jour du nom
-            f.setRealHost('[STREAMHUB]')
-            return f
+            return self.getHoster('streamhub')
         if ('upstream' in sHostName):
             return self.getHoster('upstream')
         
