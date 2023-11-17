@@ -322,13 +322,14 @@ class cHosterGui:
             return self.getHoster('rumble')
 
         if (('streamwish' in sHostName)or ('ankrzkz' in sHostName) or ('cilootv' in sHostName)or ('sfastwish' in sHostName)or ('egtpgrvh' in sHostName)
-        or ('volvovideo' in sHostName) or ('wishfast.top'in sHostName)):
+        or ('volvovideo' in sHostName) or ('wishfast.top'in sHostName) or ('fsdcmo.sbs'in sHostName)):
            return self.getHoster('streamwish')
         
         if ('rabbitstream' in sHostName) or ('dokicloud' in sHostName):
             return self.getHoster('streamrapid')
         
-        if ('motvy55' in sHostName) or ('filelions' in sHostName) or ('fviplions' in sHostName)or ('lylxan' in sHostName)or ('lumiawatch' in sHostName):
+        if (('motvy55' in sHostName) or ('filelions' in sHostName) or ('fviplions' in sHostName)or ('lylxan' in sHostName)or ('lumiawatch' in sHostName)
+            or ('fdewsdc.sbs' in sHostName)):
             return self.getHoster('filelions')
         
         if ('workupload' in sHostName):
@@ -506,8 +507,7 @@ class cHosterGui:
         if ('vid4up' in sHostName):
             return self.getHoster('vidforup')
             
-        if ('send.cm' in sHosterUrl):
-            return self.getHoster('sendme')
+        
 
         if ('avideo.host' in sHosterUrl):
             return self.getHoster('avideo')
@@ -672,7 +672,7 @@ class cHosterGui:
         
 				
         if ('nitroflare' in sHostName or 'tubeload.' in sHostName or 'Facebook' in sHostName  or 'fastdrive' in sHostName or 'megaup.net' in sHostName  or 'openload' in sHostName or 'doodrive' in sHostName or 'fikper' in sHostName or 'turbobit' in sHostName
-            or 'rapidgator' in sHostName or 'katfile' in sHostName or 'mega4upload.com' in sHostName or 'megamax' in sHostName):
+            or 'rapidgator' in sHostName or 'katfile' in sHostName or 'mega4upload.com' in sHostName or 'megamax' in sHostName or 'send.cm' in sHosterUrl):
             return False
 
         

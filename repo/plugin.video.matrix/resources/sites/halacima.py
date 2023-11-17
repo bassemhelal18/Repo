@@ -433,7 +433,8 @@ def showServers(oInputParameterHandler = False):
                     sTitle = sMovieTitle
                     if url.startswith('//'):
                        url = 'http:' + url
-            
+                    if 'streamnoads.' in url:
+                        url = url.replace('streamnoads.','streamnoads.com')
                     sHosterUrl = url 
                     oHoster = cHosterGui().checkHoster(sHosterUrl)
                     if oHoster:
@@ -452,7 +453,8 @@ def showServers(oInputParameterHandler = False):
             sTitle = sMovieTitle
             if url.startswith('//'):
                url = 'http:' + url
-            
+            if 'streamnoads.' in url:
+                url = url.replace('streamnoads.','streamnoads.com')
             sHosterUrl = url 
             oHoster = cHosterGui().checkHoster(sHosterUrl)
             if oHoster:

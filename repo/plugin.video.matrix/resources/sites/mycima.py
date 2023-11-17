@@ -176,6 +176,8 @@ def showMovies(sSearch = ''):
  
             if 'مدبلج' in sTitle:
               continue
+            if 'مسلسل' in sTitle:
+              continue
             siteUrl = aEntry[0]
             siteUrl = siteUrl.split('/')[-2]
             siteUrl = URL_MAIN+siteUrl

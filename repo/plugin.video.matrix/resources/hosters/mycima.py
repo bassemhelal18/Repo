@@ -40,7 +40,13 @@ class cHoster(iHoster):
 				
         api_call = dialog().VSselectqual(list_q,list_url)
         api_call = api_call.replace(' ', '%20').replace('localhost', 'wecima.dev') +'|AUTH=TLS&verifypeer=false' + '&Referer=' 
-
+        
+        sPattern =  '<source src="([^"]+)" type="video/mp4"' 
+        aResult = oParser.parse(sHtmlContent,sPattern)
+        if aResult[0]:
+            for aEntry in aResult[1]:            
+                api_call = aEntry
+        
         if api_call:
                     return True, api_call
 

@@ -18,14 +18,14 @@ class cHoster(iHoster):
         iHoster.__init__(self, 'vidshare', '-[vidshare]')
 
     def _getMediaLinkForGuest(self, autoPlay = False):
-        VSlog(self._url)
+        
 
         sUrl = self._url
  
         oRequest = cRequestHandler(sUrl)
         sHtmlContent = oRequest.request()
 
-
+        api_call = ''
         oParser = cParser()
        
         sPattern = '(eval\(function\(p,a,c,k,e(?:.|\s)+?\))<\/script>'
@@ -39,12 +39,10 @@ class cHoster(iHoster):
 
         sPattern = 'file:"(.+?)"}'
         aResult = oParser.parse(sHtmlContent, sPattern)
+        
         if (aResult[0] == True):
             api_call = aResult[1][0] +'|User-Agent=' + UA + '&Referer=' + self._url
                 
-        if (api_call):
-            return True, api_call
-					
         if (api_call):
             return True, api_call
 
