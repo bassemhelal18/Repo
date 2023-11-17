@@ -237,7 +237,7 @@ class cHosterGui:
         # Gestion classique
         if ('vadshar' in sHostName) or ('vidshar' in sHostName) or ('vedshaar' in sHostName) or ('viidshar' in sHostName) or  ('vedsharr' in sHostName) or ('vedshar' in sHostName) or ('vidshare' in sHostName) or ('vid1shar' in sHostName):
             return self.getHoster('vidshare')
-        if ('streamtape' in sHostName) or ('streamnoads' in sHostName):
+        if ('streamtape' in sHostName) or ('streamnoads' in sHostName) or ('tapenoads' in sHostName):
             return self.getHoster('streamtape')
         if ('mixdrop' in sHostName)or ('mdy48tn97' in sHostName)or ('mixdroop'in sHostName):
             return self.getHoster('mixdrop')
