@@ -308,7 +308,7 @@ def showSeasons():
             
 
  
-            oGui.addSeason(SITE_IDENTIFIER, 'showEpisodes', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
+            oGui.addLink(SITE_IDENTIFIER, 'showEpisodes', sTitle, sThumb, '', oOutputParameterHandler, oInputParameterHandler)
     else:
 
         sStart = '<ul class="eplist">'
@@ -346,7 +346,7 @@ def showSeasons():
             
 
  
-                oGui.addEpisode(SITE_IDENTIFIER, 'showHosters', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
+                oGui.addLink(SITE_IDENTIFIER, 'showEpisodes', sTitle, sThumb, '', oOutputParameterHandler, oInputParameterHandler)
        
     oGui.setEndOfDirectory()
        

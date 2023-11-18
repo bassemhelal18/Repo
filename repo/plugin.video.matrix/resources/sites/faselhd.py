@@ -365,7 +365,7 @@ def showSeasons():
             oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
             oOutputParameterHandler.addParameter('postid', postid)
             oOutputParameterHandler.addParameter('sThumb', sThumb)
-            oGui.addSeason(SITE_IDENTIFIER, 'showEpisodes1', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
+            oGui.addLink(SITE_IDENTIFIER, 'showEpisodes1', sTitle, sThumb, '', oOutputParameterHandler, oInputParameterHandler)
  
     oGui.setEndOfDirectory() 
   

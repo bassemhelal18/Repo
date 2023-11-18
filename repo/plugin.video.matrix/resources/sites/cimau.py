@@ -402,7 +402,7 @@ def showSeasons():
             oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
             oOutputParameterHandler.addParameter('sThumb', sThumb)
             
-            oGui.addSeason(SITE_IDENTIFIER, 'showEpisodes', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
+            oGui.addLink(SITE_IDENTIFIER, 'showEpisodes', sTitle, sThumb, '', oOutputParameterHandler, oInputParameterHandler)
     else:
         
         sPattern = '<meta name="keywords" content="(.*?)" /><meta name="(.*?)"'
@@ -427,7 +427,7 @@ def showSeasons():
                oOutputParameterHandler.addParameter('siteUrl',sUrl)
                oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
                oOutputParameterHandler.addParameter('sThumb', sThumb)
-               oGui.addSeason(SITE_IDENTIFIER, 'showEpisodes', sTitle, '', sThumb, sDesc, oOutputParameterHandler)        
+               oGui.addLink(SITE_IDENTIFIER, 'showEpisodes', sTitle, sThumb, '', oOutputParameterHandler, oInputParameterHandler)        
 
        
     oGui.setEndOfDirectory()

@@ -508,7 +508,7 @@ def showSeasons():
             
 
  
-                oGui.addSeason(SITE_IDENTIFIER, 'showEps', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
+                oGui.addLink(SITE_IDENTIFIER, 'showEps', sTitle, sThumb, '', oOutputParameterHandler, oInputParameterHandler)
        
     oGui.setEndOfDirectory() 
  

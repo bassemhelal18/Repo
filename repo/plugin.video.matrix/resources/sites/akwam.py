@@ -400,7 +400,7 @@ def showSeasons():
             
 
  
-            oGui.addSeason(SITE_IDENTIFIER, 'showEpisodes', sTitle, '', sThumb, sDesc, oOutputParameterHandler)  
+            oGui.addLink(SITE_IDENTIFIER, 'showEpisodes', sTitle, sThumb, '', oOutputParameterHandler, oInputParameterHandler)  
     # (.+?) .+?  ([^<]+)
     sPattern = '<a href="([^<]+)" class="text-white- ml-2 btn btn-light mb-2">(.+?)</a>'
     
@@ -448,7 +448,7 @@ def showSeasons():
             
 
  
-            oGui.addSeason(SITE_IDENTIFIER, 'showEpisodes', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
+            oGui.addLink(SITE_IDENTIFIER, 'showEpisodes', sTitle, sThumb, '', oOutputParameterHandler, oInputParameterHandler)
          
        
     oGui.setEndOfDirectory() 
