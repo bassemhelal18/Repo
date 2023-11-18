@@ -470,7 +470,7 @@ def showSeasons():
             oOutputParameterHandler.addParameter('sThumb', sThumb)
              
             
-            oGui.addLink(SITE_IDENTIFIER, 'showEps', sTitle, sThumb, '', oOutputParameterHandler, oInputParameterHandler)
+            oGui.addSeason(SITE_IDENTIFIER, 'showEps', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
     
     else:
         s = requests.Session()
@@ -513,7 +513,7 @@ def showSeasons():
             oOutputParameterHandler.addParameter('sThumb', sThumb)
              
             
-            oGui.addLink(SITE_IDENTIFIER, 'showEps', sTitle, sThumb, '', oOutputParameterHandler, oInputParameterHandler)
+            oGui.addSeason(SITE_IDENTIFIER, 'showEps', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
          
            
     s = requests.Session()
@@ -548,7 +548,7 @@ def showSeasons():
               oOutputParameterHandler.addParameter('siteUrl', siteUrl)
               oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
               oOutputParameterHandler.addParameter('sThumb', sThumb)
-              oGui.addLink(SITE_IDENTIFIER, 'showEps', sTitle, sThumb, '', oOutputParameterHandler, oInputParameterHandler)
+              oGui.addSeason(SITE_IDENTIFIER, 'showEps', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
     oGui.setEndOfDirectory() 
   
 def showEps():

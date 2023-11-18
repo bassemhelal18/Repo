@@ -321,7 +321,7 @@ def showSeasons():
             oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
             oOutputParameterHandler.addParameter('sMovieUrl', sUrl)
             oOutputParameterHandler.addParameter('sThumb', sThumb)
-            oGui.addLink(SITE_IDENTIFIER, 'showEpisodes', sTitle, sThumb, '', oOutputParameterHandler, oInputParameterHandler)	
+            oGui.addSeason(SITE_IDENTIFIER, 'showEpisodes', sTitle, '', sThumb, sDesc, oOutputParameterHandler)	
     else:
      sStart = '<h2 class="title ti-list-numbered f13"> باقى المواسم</h2>'
      sEnd = '<h2 class="title ti-list-numbered f13"> جميع الحلقات </h2>'
@@ -348,7 +348,7 @@ def showSeasons():
              oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
              oOutputParameterHandler.addParameter('sMovieUrl', sUrl)
              oOutputParameterHandler.addParameter('sThumb', sThumb)
-             oGui.addLink(SITE_IDENTIFIER, 'showEpisodes', sTitle, sThumb, '', oOutputParameterHandler, oInputParameterHandler)
+             oGui.addSeason(SITE_IDENTIFIER, 'showEpisodes', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
     
      else:
          sPattern = '</div><a href="(.+?)".+?class="poster-image" data-src="(.+?)".+?<h1>(.+?)</h1>'
@@ -379,7 +379,7 @@ def showSeasons():
             oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
             oOutputParameterHandler.addParameter('sThumb', sThumb)
 			
-            oGui.addLink(SITE_IDENTIFIER, 'showEpisodes', sTitle, sThumb, '', oOutputParameterHandler, oInputParameterHandler)
+            oGui.addSeason(SITE_IDENTIFIER, 'showEpisodes', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
            
     
     oGui.setEndOfDirectory()			
