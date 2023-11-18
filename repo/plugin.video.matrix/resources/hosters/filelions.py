@@ -15,6 +15,7 @@ class cHoster(iHoster):
         return True
 
     def _getMediaLinkForGuest(self, autoPlay = False):
+        self._url = self._url.replace('/d/','/v/').replace('/f/','/v/')
         VSlog(self._url)
         api_call = ''
 
