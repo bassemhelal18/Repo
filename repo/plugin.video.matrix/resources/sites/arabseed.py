@@ -740,4 +740,6 @@ def url_function(sHtmlContent):
             sTitle = " "
             if url.startswith('//'):
                 url = 'http:' + url
+            if 'vtbe' in url:
+                url = url +'|Referer='+URL_MAIN    
     return url
