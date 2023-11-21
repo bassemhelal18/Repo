@@ -405,7 +405,7 @@ class cHosterGui:
             
         if ('vidbm' in sHostName) or ('vadbam' in sHostName) or ('vedbom' in sHostName) or ('vadbom' in sHostName) or ('vidbam' in sHostName)\
             or ('viidshar' in sHostName) or ('allviid' in sHostName) or ('vidspeed' in sHostName)or ('vedbam' in sHostName) \
-            or ('viboom' in sHostName) or ('vid1bom' in sHostName) or ('viid2beem' in sHostName):
+            or ('viboom' in sHostName) or ('vid1bom' in sHostName) or ('viid2beem' in sHostName)or ('viid1boom' in sHostName):
             return self.getHoster('vidbom')
 				
         if ('mail.ru' in sHostName):
