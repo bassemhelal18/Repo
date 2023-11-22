@@ -272,7 +272,7 @@ class cHosterGui:
             return self.getHoster('resolver')
         if ('vidspeed' in sHostName):
             return self.getHoster('vidspeeds')
-        if ('allviid' in sHostName):
+        if ('allviid' in sHostName) or ('all-vid' in sHostName):
             return self.getHoster('allvid')
         if ('gofile' in sHostName):
             f = self.getHoster('resolver')
@@ -405,7 +405,8 @@ class cHosterGui:
             
         if ('vidbm' in sHostName) or ('vadbam' in sHostName) or ('vedbom' in sHostName) or ('vadbom' in sHostName) or ('vidbam' in sHostName)\
             or ('viidshar' in sHostName) or ('allviid' in sHostName) or ('vidspeed' in sHostName)or ('vedbam' in sHostName) \
-            or ('viboom' in sHostName) or ('vid1bom' in sHostName) or ('viid2beem' in sHostName)or ('viid1boom' in sHostName):
+            or ('viboom' in sHostName) or ('vid1bom' in sHostName) or ('viid2beem' in sHostName)or ('viid1boom' in sHostName)\
+            or ('ved2om' in sHostName):
             return self.getHoster('vidbom')
 				
         if ('mail.ru' in sHostName):
@@ -443,7 +444,8 @@ class cHosterGui:
             return self.getHoster('workupload')
 
         if ('upbaam' in sHostName) or ('upbam' in sHostName) or ('uppom' in sHostName) or ('uppboom' in sHostName) \
-           or ('upgobom' in sHostName)or ('uupbom' in sHostName) or ('upptobom' in sHostName) or ('up2b9om' in sHostName):
+           or ('upgobom' in sHostName)or ('uupbom' in sHostName) or ('upptobom' in sHostName) or ('up2b9om' in sHostName)\
+           or ('up1bom' in sHostName):
             return self.getHoster('uppom')
         
         if ('eeggyy' in sHosterUrl):
