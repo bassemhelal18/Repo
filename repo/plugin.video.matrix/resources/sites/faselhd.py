@@ -1,6 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 # zombi https://github.com/zombiB/zombi-addons/
 
+import base64
 import re
 	
 from resources.lib.gui.hoster import cHosterGui
@@ -12,6 +13,7 @@ from resources.lib.comaddon import progress, VSlog, isMatrix, siteManager, addon
 from resources.lib.parser import cParser
 from bs4 import BeautifulSoup
 
+UA = 'ipad'
 
 ADDON = addon()
 icons = ADDON.getSetting('defaultIcons')
@@ -543,77 +545,64 @@ def showLink(oInputParameterHandler = False):
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
-
+    
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
 
     oParser = cParser()
     
-    #Recuperation infos
-    sNote = ''
-
-    sPattern = '<div class="singleDesc">.+?<p>([^<]+)</p>'
-    aResult = oParser.parse(sHtmlContent, sPattern)
-    
-    if (aResult[0]):
-        sNote = aResult[1][0]
 			
-     # (.+?) ([^<]+) .+?
-    sPattern = 'onclick="player_iframe.location.href = ([^<]+)"><a.+?href="javascript:;"><i.+?class="fa fa-play-circle"></i>([^<]+)</a></li>'
-
+    sPattern = "player_iframe.location.href = '([^<]+)&img.*?'"
     oParser = cParser()
     aResult = oParser.parse(sHtmlContent, sPattern)
     
-   
     if aResult[0]:
-        oOutputParameterHandler = cOutputParameterHandler()    
-        for aEntry in aResult[1]:
- 
-            if "01#" not in aEntry[1]:
-                continue
- 
-            sTitle = aEntry[1].replace("&#8217;", "'") 
-            siteUrl = aEntry[0].replace("'", "") 
+        murl =  aResult[1][0]
 
-
- 
-
-            oOutputParameterHandler.addParameter('siteUrl', siteUrl)
-            oOutputParameterHandler.addParameter('sMovieTitle', sMovieTitle)
-            oOutputParameterHandler.addParameter('sThumb', sThumb)
-
-            
-
- 
-            oGui.addLink(SITE_IDENTIFIER, 'showHosters', sTitle, sThumb, sNote, oOutputParameterHandler, oInputParameterHandler)
-
-    # (.+?)
-
-    sPattern = 'onclick="player_iframe.location.href = ([^<]+)">'
-    oParser = cParser()
-    aResult = oParser.parse(sHtmlContent, sPattern)
+    oRequest = cRequestHandler(murl)
+    oRequest.addHeaderEntry('user-agent',UA)
+    oRequest.addHeaderEntry('referer',URL_MAIN)
+    data = oRequest.request()
+    page = prase_function(data)
+    page =str(page.encode('latin-1'),'utf-8')
     
-	
-    if aResult[0]:
-        for aEntry in aResult[1]:
- 
-            if "embed.php?url=" in aEntry:
-               continue
-            
-            url = aEntry.replace("'", "")
+    sPattern =  'button class="hd_btn " data-url="([^<]+)">([^<]+)</button>' 
+    aResult = oParser.parse(page,sPattern)
 
-            if url.startswith('//'):
-               url = 'http:' + url
-            
-            sHosterUrl = url 
-            oHoster = cHosterGui().checkHoster(sHosterUrl)
-            if oHoster:
-               oHoster.setDisplayName(sMovieTitle)
-               oHoster.setFileName(sMovieTitle)
-               cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+    if aResult[0]:
+       for aEntry1 in aResult[1]:
+           sHosterUrl = aEntry1[0]
+           sHost = aEntry1[1].upper()
+           sTitle = ('%s  -[%s]') % (sMovieTitle, sHost)  
+           oHoster = cHosterGui().checkHoster(sHosterUrl)
+           if oHoster:
+              oHoster.setDisplayName(sTitle)
+              oHoster.setFileName(sMovieTitle)
+              cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+
+                
+    oGui.setEndOfDirectory()   
+
+def prase_function(data):
+    if 'adilbo' in data:
+     t_script = re.findall('<script.*?;.*?\'(.*?);', data, re.S)
+     t_int = re.findall('/g.....(.*?)\)', data, re.S)
+     if t_script and t_int:
+         script = t_script[0].replace("'",'')
+         script = script.replace("+",'')
+         script = script.replace("\n",'')
+         sc = script.split('.')
+         page = ''
+         for elm in sc:
+             c_elm = base64.b64decode(elm+'==').decode()
+             t_ch = re.findall('\d+', c_elm, re.S)
+             if t_ch:
+                nb = int(t_ch[0])+int(t_int[0])
+                page = page + chr(nb)
+    return page
 				
 
-    oGui.setEndOfDirectory()       
+     
   
 def __checkForNextPage(sHtmlContent):
     
@@ -626,109 +615,3 @@ def __checkForNextPage(sHtmlContent):
 
     return False
 
-def showHosters(oInputParameterHandler = False):
-    oGui = cGui()
-    
-    if not oInputParameterHandler:
-        oInputParameterHandler = cInputParameterHandler()
-    
-    sUrl = oInputParameterHandler.getValue('siteUrl')
-    sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
-    sThumb = oInputParameterHandler.getValue('sThumb')
-    
-    oRequestHandler = cRequestHandler(sUrl)
-    sHtmlContent = oRequestHandler.request();
-    # (.+?)
-               
-
-    sPattern = 'name="iframe" src="([^<]+)" frameborde'
-    oParser = cParser()
-    aResult = oParser.parse(sHtmlContent, sPattern)
-
-	
-    if aResult[0]:
-        for aEntry in aResult[1]:
-            
-            url = aEntry
-            sTitle = " " 
-            if url.startswith('//'):
-               url = 'http:' + url
-            
-            sHosterUrl = url 
-            oHoster = cHosterGui().checkHoster(sHosterUrl)
-            if oHoster:
-               sDisplayTitle = sMovieTitle+sTitle
-               oHoster.setDisplayName(sDisplayTitle)
-               oHoster.setFileName(sMovieTitle)
-               cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
-				
-               
-        
-    sPattern = 'file: "(.+?)",type: "hls",'
-    oParser = cParser()
-    aResult = oParser.parse(sHtmlContent, sPattern)
-
-	
-    if aResult[0]:
-        for aEntry in aResult[1]:
-            
-            url = aEntry
-            sTitle = " " 
-            if url.startswith('//'):
-               url = 'http:' + url
-            
-            sHosterUrl = url
-            oHoster = cHosterGui().checkHoster(sHosterUrl)
-            if oHoster:
-               sDisplayTitle = sMovieTitle+sTitle
-               oHoster.setDisplayName(sDisplayTitle)
-               oHoster.setFileName(sMovieTitle)
-               cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
-				
-               
-        
-    sPattern = 'file: "(.+?)",.+?"type": "hls",'
-    oParser = cParser()
-    aResult = oParser.parse(sHtmlContent, sPattern)
-
-	
-    if aResult[0]:
-        for aEntry in aResult[1]:
-            
-            url = aEntry
-            sTitle = " "
-            if url.startswith('//'):
-               url = 'http:' + url
-            
-            sHosterUrl = url
-            oHoster = cHosterGui().checkHoster(sHosterUrl)
-            if oHoster:
-                sDisplayTitle = sMovieTitle+sTitle
-                oHoster.setDisplayName(sDisplayTitle)
-                oHoster.setFileName(sMovieTitle)
-                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
-				                        
-    sPattern = '<a href="(.+?)" class="download-btn" '
-    oParser = cParser()
-    aResult = oParser.parse(sHtmlContent, sPattern)
-
-	
-    if aResult[0]:
-        for aEntry in aResult[1]:
-            
-            url = aEntry
-            sTitle = " " 
-            if url.startswith('//'):
-               url = 'http:' + url
-            
-            sHosterUrl = url
-            oHoster = cHosterGui().checkHoster(sHosterUrl)
-            if oHoster:
-               sDisplayTitle = sMovieTitle+sTitle
-               oHoster.setDisplayName(sDisplayTitle)
-               oHoster.setFileName(sMovieTitle)
-               cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
-				
-
-                
-    oGui.setEndOfDirectory()
