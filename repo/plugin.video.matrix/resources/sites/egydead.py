@@ -23,7 +23,7 @@ oParser = cParser()
  
 oRequestHandler = cRequestHandler(URL_MAIN)
 sHtmlContent = oRequestHandler.request()
-    # (.+?) ([^<]+)
+
 
 sPattern = '<meta property="og:url" content="(.+?)" />'
 aResult = oParser.parse(sHtmlContent, sPattern)
@@ -31,29 +31,25 @@ aResult = oParser.parse(sHtmlContent, sPattern)
 if (aResult[0]):
     URL_MAIN = aResult[1][0]
 
-MOVIE_EN = (URL_MAIN+'/category/%D8%A7%D9%81%D9%84%D8%A7%D9%85-%D8%A7%D8%AC%D9%86%D8%A8%D9%8A/', 'showMovies')
+MOVIE_EN = (URL_MAIN+'/category/افلام-اجنبي/', 'showMovies')
 MOVIE_PACK = (URL_MAIN+'/assembly/', 'showPack')
-MOVIE_DUBBED = (URL_MAIN+'/category/english-movies-dub/', 'showMovies')
-MOVIE_TURK = (URL_MAIN+'/category/turkish-movies/', 'showMovies')
-
-MOVIE_ASIAN = (URL_MAIN+'/category/asian-movies/', 'showMovies')
-KID_MOVIES = (URL_MAIN+'/category/animation-movies/', 'showMovies')
+MOVIE_DUBBED = (URL_MAIN+'/category/افلام-اجنبية-مدبلجة/', 'showMovies')
+MOVIE_TURK = (URL_MAIN+'/category/افلام-تركية/', 'showMovies')
+MOVIE_ASIAN = (URL_MAIN+'category/افلام-اسيوية/', 'showMovies')
+KID_MOVIES = (URL_MAIN+'/category/افلام-كرتون/', 'showMovies')
 KID_CARTOON = (URL_MAIN+'/series-category/مسلسلات-كرتون/', 'showSeries')
 SERIE_LATIN = (URL_MAIN+'/series-category/مسلسلات-لاتينية/', 'showSeries')
 SERIE_EN = (URL_MAIN+'/series-category/مسلسلات-اجنبي/', 'showSeries')
-#SERIE_AR = (URL_MAIN+'/series-category/%d9%85%d8%b3%d9%84%d8%b3%d9%84%d8%a7%d8%aa-%d8%b9%d8%b1%d8%a8%d9%8a/', 'showSeries')
 SERIE_TR = (URL_MAIN+'/series-category/مسلسلات-تركية/', 'showSeries')
 SERIE_ASIA = (URL_MAIN+'/series-category/مسلسلات-اسيوية/', 'showSeries')
-
 DOC_SERIES = (URL_MAIN+'/series-category/مسلسلات-وثائقية/', 'showSeries')
-SERIE_DUBBED = (URL_MAIN+'/series-category/%d9%85%d8%b3%d9%84%d8%b3%d9%84%d8%a7%d8%aa-%d8%a7%d8%ac%d9%86%d8%a8%d9%8a%d8%a9-%d9%85%d8%af%d8%a8%d9%84%d8%ac%d8%a9/', 'showSeries')
-DOC_NEWS = (URL_MAIN+'/category/documentary-movies/', 'showMovies')
+SERIE_DUBBED = (URL_MAIN+'/series-category/مسلسلات-اجنبي-مدبلجة/', 'showSeries')
+SERIE_TR_AR = (URL_MAIN + '/series-category/مسلسلات-تركية-مدبلجة/', 'showSeries')
+DOC_NEWS = (URL_MAIN+'/category/افلام-وثائقية/', 'showMovies')
 ANIM_MOVIES = (URL_MAIN+'/series-category/%d8%a7%d9%81%d9%84%d8%a7%d9%85-%d8%a7%d9%86%d9%85%d9%8a/', 'showMovies')
 ANIM_NEWS = (URL_MAIN+'/series-category/%d9%85%d8%b3%d9%84%d8%b3%d9%84%d8%a7%d8%aa-%d8%a7%d9%86%d9%85%d9%8a/', 'showSeries')
-REPLAYTV_PLAY = (URL_MAIN+'/category/%d9%85%d8%b3%d8%b1%d8%ad%d9%8a%d8%a7%d8%aa/', 'showMovies')
-REPLAYTV_NEWS = (URL_MAIN+'/series-category/برامج-تلفزيونية/', 'showMovies')
+REPLAYTV_NEWS = (URL_MAIN+'/series-category/برامج-تلفزيونية/', 'showSeries')
 SPORT_FOOT = (URL_MAIN+'/tag/%d9%83%d8%a7%d8%b3-%d8%a7%d9%84%d8%b9%d8%a7%d9%84%d9%85-2022/', 'showMovies')
-
 URL_SEARCH = (URL_MAIN+'/?s=', 'showMovies')
 URL_SEARCH_MOVIES = (URL_MAIN+'/?s=%D9%81%D9%8A%D9%84%D9%85+', 'showMovies')
 URL_SEARCH_SERIES = (URL_MAIN+'/?s=%D9%85%D8%B3%D9%84%D8%B3%D9%84+', 'showSeries')
@@ -69,88 +65,65 @@ def load():
     oOutputParameterHandler.addParameter('siteUrl', 'http://venom/')
     oGui.addDir(SITE_IDENTIFIER, 'showSeriesSearch', 'SEARCH_SERIES', icons + '/Search.png', oOutputParameterHandler)
     
-
-    oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', MOVIE_EN[0])
     oGui.addDir(SITE_IDENTIFIER, 'showMovies', 'افلام اجنبي', icons+ '/MoviesEnglish.png', oOutputParameterHandler)
   
-    oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', MOVIE_ASIAN[0])
     oGui.addDir(SITE_IDENTIFIER, 'showMovies', 'أفلام أسيوية', icons + '/Asian.png', oOutputParameterHandler)
    
-    oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', MOVIE_TURK[0])
     oGui.addDir(SITE_IDENTIFIER, 'showMovies', 'أفلام تركية', icons + '/Turkish.png', oOutputParameterHandler)
    
-    oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', ANIM_MOVIES[0])
     oGui.addDir(SITE_IDENTIFIER, 'showMovies', 'أفلام إنمي', icons + '/Anime.png', oOutputParameterHandler)
     
-    oOutputParameterHandler = cOutputParameterHandler()
-    oOutputParameterHandler.addParameter('siteUrl', URL_MAIN+'/category/anime-movies/')
+    oOutputParameterHandler.addParameter('siteUrl', URL_MAIN+'/category/افلام-انمي/')
     oGui.addDir(SITE_IDENTIFIER, 'showMovies', 'أفلام إنمي2',  icons + '/Anime.png', oOutputParameterHandler)
 
-    oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', KID_MOVIES[0])
     oGui.addDir(SITE_IDENTIFIER, 'showMovies', 'أفلام كرتون', icons + '/Cartoon.png', oOutputParameterHandler)
 
-    oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', MOVIE_DUBBED[0])
     oGui.addDir(SITE_IDENTIFIER, 'showMovies', 'أفلام مدبلجة', icons + '/Dubbed.png', oOutputParameterHandler)
 
-    oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', DOC_NEWS[0])
     oGui.addDir(SITE_IDENTIFIER, 'showMovies', 'أفلام وثائقية', icons + '/Documentary.png', oOutputParameterHandler)
 
-    oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', SERIE_EN[0])
     oGui.addDir(SITE_IDENTIFIER, 'showSeries', 'مسلسلات أجنبية', icons + '/TVShowsEnglish.png', oOutputParameterHandler)
 
-    
-
-    oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', SERIE_ASIA[0])
     oGui.addDir(SITE_IDENTIFIER, 'showSeries', 'مسلسلات أسيوية', icons + '/Asian.png', oOutputParameterHandler)
 
-    oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', SERIE_TR[0])
     oGui.addDir(SITE_IDENTIFIER, 'showSeries', 'مسلسلات تركية', icons + '/Turkish.png', oOutputParameterHandler) 
 
-    oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', SERIE_LATIN[0])
     oGui.addDir(SITE_IDENTIFIER, 'showSeries', 'مسلسلات لاتنية', icons + '/TVShows.png', oOutputParameterHandler)
 
-    oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', ANIM_NEWS[0])
     oGui.addDir(SITE_IDENTIFIER, 'showSeries', 'مسلسلات إنمي', icons + '/Anime.png', oOutputParameterHandler)
 
-    oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', KID_CARTOON[0])
     oGui.addDir(SITE_IDENTIFIER, 'showSeries', 'مسلسلات كرتون', icons + '/Cartoon.png', oOutputParameterHandler)
 
-    oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', DOC_SERIES[0])
     oGui.addDir(SITE_IDENTIFIER, 'showSeries', 'مسلسلات وثائقية', icons + '/Documentary.png', oOutputParameterHandler)
 
-    oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', SERIE_DUBBED[0])
     oGui.addDir(SITE_IDENTIFIER, 'showSeries', 'مسلسلات مدبلجة', icons + '/Dubbed.png', oOutputParameterHandler)
     
-    oOutputParameterHandler = cOutputParameterHandler()
+    oOutputParameterHandler.addParameter('siteUrl', SERIE_TR_AR[0])
+    oGui.addDir(SITE_IDENTIFIER, 'showSeries', 'مسلسلات تركية مدبلجة', icons + '/TVShowsTurkish-Dubbed.png', oOutputParameterHandler)
+
     oOutputParameterHandler.addParameter('siteUrl', URL_MAIN+'/channel/netflix/')
     oGui.addDir(SITE_IDENTIFIER, 'showSeries', 'مسلسلات Netfilx', icons + '/TVShows.png', oOutputParameterHandler)
 
-    oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', REPLAYTV_NEWS[0])
-    oGui.addDir(SITE_IDENTIFIER, 'showMovies', 'برامج تلفزيونية', icons + '/Programs.png', oOutputParameterHandler)
+    oGui.addDir(SITE_IDENTIFIER, 'showSeries', 'برامج تلفزيونية', icons + '/Programs.png', oOutputParameterHandler)
 	
-    oOutputParameterHandler = cOutputParameterHandler()
-    oOutputParameterHandler.addParameter('siteUrl', REPLAYTV_PLAY[0])
-    oGui.addDir(SITE_IDENTIFIER, 'showMovies', 'مسرحيات', icons + '/Theater.png', oOutputParameterHandler)
-    
-    oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', URL_MAIN+'/category/%d8%b9%d8%b1%d9%88%d8%b6-%d9%88%d8%ad%d9%81%d9%84%d8%a7%d8%aa/')
-    oGui.addDir(SITE_IDENTIFIER, 'showSeries' ,'ستاند اب وحفلات',icons + '/Programs.png', oOutputParameterHandler)
+    oGui.addDir(SITE_IDENTIFIER, 'showMovies' ,'ستاند اب وحفلات',icons + '/Programs.png', oOutputParameterHandler)
 
     oGui.setEndOfDirectory()
  
@@ -173,11 +146,7 @@ def showSeriesSearch():
         showSeries(sUrl)
         oGui.setEndOfDirectory()
         return
-   
 
- 
-
- 
 def showMovies(sSearch = ''):
     oGui = cGui()
     if sSearch:
@@ -189,8 +158,6 @@ def showMovies(sSearch = ''):
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
     
-    
-      # (.+?) ([^<]+) .+?
     oParser = cParser()
     sStart = '<ul class="posts-list">'
     sEnd = '<section class="ads FooterAds">'
@@ -210,18 +177,16 @@ def showMovies(sSearch = ''):
             if progress_.iscanceled():
                 break
  
-            sTitle = aEntry[1].replace("مشاهدة","").replace("الفيلم التركي","").replace("مسلسل","").replace("انمي","").replace("مترجمة","").replace("مترجم","").replace("فيلم","").replace("والأخيرة","").replace("مدبلج للعربية","").replace("مدبلج","").replace("والاخيرة","").replace("كاملة","").replace("حلقات كاملة","").replace("اونلاين","").replace("مباشرة","").replace("انتاج ","").replace("جودة عالية","").replace("كامل","").replace("HD","").replace("السلسلة الوثائقية","").replace("الفيلم الوثائقي","").replace("اون لاين","")
+            sTitle = aEntry[1].replace("مشاهدة","").replace("عرض","").replace("الفيلم التركي","").replace("مسلسل","").replace("انمي","").replace("مترجمة","").replace("مترجم","").replace("فيلم","").replace("والأخيرة","").replace("والاخيرة","").replace("كاملة","").replace("حلقات كاملة","").replace("اونلاين","").replace("مباشرة","").replace("انتاج ","").replace("جودة عالية","").replace("كامل","").replace("HD","").replace("السلسلة الوثائقية","").replace("الفيلم الوثائقي","").replace("اون لاين","")
             siteUrl = aEntry[0]+'?View=1'
-            
             if '/assembly/' in aEntry[0] :
                 continue
-            
-            if 'مدبلج' in sTitle:
-                continue
             sDesc = ''
+            sLang =''
             sThumb = aEntry[2]
-            sYear = ''
-            sDub = ''
+            sTitle = sTitle.replace("مدبلجة","[AR]").replace("مدبلجه","[AR]").replace("مدبلج بالمصري","[AR]").replace("مدبلج بالفصحي","[AR]").replace("مدبلج مصري","[AR]").replace("مدبلج مصري","[AR]").replace("مدبلج للعربية","[AR]").replace("و مدبلج","[AR]").replace("مدبلج","[AR]")            
+            if '[AR]' in sTitle:
+                sLang = 'AR'
             m = re.search('([0-9]{4})', sTitle)
             if m:
                 sYear = str(m.group(0))
@@ -231,7 +196,8 @@ def showMovies(sSearch = ''):
             oOutputParameterHandler.addParameter('siteUrl',siteUrl)
             oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
             oOutputParameterHandler.addParameter('sThumb', sThumb) 
-            oOutputParameterHandler.addParameter('sYear', sYear) 
+            oOutputParameterHandler.addParameter('sYear', sYear)
+            oOutputParameterHandler.addParameter('sLang',sLang) 
 
             oGui.addMovie(SITE_IDENTIFIER, 'showHosters2', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
         
@@ -378,10 +344,14 @@ def showSeries(sSearch = ''):
             if 'جميع مواسم' in aEntry[1]:
                 continue
             
-            sTitle = aEntry[1].replace("الجزء","الموسم").replace("جميع مواسم ","").replace("جميع المواسم","").replace("مشاهدة","").replace(" مسلسل ","").replace("مسلسل","").replace("انمي","").replace("مترجمة","").replace("مترجم","").replace("فيلم","").replace("اون لاين","").replace("WEB-DL","").replace("كاملة","").replace("كامل","").replace("BRRip","").replace("720p","").replace("HD-TC","").replace("HDRip","").replace("HD-CAM","").replace("DVDRip","").replace("BluRay","").replace("1080p","").replace("WEBRip","").replace("WEB-dl","").replace("4K","").replace("All","").replace("BDRip","").replace("HDCAM","").replace("HDTC","").replace("HDTV","").replace("HD","").replace("720","").replace("HDCam","").replace("Full HD","").replace("1080","").replace("HC","").replace("Web-dl","").replace("والأخيرة","").replace("والاخيرة","").replace("الأخيرة","").replace("الاخيرة","")
+            sTitle = aEntry[1].replace("الجزء","الموسم").replace("عرض","").replace("برنامج","").replace("جميع مواسم ","").replace("جميع المواسم","").replace("مشاهدة","").replace(" مسلسل ","").replace("مسلسل","").replace("انمي","").replace("مترجمة","").replace("مترجم","").replace("فيلم","").replace("اون لاين","").replace("WEB-DL","").replace("كاملة","").replace("كامل","").replace("BRRip","").replace("720p","").replace("HD-TC","").replace("HDRip","").replace("HD-CAM","").replace("DVDRip","").replace("BluRay","").replace("1080p","").replace("WEBRip","").replace("WEB-dl","").replace("4K","").replace("All","").replace("BDRip","").replace("HDCAM","").replace("HDTC","").replace("HDTV","").replace("HD","").replace("720","").replace("HDCam","").replace("Full HD","").replace("1080","").replace("HC","").replace("Web-dl","").replace("والأخيرة","").replace("والاخيرة","").replace("الأخيرة","").replace("الاخيرة","")
             sTitle = sTitle.split("الموسم")[0].split("الحلقة")[0].split("موسم")[0].split("حلقة")[0]
+            sTitle = sTitle.replace("مدبلجة","[AR]").replace("مدبلجه","[AR]").replace("مدبلج بالمصري","[AR]").replace("مدبلج بالفصحي","[AR]").replace("مدبلج مصري","[AR]").replace("مدبلج مصري","[AR]").replace("مدبلج للعربية","[AR]").replace("و مدبلج","[AR]").replace("مدبلج","[AR]")
+            if '[AR]' in sTitle:
+                sLang = 'AR'
             siteUrl = aEntry[0]
             sDesc = ''
+            sLang = ''
             sThumb = aEntry[2]
             sYear = ''
             m = re.search('([0-9]{4})', sTitle)
@@ -396,7 +366,7 @@ def showSeries(sSearch = ''):
                 oOutputParameterHandler.addParameter('siteUrl',siteUrl)
                 oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
                 oOutputParameterHandler.addParameter('sThumb', sThumb) 
-                
+                oOutputParameterHandler.addParameter('sLang',sLang)
             
                 oGui.addTV(SITE_IDENTIFIER, 'showSeasons', sTitle, '', sThumb, sDesc, oOutputParameterHandler) 
             
@@ -404,8 +374,6 @@ def showSeries(sSearch = ''):
 
         progress_.VSclose(progress_)
 
-        
- 
         sNextPage = __checkForNextPage(sHtmlContent)
         if sNextPage:
             oOutputParameterHandler = cOutputParameterHandler()
@@ -414,8 +382,6 @@ def showSeries(sSearch = ''):
  
     if not sSearch:
         oGui.setEndOfDirectory()
- 
-      # (.+?) ([^<]+) .+?
  
 def __checkForNextPage(sHtmlContent):
     sPattern = '<a class="next page-numbers" href="([^<]+)">'
@@ -434,6 +400,8 @@ def showSeasons():
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
+    sLang = oInputParameterHandler.getValue('sLang')
+    
     itemList =[]
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
@@ -452,7 +420,7 @@ def showSeasons():
         oOutputParameterHandler = cOutputParameterHandler()    
         for aEntry in aResult[1]:
  
-            sTitle = aEntry[1].replace("الجزء","الموسم").replace("مترجمة","").replace("مشاهدة","").replace("مسلسل","").replace("انمي","").replace("انمى","").replace("مترجم","").replace("فيلم","").replace("اون لاين","").replace("WEB-DL","").replace("BRRip","").replace("720p","").replace("HD-TC","").replace("HDRip","").replace("HD-CAM","").replace("DVDRip","").replace("BluRay","").replace("1080p","").replace("WEBRip","").replace("WEB-dl","").replace("كامل","").replace("مشاهدة وتحميل","").replace("اون لاين","").replace("جميع حلقات","").replace("والأخيرة","").replace("والاخيرة","").replace("الأخيرة","").replace("الاخيرة","") 
+            sTitle = aEntry[1].replace("الجزء","الموسم").replace("برنامج","").replace("مترجمة","").replace("مشاهدة","").replace("مسلسل","").replace("انمي","").replace("انمى","").replace("مترجم","").replace("فيلم","").replace("اون لاين","").replace("WEB-DL","").replace("BRRip","").replace("720p","").replace("HD-TC","").replace("HDRip","").replace("HD-CAM","").replace("DVDRip","").replace("BluRay","").replace("1080p","").replace("WEBRip","").replace("WEB-dl","").replace("كامل","").replace("مشاهدة وتحميل","").replace("اون لاين","").replace("جميع حلقات","").replace("والأخيرة","").replace("والاخيرة","").replace("الأخيرة","").replace("الاخيرة","") 
             
             siteUrl = aEntry[0]
             sThumb = aEntry[2]
@@ -470,7 +438,8 @@ def showSeasons():
                 oOutputParameterHandler.addParameter('siteUrl', siteUrl)
                 oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
                 oOutputParameterHandler.addParameter('sThumb', sThumb)
-             
+                oOutputParameterHandler.addParameter('sLang',sLang)
+                
             
                 oGui.addSeason(SITE_IDENTIFIER, 'showEps', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
     
@@ -497,7 +466,7 @@ def showSeasons():
           oOutputParameterHandler = cOutputParameterHandler()    
           for aEntry in aResult[1]:
  
-            sTitle = aEntry[1].replace("الجزء","الموسم").replace("مترجمة","").replace("مشاهدة","").replace("مسلسل","").replace("انمي","").replace("انمى","").replace("مترجم","").replace("فيلم","").replace("اون لاين","").replace("WEB-DL","").replace("BRRip","").replace("720p","").replace("HD-TC","").replace("HDRip","").replace("HD-CAM","").replace("DVDRip","").replace("BluRay","").replace("1080p","").replace("WEBRip","").replace("WEB-dl","").replace("كامل","").replace("مشاهدة وتحميل","").replace("اون لاين","").replace("جميع حلقات","").replace("والأخيرة","").replace("والاخيرة","").replace("الأخيرة","").replace("الاخيرة","") 
+            sTitle = aEntry[1].replace("الجزء","الموسم").replace("برنامج","").replace("مترجمة","").replace("مشاهدة","").replace("مسلسل","").replace("انمي","").replace("انمى","").replace("مترجم","").replace("فيلم","").replace("اون لاين","").replace("WEB-DL","").replace("BRRip","").replace("720p","").replace("HD-TC","").replace("HDRip","").replace("HD-CAM","").replace("DVDRip","").replace("BluRay","").replace("1080p","").replace("WEBRip","").replace("WEB-dl","").replace("كامل","").replace("مشاهدة وتحميل","").replace("اون لاين","").replace("جميع حلقات","").replace("والأخيرة","").replace("والاخيرة","").replace("الأخيرة","").replace("الاخيرة","") 
             
             siteUrl = aEntry[0]
             sThumb = aEntry[2]
@@ -515,8 +484,7 @@ def showSeasons():
                 oOutputParameterHandler.addParameter('siteUrl', siteUrl)
                 oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
                 oOutputParameterHandler.addParameter('sThumb', sThumb)
-             
-            
+                oOutputParameterHandler.addParameter('sLang',sLang)
                 oGui.addSeason(SITE_IDENTIFIER, 'showEps', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
          
            
@@ -537,7 +505,7 @@ def showSeasons():
             oOutputParameterHandler = cOutputParameterHandler()    
             for aEntry in aResult[1]:
  
-              sTitle = aEntry[0].replace("الجزء","الموسم").replace("مترجمة","").replace("مشاهدة","").replace("مسلسل","").replace("انمي","").replace("انمى","").replace("مترجم","").replace("فيلم","").replace("اون لاين","").replace("WEB-DL","").replace("BRRip","").replace("720p","").replace("HD-TC","").replace("HDRip","").replace("HD-CAM","").replace("DVDRip","").replace("BluRay","").replace("1080p","").replace("WEBRip","").replace("WEB-dl","").replace("كامل","").replace("مشاهدة وتحميل","").replace("اون لاين","").replace("جميع حلقات","").replace("والأخيرة","").replace("والاخيرة","").replace("الأخيرة","").replace("الاخيرة","") 
+              sTitle = aEntry[0].replace("الجزء","الموسم").replace("مترجمة","").replace("برنامج","").replace("مشاهدة","").replace("مسلسل","").replace("انمي","").replace("انمى","").replace("مترجم","").replace("فيلم","").replace("اون لاين","").replace("WEB-DL","").replace("BRRip","").replace("720p","").replace("HD-TC","").replace("HDRip","").replace("HD-CAM","").replace("DVDRip","").replace("BluRay","").replace("1080p","").replace("WEBRip","").replace("WEB-dl","").replace("كامل","").replace("مشاهدة وتحميل","").replace("اون لاين","").replace("جميع حلقات","").replace("والأخيرة","").replace("والاخيرة","").replace("الأخيرة","").replace("الاخيرة","") 
               sTitle = sTitle.split("الحلقة")[0].split("حلقة")[0]
               if 'الموسم' not in aEntry[0]:
                sTitle =sTitle+' S1'   
@@ -554,6 +522,8 @@ def showSeasons():
                 oOutputParameterHandler.addParameter('siteUrl', siteUrl)
                 oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
                 oOutputParameterHandler.addParameter('sThumb', sThumb)
+                oOutputParameterHandler.addParameter('sLang',sLang)
+                
                 oGui.addSeason(SITE_IDENTIFIER, 'showEps', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
     oGui.setEndOfDirectory() 
   
@@ -563,7 +533,8 @@ def showEps():
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
- 
+    sLang = oInputParameterHandler.getValue('sLang')
+
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
     # .+? ([^<]+)
@@ -577,7 +548,7 @@ def showEps():
         oOutputParameterHandler = cOutputParameterHandler()    
         for aEntry in aResult[1]:
  
-            sTitle = aEntry[1].replace("الجزء","الموسم").replace("مترجمة","").replace("مشاهدة","").replace("مسلسل","").replace("انمي","").replace("انمى","").replace("مترجم","").replace("فيلم","").replace("اون لاين","").replace("WEB-DL","").replace("BRRip","").replace("720p","").replace("HD-TC","").replace("HDRip","").replace("HD-CAM","").replace("DVDRip","").replace("BluRay","").replace("1080p","").replace("WEBRip","").replace("WEB-dl","").replace("كامل","").replace("مشاهدة وتحميل","").replace("اون لاين","").replace("جميع حلقات","").replace("والأخيرة","").replace("والاخيرة","").replace("الأخيرة","").replace("الاخيرة","") 
+            sTitle = aEntry[1].replace("الجزء","الموسم").replace("برنامج","").replace("مترجمة","").replace("مشاهدة","").replace("مسلسل","").replace("انمي","").replace("انمى","").replace("مترجم","").replace("فيلم","").replace("اون لاين","").replace("WEB-DL","").replace("BRRip","").replace("720p","").replace("HD-TC","").replace("HDRip","").replace("HD-CAM","").replace("DVDRip","").replace("BluRay","").replace("1080p","").replace("WEBRip","").replace("WEB-dl","").replace("كامل","").replace("مشاهدة وتحميل","").replace("اون لاين","").replace("جميع حلقات","").replace("والأخيرة","").replace("والاخيرة","").replace("الأخيرة","").replace("الاخيرة","") 
             if 'الموسم' not in aEntry[1]:
                      sEp = aEntry[2].replace('حلقه ','')
                      sTitle = sMovieTitle+' E'+sEp
@@ -595,6 +566,8 @@ def showEps():
             oOutputParameterHandler.addParameter('siteUrl', siteUrl)
             oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
             oOutputParameterHandler.addParameter('sThumb', sThumb)
+            oOutputParameterHandler.addParameter('sLang',sLang)
+            
             oGui.addEpisode(SITE_IDENTIFIER, 'showHosters2', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
     else:
         s = requests.Session()
@@ -616,7 +589,7 @@ def showEps():
              for aEntry in aResult[1]:
                  
                  
-                 sTitle = aEntry[1].replace("الموسم العاشر","S10").replace("الموسم الحادي عشر","S11").replace("الموسم الثاني عشر","S12").replace("الموسم الثالث عشر","S13").replace("الموسم الرابع عشر","S14").replace("الموسم الخامس عشر","S15").replace("الموسم السادس عشر","S16").replace("الموسم السابع عشر","S17").replace("الموسم الثامن عشر","S18").replace("الموسم التاسع عشر","S19").replace("الموسم العشرون","S20").replace("الموسم الحادي و العشرون","S21").replace("الموسم الثاني و العشرون","S22").replace("الموسم الثالث و العشرون","S23").replace("الموسم الرابع والعشرون","S24").replace("الموسم الخامس و العشرون","S25").replace("الموسم السادس والعشرون","S26").replace("الموسم السابع والعشرون","S27").replace("الموسم الثامن والعشرون","S28").replace("الموسم التاسع والعشرون","S29").replace("الموسم الثلاثون","S30").replace("الموسم الحادي و الثلاثون","S31").replace("الموسم الثاني والثلاثون","S32").replace("الموسم الاول","S1").replace(" الثانى","2").replace("الموسم الثاني","S2").replace("الموسم الثالث","S3").replace("الموسم الثالث","S3").replace("الموسم الرابع","S4").replace("الموسم الخامس","S5").replace("الموسم السادس","S6").replace("الموسم السابع","S7").replace("الموسم الثامن","S8").replace("الموسم التاسع","S9").replace("الحلقة "," E").replace("الموسم","S").replace("S ","S").replace("الجزء","الموسم").replace("مترجمة","").replace("مشاهدة","").replace("مسلسل","").replace("انمي","").replace("انمى","").replace("مترجم","").replace("فيلم","").replace("اون لاين","").replace("WEB-DL","").replace("BRRip","").replace("720p","").replace("HD-TC","").replace("HDRip","").replace("HD-CAM","").replace("DVDRip","").replace("BluRay","").replace("1080p","").replace("WEBRip","").replace("WEB-dl","").replace("كامل","").replace("مشاهدة وتحميل","").replace("اون لاين","").replace("جميع حلقات","").replace("والأخيرة","").replace("والاخيرة","").replace("الأخيرة","").replace("الاخيرة","").replace("  E"," E").replace("  S"," S").replace("   S"," S")
+                 sTitle = aEntry[1].replace("الموسم العاشر","S10").replace("برنامج","").replace("الموسم الحادي عشر","S11").replace("الموسم الثاني عشر","S12").replace("الموسم الثالث عشر","S13").replace("الموسم الرابع عشر","S14").replace("الموسم الخامس عشر","S15").replace("الموسم السادس عشر","S16").replace("الموسم السابع عشر","S17").replace("الموسم الثامن عشر","S18").replace("الموسم التاسع عشر","S19").replace("الموسم العشرون","S20").replace("الموسم الحادي و العشرون","S21").replace("الموسم الثاني و العشرون","S22").replace("الموسم الثالث و العشرون","S23").replace("الموسم الرابع والعشرون","S24").replace("الموسم الخامس و العشرون","S25").replace("الموسم السادس والعشرون","S26").replace("الموسم السابع والعشرون","S27").replace("الموسم الثامن والعشرون","S28").replace("الموسم التاسع والعشرون","S29").replace("الموسم الثلاثون","S30").replace("الموسم الحادي و الثلاثون","S31").replace("الموسم الثاني والثلاثون","S32").replace("الموسم الاول","S1").replace(" الثانى","2").replace("الموسم الثاني","S2").replace("الموسم الثالث","S3").replace("الموسم الثالث","S3").replace("الموسم الرابع","S4").replace("الموسم الخامس","S5").replace("الموسم السادس","S6").replace("الموسم السابع","S7").replace("الموسم الثامن","S8").replace("الموسم التاسع","S9").replace("الحلقة "," E").replace("الموسم","S").replace("S ","S").replace("الجزء","الموسم").replace("مترجمة","").replace("مشاهدة","").replace("مسلسل","").replace("انمي","").replace("انمى","").replace("مترجم","").replace("فيلم","").replace("اون لاين","").replace("WEB-DL","").replace("BRRip","").replace("720p","").replace("HD-TC","").replace("HDRip","").replace("HD-CAM","").replace("DVDRip","").replace("BluRay","").replace("1080p","").replace("WEBRip","").replace("WEB-dl","").replace("كامل","").replace("مشاهدة وتحميل","").replace("اون لاين","").replace("جميع حلقات","").replace("والأخيرة","").replace("والاخيرة","").replace("الأخيرة","").replace("الاخيرة","").replace("  E"," E").replace("  S"," S").replace("   S"," S")
                  if 'الموسم' not in aEntry[1]:
                      sEp = aEntry[2].replace('حلقه ','')
                      sTitle = sMovieTitle+' E'+sEp
@@ -633,6 +606,8 @@ def showEps():
                  oOutputParameterHandler.addParameter('siteUrl', siteUrl)
                  oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
                  oOutputParameterHandler.addParameter('sThumb', sThumb)
+                 oOutputParameterHandler.addParameter('sLang',sLang)
+                 
                  oGui.addEpisode(SITE_IDENTIFIER, 'showHosters2', sTitle, '', sThumb, sDesc, oOutputParameterHandler) 
        
     oGui.setEndOfDirectory()  
@@ -645,9 +620,6 @@ def showHosters2(oInputParameterHandler = False):
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
     
-
-    #print sHtmlContent 
-
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
     sTitle = sMovieTitle
@@ -658,10 +630,8 @@ def showHosters2(oInputParameterHandler = False):
     if isMatrix(): 
        sHtmlContent = sHtmlContent.decode('utf8',errors='ignore')
     
-
-   
     oParser = cParser()
-    # ([^<]+) (.+?)       
+
 
     sPattern = '<li data-link="(.+?)">'
     oParser = cParser()

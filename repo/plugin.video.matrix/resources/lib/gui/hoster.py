@@ -169,8 +169,7 @@ class cHosterGui:
         sHosterUrl = sHosterUrl.lower()
 
         # lien direct ?
-        if any(sHosterUrl.endswith(x) for x in ['.avi', '.flv', '.m3u8', '.webm', '.mpd']):
-            return self.getHoster('lien_direct')
+        
         # Recuperation du host
         try:
             sHostName = sHosterUrl.split('/')[2]
@@ -298,7 +297,7 @@ class cHosterGui:
             return self.getHoster('resolver')
         if ('vimeo' in sHostName):
             return self.getHoster('resolver')
-        if ('embed.scdn.' in sHostName):
+        if ('faselhd' in sHosterUrl):
             return self.getHoster('faselhd')
         if ('/run/' in sHosterUrl):
             return self.getHoster('mycima')
