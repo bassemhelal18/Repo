@@ -720,7 +720,11 @@ class cTrakt:
                 oRequestHandler.addHeaderEntry('Authorization', 'Bearer %s' % self.ADDON.getSetting('bstoken'))
                 sHtmlContent = oRequestHandler.request(jsonDecode=True)
 
-            title = next((title for title in sHtmlContent if title['language'].lower() == 'en'), item)['title']
+            for titleSearch in sHtmlContent:
+                if titleSearch['language'].lower() == 'ar':
+                    title = titleSearch['title']
+                if titleSearch['country'].lower() == 'eg':
+                    break
 
             if title is None:
                 return item['title']
@@ -1048,7 +1052,7 @@ class cTrakt:
 
     def getTmdbID(self, sTitle, sType):
 
-        oInputParameterHandler = cInputParameterHandler()
+        
 
         from resources.lib.tmdb import cTMDb
         grab = cTMDb()
@@ -1058,9 +1062,10 @@ class cTrakt:
         elif sType == 'movies':
             sType = 'movie'
 
-        meta = 0
-        year = ''
+        
+        
         # on cherche l'annee
+        year = ''
         r = re.search('(\([0-9]{4}\))', sTitle)
         if r:
             year = str(r.group(0))

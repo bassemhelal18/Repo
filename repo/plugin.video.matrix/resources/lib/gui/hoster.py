@@ -507,7 +507,7 @@ class cHosterGui:
             return self.getHoster('fajerlive')
             
         if ('goved' in sHostName) or ('govad' in sHostName) or ('govid.me' in sHostName)or ('goveed' in sHosterUrl)\
-            or ('gov1ad' in sHostName) or ('go2ved' in sHostName) or ('go1ved' in sHostName):
+            or ('gov1ad' in sHostName) or ('go2ved' in sHostName) or ('go1ved' in sHostName) or ('go-veid' in sHostName):
             return self.getHoster('govidme')
             
         if ('nowvid' in sHostName) or ('vegaasvid' in sHostName)or('govid' in sHostName) or ('drkvid' in sHosterUrl) \

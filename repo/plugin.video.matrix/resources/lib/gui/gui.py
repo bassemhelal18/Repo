@@ -48,6 +48,8 @@ class cGui:
         # dir ou link => CONTENT par défaut = files
         if Type != 'dir' and Type != 'link':
             cGui.CONTENT = Type
+        if sCat is not None:
+            oGuiElement.setCat(sCat)
         oGuiElement.setSiteName(sId)
         oGuiElement.setFunction(sFunction)
         oGuiElement.setTitle(sLabel)
@@ -61,8 +63,7 @@ class cGui:
 
         oGuiElement.setDescription(sDesc)
 
-        if sCat is not None:
-            oGuiElement.setCat(sCat)
+        
 
         # Pour addLink on recupere le sCat et sMeta precedent.
         if Type == 'link':
@@ -408,9 +409,9 @@ class cGui:
             oListItem = listitem(itemTitle)
 
         if data.get('cast'):
-            credits = json.loads(data['cast'])
+            casts = json.loads(data['cast'])
             data['cast'] = []
-            for i in credits:
+            for i in casts:
                 if isNexus():
                     data['cast'].append(xbmc.Actor(i['name'], i['character'], i['order'], i.get('thumbnail', "")))
                 else:
@@ -436,7 +437,7 @@ class cGui:
             videoInfoTag.setMpaa(data.get('mpaa', ""))
             videoInfoTag.setDuration(int(data.get('duration', 0)))
             videoInfoTag.setPlaycount(int(data.get('playcount', 0)))
-            videoInfoTag.setCountries(list(data.get('country', [""])))
+            # videoInfoTag.setCountries(list(data.get('country', [""])))
             videoInfoTag.setTrailer(data.get('trailer', ""))
             videoInfoTag.setTagLine(data.get('tagline', ""))
             videoInfoTag.setStudios(list(data.get('studio', '').split("/")))
