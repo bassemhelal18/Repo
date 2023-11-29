@@ -325,7 +325,8 @@ class cHosterGui:
             return self.getHoster('rumble')
 
         if ('streamwish' in sHostName)or ('ankrzkz' in sHostName) or ('cilootv' in sHostName)or ('sfastwish' in sHostName)\
-            or ('egtpgrvh' in sHostName) or ('volvovideo' in sHostName) or ('wishfast.top'in sHostName) or ('fsdcmo.sbs'in sHostName):
+            or ('egtpgrvh' in sHostName) or ('volvovideo' in sHostName) or ('wishfast.top'in sHostName) or ('fsdcmo.sbs'in sHostName)\
+            or ('flaswish' in sHostName)   :
            return self.getHoster('streamwish')
         
         if ('rabbitstream' in sHostName) or ('dokicloud' in sHostName):
@@ -395,8 +396,6 @@ class cHosterGui:
         if ('gcdn' in sHostName):
             return self.getHoster('lien_direct')
 
-        
-
         if ('alarabiya' in sHostName):
             return self.getHoster('lien_direct')
 
@@ -407,7 +406,7 @@ class cHosterGui:
             or ('viidshar' in sHostName) or ('allviid' in sHostName) or ('vidspeed' in sHostName)or ('vedbam' in sHostName) \
             or ('viboom' in sHostName) or ('vid1bom' in sHostName) or ('viid2beem' in sHostName)or ('viid1boom' in sHostName)\
             or ('ved2om' in sHostName) or ('viidboom' in sHostName) or ('vid2bom' in sHostName) or ('vig1bm' in sHostName)\
-            or ('v3db1oom' in sHostName) or ('vdp1em' in sHostName)  :
+            or ('v3db1oom' in sHostName) or ('vdp1em' in sHostName) or ('ved1om' in sHostName)   :
             return self.getHoster('vidbom')
 				
         if ('mail.ru' in sHostName):
@@ -510,7 +509,7 @@ class cHosterGui:
             
         if ('goved' in sHostName) or ('govad' in sHostName) or ('govid.me' in sHostName)or ('goveed' in sHosterUrl)\
             or ('gov1ad' in sHostName) or ('go2ved' in sHostName) or ('go1ved' in sHostName) or ('go-veid' in sHostName)\
-            or ('g1ov3d' in sHostName)   :
+            or ('g1ov3d' in sHostName)  or ('g1v3d' in sHostName) :
             return self.getHoster('govidme')
             
         if ('nowvid' in sHostName) or ('vegaasvid' in sHostName)or('govid' in sHostName) or ('drkvid' in sHosterUrl) \
@@ -573,7 +572,6 @@ class cHosterGui:
 
         if ('vk.com' in sHostName) or ('vkontakte' in sHostName) or ('vkcom' in sHostName):
             f = self.getHoster('resolver')
-            #mise a jour du nom
             f.setRealHost('[VK]')
             return f
 
