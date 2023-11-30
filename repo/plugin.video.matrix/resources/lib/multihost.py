@@ -45,7 +45,7 @@ class cMegamax:
     def __init__(self):
         self.id = ''
         self.list = []
-
+        
     def GetUrls(self, url):
         sHosterUrl = url.replace('download','iframe')
         oRequestHandler = cRequestHandler(sHosterUrl)
@@ -78,10 +78,11 @@ class cMegamax:
                 if sHosterUrl.startswith('//'):
                     sHosterUrl = 'https:' + sHosterUrl
         
-                    self.list.append(sHosterUrl)
+                    self.list.append(sHosterUrl+' ,'+sQual)
                     
-        return self.list        
-        
+                    
+                    
+        return self.list 
 
 class cJheberg:
     def __init__(self):

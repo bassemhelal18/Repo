@@ -438,15 +438,19 @@ def showServers(oInputParameterHandler = False):
                         url = url.replace('streamnoads.','streamnoads.com')
                     sHosterUrl = url 
                     if 'megamax' in sHosterUrl:
-                       aResult = cMegamax().GetUrls(sHosterUrl)
-                
-                       if (aResult):
-                          for sHosterUrl in aResult:
-                              oHoster = cHosterGui().checkHoster(sHosterUrl)
-                              if (oHoster):
-                                 oHoster.setDisplayName(sMovieTitle)
-                                 oHoster.setFileName(sMovieTitle)
-                                 cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
+                       sHtmlContent2 = cMegamax().GetUrls(sHosterUrl)
+                       sPattern = "(https.*?),(.*?p)"
+                       oParser = cParser()
+                       aResult = oParser.parse(sHtmlContent2, sPattern)
+                       if aResult[0]:
+                        for aEntry1 in aResult[1]:
+                            sHosterUrl = aEntry1[0].strip()
+                            sQual = '['+aEntry1[1]+']'
+                            oHoster = cHosterGui().checkHoster(sHosterUrl)
+                            if (oHoster):
+                                oHoster.setDisplayName(sMovieTitle+sQual)
+                                oHoster.setFileName(sMovieTitle)
+                                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
                     else:
                         oHoster = cHosterGui().checkHoster(sHosterUrl)
                         if oHoster:
