@@ -8,6 +8,7 @@ from resources.lib.handler.outputParameterHandler import cOutputParameterHandler
 from resources.lib.handler.requestHandler import cRequestHandler
 from resources.lib.comaddon import progress, VSlog, siteManager, addon
 from resources.lib.parser import cParser
+from resources.lib.multihost import cMegamax
 import re 
 
 ADDON = addon()
@@ -423,7 +424,7 @@ def showServers(oInputParameterHandler = False):
             s = requests.Session()			
             r = s.post(URL_MAIN+'/ajax/getPlayer',data = data)
             sHtmlContent1 = r.content.decode('utf8',errors='ignore')  
-            VSlog(sHtmlContent1)       
+                
     
             sPattern = "SRC='(.+?)'"
             oParser = cParser()
@@ -436,11 +437,22 @@ def showServers(oInputParameterHandler = False):
                     if 'streamnoads.' in url:
                         url = url.replace('streamnoads.','streamnoads.com')
                     sHosterUrl = url 
-                    oHoster = cHosterGui().checkHoster(sHosterUrl)
-                    if oHoster:
-                       oHoster.setDisplayName(sTitle)
-                       oHoster.setFileName(sTitle)
-                       cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+                    if 'megamax' in sHosterUrl:
+                       aResult = cMegamax().GetUrls(sHosterUrl)
+                
+                       if (aResult):
+                          for sHosterUrl in aResult:
+                              oHoster = cHosterGui().checkHoster(sHosterUrl)
+                              if (oHoster):
+                                 oHoster.setDisplayName(sMovieTitle)
+                                 oHoster.setFileName(sMovieTitle)
+                                 cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
+                    else:
+                        oHoster = cHosterGui().checkHoster(sHosterUrl)
+                        if oHoster:
+                           oHoster.setDisplayName(sTitle)
+                           oHoster.setFileName(sTitle)
+                           cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
     
     oParser = cParser()
     sPattern = '<a target="_blank" href="(.+?)" title='
@@ -453,6 +465,8 @@ def showServers(oInputParameterHandler = False):
             sTitle = sMovieTitle
             if url.startswith('//'):
                url = 'http:' + url
+            if 'megamax' in url:
+                continue
             if 'streamnoads.' in url:
                 url = url.replace('streamnoads.','streamnoads.com')
             sHosterUrl = url 

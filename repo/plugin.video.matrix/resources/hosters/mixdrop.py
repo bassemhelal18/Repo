@@ -17,7 +17,7 @@ class cHoster(iHoster):
 
     def setUrl(self, url):
         self._url = str(url)
-        self._url = self._url.replace("/f/","/e/").replace("mixdrop.co","mixdrop.to")
+        self._url = self._url.replace("/f/","/e/").replace("mixdrop.co","mixdrop.to").replace("mixdrop.ag","mixdrop.to")
 
     def _getMediaLinkForGuest(self, autoPlay = False):
         

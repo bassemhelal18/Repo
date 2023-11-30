@@ -47,7 +47,7 @@
         },
         "halacima": {
             "label": "Halacima",
-            "active": "False",
+            "active": "True",
             "url": "https://halacima.website/"
         },
         "egybest": {
