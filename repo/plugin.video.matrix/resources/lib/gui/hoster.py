@@ -236,7 +236,7 @@ class cHosterGui:
         # Gestion classique
         if ('vadshar' in sHostName) or ('vidshar' in sHostName) or ('vedshaar' in sHostName) or ('viidshar' in sHostName)\
             or  ('vedsharr' in sHostName) or ('vedshar' in sHostName) or ('vidshare' in sHostName) or ('vid1shar' in sHostName)\
-            or  ('2vid2cdnshar' in sHostName) or  ('v2d2shr' in sHostName):
+            or  ('2vid2cdnshar' in sHostName) or ('v2d2shr' in sHostName) or ('v1d1shr' in sHostName):
             return self.getHoster('vidshare')
         if ('streamtape' in sHostName) or ('streamnoads' in sHostName) or ('tapenoads' in sHostName):
             return self.getHoster('streamtape')
@@ -408,7 +408,7 @@ class cHosterGui:
             or ('viboom' in sHostName) or ('vid1bom' in sHostName) or ('viid2beem' in sHostName)or ('viid1boom' in sHostName)\
             or ('ved2om' in sHostName) or ('viidboom' in sHostName) or ('vid2bom' in sHostName) or ('vig1bm' in sHostName)\
             or ('v3db1oom' in sHostName) or ('vdp1em' in sHostName) or ('ved1om' in sHostName) or ('vvid1om' in sHostName)\
-            or ('vigom' in sHostName):
+            or ('vigom' in sHostName) or ('ve1dp3m' in sHostName):
             return self.getHoster('vidbom')
 				
         if ('mail.ru' in sHostName):
@@ -448,7 +448,7 @@ class cHosterGui:
         if ('upbaam' in sHostName) or ('upbam' in sHostName) or ('uppom' in sHostName) or ('uppboom' in sHostName) \
            or ('upgobom' in sHostName)or ('uupbom' in sHostName) or ('upptobom' in sHostName) or ('up2b9om' in sHostName)\
            or ('up1bom' in sHostName)or ('up3bom' in sHostName) or ('upbom' in sHostName) or ('up1bem' in sHostName)\
-           or ('u2pbemm' in sHostName) or ('up1beem' in sHostName) or ('u1pb3m' in sHostName):
+           or ('u2pbemm' in sHostName) or ('up1beem' in sHostName) or ('u1pb3m' in sHostName) or ('bmbm' in sHostName):
             return self.getHoster('uppom')
         
         if ('eeggyy' in sHosterUrl):
@@ -523,7 +523,8 @@ class cHosterGui:
             
         if ('goved' in sHostName) or ('govad' in sHostName) or ('govid.me' in sHostName)or ('goveed' in sHosterUrl)\
             or ('gov1ad' in sHostName) or ('go2ved' in sHostName) or ('go1ved' in sHostName) or ('go-veid' in sHostName)\
-            or ('g1ov3d' in sHostName)  or ('g1v3d' in sHostName) or ('g2vfd' in sHostName) or ('goo1vd' in sHostName):
+            or ('g1ov3d' in sHostName)  or ('g1v3d' in sHostName) or ('g2vfd' in sHostName) or ('goo1vd' in sHostName)\
+            or ('g2ev4d' in sHostName):
             return self.getHoster('govidme')
             
         if ('nowvid' in sHostName) or ('vegaasvid' in sHostName)or('govid' in sHostName) or ('drkvid' in sHosterUrl) \
