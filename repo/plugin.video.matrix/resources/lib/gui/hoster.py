@@ -218,7 +218,7 @@ class cHosterGui:
                     return self.getHoster("lien_direct")
 
                 
-        supported_player = ['hdup', 'streamable', 'stardima', 'filescdn', 'vidgot', 'videott', 'vidlo', 'sendit', 'thevid', 'vidmoly', 'fastplay', 'cloudy', 'hibridvod', 'arabveturk', 'extremenow', 'yourupload', 'vidspeeds', 'moshahda', 'voe', 'faselhd', 'streamz', 'streamax', 'gounlimited', 'xdrive', 'mixloads', 'vidoza',
+        supported_player = ['hdup', 'streamable', 'stardima', 'filescdn', 'vidgot', 'videott', 'vidlo', 'sendit', 'thevid', 'vidmoly', 'fastplay', 'cloudy', 'hibridvod', 'arabveturk', 'extremenow', 'yourupload', 'vidspeeds', 'moshahda', 'faselhd', 'streamz', 'streamax', 'gounlimited', 'xdrive', 'mixloads', 'vidoza',
                             'rutube', 'megawatch', 'vidzi', 'filetrip', 'speedvid', 'netu', 
                             'onevideo', 'playreplay', 'prostream', 'vidfast', 'uptostream', 'uqload', 'letwatch',
                             'filepup', 'vimple', 'wstream', 'watchvideo', 'vidwatch', 'up2stream', 'tune', 'playtube',
@@ -355,6 +355,9 @@ class cHosterGui:
         if ('hadara.ps' in sHostName):
             return self.getHoster('lien_direct')
         
+        if ('voe' in sHostName)or ('stevenimaginelittle' in sHostName):
+            return self.getHoster('voe')
+
         if ('vidtube' in sHostName)or ('vtbe' in sHostName):
             return self.getHoster('vidtube')
 
