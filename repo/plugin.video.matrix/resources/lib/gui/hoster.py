@@ -426,8 +426,8 @@ class cHosterGui:
         if ('clicknupload' in sHostName):
             return self.getHoster('resolver')
         
-        if ('vidguard' in sHostName) or ('vembed' in sHostName) or ('vgfplay' in sHostName)or ('vgembed' in sHostName)or ('vid-guard' in sHostName)\
-            or ('v6embed' in sHostName):
+        if ('vidguard' in sHostName) or ('vembed' in sHostName) or ('vgfplay' in sHostName)or ('vgembed' in sHostName)\
+        or ('vid-guard' in sHostName) or ('v6embed' in sHostName) or ('vgplayer' in sHostName):
             return self.getHoster('vidguard')
 
         if ('linkbox' in sHostName) or ('sharezweb' in sHostName):

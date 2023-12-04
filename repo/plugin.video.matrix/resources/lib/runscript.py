@@ -54,7 +54,7 @@ class cClear:
             return
 
         elif (env == 'changelog_old'):
-            sUrl = 'https://raw.githubusercontent.com/zombiB/zombi-addons/master/plugin.video.matrix/changelog.txt'
+            sUrl = 'https://raw.githubusercontent.com/bassemhelal18/Repo/master/repo/plugin.video.matrix/changelog.txt'
             try:
                 oRequest = urllib2.Request(sUrl)
                 oResponse = urllib2.urlopen(oRequest)
@@ -86,7 +86,7 @@ class cClear:
                     self.getControl(1).setLabel('ChangeLog')
                     self.button.setLabel('OK')
 
-                    sUrl = 'https://api.github.com/repos/zombiB/zombi-addons/commits'
+                    sUrl = 'https://api.github.com/repos/bassemhelal18/repo/commits'
                     oRequest = urllib2.Request(sUrl)
                     oResponse = urllib2.urlopen(oRequest)
 
@@ -253,7 +253,41 @@ class cClear:
                 self.DIALOG.VSinfo(self.ADDON.VSlang(30014))
 
             return
+        
+        elif (env == 'updatesites'):
+            if self.DIALOG.VSyesno(self.ADDON.VSlang(30456)):
+                import datetime, time
+                addons = addon()
+                time_now = datetime.datetime.now()
+                sUrl = 'https://raw.githubusercontent.com/bassemhelal18/Repo/master/repo/plugin.video.matrix/resources/sites.json'
+                oRequestHandler = cRequestHandler(sUrl)
+                properties = oRequestHandler.request(jsonDecode=True)
+                if properties == "":
+                    return
+                siteManager().setDefaultProps(properties)
 
+                addons.setSetting('setting_time', str(time_now))
+
+                self.DIALOG.VSinfo(self.ADDON.VSlang(30014))
+
+            return
+
+        # Updates Hosters
+        elif (env == 'updatehosters'):
+            addons = addon()
+            sUrl = 'https://raw.githubusercontent.com/bassemhelal18/Repo/master/repo/plugin.video.matrix/resources/lib/gui/hoster.py'
+            file_path = VSPath('special://home/addons/plugin.video.matrix/resources/lib/gui/hoster.py')
+            if self.DIALOG.VSyesno(self.ADDON.VSlang(30456)):
+                oRequestHandler = cRequestHandler(sUrl)
+                sHosts = oRequestHandler.request()
+                if sHosts == "":
+                    return
+                with open(file_path, 'w', encoding="utf-8") as f:
+                    f.write(sHosts)
+
+                self.DIALOG.VSinfo(self.ADDON.VSlang(70021))
+
+            return
         # aciver/désactiver les sources
         elif (env == 'search'):
 
