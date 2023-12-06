@@ -421,7 +421,13 @@ class cHosterGui:
             #mise a jour du nom
             f.setRealHost('[MAIL.RU]')
             return f
-				
+	    
+        if ('rubystream' in sHostName):
+            f = self.getHoster('resolver')
+            #mise a jour du nom
+            f.setRealHost('[RUBYSTREAM]')
+            return f
+
         if ('streamcherry' in sHostName):
             return self.getHoster('resolver')
 			
