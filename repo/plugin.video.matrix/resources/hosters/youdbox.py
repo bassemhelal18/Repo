@@ -10,7 +10,7 @@ import requests
 class cHoster(iHoster):
 
     def __init__(self):
-        iHoster.__init__(self, 'youdbox', 'youdbox')
+        iHoster.__init__(self, 'youdbox', '-[youdbox]')
         
     def __getIdFromUrl(self, sUrl):
         sPattern = "https://youdbox.org/(.+?)/"

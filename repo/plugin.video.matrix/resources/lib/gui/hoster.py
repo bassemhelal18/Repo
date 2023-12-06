@@ -427,7 +427,13 @@ class cHosterGui:
             #mise a jour du nom
             f.setRealHost('[RUBYSTREAM]')
             return f
-
+        
+        if ('pixeldrain' in sHostName):
+            f = self.getHoster('resolver')
+            #mise a jour du nom
+            f.setRealHost('[PIXELDRAIN]')
+            return f
+        
         if ('streamcherry' in sHostName):
             return self.getHoster('resolver')
 			
