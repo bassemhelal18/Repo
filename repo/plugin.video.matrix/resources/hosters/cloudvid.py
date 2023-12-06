@@ -14,7 +14,7 @@ from resources.lib.comaddon import VSlog
 class cHoster(iHoster):
 
     def __init__(self):
-        iHoster.__init__(self, 'cloudvid', 'Cloudvid')
+        iHoster.__init__(self, 'cloudvid', '-[Cloudvid]')
 
     def isDownloadable(self):
         return False
