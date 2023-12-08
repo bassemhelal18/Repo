@@ -356,7 +356,7 @@ class cHosterGui:
         if ('hadara.ps' in sHostName):
             return self.getHoster('lien_direct')
         
-        if ('voe' in sHostName)or ('stevenimaginelittle' in sHostName):
+        if ('voe' in sHostName)or ('stevenimaginelittle' in sHostName) or('stevenimaginelittle'in sHostName):
             return self.getHoster('voe')
 
         if ('vidtube' in sHostName)or ('vtbe' in sHostName):
@@ -422,7 +422,7 @@ class cHosterGui:
             f.setRealHost('[MAIL.RU]')
             return f
 	    
-        if ('rubystream' in sHostName):
+        if ('rubystream' in sHostName) or ('tuktukcimamulti' in sHostName):
             f = self.getHoster('resolver')
             #mise a jour du nom
             f.setRealHost('[RUBYSTREAM]')
@@ -479,7 +479,10 @@ class cHosterGui:
             return self.getHoster('filemoon')
         
         if ('lulustream' in sHostName):
-            return self.getHoster('lulustream')
+            f = self.getHoster('resolver')
+            #mise a jour du nom
+            f.setRealHost('[LULUSTREAM]')
+            return f
         
         if ('hexupload' in sHostName):
             return self.getHoster('hexupload')  
