@@ -479,16 +479,10 @@ class cHosterGui:
             return self.getHoster('filemoon')
         
         if ('lulustream' in sHostName):
-            f = self.getHoster('resolver')
-            #mise a jour du nom
-            f.setRealHost('[LuluStream]')
-            return f
+            return self.getHoster('lulustream')
         
         if ('hexupload' in sHostName):
-            f = self.getHoster('resolver')
-            #mise a jour du nom
-            f.setRealHost('[HexUpload]')
-            return f   
+            return self.getHoster('hexupload')  
         
         if ('veehd.' in sHostName):
             return self.getHoster('veehd')
@@ -572,10 +566,7 @@ class cHosterGui:
             return self.getHoster('moviztime')
 
         if ('mp4upload' in sHostName):
-            f = self.getHoster('resolver')
-            #mise a jour du nom
-            f.setRealHost('[Mp4Upload]')
-            return f
+            return self.getHoster('mp4upload')
             
         if ('fajer.video' in sHostName):
             return self.getHoster('fajer')
@@ -680,6 +671,9 @@ class cHosterGui:
 
         if ('upvid.' in sHostName):
             return self.getHoster('upvid')
+
+        if ('darkibox' in sHostName):
+            return self.getHoster('darkibox')
         
         if ('krakenfiles' in sHostName):
             return self.getHoster('krakenfiles')
@@ -728,7 +722,7 @@ class cHosterGui:
             or 'megaup.net' in sHostName  or 'openload' in sHostName or 'doodrive' in sHostName or 'fikper' in sHostName\
             or 'turbobit' in sHostName or 'rapidgator' in sHostName or 'katfile' in sHostName or 'mega4upload.com' in sHostName\
             or 'send.cm' in sHosterUrl or 'bowfile' in sHosterUrl or 'ddownload' in sHosterUrl\
-            or 'qiwi' in sHostName or 'darkibox' in sHostName):
+            or 'qiwi' in sHostName):
             return False
 
         
