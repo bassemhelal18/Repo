@@ -322,6 +322,9 @@ class cHosterGui:
         if ('liiivideo' in sHostName):
             return self.getHoster('qfilm')
         
+        if ('vidhide' in sHostName):
+            return self.getHoster('vidhide')
+
         if ('rumble' in sHostName):
             return self.getHoster('rumble')
 
