@@ -247,11 +247,7 @@ class cHosterGui:
             return self.getHoster('resolver')
         if ('sbbrisk' in sHostName):
             return self.getHoster('resolver')
-        if ('luluvdo' in sHostName):
-            f = self.getHoster('resolver')
-            #mise a jour du nom
-            f.setRealHost('[LULUVDO]')
-            return f
+        
         if ('streamhub' in sHostName):
             return self.getHoster('streamhub')
         if ('upstream' in sHostName):
@@ -359,7 +355,7 @@ class cHosterGui:
         if ('hadara.ps' in sHostName):
             return self.getHoster('lien_direct')
         
-        if ('voe' in sHostName)or ('stevenimaginelittle' in sHostName) or('stevenimaginelittle'in sHostName):
+        if ('voe' in sHostName)or ('stevenimaginelittle' in sHostName) or('availedsmallest'in sHostName):
             return self.getHoster('voe')
 
         if ('vidtube' in sHostName)or ('vtbe' in sHostName):
@@ -480,7 +476,7 @@ class cHosterGui:
         if ('filemoon' in sHostName):
             return self.getHoster('filemoon')
         
-        if ('lulustream' in sHostName):
+        if ('lulustream' in sHostName) or ('luluvdo' in sHostName):
             return self.getHoster('lulustream')
         
         if ('hexupload' in sHostName):
