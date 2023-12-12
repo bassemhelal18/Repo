@@ -234,11 +234,12 @@ class cHosterGui:
             return self.getHoster(val.replace('.', ''))
 
         # Gestion classique
-        if ('vadshar' in sHostName) or ('vidshar' in sHostName) or ('vedshaar' in sHostName) or ('viidshar' in sHostName)\
-            or  ('vedsharr' in sHostName) or ('vedshar' in sHostName) or ('vidshare' in sHostName) or ('vid1shar' in sHostName)\
-            or  ('2vid2cdnshar' in sHostName) or ('v2d2shr' in sHostName) or ('v1d1shr' in sHostName) or ('v3dsh1r' in sHostName)\
-            or ('vds3r' in sHostName) or ('v3dshr' in sHostName) or ('vndsh1r' in sHostName) or ('segavid' in sHostName):
-            return self.getHoster('vidshare')
+        val = next((x for x in ['vadshar', 'vidshar', 'vedshaar', 'viidshar', 'vedshaar', 'vedsharr', 'vedshar', 'vidshare',
+                                'vid1shar', '2vid2cdnshar', 'v2d2shr', 'v1d1shr', "v3dsh1r", 'vds3r', 'v3dshr', 'vndsh1r',
+                                'segavid' , 'vd12s3r'] if x in sHostName), None)
+        if val:
+            return self.getHoster("vidshare")
+        
         if ('streamtape' in sHostName) or ('streamnoads' in sHostName) or ('tapenoads' in sHostName):
             return self.getHoster('streamtape')
         if ('mixdrop' in sHostName)or ('mdy48tn97' in sHostName)or ('mixdroop'in sHostName):
@@ -406,14 +407,12 @@ class cHosterGui:
         if ('kingfoot' in sHostName):
             return self.getHoster('lien_direct')
             
-        if ('vidbm' in sHostName) or ('vadbam' in sHostName) or ('vedbom' in sHostName) or ('vadbom' in sHostName) or ('vidbam' in sHostName)\
-            or ('viidshar' in sHostName) or ('allviid' in sHostName) or ('vidspeed' in sHostName)or ('vedbam' in sHostName) \
-            or ('viboom' in sHostName) or ('vid1bom' in sHostName) or ('viid2beem' in sHostName)or ('viid1boom' in sHostName)\
-            or ('ved2om' in sHostName) or ('viidboom' in sHostName) or ('vid2bom' in sHostName) or ('vig1bm' in sHostName)\
-            or ('v3db1oom' in sHostName) or ('vdp1em' in sHostName) or ('ved1om' in sHostName) or ('vvid1om' in sHostName)\
-            or ('vigom' in sHostName) or ('ve1dp3m' in sHostName) or ('vuidbeaam' in sHostName) or ('v2ddb3m' in sHostName)\
-            or ('2vbiim' in sHostName) or ('vdb123m' in sHostName) or ('vd123bm' in sHostName) or ('v3dbeam' in sHostName)\
-            or ('v3dbtom' in sHostName) or ('v7d20bm' in sHostName):
+        val = next((x for x in ['vidbm' ,'vadbam', 'vedbom', 'vadbom', 'vidbam', 'viidshar','allviid', 'vidspeed',
+                                'vedbam', 'viboom', 'vid1bom', 'viid2beem', 'viid1boom', 'ved2om' ,'viidboom',
+                                'vid2bom', 'vig1bm', 'v3db1oom', 'vdp1em', 'ved1om', 'vvid1om', 'vigom',
+                                've1dp3m', 'vuidbeaam', 'v2ddb3m', '2vbiim', 'vdb123m', 'vd123bm', 'v3dbeam',
+                                'v3dbtom', 'v7d20bm', 'vdtom'] if x in sHostName), None)
+        if val:
             return self.getHoster('vidbom')
 				
         if ('mail.ru' in sHostName):
@@ -459,12 +458,11 @@ class cHosterGui:
         if ('workupload' in sHostName):
             return self.getHoster('workupload')
 
-        if ('upbaam' in sHostName) or ('upbam' in sHostName) or ('uppom' in sHostName) or ('uppboom' in sHostName) \
-           or ('upgobom' in sHostName)or ('uupbom' in sHostName) or ('upptobom' in sHostName) or ('up2b9om' in sHostName)\
-           or ('up1bom' in sHostName)or ('up3bom' in sHostName) or ('upbom' in sHostName) or ('up1bem' in sHostName)\
-           or ('u2pbemm' in sHostName) or ('up1beem' in sHostName) or ('u1pb3m' in sHostName) or ('bmbm' in sHostName)\
-           or ('4bmto' in sHostName) or ('2bm.shop' in sHostName) or ('4bem2022' in sHostName) or ('t0bm4' in sHostName)\
-           or ('bm025' in sHostName):
+        val = next((x for x in ['upbaam', 'upbam', 'uppom', 'uppboom', 'upgobom', 'uupbom', 'upptobom',
+                                'up2b9om', 'up1bom', 'up3bom', 'upbom', 'up1bem', 'u2pbemm', 'up1beem',
+                                'u1pb3m', 'bmbm', '4bmto', '2bm.shop', '4bem2022', 't0bm4','bm025',
+                                'bm2024'] if x in sHostName), None)
+        if val:
             return self.getHoster('uppom')
         
         if ('eeggyy' in sHosterUrl):
@@ -531,12 +529,11 @@ class cHosterGui:
         if ('fajer.live' in sHostName):
             return self.getHoster('fajerlive')
             
-        if ('goved' in sHostName) or ('govad' in sHostName) or ('govid.me' in sHostName)or ('goveed' in sHosterUrl)\
-            or ('gov1ad' in sHostName) or ('go2ved' in sHostName) or ('go1ved' in sHostName) or ('go-veid' in sHostName)\
-            or ('g1ov3d' in sHostName)  or ('g1v3d' in sHostName) or ('g2vfd' in sHostName) or ('goo1vd' in sHostName)\
-            or ('g2ev4d' in sHostName) or ('ge1verd' in sHostName) or ('g1oov1d' in sHostName) or ('ga1ov3d' in sHostName)\
-            or ('1gafv3d' in sHostName)or ('go12d' in sHostName) or ('go1v2d' in sHostName) or ('gonvd1' in sHostName)\
-            or ('gaonv3d' in sHostName):
+        val = next((x for x in ['goved', 'govad', 'govid.me', 'goveed', 'gov1ad', 'go2ved', 'go1ved', 
+                                'go-veid', 'g1ov3d', 'g1v3d' ,'g2vfd', 'goo1vd', 'g2ev4d', 'ge1verd', 
+                                'g1oov1d', 'ga1ov3d' , '1gafv3d', 'go12d', 'go1v2d', 'gonvd1','gaonv3d',
+                                'gonv20d'] if x in sHostName), None)
+        if val:
             return self.getHoster('govidme')
             
         if ('nowvid' in sHostName) or ('vegaasvid' in sHostName)or('govid' in sHostName) or ('drkvid' in sHosterUrl) \
