@@ -587,7 +587,7 @@ class cGuiElement:
         if 'backdrop_path' in meta:
             url = meta.pop('backdrop_path')
             if url:
-                self.addItemProperties('fanart_image', url)
+                self.addItemProperties('fanart_image', '')
                 self.__sFanart = url
             else:
                 self.addItemProperties('fanart_image', '')
