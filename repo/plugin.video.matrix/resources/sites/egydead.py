@@ -577,12 +577,37 @@ def showEps():
         if isMatrix(): 
          sHtmlContent = sHtmlContent.decode('utf8',errors='ignore')
     
+         sPattern = '<meta property="og:title" content="(.*?)">.*?<meta property="og:url" content="(.*?)" />'
+         oParser = cParser()
+         aResult = oParser.parse(sHtmlContent, sPattern)
+         
+   
+         if aResult[0]:
+             oOutputParameterHandler = cOutputParameterHandler()    
+             for aEntry in aResult[1]:
+                 
+                 
+                 sTitle = aEntry[0].split('الحلقة')[-1].replace('مترجمة','')
+                 sTitle = sMovieTitle +' E'+sTitle
+                 siteUrl = aEntry[1]+'?View=1'
+                 sThumb = ''
+                 sDesc = ''
+                 sYear = ''
+                 
+                 sTitle = sTitle.strip()
+                 
+                 oOutputParameterHandler.addParameter('siteUrl', siteUrl)
+                 oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
+                 oOutputParameterHandler.addParameter('sThumb', sThumb)
+                 oOutputParameterHandler.addParameter('sLang',sLang)
+                 
+                 oGui.addEpisode(SITE_IDENTIFIER, 'showHosters2', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
          oParser = cParser()
          sPattern = '<a href="([^<]+)" title="([^<]+)">([^<]+)</a>'
     
          oParser = cParser()
          aResult = oParser.parse(sHtmlContent, sPattern)
-    
+         
    
          if aResult[0]:
              oOutputParameterHandler = cOutputParameterHandler()    
@@ -609,7 +634,8 @@ def showEps():
                  oOutputParameterHandler.addParameter('sLang',sLang)
                  
                  oGui.addEpisode(SITE_IDENTIFIER, 'showHosters2', sTitle, '', sThumb, sDesc, oOutputParameterHandler) 
-       
+        
+         
     oGui.setEndOfDirectory()  
  
 def showHosters2(oInputParameterHandler = False):
