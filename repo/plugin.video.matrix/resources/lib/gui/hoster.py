@@ -236,7 +236,7 @@ class cHosterGui:
         # Gestion classique
         val = next((x for x in ['vadshar', 'vidshar', 'vedshaar', 'viidshar', 'vedshaar', 'vedsharr', 'vedshar', 'vidshare',
                                 'vid1shar', '2vid2cdnshar', 'v2d2shr', 'v1d1shr', "v3dsh1r", 'vds3r', 'v3dshr', 'vndsh1r',
-                                'segavid' , 'vd12s3r'] if x in sHostName), None)
+                                'segavid' , 'vd12s3r', 'v31dshr'] if x in sHostName), None)
         if val:
             return self.getHoster("vidshare")
         
@@ -411,7 +411,7 @@ class cHosterGui:
                                 'vedbam', 'viboom', 'vid1bom', 'viid2beem', 'viid1boom', 'ved2om' ,'viidboom',
                                 'vid2bom', 'vig1bm', 'v3db1oom', 'vdp1em', 'ved1om', 'vvid1om', 'vigom',
                                 've1dp3m', 'vuidbeaam', 'v2ddb3m', '2vbiim', 'vdb123m', 'vd123bm', 'v3dbeam',
-                                'v3dbtom', 'v7d20bm', 'vdtom'] if x in sHostName), None)
+                                'v3dbtom', 'v7d20bm', 'vdtom', 'vendm'] if x in sHostName), None)
         if val:
             return self.getHoster('vidbom')
 				
@@ -532,7 +532,7 @@ class cHosterGui:
         val = next((x for x in ['goved', 'govad', 'govid.me', 'goveed', 'gov1ad', 'go2ved', 'go1ved', 
                                 'go-veid', 'g1ov3d', 'g1v3d' ,'g2vfd', 'goo1vd', 'g2ev4d', 'ge1verd', 
                                 'g1oov1d', 'ga1ov3d' , '1gafv3d', 'go12d', 'go1v2d', 'gonvd1','gaonv3d',
-                                'gonv20d'] if x in sHostName), None)
+                                'gonv20d', 'goevd'] if x in sHostName), None)
         if val:
             return self.getHoster('govidme')
             
