@@ -63,7 +63,7 @@
         "mycima": {
             "label": "Mycima",
             "active": "True",
-            "url": "https://wecima.dev/"
+            "url": "https://cdn1.we2cemaa.shop/"
         },
         "shahidu": {
             "label": "Shahid4u",
@@ -89,7 +89,7 @@
         "tuktukcinema": {
             "label": "Tuktukcinema",
             "active": "True",
-            "url": "https://ww.tuktukcinema.co/"
+            "url": "https://ww.tuktukcima.com/"
         }
     }
 }
