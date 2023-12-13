@@ -353,7 +353,7 @@ class cHosterGui:
         if ('voodc' in sHostName):
             return self.getHoster('voodc')
         
-        if ('vidsrc' in sHostName):
+        if ('vidsrc.to' in sHostName) or ('vidsrc.net' in sHostName):
             return self.getHoster('vidsrc')
 
         if ('hadara.ps' in sHostName):
