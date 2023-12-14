@@ -9,6 +9,7 @@ from resources.lib.handler.inputParameterHandler import cInputParameterHandler
 from resources.lib.handler.outputParameterHandler import cOutputParameterHandler
 from resources.lib.handler.requestHandler import cRequestHandler
 from resources.lib.comaddon import progress, VSlog, siteManager, addon
+from resources.lib.multihost import cVidsrcnet, cVidsrcto
 from resources.lib.parser import cParser
 from bs4 import BeautifulSoup
 import requests
@@ -626,19 +627,32 @@ def showLinks(oInputParameterHandler = False):
                        url = 'http:' + url
             
                     sHosterUrl = url 
-                    if 'userload' in sHosterUrl:
-                        sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
-                    if 'moshahda' in sHosterUrl:
-                        sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
-                    if 'streamtape' in sHosterUrl:
-                        sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN  
-                    if 'mystream' in sHosterUrl:
-                        sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN                           
-                    oHoster = cHosterGui().checkHoster(sHosterUrl)
-                    if oHoster:
-                       oHoster.setDisplayName(sTitle)
-                       oHoster.setFileName(sMovieTitle)
-                       cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+                    if 'vidsrc.to' in aEntry:
+                       aResult = cVidsrcto().GetUrls(aEntry)
+                       if (aResult):
+                         for aEntry in aResult:
+                             sHosterUrl = aEntry
+                             oHoster = cHosterGui().checkHoster(sHosterUrl)
+                             if (oHoster):
+                                oHoster.setDisplayName(sMovieTitle)
+                                oHoster.setFileName(sMovieTitle)
+                                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+                    if 'vidsrc.net' in aEntry:
+                       aResult = cVidsrcnet().GetUrls(aEntry)
+                       if (aResult):
+                         for aEntry in aResult:
+                             sHosterUrl = aEntry
+                             oHoster = cHosterGui().checkHoster(sHosterUrl)
+                             if (oHoster):
+                                oHoster.setDisplayName(sMovieTitle)
+                                oHoster.setFileName(sMovieTitle)
+                                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+                    else:      
+                       oHoster = cHosterGui().checkHoster(aEntry)
+                       if (oHoster):
+                           oHoster.setDisplayName(sMovieTitle)
+                           oHoster.setFileName(sMovieTitle)
+                           cHosterGui().showHoster(oGui, oHoster, aEntry, sThumb, oInputParameterHandler=oInputParameterHandler)
     # (.+?) ([^<]+)
 
     sPattern = 'href="([^<]+)" target="_blank" class="download_link">'

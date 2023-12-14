@@ -353,8 +353,6 @@ class cHosterGui:
         if ('voodc' in sHostName):
             return self.getHoster('voodc')
         
-        if ('vidsrc.to' in sHostName) or ('vidsrc.net' in sHostName):
-            return self.getHoster('vidsrc')
 
         if ('hadara.ps' in sHostName):
             return self.getHoster('lien_direct')
@@ -721,7 +719,7 @@ class cHosterGui:
             or 'megaup.net' in sHostName  or 'openload' in sHostName or 'doodrive' in sHostName or 'fikper' in sHostName\
             or 'turbobit' in sHostName or 'rapidgator' in sHostName or 'katfile' in sHostName or 'mega4upload.com' in sHostName\
             or 'send.cm' in sHosterUrl or 'bowfile' in sHosterUrl or 'ddownload' in sHosterUrl\
-            or 'qiwi' in sHostName):
+            or 'qiwi' in sHostName or 'autoembed' in sHostName):
             return False
 
         
