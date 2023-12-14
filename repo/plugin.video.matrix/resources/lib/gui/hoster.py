@@ -535,7 +535,7 @@ class cHosterGui:
         val = next((x for x in ['goved', 'govad', 'govid.me', 'goveed', 'gov1ad', 'go2ved', 'go1ved', 
                                 'go-veid', 'g1ov3d', 'g1v3d' ,'g2vfd', 'goo1vd', 'g2ev4d', 'ge1verd', 
                                 'g1oov1d', 'ga1ov3d' , '1gafv3d', 'go12d', 'go1v2d', 'gonvd1','gaonv3d',
-                                'gonv20d', 'goevd', 'goandvd'] if x in sHostName), None)
+                                'gonv20d', 'goevd', 'goanvd'] if x in sHostName), None)
         if val:
             return self.getHoster('govidme')
             
