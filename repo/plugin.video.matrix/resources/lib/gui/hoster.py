@@ -218,7 +218,7 @@ class cHosterGui:
                     return self.getHoster("lien_direct")
 
                 
-        supported_player = ['hdup', 'streamable', 'stardima', 'filescdn', 'vidgot', 'videott', 'vidlo', 'sendit', 'thevid', 'vidmoly', 'fastplay', 'cloudy', 'hibridvod', 'arabveturk', 'extremenow', 'yourupload', 'vidspeeds', 'moshahda', 'faselhd', 'streamz', 'streamax', 'gounlimited', 'xdrive', 'mixloads', 'vidoza',
+        supported_player = ['hdup', 'streamable', 'stardima', 'filescdn', 'vidgot', 'videott', 'sendit', 'thevid', 'vidmoly', 'fastplay', 'cloudy', 'hibridvod', 'arabveturk', 'extremenow', 'yourupload', 'vidspeeds', 'moshahda', 'faselhd', 'streamz', 'streamax', 'gounlimited', 'xdrive', 'mixloads', 'vidoza',
                             'rutube', 'megawatch', 'vidzi', 'filetrip', 'speedvid', 'netu', 
                             'onevideo', 'playreplay', 'prostream', 'vidfast', 'uptostream', 'uqload', 'letwatch',
                             'filepup', 'vimple', 'wstream', 'watchvideo', 'vidwatch', 'up2stream', 'tune', 'playtube',
@@ -239,6 +239,9 @@ class cHosterGui:
                                 'segavid' , 'vd12s3r', 'v31dshr', 'vds1r'] if x in sHostName), None)
         if val:
             return self.getHoster("vidshare")
+        
+        if ('vidlo' in sHostName) or ('c13-look' in sHostName):
+            return self.getHoster('vidlo')
         
         if ('streamtape' in sHostName) or ('streamnoads' in sHostName) or ('tapenoads' in sHostName):
             return self.getHoster('streamtape')
@@ -412,7 +415,7 @@ class cHosterGui:
                                 'vedbam', 'viboom', 'vid1bom', 'viid2beem', 'viid1boom', 'ved2om' ,'viidboom',
                                 'vid2bom', 'vig1bm', 'v3db1oom', 'vdp1em', 'ved1om', 'vvid1om', 'vigom',
                                 've1dp3m', 'vuidbeaam', 'v2ddb3m', '2vbiim', 'vdb123m', 'vd123bm', 'v3dbeam',
-                                'v3dbtom', 'v7d20bm', 'vdtom', 'vendm', 'vandbm'] if x in sHostName), None)
+                                'v3dbtom', 'v7d20bm', 'vdtom', 'vendm', 'vandbm', 'vand1bm'] if x in sHostName), None)
         if val:
             return self.getHoster('vidbom')
 				
@@ -462,7 +465,7 @@ class cHosterGui:
         val = next((x for x in ['upbaam', 'upbam', 'uppom', 'uppboom', 'upgobom', 'uupbom', 'upptobom',
                                 'up2b9om', 'up1bom', 'up3bom', 'upbom', 'up1bem', 'u2pbemm', 'up1beem',
                                 'u1pb3m', 'bmbm', '4bmto', '2bm.shop', '4bem2022', 't0bm4','bm025',
-                                'bm2024', 'u1p15'] if x in sHostName), None)
+                                'bm2024', 'u1p15', 'up15.shop'] if x in sHostName), None)
         if val:
             return self.getHoster('uppom')
         
@@ -533,7 +536,7 @@ class cHosterGui:
         val = next((x for x in ['goved', 'govad', 'govid.me', 'goveed', 'gov1ad', 'go2ved', 'go1ved', 
                                 'go-veid', 'g1ov3d', 'g1v3d' ,'g2vfd', 'goo1vd', 'g2ev4d', 'ge1verd', 
                                 'g1oov1d', 'ga1ov3d' , '1gafv3d', 'go12d', 'go1v2d', 'gonvd1','gaonv3d',
-                                'gonv20d', 'goevd', 'goanvd'] if x in sHostName), None)
+                                'gonv20d', 'goevd', 'goanvd', 'goanv1d'] if x in sHostName), None)
         if val:
             return self.getHoster('govidme')
             
