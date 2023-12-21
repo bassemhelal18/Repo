@@ -8,6 +8,7 @@ from resources.lib.handler.inputParameterHandler import cInputParameterHandler
 from resources.lib.handler.outputParameterHandler import cOutputParameterHandler
 from resources.lib.comaddon import dialog, addon, VSlog
 import resolveurl
+
 ADDON = addon()
 icons = ADDON.getSetting('defaultIcons')
 
@@ -506,6 +507,21 @@ class cHosterGui:
         if (('cloudvideo' in sHostName) or ('streamcloud' in sHostName) or ('userscloud' in sHostName)):
             return self.getHoster('cloudvid')
             
+        if ('mcloud' in sHosterUrl) or ('vizcloud' in sHosterUrl) or ('vidstream' in sHosterUrl) or ('vidplay' in sHosterUrl):
+            return self.getHoster('vidplay')
+
+        if ('vidsrc.stream' in sHostName):
+            return self.getHoster('vidsrcstream')
+
+        if ('multiembed' in sHostName):
+            return self.getHoster('multiembed')
+
+        if ('2embed.me' in sHostName):
+            return self.getHoster('2embedme')
+
+        if ('remotestre.am' in sHostName):
+            return self.getHoster('remotestream')
+        
         if ('myviid' in sHostName) or ('myvid' in sHostName):
             return self.getHoster('myvid')
        
@@ -726,7 +742,7 @@ class cHosterGui:
             or 'megaup.net' in sHostName  or 'openload' in sHostName or 'doodrive' in sHostName or 'fikper' in sHostName\
             or 'turbobit' in sHostName or 'rapidgator' in sHostName or 'katfile' in sHostName or 'mega4upload.com' in sHostName\
             or 'send.cm' in sHosterUrl or 'bowfile' in sHosterUrl or 'ddownload' in sHosterUrl\
-            or 'qiwi' in sHostName or 'autoembed' in sHostName):
+            or 'qiwi' in sHostName):
             return False
 
         

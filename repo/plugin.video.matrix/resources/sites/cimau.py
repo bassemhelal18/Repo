@@ -2,7 +2,8 @@
 # zombi https://github.com/zombiB/zombi-addons/
 
 import re
-	
+import base64
+from requests.compat import urlparse	
 from resources.lib.gui.hoster import cHosterGui
 from resources.lib.gui.gui import cGui
 from resources.lib.handler.inputParameterHandler import cInputParameterHandler
@@ -620,6 +621,7 @@ def showLinks(oInputParameterHandler = False):
 
 	
             if aResult[0]:
+                oOutputParameterHandler = cOutputParameterHandler()
                 for aEntry in aResult[1]:
                     sTitle = sMovieTitle
                     url = aEntry
@@ -637,7 +639,7 @@ def showLinks(oInputParameterHandler = False):
                                 oHoster.setDisplayName(sMovieTitle)
                                 oHoster.setFileName(sMovieTitle)
                                 cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
-                    if 'vidsrc.net' in aEntry:
+                    if 'vidnow' in aEntry or 'vidsrc.net' in aEntry:
                        aResult = cVidsrcnet().GetUrls(aEntry)
                        if (aResult):
                          for aEntry in aResult:
@@ -647,6 +649,20 @@ def showLinks(oInputParameterHandler = False):
                                 oHoster.setDisplayName(sMovieTitle)
                                 oHoster.setFileName(sMovieTitle)
                                 cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+                    if "autoembed.to" in sHosterUrl:
+                        aembed = requests.get(sHosterUrl, headers={"Referer": sHosterUrl})
+                        aembed_list = re.findall(r'data-server="(.*?)"', aembed.text)
+                        for aEntry in aembed_list:
+                            aembed_list_decode = base64.b64decode(aEntry).decode('utf8',errors='ignore')
+                            if '2embed.me' in aembed_list_decode  or 'remotestre.am' in aembed_list_decode:
+                                sHosterUrl = aembed_list_decode
+
+                                sDisplayTitle = sMovieTitle
+                                oHoster = cHosterGui().checkHoster(sHosterUrl)
+                                if oHoster != False:
+                                   oHoster.setDisplayName(sDisplayTitle)
+                                   oHoster.setFileName(sMovieTitle)
+                                   cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
                     else:      
                        oHoster = cHosterGui().checkHoster(aEntry)
                        if (oHoster):

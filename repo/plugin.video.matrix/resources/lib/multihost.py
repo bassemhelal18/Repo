@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 # vStream https://github.com/Kodi-vStream/venom-xbmc-addons
 
-import requests
-from resources.lib.comaddon import VSlog
-from resources.lib.handler.requestHandler import cRequestHandler
-import re
-import base64
-from urllib.parse import unquote
 from resources.lib.parser import cParser
-from bs4 import BeautifulSoup
+from resources.lib.handler.requestHandler import cRequestHandler
+from resources.lib.comaddon import VSlog
+
+import re
+import requests, base64
+from urllib.parse import unquote
 UA = 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:56.0) Gecko/20100101 Firefox/56.0'
 
 
@@ -153,38 +152,30 @@ class cVidsrcto:
     def GetUrls(self, url):
         oParser = cParser()
         
-        
         oRequest = cRequestHandler(url)
         sHtmlContent = oRequest.request()
         
-        
-
         sPattern = 'data-id="(.*?)"'
         aResult = oParser.parse(sHtmlContent, sPattern) 
         if (aResult[0]):
           sources_code = aResult[1][0]
           sources = self.get_sources(sources_code)
+
           sPattern = "'.*?': '(.*?)'"
           aResult = oParser.parse(sources, sPattern)
           if aResult[0]:
             for aEntry in aResult[1]:
                 source = aEntry
                 source_url = self.get_source_url(source)
-                if "vidplay" in source_url:
-                   sHosterUrl =self.handle_vidplay(source_url)
-                   self.list.append(sHosterUrl)
-                elif "filemoon" in source_url:
-                   sHosterUrl = self.handle_filemoon(source_url)
-                   self.list.append(sHosterUrl)
+                self.list.append(source_url)
         return self.list 
-        
-    
+
     def get_sources(self, data_id) -> dict:
         req = requests.get(f"https://vidsrc.to/ajax/embed/episode/{data_id}/sources")
         data = req.json()
 
-        return {video.get("title"): video.get("id") for video in data.get("result")}      
-    
+        return {video.get("title"): video.get("id") for video in data.get("result")}    
+
     def get_source_url(self, source_id) -> str:
         req = requests.get(f"https://vidsrc.to/ajax/embed/source/{source_id}")
         data = req.json()
@@ -227,106 +218,6 @@ class cVidsrcto:
 
         return decoded
 
-    def handle_vidplay(self, url) -> str:
-        key = self.encode_id(url.split('/e/')[1].split('?')[0])
-        data = self.get_futoken(key, url)
-
-        req = requests.get(f"https://vidplay.site/mediainfo/{data}?{url.split('?')[1]}&autostart=true", headers={"Referer": url})
-        req_data = req.json()
-
-        if type(req_data.get("result")) == dict:
-            return req_data.get("result").get("sources", [{}])[0].get("file")
-        return None
-
-    def handle_filemoon(self, url) -> str:
-        req = requests.get(url)
-        matches = re.search(r'return p}\((.+)\)', req.text)
-        processed_matches = []
-
-        if not matches:
-            raise Exception("No values found")
-        
-        split_matches = matches.group(1).split(",")
-        corrected_split_matches = [",".join(split_matches[:-3])] + split_matches[-3:]
-        
-        for val in corrected_split_matches:
-            val = val.strip()
-            val = val.replace(".split('|'))", "")
-            if val.isdigit() or (val[0] == "-" and val[1:].isdigit()):
-                processed_matches.append(int(val))
-            elif val[0] == "'" and val[-1] == "'":
-                processed_matches.append(val[1:-1])
-
-        processed_matches[-1] = processed_matches[-1].split("|")
-        unpacked = self.unpack(*processed_matches)
-        hls_url = re.search(r'file:"([^"]*)"', unpacked).group(1)
-        return hls_url
-    
-    def encode_id(self, v_id) -> str:
-        key1, key2 = requests.get('https://raw.githubusercontent.com/Claudemirovsky/worstsource-keys/keys/keys.json').json() 
-        decoded_id = self.key_permutation(key1, v_id).encode('Latin_1')
-        encoded_result = self.key_permutation(key2, decoded_id).encode('Latin_1')
-        encoded_base64 = base64.b64encode(encoded_result)
-
-        return encoded_base64.decode('utf-8').replace('/', '_')
-    
-    def get_futoken(self, key, url) -> str:
-        req = requests.get("https://vidplay.site/futoken", {"Referer": url})
-        fu_key = re.search(r"var\s+k\s*=\s*'([^']+)'", req.text).group(1)
-        
-        return f"{fu_key},{','.join([str(ord(fu_key[i % len(fu_key)]) + ord(key[i])) for i in range(len(key))])}"
-    
-    def int_2_base(self, x, base) -> str:
-        charset = list("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/")
-
-        if x < 0:
-            sign = -1
-        elif x == 0:
-            return 0
-        else:
-            sign = 1
-
-        x *= sign
-        digits = []
-
-        while x:
-            digits.append(charset[int(x % base)])
-            x = int(x / base)
-        
-        if sign < 0:
-            digits.append('-')
-        digits.reverse()
-
-        return ''.join(digits)
-    
-    def unpack(self, p, a, c, k, e=None, d=None) -> str:
-        for i in range(c-1, -1, -1):
-            if k[i]: p = re.sub("\\b"+self.int_2_base(i,a)+"\\b", k[i], p)
-        return p
-    
-    def key_permutation(self, key, data) -> str:
-        state = list(range(256))
-        index_1 = 0
-
-        for i in range(256):
-            index_1 = ((index_1 + state[i]) + ord(key[i % len(key)])) % 256
-            state[i], state[index_1] = state[index_1], state[i]
-
-        index_1 = index_2 = 0
-        final_key = ''
-
-        for char in range(len(data)):
-            index_1 = (index_1 + 1) % 256
-            index_2 = (index_2 + state[index_1]) % 256
-            state[index_1], state[index_2] = state[index_2], state[index_1]
-
-            if isinstance(data[char], str):
-                final_key += chr(ord(data[char]) ^ state[(state[index_1] + state[index_2]) % 256])
-            elif isinstance(data[char], int):
-                final_key += chr((data[char]) ^ state[(state[index_1] + state[index_2]) % 256])
-
-        return final_key
-
 class cVidsrcnet:
     def __init__(self):
         self.id = ''
@@ -335,19 +226,17 @@ class cVidsrcnet:
     def GetUrls(self, url):
         oParser = cParser()
         req = requests.get(url)
-        soup = BeautifulSoup(req.text, "html.parser")
-        sources = {attr.text: attr.get("data-hash") for attr in soup.find_all("div", {"class": "server"})}
-        
-        sPattern = "'.*?': '(.*?)'"
+        sources = re.findall(r'<div class="server" data-hash="(.*?)">(.+?)</div>', req.text)
+
+        sPattern = "'(.*?)', '.*?'"
         aResult = oParser.parse(sources, sPattern)
         if aResult[0]:
             for aEntry in aResult[1]:
                 source = aEntry
                 req_1 = requests.get(f"https://rcp.vidsrc.me/rcp/{source}", headers={"Referer": url})
-                soup = BeautifulSoup(req_1.text, "html.parser")
 
-                encoded = soup.find("div", {"id": "hidden"}).get("data-h")
-                seed = soup.find("body").get("data-i")
+                encoded = re.search(r'data-h="(.*?)"', req_1.text).group(1)
+                seed = re.search(r'<body data-i="(.*?)">', req_1.text).group(1)
 
                 decoded_url = self.decode_src(encoded, seed)
                 if decoded_url.startswith("//"):
@@ -355,57 +244,19 @@ class cVidsrcnet:
 
                 req_2 = requests.get(decoded_url, allow_redirects=False, headers={"Referer": f"https://rcp.vidsrc.me/rcp/{source}"})
                 location = req_2.headers.get("Location")
-                VSlog(location)
         
                 if "vidsrc.stream" in location:
-                  sHosterUrl= self.handle_vidsrc_stream(location, f"https://rcp.vidsrc.me/rcp/{source}")
-                  self.list.append(sHosterUrl)
+                  location= location + f"?Referer=https://rcp.vidsrc.me/rcp/{source}"
+                  self.list.append(location)
                 if "2embed.cc" in location:
-                  sHosterUrl = ''
-                  self.list.append(sHosterUrl)
+                  location = ''
+                  self.list.append(location)
                 if "multiembed.mov" in location:
-                   sHosterUrl = self.handle_multiembed(location, f"https://rcp.vidsrc.me/rcp/{source}")
-                   self.list.append(sHosterUrl)
-        return self.list     
-    
-    def hunter_def(self, d, e, f) -> int:
-        '''Used by self.hunter'''
-        g = list("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/")
-        h = g[0:e]
-        i = g[0:f]
-        d = list(d)[::-1]
-        j = 0
-        for c,b in enumerate(d):
-            if b in h:
-                j = j + h.index(b)*e**c
-    
-        k = ""
-        while j > 0:
-            k = i[j%f] + k
-            j = (j - (j%f))//f
-    
-        return int(k) or 0
-    
-    def hunter(self, h, u, n, t, e, r) -> str:
-        '''Decodes the common h,u,n,t,e,r packer'''
-        r = ""
-        i = 0
-        while i < len(h):
-            j = 0
-            s = ""
-            while h[i] is not n[e]:
-                s = ''.join([s,h[i]])
-                i = i + 1
-    
-            while j < len(n):
-                s = s.replace(n[j],str(j))
-                j = j + 1
-    
-            r = ''.join([r,''.join(map(chr, [self.hunter_def(s,e,10) - t]))])
-            i = i + 1
-    
-        return r
+                  location= location + f"?Referer=https://rcp.vidsrc.me/rcp/{source}"
+                  self.list.append(location)
 
+        return self.list
+       
     def decode_src(self, encoded, seed) -> str:
         '''decodes hash found @ vidsrc.me embed page'''
         encoded_buffer = bytes.fromhex(encoded)
@@ -414,53 +265,3 @@ class cVidsrcnet:
             decoded += chr(encoded_buffer[i] ^ ord(seed[i % len(seed)]))
         return decoded
     
-    def decode_base64_url_safe(self, s) -> bytearray:
-        standardized_input = s.replace('_', '/').replace('-', '+')
-        binary_data = base64.b64decode(standardized_input)
-
-        return bytearray(binary_data)
-
-    def handle_vidsrc_stream(self, url, source) -> str:
-        '''Main vidsrc, get urls from here its fast'''
-        req = requests.get(url, headers={"Referer": source})
-
-        hls_url = re.search(r'file:"([^"]*)"', req.text).group(1)
-        hls_url = re.sub(r'\/\/\S+?=', '', hls_url).replace('#2', '')
-
-        try:
-            hls_url = base64.b64decode(hls_url).decode('utf-8') # this randomly breaks and doesnt decode properly, will fix later, works most of the time anyway, just re-run
-        except Exception: 
-            return self.handle_vidsrc_stream(url, source)
-
-        set_pass = re.search(r'var pass_path = "(.*?)";', req.text).group(1)
-        if set_pass.startswith("//"):
-            set_pass = f"https:{set_pass}"
-
-        requests.get(set_pass, headers={"Referer": source})
-        return hls_url
-    
-    def handle_2embed(self, url, source) -> str:
-        '''Site provides ssl error :( cannot fetch from here''' # this site works now, ill reverse in future
-        pass
-
-    def handle_multiembed(self, url, source) -> str:
-        '''Fallback site used by vidsrc'''
-        req = requests.get(url, headers={"Referer": source})
-        matches = re.search(r'escape\(r\)\)}\((.*?)\)', req.text)
-        processed_values = []
-
-        if not matches:
-            print("[Error] Failed to fetch multiembed, this is likely because of a captcha, try accessing the source below directly and solving the captcha before re-trying.")
-            print(url)
-            return
-
-        for val in matches.group(1).split(','):
-            val = val.strip()
-            if val.isdigit() or (val[0] == '-' and val[1:].isdigit()):
-                processed_values.append(int(val))
-            elif val[0] == '"' and val[-1] == '"':
-                processed_values.append(val[1:-1])
-
-        unpacked = self.hunter(*processed_values)
-        hls_url = re.search(r'file:"([^"]*)"', unpacked).group(1)
-        return hls_url
