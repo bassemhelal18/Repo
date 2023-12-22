@@ -163,7 +163,7 @@ def showMovies(sSearch = ''):
     
 
  # ([^<]+) .+?
-    sPattern = '<div class="block-post">.+?<a href="([^<]+)" title="([^<]+)">.+?<div class=.+?image:url([^<]+);">'
+    sPattern = '<div class="block-post">.*?<a.*?href="([^<]+)" title="([^<]+)">.*?data-img="(.*?)"'
 
     oParser = cParser()
     aResult = oParser.parse(sHtmlContent, sPattern)
@@ -183,7 +183,7 @@ def showMovies(sSearch = ''):
             sTitle = aEntry[1].replace("مشاهدة","").replace("مسلسل","").replace("انمي","").replace("مترجمة","").replace("مترجم","").replace("فيلم","").replace("والأخيرة","").replace("مدبلج للعربية","مدبلج").replace("برنامج","").replace("والاخيرة","").replace("كاملة","").replace("حلقات كاملة","").replace("اونلاين","").replace("مباشرة","").replace("انتاج ","").replace("جودة عالية","").replace("كامل","").replace("HD","").replace("السلسلة الوثائقية","").replace("الفيلم الوثائقي","").replace("اون لاين","")
             if 'مدبلج' in sTitle:
               continue
-            siteUrl = aEntry[0]+'/?do=views'
+            siteUrl = aEntry[0]+'watch/'
             sThumb = aEntry[2].replace("(","").replace(")","")
             sDesc = ''
             m = re.search('([0-9]{4})', sTitle)
@@ -223,7 +223,7 @@ def showSeries(sSearch = ''):
     sHtmlContent = oRequestHandler.request()
     
     
-    sPattern = '<div class="block-post">.+?<a href="([^<]+)" title="([^<]+)">.+?<div class=.+?image:url([^<]+);">'
+    sPattern = '<div class="block-post">.*?<a.*?href="([^<]+)" title="([^<]+)">.*?data-img="(.*?)"'
     oParser = cParser()
     aResult = oParser.parse(sHtmlContent, sPattern)
 	
@@ -240,7 +240,7 @@ def showSeries(sSearch = ''):
  
             sTitle = aEntry[1].replace("مشاهدة","").replace("مسلسل","").replace("انمي","").replace("مترجمة","").replace("مترجم","").replace("برنامج","").replace("فيلم","").replace("والأخيرة","").replace("مدبلج للعربية","مدبلج").replace("والاخيرة","").replace("كاملة","").replace("حلقات كاملة","").replace("اونلاين","").replace("مباشرة","").replace("انتاج ","").replace("جودة عالية","").replace("كامل","").replace("HD","").replace("السلسلة الوثائقية","").replace("الفيلم الوثائقي","").replace("اون لاين","")
             sTitle = sTitle.split("الموسم")[0].split("الحلقة")[0].split("موسم")[0].split("حلقة")[0]
-            siteUrl = aEntry[0]+'?do=views'
+            siteUrl = aEntry[0]+'watch/'
             
             sThumb = aEntry[2].replace("(","").replace(")","")
             sDesc=''
@@ -282,9 +282,13 @@ def showSeasons():
  
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
-    
+    sHtmlContent2 = oRequestHandler.request()
     # (.+?) .+? ([^<]+)
-    sPattern = 'data-season="(.+?)">الموسم (.+?)<'
+    oParser = cParser()
+    sStart = '<div class="tabCon" id="seasons">'
+    sEnd = '<div class="tabCon" id="otherseries">'
+    sHtmlContent = oParser.abParse(sHtmlContent, sStart, sEnd)
+    sPattern = 'div class="block-post">.*?<a href="([^<]+)" title="([^<]+)">.*?data-img="([^<]+)"'
 
     oParser = cParser()
     aResult = oParser.parse(sHtmlContent, sPattern)
@@ -292,16 +296,14 @@ def showSeasons():
     if aResult[0] is True:
         oOutputParameterHandler = cOutputParameterHandler() 
         for aEntry in aResult[1]:
-            sSeason = aEntry[1].replace("مترجم","").replace("الموسم","").replace("مترجمة","").replace(" الحادي عشر","11").replace(" الثاني عشر","12").replace(" الثالث عشر","13").replace(" الرابع عشر","14").replace(" الخامس عشر","15").replace(" السادس عشر","16").replace(" السابع عشر","17").replace(" الثامن عشر","18").replace(" التاسع عشر","19").replace(" العشرون","20").replace(" الحادي و العشرون","21").replace(" الثاني و العشرون","22").replace(" الثالث و العشرون","23").replace(" الرابع والعشرون","24").replace(" الخامس و العشرون","25").replace(" السادس والعشرون","26").replace(" السابع والعشرون","27").replace(" الثامن والعشرون","28").replace(" التاسع والعشرون","29").replace(" الثلاثون","30").replace(" الحادي و الثلاثون","31").replace(" الثاني والثلاثون","32").replace(" الاول","1").replace(" الثاني","2").replace(" الثانى","2").replace(" الثالث","3").replace(" الرابع","4").replace(" الخامس","5").replace(" السادس","6").replace(" السابع","7").replace(" الثامن","8").replace(" التاسع","9").replace(" العاشر","10")
-            sSeason = sMovieTitle+" S"+sSeason
-            
-            
-            siteUrl = URL_MAIN +'/?p='+aEntry[0]
-            
-            sTitle = sSeason
-            sThumb = ''
+            sTitle = aEntry[1].replace("مشاهدة","").replace("مسلسل","").replace("انمي","").replace("مترجمة","").replace("مترجم","").replace("فيلم","").replace("والأخيرة","").replace("مدبلج للعربية","مدبلج").replace("برنامج","").replace("والاخيرة","").replace("كاملة","").replace("حلقات كاملة","").replace("اونلاين","").replace("مباشرة","").replace("انتاج ","").replace("جودة عالية","").replace("كامل","").replace("HD","").replace("السلسلة الوثائقية","").replace("الفيلم الوثائقي","").replace("اون لاين","").replace("مترجم","").replace("الموسم","S").replace("مترجمة","").replace(" الحادي عشر","11").replace(" الثاني عشر","12").replace(" الثالث عشر","13").replace(" الرابع عشر","14").replace(" الخامس عشر","15").replace(" السادس عشر","16").replace(" السابع عشر","17").replace(" الثامن عشر","18").replace(" التاسع عشر","19").replace(" العشرون","20").replace(" الحادي و العشرون","21").replace(" الثاني و العشرون","22").replace(" الثالث و العشرون","23").replace(" الرابع والعشرون","24").replace(" الخامس و العشرون","25").replace(" السادس والعشرون","26").replace(" السابع والعشرون","27").replace(" الثامن والعشرون","28").replace(" التاسع والعشرون","29").replace(" الثلاثون","30").replace(" الحادي و الثلاثون","31").replace(" الثاني والثلاثون","32").replace(" الاول","1").replace(" الثاني","2").replace(" الثانى","2").replace(" الثالث","3").replace(" الرابع","4").replace(" الخامس","5").replace(" السادس","6").replace(" السابع","7").replace(" الثامن","8").replace(" التاسع","9").replace(" العاشر","10")
+            siteUrl = aEntry[0]
+            sThumb = aEntry[2]
             sDesc = ''
-
+            m = re.search('([0-9]{4})', sTitle)
+            if m:
+                sYear = str(m.group(0))
+                sTitle = sTitle.replace(sYear,'S1')
             oOutputParameterHandler.addParameter('siteUrl', siteUrl)
             oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
             oOutputParameterHandler.addParameter('sThumb', sThumb)
@@ -311,9 +313,9 @@ def showSeasons():
             oGui.addSeason(SITE_IDENTIFIER, 'showEpisodes', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
     else:
 
-        sStart = '<ul class="eplist">'
-        sEnd = '<div class="sec-title">'
-        sHtmlContent = oParser.abParse(sHtmlContent, sStart, sEnd)
+        sStart = '<div class="tabCon episodes" id="episodes">'
+        sEnd = '</div>'
+        sHtmlContent = oParser.abParse(sHtmlContent2, sStart, sEnd)
     # (.+?) .+? ([^<]+)
         sPattern = '<a class=".+?" href="(.+?)" title="(.+?)"'
 
@@ -334,7 +336,7 @@ def showSeasons():
                 if m:
                    sYear = str(m.group(0))
                    sTitle = sTitle.replace(sYear,'S1')
-                siteUrl = aEntry[0]+'?do=views'
+                siteUrl = aEntry[0]+'watch/'
                 
                 sThumb = ''
                 sDesc = ''
@@ -366,10 +368,10 @@ def showEpisodes():
     sHtmlContent = oRequestHandler.request()
 
     oParser = cParser()
-    sStart = '<ul class="eplist">'
-    sEnd = '<div class="sec-title">'
+    sStart = '<div class="tabCon episodes" id="episodes">'
+    sEnd = '</div>'
     sHtmlContent = oParser.abParse(sHtmlContent, sStart, sEnd)
-    sPattern = '<a class=".+?" href="(.+?)" title="(.+?)"'
+    sPattern = 'href="(.+?)" title="(.+?)"'
 
     oParser = cParser()
     aResult = oParser.parse(sHtmlContent, sPattern)
@@ -380,16 +382,14 @@ def showEpisodes():
 
  
                 
-                sTitle = aEntry[1].replace("مشاهدة","").replace("الاخيره","").replace("الاخيرة","").replace("مسلسل","").replace("انمي","").replace("مترجمة","").replace("مترجم","").replace("برنامج","").replace("فيلم","").replace("والأخيرة","").replace("مدبلج للعربية","مدبلج").replace("والاخيرة","").replace("كاملة","").replace("حلقات كاملة","").replace("اونلاين","").replace("مباشرة","").replace("انتاج ","").replace("جودة عالية","").replace("كامل","").replace("HD","").replace("السلسلة الوثائقية","").replace("الفيلم الوثائقي","").replace("اون لاين","")
-                
-                sTitle = sTitle.replace("الموسم العاشر","S10").replace("الموسم الحادي عشر","S11").replace("الموسم الثاني عشر","S12").replace("الموسم الثالث عشر","S13").replace("الموسم الرابع عشر","S14").replace("الموسم الخامس عشر","S15").replace("الموسم السادس عشر","S16").replace("الموسم السابع عشر","S17").replace("الموسم الثامن عشر","S18").replace("الموسم السابع والعشرون","S27").replace("الموسم التاسع عشر","S19").replace("الموسم العشرون","S20").replace("الموسم الحادي و العشرون","S21").replace("الموسم الثاني و العشرون","S22").replace("الموسم الثالث و العشرون","S23").replace("الموسم الرابع والعشرون","S24").replace("الموسم الخامس و العشرون","S25").replace("الموسم السادس والعشرون","S26").replace("الموسم السابع والعشرون","S27").replace("الموسم الثامن والعشرون","S28").replace("الموسم التاسع والعشرون","S29").replace("الموسم الثلاثون","S30").replace("الموسم الحادي و الثلاثون","S31").replace("الموسم الثاني والثلاثون","S32").replace("الموسم الثالث و الثلاثون","S33").replace("الموسم الأول","S1").replace("الموسم الاول","S1").replace("الموسم الثاني","S2").replace("الموسم الثالث","S3").replace("الموسم الثالث","S3").replace("الموسم الرابع","S4").replace("الموسم الخامس","S5").replace("الموسم السادس","S6").replace("الموسم السابع","S7").replace("الموسم الثامن","S8").replace("الموسم التاسع","S9").replace("الموسم","S").replace("S ","S")
-                sTitle = sTitle.replace("الحلقة","E").replace("E ","E")
+                sTitle = aEntry[1].replace("الحلقة","E").replace("E ","E")
+                sTitle = sMovieTitle+sTitle
                 sTitle = sTitle.strip()
                 m = re.search('([0-9]{4})', sTitle)
                 if m:
                    sYear = str(m.group(0))
                    sTitle = sTitle.replace(sYear,'S1')
-                siteUrl = aEntry[0]+'?do=views'
+                siteUrl = aEntry[0]+'watch/'
                
                 sThumb = ''
                 sDesc = ''
@@ -430,7 +430,7 @@ def showHosters(oInputParameterHandler = False):
     sHtmlContent = oRequestHandler.request()
 
     oParser = cParser()
-    sPattern =  'data-content-id="([^"]+)' 
+    sPattern =  'postid-(.*?)"' 
     aResult = oParser.parse(sHtmlContent,sPattern)
     if aResult[0]:
         sID = aResult[1][0] 
@@ -472,13 +472,19 @@ def showHosters(oInputParameterHandler = False):
                     cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
 
     ## Download Servers
-    sPattern = 'target="_blank" href="(.+?)"><i class="icon-download">'
+    sUrl = sUrl.replace('/watch/','/downloads/')
+    oRequestHandler = cRequestHandler(sUrl)
+    cook = oRequestHandler.GetCookies()  
+    sHtmlContent = oRequestHandler.request()
+    
+    sPattern = '<a href="([^<]+)" rel="nofollow".*?<span>([^<]+)P.*?<span>'
     oParser = cParser()
     aResult = oParser.parse(sHtmlContent, sPattern)
     if aResult[0]:
         for aEntry in aResult[1]:
 
-            url = aEntry
+            url = aEntry[0]
+            sQual = '['+aEntry[1] +'P'+']'
             sTitle = sMovieTitle
             if url.startswith('//'):
                url = 'http:' + url
@@ -486,7 +492,7 @@ def showHosters(oInputParameterHandler = False):
             sHosterUrl = url 
             oHoster = cHosterGui().checkHoster(sHosterUrl)
             if oHoster:
-               oHoster.setDisplayName(sTitle)
+               oHoster.setDisplayName(sTitle+sQual)
                oHoster.setFileName(sMovieTitle)
                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
 

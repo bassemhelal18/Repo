@@ -129,7 +129,22 @@ class cPlayer(xbmc.Player):
             else:
                 dialog().VSerror('Nécessite kodi 17 minimum')
                 return
-        
+        elif '.m3u8' in sUrl:
+            
+            item.setProperty('inputstream', 'inputstream.adaptive')
+            item.setContentLookup(False)
+            item.setMimeType('application/xml+dash')
+            item.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')
+            
+            if '|' in  sUrl:
+               sUrl, hdrs = sUrl.split('|')
+            else:
+               hdrs=''
+            item.setProperty('inputstream.adaptive.stream_headers', hdrs)
+            item.setProperty('inputstream.adaptive.manifest_headers', hdrs)
+            
+            xbmcplugin.setResolvedUrl(sPluginHandle, True, listitem=item)
+            VSlog('Player use inputstream addon')
         # 1 er mode de lecture
         elif player_conf == '0':
             self.play(sUrl, item)
