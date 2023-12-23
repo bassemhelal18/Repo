@@ -4,7 +4,7 @@ from resources.lib.comaddon import dialog, xbmcgui
 from resources.hosters.hoster import iHoster
 from resources.lib.packer import cPacker
 from resources.lib.comaddon import VSlog
-import re
+import re,requests
 
 class cHoster(iHoster):
 
@@ -17,20 +17,26 @@ class cHoster(iHoster):
     def _getMediaLinkForGuest(self, autoPlay = False):
         sReferer = ''
         if '/d/' in self._url:
-            self._url = self._url.replace('/d/','/embed-')
+            self._url = self._url.replace('/d/','embed-')
+            if '.html' not in self._url:
+                self._url = self._url + '.html'
         if '|Referer=' in self._url:
             sReferer = self._url.split('|Referer=')[1]            
             self._url = self._url.split('|Referer=')[0]
-        
+            
         api_call = ''
 
-        oRequest = cRequestHandler(self._url)
-        oRequest.addHeaderEntry('Referer', sReferer)
-        sHtmlContent = oRequest.request()
-        sPattern = "(\s*eval\s*\(\s*function(?:.|\s)+?)<\/script>"
+        UA = 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:39.0) Gecko/20100101 Firefox/39.0'
         oParser = cParser()
-        aResult = oParser.parse(sHtmlContent, sPattern)
 
+        headers = {'User-Agent': UA,
+                   'Referer': sReferer
+                   }
+        s = requests.session()
+        sHtmlContent = s.get(self._url, headers=headers).text
+
+        sPattern = "(\s*eval\s*\(\s*function(?:.|\s)+?)<\/script>"
+        aResult = oParser.parse(sHtmlContent, sPattern)
         if aResult[0]:
             sHtmlContent = cPacker().unpack(aResult[1][0])
         
@@ -44,13 +50,13 @@ class cHoster(iHoster):
                 url.append(str(i[0]))
                 qua.append(str(i[1]))
 
-            api_call = dialog().VSselectqual(qua, url)
+            api_call = dialog().VSselectqual(qua, url)  + '|User-Agent=' + UA + '&Referer=' + self._url + '&Origin=' + self._url.rsplit('/', 1)[0]
 
-        sPattern =  'sources: *\[{file:"([^"]+)"' 
+        sPattern =  'sources:*\[{file:"([^"]+)"' 
         aResult = oParser.parse(sHtmlContent,sPattern)
         if aResult[0]:
             for aEntry in aResult[1]:            
-                api_call = aEntry
+                api_call = aEntry + '|User-Agent=' + UA + '&Referer=' + self._url + '&Origin=' + self._url.rsplit('/', 1)[0]
 
         if api_call:
             return True, api_call

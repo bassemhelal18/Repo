@@ -241,14 +241,17 @@ class cHosterGui:
         if val:
             return self.getHoster("vidshare")
         
-        vidlook = next((x for x in ['vidlo', 'c13-look', '7c3-look', '6v8-look', 'ut4-look'] if x in sHostName), None)
+        vidlook = next((x for x in ['vidlo', 'c13-look', '7c3-look', '6v8-look', 'ut4-look', 'jo6-look'] if x in sHostName), None)
         if vidlook:    
             return self.getHoster('vidlo')
         
         if ('streamtape' in sHostName) or ('streamnoads' in sHostName) or ('tapenoads' in sHostName):
             return self.getHoster('streamtape')
-        if ('mixdrop' in sHostName)or ('mdy48tn97' in sHostName)or ('mixdroop'in sHostName):
+        
+        mixdrop = next((x for x in ['mixdrop', 'mdy48tn97', 'mixdroop', 'mdbekjwqa'] if x in sHostName), None)
+        if mixdrop:
             return self.getHoster('mixdrop')
+        
         if ('sbfull' in sHostName):
             return self.getHoster('resolver')
         if ('sbbrisk' in sHostName):
@@ -332,7 +335,7 @@ class cHosterGui:
 
         streamwish = next((x for x in ['streamwish', 'ankrzkz', 'cilootv', 'sfastwish', 'egtpgrvh', 'volvovideo','cimawish',
                                       'wishfast.top', 'fsdcmo.sbs', 'flaswish', 'cdnwish-down', 'heavenlyvideo',
-                                       'egopxutd', 'obeywish'] if x in sHostName), None)
+                                       'egopxutd', 'obeywish', 'trgsfjller'] if x in sHostName), None)
         if streamwish:
             return self.getHoster('streamwish')
         
@@ -419,7 +422,7 @@ class cHosterGui:
                                 'vid2bom', 'vig1bm', 'v3db1oom', 'vdp1em', 'ved1om', 'vvid1om', 'vigom',
                                 've1dp3m', 'vuidbeaam', 'v2ddb3m', '2vbiim', 'vdb123m', 'vd123bm', 'v3dbeam',
                                 'v3dbtom', 'v7d20bm', 'vdtom', 'vendm', 'vandbm', 'vand1bm', 'vrdb2m', 'vdbt3om',
-                                'vd22tom', 'ven1dm', 'vrdtem', 'vrd1tem'] if x in sHostName), None)
+                                'vd22tom', 'ven1dm', 'vrdtem', 'vrd1tem', 'v5db2m'] if x in sHostName), None)
         if val:
             return self.getHoster('vidbom')
 				
@@ -429,7 +432,8 @@ class cHosterGui:
             f.setRealHost('[MAIL.RU]')
             return f
 	    
-        if ('rubystream' in sHostName) or ('tuktukcimamulti' in sHostName):
+        rubystream = next((x for x in ['rubystream', 'tuktukcimamulti', 'stmruby'] if x in sHostName), None)
+        if rubystream:
             return self.getHoster('rubystream')
         
         if ('pixeldrain' in sHostName):
@@ -465,7 +469,8 @@ class cHosterGui:
         val = next((x for x in ['upbaam', 'upbam', 'uppom', 'uppboom', 'upgobom', 'uupbom', 'upptobom',
                                 'up2b9om', 'up1bom', 'up3bom', 'upbom', 'up1bem', 'u2pbemm', 'up1beem',
                                 'u1pb3m', 'bmbm', '4bmto', '2bm.shop', '4bem2022', 't0bm4','bm025',
-                                'bm2024', 'u1p15', 'up15.shop', 'tbm1.shop', 'b245m.shop', 'b2m1.shop'] if x in sHostName), None)
+                                'bm2024', 'u1p15', 'up15.shop', 'tbm1.shop', 'b245m.shop', 'b2m1.shop',
+                                'online20.shop'] if x in sHostName), None)
         if val:
             return self.getHoster('uppom')
         
@@ -552,7 +557,7 @@ class cHosterGui:
                                 'go-veid', 'g1ov3d', 'g1v3d' ,'g2vfd', 'goo1vd', 'g2ev4d', 'ge1verd', 
                                 'g1oov1d', 'ga1ov3d' , '1gafv3d', 'go12d', 'go1v2d', 'gonvd1','gaonv3d',
                                 'gonv20d', 'goevd', 'goanvd', 'goanv1d', 'gonvnd', 'gvnd', 'gaonvd',
-                                'go1evd', 'goverd', 'gnvd'] if x in sHostName), None)
+                                'go1evd', 'goverd', 'gnvd', 'go1vend'] if x in sHostName), None)
         if val:
             return self.getHoster('govidme')
             
@@ -622,6 +627,9 @@ class cHosterGui:
 
         if ('playvidto' in sHostName):
             return self.getHoster('vidto')
+
+        if ('demonvid' in sHostName):
+            return self.getHoster('tuktuk')
 
         if ('hd-stream' in sHostName):
             return self.getHoster('hd_stream')
@@ -735,11 +743,10 @@ class cHosterGui:
             return self.getHoster('lien_direct')
         
 				
-        if ('nitroflare' in sHostName or 'tubeload.' in sHostName or 'Facebook' in sHostName  or 'fastdrive' in sHostName\
-            or 'megaup.net' in sHostName  or 'openload' in sHostName or 'doodrive' in sHostName or 'fikper' in sHostName\
-            or 'turbobit' in sHostName or 'rapidgator' in sHostName or 'katfile' in sHostName or 'mega4upload.com' in sHostName\
-            or 'send.cm' in sHosterUrl or 'bowfile' in sHosterUrl or 'ddownload' in sHosterUrl\
-            or 'qiwi' in sHostName):
+        val = next((x for x in ['nitroflare', 'tubeload.', 'Facebook', 'fastdrive', 'megaup.net', 'openload',
+                                'doodrive', 'fikper', 'turbobit', 'rapidgator', 'katfile', 'mega4upload.com', 
+                                'send.cm', 'bowfile', 'ddownload', 'qiwi', 'uploadbank', 'frdl.to'] if x in sHostName), None)
+        if val:
             return False
 
         
