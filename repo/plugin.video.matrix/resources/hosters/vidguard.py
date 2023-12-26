@@ -3,7 +3,7 @@
 from resources.lib.handler.requestHandler import cRequestHandler
 from resources.lib.parser import cParser
 from resources.hosters.hoster import iHoster
-from resources.lib.comaddon import dialog
+from resources.lib.comaddon import VSlog, dialog
 from resources.lib.aadecode import decodeAA
 from resources.lib.util import cUtil
 
@@ -26,7 +26,7 @@ class cHoster(iHoster):
         self._url = self._url.replace('/d/','/e/')
         oRequest = cRequestHandler(self._url)
         sHtmlContent = oRequest.request()
-
+        
         api_call = ''
 
         oParser = cParser()
@@ -60,6 +60,16 @@ class cHoster(iHoster):
                         qua.append(str(i[0]))
 
                     api_call = dialog().VSselectqual(qua, url) + '|Referer=' + self._url
+                
+                sPattern = '"stream":"(.*?)"'
+                aResult = oParser.parse(sHtmlContent, sPattern)
+                if aResult[0]:
+                    url = aResult[1][0]
+                    url = str(url)
+                    url = url.encode().decode('unicode-escape')
+                    url2 = sig_decode(url)
+                    api_call = url2 + '|Referer=' + self._url
+
 
         if api_call:
             return True, api_call

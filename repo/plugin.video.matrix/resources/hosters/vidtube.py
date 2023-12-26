@@ -17,7 +17,7 @@ class cHoster(iHoster):
     def _getMediaLinkForGuest(self, autoPlay = False):
         sReferer = ''
         if '/d/' in self._url:
-            self._url = self._url.replace('/d/','embed-')
+            self._url = self._url.replace('/d/','/embed-')
             if '.html' not in self._url:
                 self._url = self._url + '.html'
         if '|Referer=' in self._url:
