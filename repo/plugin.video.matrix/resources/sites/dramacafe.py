@@ -296,7 +296,7 @@ def showEpisodes():
     sHtmlContent = oRequestHandler.request()
 
     oParser = cParser()
-    sPattern = "title='(.+?)' href='([^<]+)'><li><em>([^<]+)</em>"
+    sPattern = 'title="(.+?)" href="([^<]+)"><li><em>([^<]+)</em>'
     aResult = oParser.parse(sHtmlContent, sPattern)
 	
     if aResult[0] :
