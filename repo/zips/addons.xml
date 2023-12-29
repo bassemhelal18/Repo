@@ -33,7 +33,7 @@
         </assets>
     </extension>
 
-</addon><addon id="plugin.video.matrix" name="matrix" version="999.0.65" provider-name="bassemhelal">
+</addon><addon id="plugin.video.matrix" name="matrix" version="999.0.66" provider-name="bassemhelal">
     <requires>
 
         <trycatch>

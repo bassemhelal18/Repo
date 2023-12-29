@@ -99,17 +99,7 @@ class cUtil:
 
     def titleWatched(self, title):
         # enlève les accents, si nécessaire
-        n2 = re.sub('[^a-zA-Z0-9 ]', '', title)
-        if n2 != title:
-            try:
-                if not isMatrix():
-                    title = title.decode('utf8', 'ignore')    # converti en unicode pour aider aux convertions
-                title = unicodedata.normalize('NFD', title).encode('ascii', 'ignore')
-                if isMatrix():
-                    title = title.decode('utf8', 'ignore')
-            except Exception as e:
-                pass
-
+        
         # cherche la saison et episode puis les balises [color]titre[/color]
         # title, saison = self.getSaisonTitre(title)
         # title, episode = self.getEpisodeTitre(title)
@@ -119,7 +109,7 @@ class cUtil:
         # title = re.sub(r'[0-9]+?', r'', str(title))
         title = title.replace('-', ' ')  # on garde un espace pour que Orient-express ne devienne pas Orientexpress pour la recherche tmdb
         title = title.replace('Season', '').replace('season', '').replace('Season', '').replace('Episode', '').replace('episode', '')
-        title = re.sub('[^%s]' % (string.ascii_lowercase + string.digits), ' ', title.lower())
+        title = title.lower()
         title = re.sub(' +', ' ', title)  # vire espace double au milieu
         # title = QuotePlus(title)
         # title = title.decode('string-escape')

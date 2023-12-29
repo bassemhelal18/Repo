@@ -586,11 +586,14 @@ class cGuiElement:
 
         if 'backdrop_path' in meta:
             url = meta.pop('backdrop_path')
+            urlback = url
             if metaType in (5,6):
                 url = meta.pop('poster_path')
                 url = url.replace('w342','w1280')
                 self.addItemProperties('fanart_image', url)
-                self.__sThumbnail = url
+                self.__sThumbnail = url.replace('w1280','w342')
+                if self.__sThumbnail =='':
+                  self.__sThumbnail = urlback.replace('w1280','w342')
             else:
                 self.addItemProperties('fanart_image', url)
                 self.__sFanart = url
