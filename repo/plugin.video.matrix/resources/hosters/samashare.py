@@ -18,18 +18,34 @@ class cHoster(iHoster):
     def setUrl(self, sUrl):
         self._url = str(sUrl)
         #lien embed obligatoire
-        if not 'embed-' in self._url:
-            self._url = self._url.rsplit('/', 1)[0] + '/embed-' + self._url.rsplit('/', 1)[1]
-           
-
+    
     def _getMediaLinkForGuest(self, autoPlay = False):
         VSlog(self._url)
         api_call = False
-
+        host = 'https://'+self._url.split('/')[2]
+        
         oRequest = cRequestHandler(self._url)
         sHtmlContent = oRequest.request()
-
         oParser = cParser()
+        
+        sPattern =  """onclick="download_video.*?'(.*?)','(.*?)','(.*?)'"""
+        aResult = oParser.parse(sHtmlContent, sPattern)
+        if aResult[0]:
+           for aEntry in aResult[1]:
+               sId = aEntry[0]
+               sMode= aEntry[1]
+               sHash = aEntry[2]
+               slink  = host + '/dl?op=download_orig'+'&id='+sId+'&mode='+sMode+'&hash='+sHash
+               
+               oRequest = cRequestHandler(slink)
+               sHtmlContent2 = oRequest.request()
+               
+               sPattern =  'href="([^<]+)">Direct'
+               aResult = oParser.parse(sHtmlContent2, sPattern)
+               if aResult[0]:
+                    
+                    api_call =aResult[1][0]
+                    
         sPattern =  '(\s*eval\s*\(\s*function(?:.|\s)+?)<\/script>'
         aResult = oParser.parse(sHtmlContent, sPattern)
         if aResult[0]:
@@ -46,6 +62,6 @@ class cHoster(iHoster):
 
 
         if api_call:
-            return True, api_call + '|User-Agent=' + UA
+            return True, api_call + '|User-Agent=' + UA 
 
         return False, False
