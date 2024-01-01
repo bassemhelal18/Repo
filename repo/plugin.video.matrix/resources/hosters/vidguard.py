@@ -1,5 +1,6 @@
 # coding: utf-8
 
+import re
 from resources.lib.handler.requestHandler import cRequestHandler
 from resources.lib.parser import cParser
 from resources.hosters.hoster import iHoster
@@ -31,22 +32,19 @@ class cHoster(iHoster):
 
         oParser = cParser()
         
-        sPattern = '<script\s*src="(/assets/videojs/ad/[^"]+)'
-        aResult = oParser.parse(sHtmlContent, sPattern)
+        r = re.search(r'eval\("window\.ADBLOCKER\s*=\s*false;\\n(.+?);"\);</script', sHtmlContent)
+        r = r.group(1).replace('\\u002b', '+')
+        r = r.replace('\\u0027', "'")
+        r = r.replace('\\u0022', '"')
+        r = r.replace('\\/', '/')
+        r = r.replace('\\\\', '\\')
+        r = r.replace('\\"', '"')
         
-        if aResult[0] is True:
-            url = self.__getHost() + aResult[1][0]
-            
-            oRequest = cRequestHandler(url)
-            oRequest.addHeaderEntry('Referer', self._url)
-            sHtmlContent = oRequest.request()
-            
-            sPattern = '(ﾟωﾟ.+?\(\'_\'\);)'
-            aResult = oParser.parse(sHtmlContent, sPattern)
+        sPattern = '(ﾟωﾟ.+?\(\'_\'\))'
+        aResult = oParser.parse(r, sPattern)
 
-            if aResult[0] is True:
+        if aResult[0] is True:
                 sHtmlContent = decodeAA(aResult[1][0], True)
-                
                 sPattern = 'Label":"([^"]+)","URL":"([^"]+)"'
                 aResult = oParser.parse(sHtmlContent, sPattern)
                 if aResult[0]:

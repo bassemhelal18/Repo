@@ -9,6 +9,7 @@ from resources.lib.handler.inputParameterHandler import cInputParameterHandler
 from resources.lib.handler.outputParameterHandler import cOutputParameterHandler
 from resources.lib.handler.requestHandler import cRequestHandler
 from resources.lib.comaddon import progress, VSlog, siteManager, addon
+from resources.lib.multihost import cMegamax
 from resources.lib.parser import cParser
 from bs4 import BeautifulSoup
 
@@ -525,20 +526,26 @@ def showHosters(oInputParameterHandler = False):
             sHosterUrl = url 
             
             
-            if '?download_' in sHosterUrl:
-               sHosterUrl = sHosterUrl.replace("moshahda","ffsff")
-               sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN 
-            if 'userload' in sHosterUrl:
-                sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN
-            if 'moshahda' in sHosterUrl:
-                sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN 
-            if 'mystream' in sHosterUrl:
-                sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN  
-            oHoster = cHosterGui().checkHoster(sHosterUrl)
-            if oHoster:
-                oHoster.setDisplayName(sTitle)
-                oHoster.setFileName(sMovieTitle)
-                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+            if 'megamax' in sHosterUrl:
+                sHtmlContent2 = cMegamax().GetUrls(sHosterUrl)
+                sPattern = "(https.*?),(.*?p)"
+                oParser = cParser()
+                aResult = oParser.parse(sHtmlContent2, sPattern)
+                if aResult[0]:
+                    for aEntry1 in aResult[1]:
+                        sHosterUrl = aEntry1[0].strip()
+                        sQual = '['+aEntry1[1]+']'
+                        oHoster = cHosterGui().checkHoster(sHosterUrl)
+                        if (oHoster):
+                            oHoster.setDisplayName(sMovieTitle+sQual)
+                            oHoster.setFileName(sMovieTitle)
+                            cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+            else:
+                oHoster = cHosterGui().checkHoster(sHosterUrl)
+                if oHoster:
+                    oHoster.setDisplayName(sTitle)
+                    oHoster.setFileName(sTitle)
+                    cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
     # (.+?) ([^<]+) .+?
 
     sPattern = '<a target="_blank" href="(.+?)" class="download--direct"><i class="fa fa-download"></i><span>(.+?)</span>'
@@ -554,7 +561,8 @@ def showHosters(oInputParameterHandler = False):
 			
             sTitle = sMovieTitle					
             sHosterUrl = url 
-            
+            if 'megamax' in url:
+                continue
             if '?download_' in sHosterUrl:
                sHosterUrl = sHosterUrl.replace("moshahda","ffsff")
                sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN 
@@ -584,7 +592,8 @@ def showHosters(oInputParameterHandler = False):
 			
             sTitle = sMovieTitle					
             sHosterUrl = url 
-            
+            if 'megamax' in url:
+                continue
             if '?download_' in sHosterUrl:
               sHosterUrl = sHosterUrl.replace("moshahda","ffsff")
               sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN 
