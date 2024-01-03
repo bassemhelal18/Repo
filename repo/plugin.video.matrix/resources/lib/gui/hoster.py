@@ -277,9 +277,7 @@ class cHosterGui:
         if ('vidpro' in sHostName):
             return self.getHoster('samashare')
         if ('streamvid' in sHostName):
-            f = self.getHoster('resolver')
-            f.setRealHost('[STREAMVID]')
-            return f
+            return self.getHoster('streamvid')  
         if ('vidspeed' in sHostName):
             return self.getHoster('vidspeeds')
         if ('allviid' in sHostName) or ('all-vid' in sHostName):
