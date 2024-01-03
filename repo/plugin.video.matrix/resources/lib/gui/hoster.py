@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-
+from resources.lib.parser import cParser
 from resources.lib.gui.gui import cGui
 from resources.lib.gui.guiElement import cGuiElement
 from resources.lib.gui.contextElement import cContextElement
@@ -238,7 +238,7 @@ class cHosterGui:
         val = next((x for x in ['vadshar', 'vidshar', 'vedshaar', 'viidshar', 'vedshaar', 'vedsharr', 'vedshar', 'vidshare',
                                 'vid1shar', '2vid2cdnshar', 'v2d2shr', 'v1d1shr', "v3dsh1r", 'vds3r', 'v3dshr', 'vndsh1r',
                                 'segavid' , 'vd12s3r', 'v31dshr', 'vds1r', 'vdonlineshr', 'v4dshnr', 'vd1sher',
-                                'vd13r', 'vd1sr', 'v1dsr', 'vd2sr', 'v1d2sr'] if x in sHostName), None)
+                                'vd13r', 'vd1sr', 'v1dsr', 'vd2sr', 'v1d2sr', 'v2d3sr'] if x in sHostName), None)
         if val:
             return self.getHoster("vidshare")
         
@@ -370,7 +370,8 @@ class cHosterGui:
         if ('hadara.ps' in sHostName):
             return self.getHoster('lien_direct')
         
-        if ('voe' in sHostName)or ('stevenimaginelittle' in sHostName) or('availedsmallest'in sHostName):
+        voe = next((x for x in ['voe', 'stevenimaginelittle', 'availedsmallest', 'monorhinouscassaba'] if x in sHostName), None)
+        if voe:
             return self.getHoster('voe')
 
         if ('vidtube' in sHostName)or ('vtbe' in sHostName):
@@ -427,7 +428,7 @@ class cHosterGui:
                                 've1dp3m', 'vuidbeaam', 'v2ddb3m', '2vbiim', 'vdb123m', 'vd123bm', 'v3dbeam',
                                 'v3dbtom', 'v7d20bm', 'vdtom', 'vendm', 'vandbm', 'vand1bm', 'vrdb2m', 'vdbt3om',
                                 'vd22tom', 'ven1dm', 'vrdtem', 'vrd1tem', 'v5db2m', 'vdb1m', 'vendbm', 'v6b3m',
-                                'vd1bm', 'vdb2m', 'v1db2m'] if x in sHostName), None)
+                                'vd1bm', 'vdb2m', 'v1db2m', 'v2db3m'] if x in sHostName), None)
         if val:
             return self.getHoster('vidbom')
 				
@@ -437,7 +438,7 @@ class cHosterGui:
             f.setRealHost('[MAIL.RU]')
             return f
 	    
-        rubystream = next((x for x in ['rubystream', 'tuktukcimamulti', 'stmruby'] if x in sHostName), None)
+        rubystream = next((x for x in ['rubystream', 'tuktukcimamulti', 'stmruby', 'streamruby'] if x in sHostName), None)
         if rubystream:
             return self.getHoster('rubystream')
         
@@ -476,7 +477,7 @@ class cHosterGui:
                                 'u1pb3m', 'bmbm', '4bmto', '2bm.shop', '4bem2022', 't0bm4','bm025',
                                 'bm2024', 'u1p15', 'up15.shop', 'tbm1.shop', 'b245m.shop', 'b2m1.shop',
                                 'online20.shop', 'line50.shop', 'fo0.shop', 'online20stream','4view.shop',
-                                'team20.shop', 'travel15.shop', 'sigh15.shop'] if x in sHostName), None)
+                                'team20.shop', 'travel15.shop', 'sigh15.shop', 'video15.shop'] if x in sHostName), None)
         if val:
             return self.getHoster('uppom')
         
@@ -564,7 +565,7 @@ class cHosterGui:
                                 'g1oov1d', 'ga1ov3d' , '1gafv3d', 'go12d', 'go1v2d', 'gonvd1','gaonv3d',
                                 'gonv20d', 'goevd', 'goanvd', 'goanv1d', 'gonvnd', 'gvnd', 'gaonvd',
                                 'go1evd', 'goverd', 'gnvd', 'go1vend', 'go1vd', 'go2vd', 'go4vd', 'gov7d',
-                                'gon1vd', 'goov9d'] if x in sHostName), None)
+                                'gon1vd', 'goov9d','goov1d'] if x in sHostName), None)
         if val:
             return self.getHoster('govidme')
             
@@ -757,9 +758,6 @@ class cHosterGui:
         if val:
             return False
 
-        
-        # lien direct ?
-        
         if any(sHosterUrl.endswith(x) for x in ['.mp4', '.avi', '.flv', '.m3u8', '.webm', '.mkv', '.mpd']):
             return self.getHoster('lien_direct')
 
