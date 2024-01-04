@@ -475,7 +475,7 @@ class cHosterGui:
                                 'u1pb3m', 'bmbm', '4bmto', '2bm.shop', '4bem2022', 't0bm4','bm025',
                                 'bm2024', 'u1p15', 'up15.shop', 'tbm1.shop', 'b245m.shop', 'b2m1.shop',
                                 'online20.shop', 'line50.shop', 'fo0.shop', 'online20stream','4view.shop',
-                                'team20.shop', 'travel15.shop', 'sigh15.shop', 'video15.shop'] if x in sHostName), None)
+                                'team20.shop', 'travel15.shop', 'sigh15.shop', 'video15.shop', 'streaming15.shop'] if x in sHostName), None)
         if val:
             return self.getHoster('uppom')
         
@@ -546,12 +546,10 @@ class cHosterGui:
         if ('skyvid' in sHostName)or ('gvadz' in sHostName):
             return self.getHoster('skyvid')
             
-        if ('seeeed' in sHostName):
-            return self.getHoster('arabseed')
-            
-        if ('reviewtech' in sHostName):
-            return self.getHoster('arabseed')
-            
+        arabseed = next((x for x in ['seeeed' ,'reviewtech', 'reviewrate'] if x in sHostName), None)
+        if arabseed:
+           return self.getHoster('arabseed')    
+        
         if ('4shared' in sHostName):
             return self.getHoster('shared')
 				
@@ -563,7 +561,7 @@ class cHosterGui:
                                 'g1oov1d', 'ga1ov3d' , '1gafv3d', 'go12d', 'go1v2d', 'gonvd1','gaonv3d',
                                 'gonv20d', 'goevd', 'goanvd', 'goanv1d', 'gonvnd', 'gvnd', 'gaonvd',
                                 'go1evd', 'goverd', 'gnvd', 'go1vend', 'go1vd', 'go2vd', 'go4vd', 'gov7d',
-                                'gon1vd', 'goov9d','goov1d'] if x in sHostName), None)
+                                'gon1vd', 'goov9d','goov1d', 'gov9d'] if x in sHostName), None)
         if val:
             return self.getHoster('govidme')
             
@@ -649,12 +647,6 @@ class cHosterGui:
 
         if ('embedo' in sHostName):
             return self.getHoster('resolver')
-        
-        if ('reviewtech' in sHosterUrl) or ('reviewrate' in sHosterUrl):
-            return self.getHoster('arabseed')
-        
-        
-
         # vidtodo et clone
         val = next((x for x in ['vidtodo', 'vixtodo', 'viddoto', 'vidstodo'] if x in sHostName), None)
         if val:
