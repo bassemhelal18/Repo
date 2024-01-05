@@ -446,6 +446,12 @@ class cHosterGui:
             f.setRealHost('[PIXELDRAIN]')
             return f
         
+        if ('frdl' in sHostName):
+            f = self.getHoster('resolver')
+            #mise a jour du nom
+            f.setRealHost('[FRDL]')
+            return f
+
         if ('streamcherry' in sHostName):
             return self.getHoster('resolver')
 			
@@ -475,7 +481,8 @@ class cHosterGui:
                                 'u1pb3m', 'bmbm', '4bmto', '2bm.shop', '4bem2022', 't0bm4','bm025',
                                 'bm2024', 'u1p15', 'up15.shop', 'tbm1.shop', 'b245m.shop', 'b2m1.shop',
                                 'online20.shop', 'line50.shop', 'fo0.shop', 'online20stream','4view.shop',
-                                'team20.shop', 'travel15.shop', 'sigh15.shop', 'video15.shop', 'streaming15.shop'] if x in sHostName), None)
+                                'team20.shop', 'travel15.shop', 'sigh15.shop', 'video15.shop', 'streaming15.shop',
+                                'onlin12estream'] if x in sHostName), None)
         if val:
             return self.getHoster('uppom')
         
@@ -546,7 +553,7 @@ class cHosterGui:
         if ('skyvid' in sHostName)or ('gvadz' in sHostName):
             return self.getHoster('skyvid')
             
-        arabseed = next((x for x in ['seeeed' ,'reviewtech', 'reviewrate'] if x in sHostName), None)
+        arabseed = next((x for x in ['seeeed' ,'reviewtech', 'reviewrate', 'techinsider'] if x in sHostName), None)
         if arabseed:
            return self.getHoster('arabseed')    
         
@@ -561,7 +568,7 @@ class cHosterGui:
                                 'g1oov1d', 'ga1ov3d' , '1gafv3d', 'go12d', 'go1v2d', 'gonvd1','gaonv3d',
                                 'gonv20d', 'goevd', 'goanvd', 'goanv1d', 'gonvnd', 'gvnd', 'gaonvd',
                                 'go1evd', 'goverd', 'gnvd', 'go1vend', 'go1vd', 'go2vd', 'go4vd', 'gov7d',
-                                'gon1vd', 'goov9d','goov1d', 'gov9d'] if x in sHostName), None)
+                                'gon1vd', 'goov9d','goov1d', 'gov9d', 'goov2d'] if x in sHostName), None)
         if val:
             return self.getHoster('govidme')
             
@@ -705,8 +712,6 @@ class cHosterGui:
         if ('upvideo' in sHostName) or ('streamon' in sHostName):
             return self.getHoster('upvideo')
 
-        if ('estream' in sHostName) and not ('widestream' in sHostName):
-            return self.getHoster('estream')
 
         if ('clipwatching' in sHostName) or ('highstream' in sHostName):
             return self.getHoster('clipwatching')
@@ -744,7 +749,7 @@ class cHosterGui:
 				
         val = next((x for x in ['nitroflare', 'tubeload.', 'Facebook', 'fastdrive', 'megaup.net', 'openload',
                                 'doodrive', 'fikper', 'turbobit', 'rapidgator', 'katfile', 'mega4upload.com', 
-                                'send.cm', 'bowfile', 'ddownload', 'qiwi', 'uploadbank', 'frdl.to'] if x in sHostName), None)
+                                'send.cm', 'bowfile', 'ddownload', 'qiwi', 'uploadbank'] if x in sHostName), None)
         if val:
             return False
 
