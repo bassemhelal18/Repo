@@ -22,7 +22,8 @@ class cHoster(iHoster):
         oRequest = cRequestHandler(self._url)
         oRequest.addHeaderEntry('Host', 'vk.com')
         oRequest.addHeaderEntry('Referer', self._url)
-        oRequest.addHeaderEntry('User-Agent', 'Mozilla/5.0 (iPad; CPU OS 13_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/87.0.4280.77 Mobile/15E148 Safari/604.1')
+        oRequest.addHeaderEntry('Origin', 'vk.com')
+        oRequest.addHeaderEntry('User-Agent', UA)
         sHtmlContent = oRequest.request()
         sHtmlContent = sHtmlContent.replace('\\', '')
 
