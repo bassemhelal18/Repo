@@ -329,7 +329,8 @@ class cHosterGui:
         if ('liiivideo' in sHostName):
             return self.getHoster('qfilm')
         
-        if ('vidhide' in sHostName) or ('tuktukcinema29.buzz'in sHostName):
+        vidhide = next((x for x in ['vidhide', 'tuktukcinema29.buzz', 'anime7u'] if x in sHostName), None)
+        if vidhide:    
             return self.getHoster('vidhide')
 
         if ('rumble' in sHostName):
