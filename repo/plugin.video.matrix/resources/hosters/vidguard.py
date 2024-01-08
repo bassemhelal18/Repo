@@ -45,7 +45,7 @@ class cHoster(iHoster):
 
         if aResult[0] is True:
                 sHtmlContent = decodeAA(aResult[1][0], True)
-                sPattern = 'Label":"([^"]+)","URL":"([^"]+)"'
+                sPattern = '"Label":"([^"]+)","URL":"([^"]+)"'
                 aResult = oParser.parse(sHtmlContent, sPattern)
                 if aResult[0]:
                     # initialisation des tableaux
@@ -53,6 +53,8 @@ class cHoster(iHoster):
                     qua = []
                     for i in aResult[1]:
                         url2 = str(i[1])
+                        if not  url2 .startswith('https://'):
+                            url2 = re.sub(':/*', '://', url2)
                         url2 = url2.encode().decode('unicode-escape')
                         url.append(sig_decode(url2))
                         qua.append(str(i[0]))
@@ -64,6 +66,8 @@ class cHoster(iHoster):
                 if aResult[0]:
                     url = aResult[1][0]
                     url = str(url)
+                    if not  url.startswith('https://'):
+                            url= re.sub(':/*', '://', url)
                     url = url.encode().decode('unicode-escape')
                     url2 = sig_decode(url)
                     api_call = url2 + '|Referer=' + self._url
