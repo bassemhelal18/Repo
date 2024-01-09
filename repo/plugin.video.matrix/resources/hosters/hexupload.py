@@ -30,7 +30,6 @@ class cHoster(iHoster):
             aResult = re.search(r'b4aa\.buy\("([^"]+)', sHtmlContent)
             if aResult:
                api_call = base64.b64decode(aResult.group(1)).decode('utf8',errors='ignore')
-               VSlog(api_call)
                api_call = api_call
                 
          else:
@@ -41,8 +40,7 @@ class cHoster(iHoster):
                   if '/' in sID:
                      sID = sID.split('/')[0]
                sLink= 'https://'+sHost+'/'+sID     
-  
-               api_call = Unquote(self._url2)  
+   
 
                Sgn=requests.Session()
                headers = {
