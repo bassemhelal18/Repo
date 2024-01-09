@@ -427,7 +427,7 @@ class cHosterGui:
                                 've1dp3m', 'vuidbeaam', 'v2ddb3m', '2vbiim', 'vdb123m', 'vd123bm', 'v3dbeam',
                                 'v3dbtom', 'v7d20bm', 'vdtom', 'vendm', 'vandbm', 'vand1bm', 'vrdb2m', 'vdbt3om',
                                 'vd22tom', 'ven1dm', 'vrdtem', 'vrd1tem', 'v5db2m', 'vdb1m', 'vendbm', 'v6b3m',
-                                'vd1bm', 'vdb2m', 'v1db2m', 'v2db3m', 'venb1m'] if x in sHostName), None)
+                                'vd1bm', 'vdb2m', 'v1db2m', 'v2db3m', 'venb1m', 'v1enbm'] if x in sHostName), None)
         if val:
             return self.getHoster('vidbom')
 				
@@ -483,7 +483,7 @@ class cHosterGui:
                                 'bm2024', 'u1p15', 'up15.shop', 'tbm1.shop', 'b245m.shop', 'b2m1.shop',
                                 'online20.shop', 'line50.shop', 'fo0.shop', 'online20stream','4view.shop',
                                 'team20.shop', 'travel15.shop', 'sigh15.shop', 'video15.shop', 'streaming15.shop',
-                                'onlin12estream', 'tostream20'] if x in sHostName), None)
+                                'onlin12estream', 'tostream20', 'streaming200'] if x in sHostName), None)
         if val:
             return self.getHoster('uppom')
         
@@ -499,7 +499,7 @@ class cHosterGui:
         if ('lulustream' in sHostName) or ('luluvdo' in sHostName):
             return self.getHoster('lulustream')
         
-        if ('hexupload' in sHostName):
+        if ('hexupload' in sHostName) or ('hexload' in sHostName):
             return self.getHoster('hexupload')  
         
         if ('veehd.' in sHostName):
@@ -569,7 +569,7 @@ class cHosterGui:
                                 'g1oov1d', 'ga1ov3d' , '1gafv3d', 'go12d', 'go1v2d', 'gonvd1','gaonv3d',
                                 'gonv20d', 'goevd', 'goanvd', 'goanv1d', 'gonvnd', 'gvnd', 'gaonvd',
                                 'go1evd', 'goverd', 'gnvd', 'go1vend', 'go1vd', 'go2vd', 'go4vd', 'gov7d',
-                                'gon1vd', 'goov9d','goov1d', 'gov9d', 'goov2d', 'g2v3d'] if x in sHostName), None)
+                                'gon1vd', 'goov9d','goov1d', 'gov9d', 'goov2d', 'g2v3d', 'g1ovd'] if x in sHostName), None)
         if val:
             return self.getHoster('govidme')
             
