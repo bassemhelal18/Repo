@@ -563,6 +563,8 @@ def showHosters(oInputParameterHandler = False):
             sHosterUrl = url 
             if 'megamax' in url:
                 continue
+            if 'tuktukcimamulti' in url:
+                continue
             if '?download_' in sHosterUrl:
                sHosterUrl = sHosterUrl.replace("moshahda","ffsff")
                sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN 
@@ -593,6 +595,8 @@ def showHosters(oInputParameterHandler = False):
             sTitle = sMovieTitle					
             sHosterUrl = url 
             if 'megamax' in url:
+                continue
+            if 'tuktukcimamulti' in url:
                 continue
             if '?download_' in sHosterUrl:
               sHosterUrl = sHosterUrl.replace("moshahda","ffsff")
