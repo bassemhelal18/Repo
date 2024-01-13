@@ -338,7 +338,7 @@ class cHosterGui:
 
         streamwish = next((x for x in ['streamwish', 'ankrzkz', 'cilootv', 'sfastwish', 'egtpgrvh', 'volvovideo','cimawish',
                                       'wishfast.top', 'fsdcmo.sbs', 'flaswish', 'cdnwish-down', 'heavenlyvideo',
-                                       'egopxutd', 'obeywish', 'trgsfjller', 'trgsfjll', 'anime4low'] if x in sHostName), None)
+                                       'egopxutd', 'obeywish', 'trgsfjller', 'trgsfjll', 'anime4low', 'embedwish'] if x in sHostName), None)
         if streamwish:
             return self.getHoster('streamwish')
         
@@ -483,7 +483,7 @@ class cHosterGui:
                                 'bm2024', 'u1p15', 'up15.shop', 'tbm1.shop', 'b245m.shop', 'b2m1.shop',
                                 'online20.shop', 'line50.shop', 'fo0.shop', 'online20stream','4view.shop',
                                 'team20.shop', 'travel15.shop', 'sigh15.shop', 'video15.shop', 'streaming15.shop',
-                                'onlin12estream', 'tostream20', 'streaming200'] if x in sHostName), None)
+                                'onlin12estream', 'tostream20', 'streaming200', 'top15top'] if x in sHostName), None)
         if val:
             return self.getHoster('uppom')
         
