@@ -526,7 +526,7 @@ def showHosters(oInputParameterHandler = False):
             sHosterUrl = url 
             
             
-            if 'megamax' in sHosterUrl:
+            if 'megamax' in sHosterUrl or 'tuktukcimamulti' in sHosterUrl:
                 sHtmlContent2 = cMegamax().GetUrls(sHosterUrl)
                 sPattern = "(https.*?),(.*?p)"
                 oParser = cParser()

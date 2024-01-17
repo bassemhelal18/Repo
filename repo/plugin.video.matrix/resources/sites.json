@@ -32,7 +32,7 @@
         },
         "cimau": {
             "label": "Cima4u",
-            "active": "True",
+            "active": "False",
             "url": "https://1-cima4u.cam/"
         },
         "dramacafe": {
