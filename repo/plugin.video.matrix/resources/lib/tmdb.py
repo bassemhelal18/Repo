@@ -4,11 +4,11 @@
 # https://github.com/Kodi-vStream/venom-xbmc-addons/
 import re
 import string
+from resources.lib.parser import cParser
 import xbmcvfs
 import json
 import unicodedata
 import threading
-
 from resources.lib.comaddon import addon, dialog, VSlog, VSPath, isMatrix, xbmc
 from resources.lib.util import QuotePlus
 
@@ -513,6 +513,21 @@ class cTMDb:
         if season:
             result = self._call('tv/' + str(show_id) + '/season/' + str(season) + '/episode/' + str(episode))
             result['tmdb_id'] = show_id
+            data = self.simkl(show_id)
+            if result.get('still_path')==None:
+                sPattern = "'season': (.*?), 'episode': (.*?),.*?'img':.*?(.*?),"
+                oParser = cParser()
+                aResult = oParser.parse(data, sPattern)
+                for aEntry in aResult[1]:
+                   if aEntry[0]==season and aEntry[1]==episode:
+                      img = aEntry[2].replace("'","").strip()
+                      img = 'https://wsrv.nl/?url=https://simkl.in/episodes/'+ img +'_w.jpg'
+                      if 'None' in img:
+                          img = None
+                      for key, value in result.items():
+                          if value == None:
+                              if key=='still_path':
+                                  result[key] = img
             return result
         else:
             return False
@@ -736,10 +751,16 @@ class cTMDb:
                 pass
 
         if _meta['poster_path']:
-            _meta['poster_path'] = self.poster + _meta['poster_path']
+            if 'simkl' in _meta['poster_path']:
+               _meta['poster_path'] = _meta['poster_path']
+            else :   
+               _meta['poster_path'] = self.poster + _meta['poster_path']
 
         if _meta['backdrop_path']:
-            _meta['backdrop_path'] = self.fanart + _meta['backdrop_path']
+               if 'simkl' in _meta['backdrop_path']:
+                  _meta['backdrop_path'] = _meta['backdrop_path']
+               else:
+                 _meta['backdrop_path'] = self.fanart + _meta['backdrop_path']
         return _meta
 
     def _clean_title(self, title):
@@ -1183,3 +1204,22 @@ class cTMDb:
         if genre:
             return genre
         return genreID
+    
+
+    def simkl(self,show_id):
+        import requests
+        url = 'https://api.simkl.com/search/id?tmdb='+str(show_id)+'&client_id=4b48a648b355c253d4b24c47e89b3145ab2d73198568c1facedf34154cce7c2d'
+        
+        data = json.loads(requests.get(url).content)
+        sPattern = "'simkl':(.*?),"
+        oParser = cParser()
+        aResult = oParser.parse(data, sPattern)
+        if aResult[0] :
+            smikl = aResult[1][0]
+            smikl = smikl.strip()
+            headers ={'Content-Type':'application/json'}
+            url = 'https://api.simkl.com/tv/episodes/'+smikl+'?client_id=4b48a648b355c253d4b24c47e89b3145ab2d73198568c1facedf34154cce7c2d'
+            data2 = json.loads(requests.get(url,headers=headers).content)
+            
+            return data2
+                      
