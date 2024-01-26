@@ -513,8 +513,9 @@ class cTMDb:
         if season:
             result = self._call('tv/' + str(show_id) + '/season/' + str(season) + '/episode/' + str(episode))
             result['tmdb_id'] = show_id
-            data = self.simkl(show_id)
+            
             if result.get('still_path')==None:
+                data = self.simkl(show_id)
                 sPattern = "'season': (.*?), 'episode': (.*?),.*?'img':.*?(.*?),"
                 oParser = cParser()
                 aResult = oParser.parse(data, sPattern)
