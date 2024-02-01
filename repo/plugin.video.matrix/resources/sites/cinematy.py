@@ -459,7 +459,7 @@ def showHosters(oInputParameterHandler = False):
 
             sPattern = 'iframe.+?src=\"(.+?)\"'
             oParser = cParser()
-            aResult = oParser.parse(sHtmlContent2.lower(), sPattern)
+            aResult = oParser.parse(sHtmlContent2, sPattern)
             if aResult[0]:
                 sHosterUrl = aResult[1][0]
                 sTitle = sMovieTitle
