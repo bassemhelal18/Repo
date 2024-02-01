@@ -727,7 +727,15 @@ def showHosters(oInputParameterHandler = False):
                                         oHoster.setDisplayName(sDisplayTitle)
                                         oHoster.setFileName(sMovieTitle)
                                         cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
-
+                        else:
+                            url = aEntry
+                            sHosterUrl = url
+                            oHoster = cHosterGui().checkHoster(sHosterUrl)
+                            if oHoster:
+                                sTitle = sMovieTitle 
+                                oHoster.setDisplayName(sTitle)
+                                oHoster.setFileName(sMovieTitle)
+                                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
     sPattern =  'name="codes" value="([^"]+)' 
     aResult = oParser.parse(sHtmlContent1,sPattern)
     if aResult[0]:
