@@ -37,7 +37,7 @@
         },
         "dramacafe": {
             "label": "Dramacafe",
-            "active": "True",
+            "active": "False",
             "url": "https://wwl.dramacafe-tv.com/"
         },
         "egydead": {
