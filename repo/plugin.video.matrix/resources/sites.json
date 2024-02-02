@@ -67,9 +67,9 @@
         },
         "shahidu": {
             "label": "Shahid4u",
-            "active": "False",
+            "active": "True",
             "cloudflare": "False",
-            "url": "https://shahed4u5.cam/"
+            "url": "https://shahee4u.cam"
         },
         "themoviedb_org": {
             "label": "The Movie Database",
