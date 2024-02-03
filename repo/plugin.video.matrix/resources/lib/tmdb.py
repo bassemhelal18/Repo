@@ -525,10 +525,7 @@ class cTMDb:
                       img = 'https://wsrv.nl/?url=https://simkl.in/episodes/'+ img +'_w.jpg'
                       if 'None' in img:
                           img = None
-                      for key, value in result.items():
-                          if value == None:
-                              if key=='still_path':
-                                  result[key] = img
+                      result.update({'still_path': img})
             return result
         else:
             return False
