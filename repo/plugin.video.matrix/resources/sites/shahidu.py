@@ -10,6 +10,7 @@ from resources.lib.handler.inputParameterHandler import cInputParameterHandler
 from resources.lib.handler.outputParameterHandler import cOutputParameterHandler
 from resources.lib.handler.requestHandler import cRequestHandler
 from resources.lib.comaddon import addon, progress, VSlog, siteManager
+from resources.lib.multihost import cMultiup
 from resources.lib.parser import cParser
 
  
@@ -544,9 +545,22 @@ def showHosters(oInputParameterHandler = False):
                     sTitle = sMovieTitle
                     if url.startswith('//'):
                         url = 'http:' + url		         
-                    sHosterUrl = url
-                    oHoster = cHosterGui().checkHoster(sHosterUrl)
-                    if oHoster:
+                    sHosterUrl = url 
+                    if 'multiup' in sHosterUrl:
+                       aResult = cMultiup().GetUrls(sHosterUrl)
+                       
+                       if (aResult):
+                        for aEntry in aResult:
+                          sHosterUrl = aEntry  
+                          oHoster = cHosterGui().checkHoster(sHosterUrl)
+                          if (oHoster):
+                            sDisplayTitle =('-[%sp]') % (sQual)
+                            oHoster.setDisplayName(sTitle+sDisplayTitle)
+                            oHoster.setFileName(sMovieTitle)
+                            cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+                    else:      
+                     oHoster = cHosterGui().checkHoster(url)
+                     if (oHoster):
                         sDisplayTitle =('-[%sp]') % (sQual)
                         oHoster.setDisplayName(sTitle+sDisplayTitle)
                         oHoster.setFileName(sMovieTitle)

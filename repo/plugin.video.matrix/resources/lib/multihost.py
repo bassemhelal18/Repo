@@ -17,28 +17,23 @@ class cMultiup:
         self.list = []
 
     def GetUrls(self, url):
-        sHtmlContent = GetHtml(url)
-        sPattern = '<form action="(.+?)" method="post"'
-        result = re.findall(sPattern, sHtmlContent)
-        if result:
-         url = 'https://www.multiup.org' + ''.join(result[0])
+        
+        url = url .replace('/download/','/en/mirror/')
+        oRequestHandler = cRequestHandler(url)
+        sHtmlContent = oRequestHandler.request()
         
         
+        sPattern = 'link="([^"]+)".*?validity="valid"'
+        oParser = cParser()
+        aResult = oParser.parse(sHtmlContent, sPattern)
         
-        sHtmlContent = GetHtml(url)
+        if aResult[0]:
+           for aEntry in aResult[1]:
+               if '/download-fast/' in aEntry:
+                  continue
+               sHost = aEntry
+               self.list.append(sHost)
         
-        sPattern = 'link="([^"]+)".+?class="([^"]+)"'
-        
-        r = re.findall(sPattern, sHtmlContent, re.MULTILINE)
-        
-        if not r:
-            return False
-
-        for item in r:
-
-            if 'bounce-to-right' in str(item[1]) and not 'download-fast' in item[0]:
-                self.list.append(item[0])
-
         return self.list
 
 class cMegamax:
