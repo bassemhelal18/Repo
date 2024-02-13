@@ -477,14 +477,18 @@ def showHosters(oInputParameterHandler = False):
     cook = oRequestHandler.GetCookies()  
     sHtmlContent = oRequestHandler.request()
     
-    sPattern = '<a href="([^<]+)" rel="nofollow".*?<span>([^<]+)P.*?<span>'
+    sStart = '<div class="DownList">'
+    sEnd = '</div>'
+    sHtmlContent = oParser.abParse(sHtmlContent, sStart, sEnd)
+    
+    sPattern = '<a href="([^"]+)".+?</span><span>(.+?)</span>'
     oParser = cParser()
     aResult = oParser.parse(sHtmlContent, sPattern)
     if aResult[0]:
         for aEntry in aResult[1]:
 
             url = aEntry[0]
-            sQual = '['+aEntry[1] +'P'+']'
+            sQual = '['+aEntry[1] +']'
             sTitle = sMovieTitle
             if url.startswith('//'):
                url = 'http:' + url
