@@ -306,8 +306,6 @@ class cHosterGui:
             return self.getHoster('resolver')
         if ('vimeo' in sHostName):
             return self.getHoster('resolver')
-        if ('faselhd' in sHosterUrl):
-            return self.getHoster('faselhd')
         if ('/run/' in sHosterUrl):
             return self.getHoster('mycima')
         if ('weecima' in sHostName):

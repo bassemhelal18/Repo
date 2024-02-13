@@ -571,9 +571,9 @@ def showLink(oInputParameterHandler = False):
 
     if aResult[0]:
        for aEntry1 in aResult[1]:
-           sHosterUrl = aEntry1[0].replace('master.m3u8','faselhd')
+           sHosterUrl = aEntry1[0]
            sHost = '-['+aEntry1[1]+']'
-           sHost = sHost.replace('-[auto]','').upper()
+           sHost = sHost.upper()
            sTitle = ('%s  %s') % (sMovieTitle, sHost)  
            oHoster = cHosterGui().checkHoster(sHosterUrl)
            if oHoster:

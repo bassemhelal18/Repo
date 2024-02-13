@@ -4,7 +4,7 @@
 from requests import post, Session, Request, RequestException, ConnectionError
 from resources.lib.comaddon import addon, dialog, VSlog, VSPath, isMatrix
 from resources.lib.util import urlEncode, urlHostName
-
+from resolveurl import common
 import requests.packages.urllib3.util.connection as urllib3_cn
 import socket
 from resources.lib.SQLiteCache import SqliteCache
@@ -194,9 +194,9 @@ class cRequestHandler:
         return ''
 
     def __setDefaultHeader(self):
-        self.addHeaderEntry('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:50.0) Gecko/20100101 Firefox/50.0')
-        self.addHeaderEntry('Accept-Language', 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3')
-        self.addHeaderEntry('Accept-Charset', 'ISO-8859-1,utf-8;q=0.7,*;q=0.7')
+        self.addHeaderEntry('User-Agent', common.RAND_UA)
+        self.addHeaderEntry('Accept-Language', 'en-US,en;q=0.9')
+        self.addHeaderEntry('Accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7')
 
     def __callRequest(self, jsonDecode=False):
         if self.__enableDNS:
@@ -364,7 +364,7 @@ class cRequestHandler:
                 host = host[:host.find("/")]
             resolver = dns.resolver.Resolver(configure=False)
             # Résolveurs DNS ouverts: https://www.fdn.fr/actions/dns/
-            resolver.nameservers = ['80.67.169.12', '2001:910:800::12', '80.67.169.40', '2001:910:800::40']
+            resolver.nameservers = ['8.8.8.8', '2001:4860:4860::8888', '8.8.4.4', '2001:4860:4860::8844', '1.1.1.1', '2606:4700:4700::1111', '1.0.0.1' , '2606:4700:4700::1001']
             answer = resolver.query(host, 'a')
             host_found = str(answer[0])
             VSlog("new_getaddrinfo found host %s" % host_found)
