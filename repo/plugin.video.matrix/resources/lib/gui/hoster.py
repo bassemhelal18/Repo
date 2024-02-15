@@ -283,10 +283,7 @@ class cHosterGui:
         if ('allviid' in sHostName) or ('all-vid' in sHostName):
             return self.getHoster('allvid')
         if ('gofile' in sHostName):
-            f = self.getHoster('resolver')
-            #mise a jour du nom
-            f.setRealHost('[GOFILE]')
-            return f
+            return self.getHoster('gofile')
         if ('drop.download' in sHostName):
             return self.getHoster('resolver')
 
@@ -327,7 +324,7 @@ class cHosterGui:
         if ('liiivideo' in sHostName):
             return self.getHoster('qfilm')
         
-        vidhide = next((x for x in ['vidhide', 'tuktukcinema29.buzz', 'anime7u', 'gsfomqu', 'codeda'] if x in sHostName), None)
+        vidhide = next((x for x in ['vidhide', 'tuktukcinema29.buzz', 'anime7u', 'gsfomqu', 'codeda', 'ma3refa.store'] if x in sHostName), None)
         if vidhide:    
             return self.getHoster('vidhide')
 
@@ -336,7 +333,7 @@ class cHosterGui:
 
         streamwish = next((x for x in ['streamwish', 'ankrzkz', 'cilootv', 'sfastwish', 'egtpgrvh', 'volvovideo','cimawish',
                                       'wishfast.top', 'fsdcmo.sbs', 'flaswish', 'cdnwish-down', 'heavenlyvideo', 'm3lomatik.store',
-                                       'egopxutd', 'obeywish', 'trgsfjller', 'trgsfjll', 'anime4low', 'embedwish', 'cdnwish'] if x in sHostName), None)
+                                       'egopxutd', 'obeywish', 'trgsfjller', 'trgsfjll', 'anime4low', 'embedwish', 'cdnwish', 'ma2d.store'] if x in sHostName), None)
         if streamwish:
             return self.getHoster('streamwish')
         
@@ -703,6 +700,9 @@ class cHosterGui:
         if ('upvid.' in sHostName):
             return self.getHoster('upvid')
 
+        if ('qiwi' in sHostName):
+            return self.getHoster('qiwi')
+
         if ('darkibox' in sHostName):
             return self.getHoster('darkibox')
         
@@ -749,7 +749,7 @@ class cHosterGui:
 				
         val = next((x for x in ['nitroflare', 'tubeload.', 'Facebook', 'fastdrive', 'megaup.net', 'openload',
                                 'doodrive', 'fikper', 'turbobit', 'rapidgator', 'katfile', 'mega4upload.com', 
-                                'send.cm', 'bowfile', 'ddownload', 'qiwi', 'uploadbank'] if x in sHostName), None)
+                                'send.cm', 'bowfile', 'ddownload', 'uploadbank'] if x in sHostName), None)
         if val:
             return False
 
