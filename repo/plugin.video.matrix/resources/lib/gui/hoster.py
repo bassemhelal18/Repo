@@ -739,6 +739,9 @@ class cHosterGui:
 
         if ('myfiles.alldebrid.com' in sHostName):
             return self.getHoster('lien_direct')
+        
+        if ('megaup.net' in sHostName):
+            return self.getHoster('megaup')
 
         if ('.m3u8' in sHosterUrl):
             return self.getHoster('lien_direct')
@@ -747,7 +750,7 @@ class cHosterGui:
             return self.getHoster('lien_direct')
         
 				
-        val = next((x for x in ['nitroflare', 'tubeload.', 'Facebook', 'fastdrive', 'megaup.net', 'openload',
+        val = next((x for x in ['nitroflare', 'tubeload.', 'Facebook', 'fastdrive', 'openload',
                                 'doodrive', 'fikper', 'turbobit', 'rapidgator', 'katfile', 'mega4upload.com', 
                                 'send.cm', 'bowfile', 'ddownload', 'uploadbank'] if x in sHostName), None)
         if val:

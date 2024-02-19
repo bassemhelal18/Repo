@@ -302,16 +302,13 @@ class cRequestHandler:
                 if "Forbidden" not in sContent:
                     
                     # Tenter par FlareSolverr
-                    
-                    CLOUDPROXY_ENDPOINT = 'http://' + addon().getSetting('ipaddress') + ':8191/v1'
+                    CLOUDPROXY_ENDPOINT="https://cf.jmdkh.eu.org/v1"
+                    data = {"cmd": "request.get", "url": self.__sUrl, "maxTimeout": 60000}
 
                     json_response = False
                     try:
                         # On fait une requete.
-                        json_response = post(CLOUDPROXY_ENDPOINT, headers=self.__aHeaderEntries, json={
-                            'cmd': 'request.%s' % method.lower(),
-                            'url': self.__sUrl
-                        })
+                        json_response = post(CLOUDPROXY_ENDPOINT, headers={"Content-Type": "application/json"}, json=data)
                     except:
                         dialog().VSerror("%s (%s)" % ("Page protegee par Cloudflare, essayez FlareSolverr", urlHostName(self.__sUrl)))
 
