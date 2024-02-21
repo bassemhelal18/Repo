@@ -238,7 +238,7 @@ class cHosterGui:
         val = next((x for x in ['vadshar', 'vidshar', 'vedshaar', 'viidshar', 'vedshaar', 'vedsharr', 'vedshar', 'vidshare',
                                 'vid1shar', '2vid2cdnshar', 'v2d2shr', 'v1d1shr', "v3dsh1r", 'vds3r', 'v3dshr', 'vndsh1r',
                                 'segavid' , 'vd12s3r', 'v31dshr', 'vds1r', 'vdonlineshr', 'v4dshnr', 'vd1sher',
-                                'vd13r', 'vd1sr', 'v1dsr', 'vd2sr', 'v1d2sr', 'v2d3sr', 'vadsr', 'va1dsr'] if x in sHostName), None)
+                                'vd13r', 'vd1sr', 'v1dsr', 'vd2sr', 'v1d2sr', 'v2d3sr', 'vadsr', 'va1dsr', 'vd5sr'] if x in sHostName), None)
         if val:
             return self.getHoster("vidshare")
         
@@ -422,7 +422,7 @@ class cHosterGui:
                                 've1dp3m', 'vuidbeaam', 'v2ddb3m', '2vbiim', 'vdb123m', 'vd123bm', 'v3dbeam',
                                 'v3dbtom', 'v7d20bm', 'vdtom', 'vendm', 'vandbm', 'vand1bm', 'vrdb2m', 'vdbt3om',
                                 'vd22tom', 'ven1dm', 'vrdtem', 'vrd1tem', 'v5db2m', 'vdb1m', 'vendbm', 'v6b3m',
-                                'vd1bm', 'vdb2m', 'v1db2m', 'v2db3m', 'venb1m', 'v1enbm', 'v1dbm'] if x in sHostName), None)
+                                'vd1bm', 'vdb2m', 'v1db2m', 'v2db3m', 'venb1m', 'v1enbm', 'v1dbm', 'vd5bm'] if x in sHostName), None)
         if val:
             return self.getHoster('vidbom')
 				
