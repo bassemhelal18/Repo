@@ -21,7 +21,7 @@ class cHoster(iHoster):
         
        # (.+?) .+? ([^<]+)
 
-        sPattern =  '<source src="(.+?)".*?type=' 
+        sPattern =  'data-src-url="([^"]+)' 
         aResult = oParser.parse(sHtmlContent,sPattern)
         
         for aEntry in aResult[1]:

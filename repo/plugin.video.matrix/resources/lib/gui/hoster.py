@@ -254,6 +254,9 @@ class cHosterGui:
         if mixdrop:
             return self.getHoster('mixdrop')
         
+        if ('veev.to' in sHostName):
+            return self.getHoster('veev')
+
         if ('sbfull' in sHostName):
             return self.getHoster('resolver')
         if ('sbbrisk' in sHostName):
@@ -422,7 +425,7 @@ class cHosterGui:
                                 've1dp3m', 'vuidbeaam', 'v2ddb3m', '2vbiim', 'vdb123m', 'vd123bm', 'v3dbeam',
                                 'v3dbtom', 'v7d20bm', 'vdtom', 'vendm', 'vandbm', 'vand1bm', 'vrdb2m', 'vdbt3om',
                                 'vd22tom', 'ven1dm', 'vrdtem', 'vrd1tem', 'v5db2m', 'vdb1m', 'vendbm', 'v6b3m',
-                                'vd1bm', 'vdb2m', 'v1db2m', 'v2db3m', 'venb1m', 'v1enbm', 'v1dbm', 'vd5bm'] if x in sHostName), None)
+                                'vd1bm', 'vdb2m', 'v1db2m', 'v2db3m', 'venb1m', 'v1enbm', 'v1dbm', 'vd5bm', 'vdbtm'] if x in sHostName), None)
         if val:
             return self.getHoster('vidbom')
 				
