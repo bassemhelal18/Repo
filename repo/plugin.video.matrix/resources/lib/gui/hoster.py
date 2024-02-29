@@ -645,7 +645,7 @@ class cHosterGui:
         if ('hd-stream' in sHostName):
             return self.getHoster('hd_stream')
         
-        dood = next((x for x in ['dooood.com', 'dood', 'ds2play', 'ds2video', 'd0o0d', 'do0od', 'd0000d'] if x in sHostName), None)
+        dood = next((x for x in ['dooood.com', 'dood', 'ds2play', 'ds2video', 'd0o0d', 'do0od', 'd0000d', 'd000d'] if x in sHostName), None)
         if dood:
             return self.getHoster('dood')
         
