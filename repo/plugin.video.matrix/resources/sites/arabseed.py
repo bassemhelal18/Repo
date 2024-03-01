@@ -600,6 +600,8 @@ def showHosters(oInputParameterHandler = False):
             
             sHosterUrl = aEntry[0].strip()
             sQual = ' ['+aEntry[1]+'p]'
+            if 'vtbe' in sHosterUrl:
+                sHosterUrl = sHosterUrl+'|Referer='+URL_MAIN
             oHoster = cHosterGui().checkHoster(sHosterUrl)
             if oHoster:
                 sTitle = sMovieTitle
