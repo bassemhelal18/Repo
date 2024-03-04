@@ -327,7 +327,7 @@ class cHosterGui:
         if ('liiivideo' in sHostName):
             return self.getHoster('qfilm')
         
-        vidhide = next((x for x in ['vidhide', 'tuktukcinema29.buzz', 'anime7u', 'gsfomqu', 'codeda', 'ma3refa.store'] if x in sHostName), None)
+        vidhide = next((x for x in ['vidhide', 'tuktukcinema29.buzz', 'anime7u', 'gsfomqu', 'codeda', 'ma3refa.store', 'coolciima'] if x in sHostName), None)
         if vidhide:    
             return self.getHoster('vidhide')
 
@@ -336,7 +336,8 @@ class cHosterGui:
 
         streamwish = next((x for x in ['streamwish', 'ankrzkz', 'cilootv', 'sfastwish', 'egtpgrvh', 'volvovideo','cimawish',
                                       'wishfast.top', 'fsdcmo.sbs', 'flaswish', 'cdnwish-down', 'heavenlyvideo', 'm3lomatik.store',
-                                       'egopxutd', 'obeywish', 'trgsfjller', 'trgsfjll', 'anime4low', 'embedwish', 'cdnwish', 'ma2d.store'] if x in sHostName), None)
+                                       'egopxutd', 'obeywish', 'trgsfjller', 'trgsfjll', 'anime4low', 'embedwish', 'cdnwish',
+                                        'ma2d.store', 'mohahhda'] if x in sHostName), None)
         if streamwish:
             return self.getHoster('streamwish')
         

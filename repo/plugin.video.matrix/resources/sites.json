@@ -35,6 +35,11 @@
             "active": "False",
             "url": "https://1-cima4u.cam/"
         },
+        "coolcima": {
+            "label": "CoolCima",
+            "active": "True",
+            "url": "https://cooolman.store/"
+        },
         "dramacafe": {
             "label": "Dramacafe",
             "active": "True",
