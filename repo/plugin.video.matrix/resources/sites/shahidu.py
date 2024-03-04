@@ -23,7 +23,7 @@ icons = ADDON.getSetting('defaultIcons')
 
 URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
 
-RAMADAN_SERIES = (URL_MAIN + '/category/مسلسلات-رمضان-2023', 'showSeries')
+RAMADAN_SERIES = (URL_MAIN + '/category/مسلسلات-رمضان-2024', 'showSeries')
 
 
 MOVIE_EN = (URL_MAIN + '/category/افلام-اجنبي', 'showMovies')

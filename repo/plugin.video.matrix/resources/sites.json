@@ -37,8 +37,8 @@
         },
         "dramacafe": {
             "label": "Dramacafe",
-            "active": "False",
-            "url": "https://wwl.dramacafe-tv.com/"
+            "active": "True",
+            "url": "https://ww2.dramacafe-tv.com/"
         },
         "egydead": {
             "label": "Egydead",
@@ -48,7 +48,7 @@
         "halacima": {
             "label": "Halacima",
             "active": "True",
-            "url": "https://halacima.media/"
+            "url": "https://halaacima2.shop/"
         },
         "egybest": {
             "label": "EgyBest",
@@ -69,7 +69,7 @@
             "label": "Shahid4u",
             "active": "True",
             "cloudflare": "False",
-            "url": "https://shahee4u.cam"
+            "url": "https://shii4u.cam/"
         },
         "themoviedb_org": {
             "label": "The Movie Database",
@@ -79,7 +79,7 @@
         "topcinema": {
             "label": "TopCinema",
             "active": "True",
-            "url": "https://web.topcinema.cam/"
+            "url": "https://web4.topcinema.top/"
         },
         "topimdb": {
             "label": "Top IMDB",

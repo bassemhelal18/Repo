@@ -27,7 +27,7 @@ MOVIE_CLASSIC = (URL_MAIN + 'category/افلام/arabic-movies-افلام-عرب
 MOVIE_FAM = (URL_MAIN + 'mpaa/pg/', 'showMovies')
 MOVIE_EN = (URL_MAIN + 'category/أفلام/10-movies-english-افلام-اجنبي/list/recent/', 'showMovies')
 
-RAMADAN_SERIES = (URL_MAIN + '/category/مسلسلات/مسلسلات-رمضان-2023-series-ramadan-2023/', 'showSeries')
+RAMADAN_SERIES = (URL_MAIN + 'category/مسلسلات/مسلسلات-رمضان-2024/', 'showSeries')
 MOVIE_AR = (URL_MAIN + '/category/افلام/افلام-عربي-arabic-movies/', 'showMovies')
 MOVIE_TURK = (URL_MAIN + 'category/افلام/افلام-تركى-turkish-films/', 'showMovies')
 MOVIE_HI = (URL_MAIN + 'category/افلام/افلام-هندي-indian-movies/', 'showMovies')
