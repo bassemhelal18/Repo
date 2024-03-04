@@ -21,15 +21,7 @@ ADDON = addon()
 icons = ADDON.getSetting('defaultIcons') 
 
 URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
-oParser = cParser()
- 
-oRequestHandler = cRequestHandler(URL_MAIN)
-sHtmlContent = oRequestHandler.request()
-sPattern = '<meta property="og:url" content="([^"]+)'
-aResult = oParser.parse(sHtmlContent, sPattern)    
 
-if (aResult[0]):
-        URL_MAIN = aResult[1][0]+'/'
 
 MOVIE_EN = (URL_MAIN + 'movies?lang=الإنجليزية', 'showMovies')
 MOVIE_AR = (URL_MAIN + 'movies?lang=العربية', 'showMovies')

@@ -20,17 +20,6 @@ SITE_NAME = 'Mycima'
 SITE_DESC = 'arabic vod'
  
 URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
-oParser = cParser()
- 
-oRequestHandler = cRequestHandler(URL_MAIN)
-sHtmlContent = oRequestHandler.request()
-    # (.+?) ([^<]+)
-
-sPattern = '<a href="(.+?)"><div class="HeaderLogo">'
-aResult = oParser.parse(sHtmlContent, sPattern)
-    
-if (aResult[0]):
-    URL_MAIN = aResult[1][0]+'/'
 
 MOVIE_TOP = (URL_MAIN + 'category/افلام/movies-english-افلام-اجنبي/list/best/', 'showMovies')
 MOVIE_POP = (URL_MAIN + 'category/افلام/movies-english-افلام-اجنبي/list/top/', 'showMovies')
