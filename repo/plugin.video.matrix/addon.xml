@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.matrix" name="matrix" version="999.0.87" provider-name="bassemhelal">
+<addon id="plugin.video.matrix" name="matrix" version="999.0.88" provider-name="bassemhelal">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
         <import addon="Bassemhelal18_Repo"/>

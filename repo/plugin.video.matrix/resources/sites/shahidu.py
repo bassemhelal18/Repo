@@ -23,34 +23,34 @@ icons = ADDON.getSetting('defaultIcons')
 
 URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
 
-RAMADAN_SERIES = (URL_MAIN + '/category/مسلسلات-رمضان-2024', 'showSeries')
+RAMADAN_SERIES = (URL_MAIN + 'category/مسلسلات-رمضان-2024', 'showSeries')
 
 
-MOVIE_EN = (URL_MAIN + '/category/افلام-اجنبي', 'showMovies')
-MOVIE_AR = (URL_MAIN + '/category/افلام-عربي', 'showMovies')
-MOVIE_HI = (URL_MAIN + '/category/افلام-هندي', 'showMovies')
-MOVIE_ASIAN = (URL_MAIN + '/category/افلام-اسيوية', 'showMovies')
-MOVIE_TURK = (URL_MAIN + '/category/افلام-تركية', 'showMovies')
+MOVIE_EN = (URL_MAIN + 'category/افلام-اجنبي', 'showMovies')
+MOVIE_AR = (URL_MAIN + 'category/افلام-عربي', 'showMovies')
+MOVIE_HI = (URL_MAIN + 'category/افلام-هندي', 'showMovies')
+MOVIE_ASIAN = (URL_MAIN + 'category/افلام-اسيوية', 'showMovies')
+MOVIE_TURK = (URL_MAIN + 'category/افلام-تركية', 'showMovies')
 MOVIE_GENRES = (True, 'moviesGenres')
 
-SERIE_EN = (URL_MAIN + '/category/مسلسلات-اجنبي', 'showSeries')
-SERIE_AR = (URL_MAIN + '/category/مسلسلات-عربي', 'showSeries')
-SERIE_HEND = (URL_MAIN + '/category/مسلسلات-هندية', 'showSeries')
-SERIE_ASIA = (URL_MAIN + '/category/مسلسلات-اسيوية', 'showSeries')
-SERIE_TR = (URL_MAIN + '/category/مسلسلات-تركية', 'showSeries')
+SERIE_EN = (URL_MAIN + 'category/مسلسلات-اجنبي', 'showSeries')
+SERIE_AR = (URL_MAIN + 'category/مسلسلات-عربي', 'showSeries')
+SERIE_HEND = (URL_MAIN + 'category/مسلسلات-هندية', 'showSeries')
+SERIE_ASIA = (URL_MAIN + 'category/مسلسلات-اسيوية', 'showSeries')
+SERIE_TR = (URL_MAIN + 'category/مسلسلات-تركية', 'showSeries')
 SERIE_GENRES = (True, 'seriesGenres')
 
-ANIM_MOVIES = (URL_MAIN + '/category/افلام-انمي', 'showMovies')
-ANIM_NEWS = (URL_MAIN+'/category/مسلسلات-انمي' , 'showSeries')
+ANIM_MOVIES = (URL_MAIN + 'category/افلام-انمي', 'showMovies')
+ANIM_NEWS = (URL_MAIN+'category/مسلسلات-انمي' , 'showSeries')
 
-REPLAYTV_NEWS = (URL_MAIN + '/category/برامج-تلفزيونية', 'showSeries')
+REPLAYTV_NEWS = (URL_MAIN + 'category/برامج-تلفزيونية', 'showSeries')
 
-DOC_NEWS = (URL_MAIN + '/genre/وثائقي', 'showMovies')
-DOC_SERIES = (URL_MAIN + '/genre/وثائقي', 'showSeries')
+DOC_NEWS = (URL_MAIN + 'genre/وثائقي', 'showMovies')
+DOC_SERIES = (URL_MAIN + 'genre/وثائقي', 'showSeries')
 
 
-URL_SEARCH_MOVIES = (URL_MAIN + '/search?s=فيلم+', 'showMovies')
-URL_SEARCH_SERIES = (URL_MAIN + '/search?s=مسلسل+', 'showSeries')
+URL_SEARCH_MOVIES = (URL_MAIN + 'search?s=فيلم+', 'showMovies')
+URL_SEARCH_SERIES = (URL_MAIN + 'search?s=مسلسل+', 'showSeries')
 FUNCTION_SEARCH = 'showMovies'
  
 def load():
@@ -126,7 +126,7 @@ def showSearch():
  
     sSearchText = oGui.showKeyBoard()
     if sSearchText:
-        sUrl = URL_MAIN + '/search?s=فيلم+'+sSearchText
+        sUrl = URL_MAIN + 'search?s=فيلم+'+sSearchText
         showMovies(sUrl)
         oGui.setEndOfDirectory()
         return
@@ -136,7 +136,7 @@ def showSearchSeries():
  
     sSearchText = oGui.showKeyBoard()
     if sSearchText:
-        sUrl = URL_MAIN + '/search?s=مسلسل+'+sSearchText
+        sUrl = URL_MAIN + 'search?s=مسلسل+'+sSearchText
         showSeries(sUrl)
         oGui.setEndOfDirectory()
         return

@@ -1,17 +1,16 @@
 ﻿#-*- coding: utf-8 -*-
 
-from resources.lib.handler.requestHandler import cRequestHandler
-from resources.lib.parser import cParser
-from resources.lib.comaddon import dialog
+
+import requests 
 from resources.hosters.hoster import iHoster
 from resources.lib.comaddon import VSlog
 
-UA = 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Mobile Safari/537.36'
+
 
 class cHoster(iHoster):
 
     def __init__(self):
-        iHoster.__init__(self, 'sendme', 'Send.Me')
+        iHoster.__init__(self, 'sendme', '[Send.Me]')
 
     def isDownloadable(self):
         return True
@@ -21,22 +20,22 @@ class cHoster(iHoster):
 
     def _getMediaLinkForGuest(self, autoPlay = False):
         VSlog(self._url)
-        sUrl = self._url
-
-        oRequest = cRequestHandler(self._url)
-        sHtmlContent = oRequest.request()
-        oParser = cParser()
-            # (.+?) .+?
-        sPattern = '<source src="([^"]+)'
-        aResult = oParser.parse(sHtmlContent, sPattern)
+        s = requests.Session()
+        file_id = self._url.split("/")[-1]
+       
+        data = {"op": "download2", "id": file_id}
+                
+        link = s.post("https://send.cm/", data=data, allow_redirects=False)
         
-        api_call = False
-
-        if aResult[0]:
-            api_call = aResult[1][0]
+        if "Location" in link.headers:
+            api_call=link.headers["Location"]+"|Referer=https://send.cm/"
+           
+        
+        
+        
 
         if api_call:
-            return True, api_call+ '|Referer=https://send.cm/'
+            return True, api_call
 
         return False, False
         

@@ -23,7 +23,7 @@ class cMultiup:
         sHtmlContent = oRequestHandler.request()
         
         
-        sPattern = 'link="([^"]+)".*?validity="valid"'
+        sPattern = 'link="([^"]+)".*?validity'
         oParser = cParser()
         aResult = oParser.parse(sHtmlContent, sPattern)
         

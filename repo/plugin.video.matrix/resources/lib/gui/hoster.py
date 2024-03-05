@@ -749,6 +749,9 @@ class cHosterGui:
         
         if ('megaup.net' in sHostName):
             return self.getHoster('megaup')
+        
+        if ('send.cm' in sHostName):
+            return self.getHoster('sendme')
 
         if ('.m3u8' in sHosterUrl):
             return self.getHoster('lien_direct')
@@ -759,7 +762,7 @@ class cHosterGui:
 				
         val = next((x for x in ['nitroflare', 'tubeload.', 'Facebook', 'fastdrive', 'openload',
                                 'doodrive', 'fikper', 'turbobit', 'rapidgator', 'katfile', 'mega4upload.com', 
-                                'send.cm', 'bowfile', 'ddownload', 'uploadbank', 'douploads', 'dailyuploads', 
+                                'bowfile', 'ddownload', 'uploadbank', 'douploads', 'dailyuploads', 
                                 'uploady','mdiaload', 'usersdrive'] if x in sHostName), None)
         if val:
             return False
