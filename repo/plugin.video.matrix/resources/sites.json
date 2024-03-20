@@ -35,6 +35,11 @@
             "active": "False",
             "url": "https://1-cima4u.cam/"
         },
+        "cimaclub": {
+            "label": "CimaClub",
+            "active": "True",
+            "url": "https://cimaclub.top/"
+        },
         "coolcima": {
             "label": "CoolCima",
             "active": "True",

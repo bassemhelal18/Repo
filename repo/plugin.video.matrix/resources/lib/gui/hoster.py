@@ -710,6 +710,9 @@ class cHosterGui:
         if ('qiwi' in sHostName):
             return self.getHoster('qiwi')
 
+        if ('cimaclub' in sHostName):
+            return self.getHoster('cimaclub')    
+
         if ('darkibox' in sHostName):
             return self.getHoster('darkibox')
         
