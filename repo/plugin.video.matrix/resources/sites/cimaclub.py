@@ -149,27 +149,16 @@ def showMovies(sSearch = ''):
             oGui.addMovie(SITE_IDENTIFIER, 'showServers', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
 
         progress_.VSclose(progress_)
- 
-    sPattern = 'class="page-link" href="([^"]+)">([^<]+)</a></li>'
-    aResult = oParser.parse(sHtmlContent, sPattern)
-    if aResult[0]:
-            for aEntry in aResult[1]:
-                sTitle = aEntry[1]
-            
-                sTitle =  "PAGE " + sTitle
-                sTitle =   '[COLOR red]'+sTitle+'[/COLOR]'
-                siteUrl = URL_MAIN + aEntry[0].replace('---','-–-')
-                sThumb = ""
-                sDesc = ""
-
-                oOutputParameterHandler = cOutputParameterHandler()
-                oOutputParameterHandler.addParameter('siteUrl',siteUrl)
-			
-                oGui.addDir(SITE_IDENTIFIER, 'showMovies', sTitle, '', oOutputParameterHandler)
+    
+        sNextPage = __checkForNextPage(sHtmlContent)
+        if sNextPage:
+            oOutputParameterHandler = cOutputParameterHandler()
+            oOutputParameterHandler.addParameter('siteUrl', sNextPage)
+            oGui.addDir(SITE_IDENTIFIER, 'showMovies', '[COLOR teal]Next >>>[/COLOR]', icons +'/next.png', oOutputParameterHandler)
  
     if not sSearch:
         oGui.setEndOfDirectory()
-
+    
 def showSerie(sSearch = ''):
     oGui = cGui()
     if sSearch:
@@ -212,24 +201,13 @@ def showSerie(sSearch = ''):
                 oGui.addTV(SITE_IDENTIFIER, 'showSeasons', sDisplayTitle, '', sThumb, sDesc, oOutputParameterHandler)
 
         progress_.VSclose(progress_)
- 
-    sPattern = 'class="page-link" href="([^"]+)">([^<]+)</a></li>'
-    aResult = oParser.parse(sHtmlContent, sPattern)
-    if aResult[0]:
-        for aEntry in aResult[1]:
-            sTitle = aEntry[1]
-            
-            sTitle =  "PAGE " + sTitle
-            sTitle =   '[COLOR red]'+sTitle+'[/COLOR]'
-            siteUrl = URL_MAIN + aEntry[0].replace('---','-–-')
-            sThumb = ""
-            sDesc = ""
-
+    
+        sNextPage = __checkForNextPage(sHtmlContent)
+        if sNextPage:
             oOutputParameterHandler = cOutputParameterHandler()
-            oOutputParameterHandler.addParameter('siteUrl',siteUrl)
-			
-            oGui.addDir(SITE_IDENTIFIER, 'showSerie', sTitle, '', oOutputParameterHandler)
-         
+            oOutputParameterHandler.addParameter('siteUrl', sNextPage)
+            oGui.addDir(SITE_IDENTIFIER, 'showSerie', '[COLOR teal]Next >>>[/COLOR]', icons +'/next.png', oOutputParameterHandler)
+ 
     if not sSearch:
         oGui.setEndOfDirectory()
 
@@ -346,7 +324,7 @@ def showEpisodes():
 		
 def __checkForNextPage(sHtmlContent):
     oParser = cParser()
-    sPattern = 'class="page-link" href="([^"]+)'
+    sPattern = '<a class="page-link" href="([^"]+)">›</a>'
     aResult = oParser.parse(sHtmlContent, sPattern)
     if aResult[0]:       
         return URL_MAIN + aResult[1][0]
