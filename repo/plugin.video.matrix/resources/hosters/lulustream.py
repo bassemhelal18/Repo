@@ -1,6 +1,7 @@
 #-*- coding: utf-8 -*-
 
 from resources.hosters.hoster import iHoster
+from resources.lib import helpers
 from resources.lib.packer import cPacker
 from resources.lib.comaddon import dialog, VSlog
 import re
@@ -34,6 +35,6 @@ class cHoster(iHoster):
             api_call = aResult.group(1)
 
         if api_call:
-            return True, api_call + '|User-Agent=' + UA + '&Referer=' + self._url + '&Origin=' + self._url.rsplit('/', 1)[0]
+            return True, api_call + helpers.append_headers(headers)
 
         return False, False

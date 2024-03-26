@@ -123,7 +123,7 @@ def showMovies(sSearch = ''):
     sHtmlContent = oRequestHandler.request()
 
     
-    sPattern = '<div class="BlockItem"><a href="(.+?)".*?url.*?(https.*?);.*?class="slide-contents"><h4>(.*?)</h4>'
+    sPattern = 'class="BlockItem"><a.*?href="(.+?)".*?url.*?(https.*?);.*?class="slide-contents"><h4>(.*?)</h4>'
 
     oParser = cParser()
     aResult = oParser.parse(sHtmlContent, sPattern)
@@ -182,7 +182,7 @@ def showSeries(sSearch = ''):
     sHtmlContent = oRequestHandler.request()
 
     
-    sPattern = '<div class="BlockItem"><a href="(.+?)".*?url.*?(https.*?);.*?class="slide-contents"><h4>(.*?)</h4>'
+    sPattern = 'class="BlockItem"><a.*?href="(.+?)".*?url.*?(https.*?);.*?class="slide-contents"><h4>(.*?)</h4>'
 
     oParser = cParser()
     aResult = oParser.parse(sHtmlContent, sPattern)

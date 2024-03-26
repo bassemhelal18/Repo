@@ -4,14 +4,14 @@
 from requests import post, Session, Request, RequestException, ConnectionError
 from resources.lib.comaddon import addon, dialog, VSlog, VSPath, isMatrix
 from resources.lib.util import urlEncode, urlHostName
-from resolveurl import common
+from resources.lib import random_ua
 import requests.packages.urllib3.util.connection as urllib3_cn
 import socket
 from resources.lib.SQLiteCache import SqliteCache
 import time
 db = SqliteCache()
 
-
+UA = random_ua.get_ua()
 
 class cRequestHandler:
     REQUEST_TYPE_GET = 0
@@ -194,7 +194,7 @@ class cRequestHandler:
         return ''
 
     def __setDefaultHeader(self):
-        self.addHeaderEntry('User-Agent', common.RAND_UA)
+        self.addHeaderEntry('User-Agent', UA)
         self.addHeaderEntry('Accept-Language', 'en-US,en;q=0.9')
         self.addHeaderEntry('Accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7')
 
@@ -303,15 +303,15 @@ class cRequestHandler:
                     
                     # Tenter par FlareSolverr
                     CLOUDPROXY_ENDPOINT="https://cf.jmdkh.eu.org/v1"
-                    data = {"cmd": "request.get", "url": self.__sUrl, "maxTimeout": 60000}
-
+                    if method == 'GET':
+                            data = {"cmd": 'request.%s' % method.lower(), "url": self.__sUrl, "maxTimeout": 40000}
+                    else:    
+                            data = {"cmd": 'request.%s' % method.lower(), "url": self.__sUrl, "postData": _request.data, "maxTimeout": 40000}
                     json_response = False
                     try:
-                        # On fait une requete.
                         json_response = post(CLOUDPROXY_ENDPOINT, headers={"Content-Type": "application/json"}, json=data)
                     except:
-                        dialog().VSerror("%s (%s)" % ("Page protegee par Cloudflare, essayez FlareSolverr", urlHostName(self.__sUrl)))
-
+                        dialog().VSerror("%s (%s)" % ("Page protegee par Cloudflare, essayez FlareSolverr", urlHostName(self.__sUrl)))            
                     if json_response:
                         response = json_response.json()
                         if 'solution' in response:
@@ -319,6 +319,10 @@ class cRequestHandler:
                                 self.__sRealUrl = response['solution']['url']
     
                             sContent = response['solution']['response']
+                            UA = response['solution']['userAgent']
+                            cookie = response['solution']['cookies']
+                            random_ua.set_ua(UA)
+                            random_ua.savecookies(cookie)
 
             if self.oResponse and not sContent:
                 # Ignorer ces deux codes erreurs.

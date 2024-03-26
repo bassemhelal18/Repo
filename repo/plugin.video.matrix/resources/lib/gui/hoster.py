@@ -337,7 +337,7 @@ class cHosterGui:
         streamwish = next((x for x in ['streamwish', 'ankrzkz', 'cilootv', 'sfastwish', 'egtpgrvh', 'volvovideo','cimawish',
                                       'wishfast.top', 'fsdcmo.sbs', 'flaswish', 'cdnwish-down', 'heavenlyvideo', 'm3lomatik.store',
                                        'egopxutd', 'obeywish', 'trgsfjller', 'trgsfjll', 'anime4low', 'embedwish', 'cdnwish',
-                                        'ma2d.store', 'mohahhda'] if x in sHostName), None)
+                                        'ma2d.store', 'mohahhda', 'asnwish'] if x in sHostName), None)
         if streamwish:
             return self.getHoster('streamwish')
         
@@ -447,10 +447,7 @@ class cHosterGui:
             return f
         
         if ('frdl' in sHostName):
-            f = self.getHoster('resolver')
-            #mise a jour du nom
-            f.setRealHost('[FRDL]')
-            return f
+            return self.getHoster('frdl')
 
         if ('streamcherry' in sHostName):
             return self.getHoster('resolver')
@@ -591,7 +588,7 @@ class cHosterGui:
             return self.getHoster('vidhls')
         
         vidguard = next((x for x in ['vidguard', 'vembed', 'vgfplay', 'vgembed', 'vid-guard', 'v6embed', 'vgplayer', 'fertoto',
-                                'embedv'] if x in sHostName), None)
+                                'embedv','bembed'] if x in sHostName), None)
         if vidguard:
             return self.getHoster('vidguard')
         
