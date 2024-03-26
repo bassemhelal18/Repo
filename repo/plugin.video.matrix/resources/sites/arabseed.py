@@ -342,7 +342,13 @@ def showSeries(sSearch = ''):
 
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
-
+    oParser = cParser()
+    
+    sPattern = 'HomeURL = "(.+?)";'
+    aResult = oParser.parse(sHtmlContent, sPattern)    
+    if (aResult[0]):
+        URL_MAIN = aResult[1][0]
+    
     s = requests.Session()            
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:65.0) Gecko/20100101 Firefox/65.0',
 							'Referer': Quote(sUrl)}
@@ -418,6 +424,11 @@ def showSeasons():
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
     # (.+?) .+? ([^<]+)
+    sPattern = 'HomeURL = "(.+?)";'
+    aResult = oParser.parse(sHtmlContent, sPattern)    
+    if (aResult[0]):
+        URL_MAIN = aResult[1][0]
+    
     sPattern = 'data-id="(.+?)" data-season="(.+?)"><i class="fa fa-folder"></i>الموسم <span>(.+?)</span></li>'
 
     oParser = cParser()
