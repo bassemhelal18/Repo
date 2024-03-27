@@ -22,7 +22,7 @@ class cHoster(iHoster):
         oRequest = cRequestHandler(self._url)
         sHtmlContent = oRequest.request()
         oParser = cParser()
-       
+        
 
         sPattern = '(eval\(function\(p,a,c,k,e(?:.|\s)+?\))<\/script>'
         aResult = oParser.parse(sHtmlContent, sPattern)
@@ -37,10 +37,15 @@ class cHoster(iHoster):
 
             sPattern = 'file:"(.+?)"'
             aResult = oParser.parse(sHtmlContent2, sPattern)
-            VSlog(aResult)
+            
             if aResult[0]:
                 api_call = aResult[1][0] 
-
+        
+        sPattern = 'file:"(.+?)"'
+        aResult = oParser.parse(sHtmlContent, sPattern)
+        
+        if aResult[0]:
+            api_call = aResult[1][0] 
         if api_call:
             return True, api_call+ '|User-Agent=' + UA + '&Referer=' + self._url + '&Origin=' + self._url.rsplit('/', 1)[0]
 
