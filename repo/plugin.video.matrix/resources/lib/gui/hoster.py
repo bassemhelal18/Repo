@@ -327,7 +327,7 @@ class cHosterGui:
         if ('liiivideo' in sHostName):
             return self.getHoster('qfilm')
         
-        vidhide = next((x for x in ['vidhide', 'tuktukcinema29.buzz', 'anime7u', 'gsfomqu', 'codeda', 'ma3refa.store', 'coolciima'] if x in sHostName), None)
+        vidhide = next((x for x in ['vidhide', 'tuktukcinema29.buzz', 'anime7u', 'gsfomqu', 'codeda', 'ma3refa.store', 'coolciima','fdewsdc.sbs'] if x in sHostName), None)
         if vidhide:    
             return self.getHoster('vidhide')
 
@@ -345,7 +345,7 @@ class cHosterGui:
             return self.getHoster('streamrapid')
         
         if ('motvy55' in sHostName) or ('filelions' in sHostName) or ('fviplions' in sHostName)or ('lylxan' in sHostName)\
-           or ('lumiawatch' in sHostName) or ('fdewsdc.sbs' in sHostName) or ('5drama.vip' in sHostName)\
+           or ('lumiawatch' in sHostName) or ('5drama.vip' in sHostName)\
            or ('cdnlion-down' in sHostName) or ('demonvideo' in sHostName):
             return self.getHoster('filelions')
         

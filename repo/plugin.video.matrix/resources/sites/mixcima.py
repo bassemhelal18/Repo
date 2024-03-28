@@ -381,6 +381,8 @@ def showHosters(oInputParameterHandler = False):
             sHosterUrl = aEntry
             if sHosterUrl.startswith('//'):
                 sHosterUrl = 'http:' + sHosterUrl
+            if 'megamax' in sHosterUrl or 'tuktukcimamulti' in sHosterUrl:
+                continue
             if 'multiup' in sHosterUrl:
                 aResult = cMultiup().GetUrls(sHosterUrl)
                        

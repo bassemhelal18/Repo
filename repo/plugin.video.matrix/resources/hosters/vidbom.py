@@ -19,6 +19,7 @@ class cHoster(iHoster):
         oParser = cParser()
 
         oRequest = cRequestHandler(self._url)
+        oRequest.addHeaderEntry('Referer',self._url)
         sHtmlContent = oRequest.request()
 
         sPattern = 'sources: *\[{file:"([^"]+)"'

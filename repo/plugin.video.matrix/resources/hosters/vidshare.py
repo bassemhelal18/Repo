@@ -23,6 +23,7 @@ class cHoster(iHoster):
         sUrl = self._url
  
         oRequest = cRequestHandler(sUrl)
+        oRequest.addHeaderEntry('Referer',self._url)
         sHtmlContent = oRequest.request()
 
         api_call = ''
