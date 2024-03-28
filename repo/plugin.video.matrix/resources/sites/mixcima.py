@@ -9,7 +9,7 @@ from resources.lib.handler.inputParameterHandler import cInputParameterHandler
 from resources.lib.handler.outputParameterHandler import cOutputParameterHandler
 from resources.lib.handler.requestHandler import cRequestHandler
 from resources.lib.comaddon import VSlog, progress, siteManager, addon
-from resources.lib.multihost import cMultiup
+from resources.lib.multihost import cMegamax, cMultiup
 from resources.lib.parser import cParser
 from resources.lib.util import Quote
 from bs4 import BeautifulSoup
@@ -348,12 +348,26 @@ def showHosters(oInputParameterHandler = False):
                   if sHosterUrl.startswith('//'):
                      sHosterUrl = 'http:' + sHosterUrl
                                   
-                  oHoster = cHosterGui().checkHoster(sHosterUrl)
-                       
-                  if oHoster:
-                     oHoster.setDisplayName(sMovieTitle)
-                     oHoster.setFileName(sMovieTitle)
-                     cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+                  if 'megamax' in sHosterUrl or 'tuktukcimamulti' in sHosterUrl:
+                    sHtmlContent2 = cMegamax().GetUrls(sHosterUrl)
+                    sPattern = "(https.*?),(.*?p)"
+                    oParser = cParser()
+                    aResult = oParser.parse(sHtmlContent2, sPattern)
+                    if aResult[0]:
+                     for aEntry1 in aResult[1]:
+                        sHosterUrl = aEntry1[0].strip()
+                        sQual = '['+aEntry1[1]+']'
+                        oHoster = cHosterGui().checkHoster(sHosterUrl)
+                        if (oHoster):
+                            oHoster.setDisplayName(sMovieTitle+sQual)
+                            oHoster.setFileName(sMovieTitle)
+                            cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
+                  else:
+                   oHoster = cHosterGui().checkHoster(sHosterUrl)
+                   if oHoster:
+                       oHoster.setDisplayName(sMovieTitle)
+                       oHoster.setFileName(sMovieTitle)
+                       cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
     sUrl = sUrl.replace('/?watch=1','/?download=1')
     oParser = cParser()
     oRequestHandler = cRequestHandler(sUrl)
