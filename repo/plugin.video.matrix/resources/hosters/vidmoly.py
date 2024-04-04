@@ -15,7 +15,7 @@ class cHoster(iHoster):
 
     def _getMediaLinkForGuest(self, autoPlay = False):
         VSlog(self._url)
-        self._url = self._url.replace('embed-','')
+        self._url = self._url.replace('embed-','').replace('vidmoly.to','vidmoly.me')
         api_call = ''
         
         oParser = cParser()
