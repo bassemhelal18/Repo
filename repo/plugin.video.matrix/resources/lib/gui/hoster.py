@@ -763,7 +763,7 @@ class cHosterGui:
         val = next((x for x in ['nitroflare', 'tubeload.', 'Facebook', 'fastdrive', 'openload',
                                 'doodrive', 'fikper', 'turbobit', 'rapidgator', 'katfile', 'mega4upload.com', 
                                 'bowfile', 'ddownload', 'uploadbank', 'douploads', 'dailyuploads', 
-                                'uploady','mdiaload', 'usersdrive'] if x in sHostName), None)
+                                'uploady','mdiaload', 'usersdrive', '1cloudfile'] if x in sHostName), None)
         if val:
             return False
 

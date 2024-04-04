@@ -133,7 +133,8 @@ class cPlayer(xbmc.Player):
             
             item.setProperty('inputstream', 'inputstream.adaptive')
             item.setContentLookup(False)
-            item.setMimeType('application/xml+dash')
+            item.setMimeType('application/vnd.apple.mpegurl')
+            item.setMimeType('application/x-mpegurl')
             item.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')
             item.setProperty('inputstream.adaptive.manifest_type', 'hls')
             if '|' in  sUrl:
