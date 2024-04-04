@@ -19,61 +19,7 @@ class cHoster(iHoster):
         self._url = str(url)
 
     def _getMediaLinkForGuest(self, autoPlay = False):
-        # Get Redirection
-        if 'fembed' in self._url:
-            oRequest = cRequestHandler(self._url)
-            oRequest.addHeaderEntry('User-Agent', UA)
-            oRequest.request()
-            self._url = oRequest.getRealUrl()
-
-        if 'french-vid' in self._url:
-            baseUrl = 'https://www.fembed.com/api/source/'
-        elif 'fembed' in self._url or "femax20" in self._url:
-            baseUrl = 'https://www.diasfem.com/api/source/'
-        elif 'fem.tohds' in self._url:
-            baseUrl = 'https://feurl.com/api/source/'
-        else:
-            baseUrl = 'https://' + self._url.split('/')[2] + '/api/source/'
-
-        if 'fem.tohds' in self._url:
-            oRequestHandler = cRequestHandler(self._url)
-            sHtmlContent = oRequestHandler.request()
-
-            sPattern = '<iframe src="([^"]+)"'
-            oParser = cParser()
-            aResult = oParser.parse(sHtmlContent, sPattern)
-
-            url = baseUrl + aResult[1][0].rsplit('/', 1)[1]
-            postdata = 'r=""' + '&d=' + self._url.split('/')[2]
-        else:
-            url = baseUrl + self._url.rsplit('/', 1)[1]
-            postdata = "r=''" + "&d=" + self._url.split('/')[2]
-
-        oRequest = cRequestHandler(url)
-        oRequest.setRequestType(1)
-        oRequest.addHeaderEntry('User-Agent', UA)
-        oRequest.addHeaderEntry('Referer', self._url)
-        oRequest.addParametersLine(postdata)
-        page = oRequest.request(jsonDecode=True)
-        if page:
-            url = []
-            qua = []
-            for x in page['data']:
-                url.append(x['file'])
-                qua.append(x['label'])
-    
-            api_call = dialog().VSselectqual(qua, url)
-    
-            oRequest = cRequestHandler(api_call)
-            oRequest.addHeaderEntry('Host', 'fvs.io')
-            oRequest.addHeaderEntry('User-Agent', UA)
-            oRequest.request()
-            api_call = oRequest.getRealUrl()
-    
-            if api_call:
-                return True, api_call + '|User-Agent=' + UA
-
-
+        
         oRequestHandler = cRequestHandler(self._url)
         sHtmlContent = oRequestHandler.request()
         sPattern = 'var video_source = "([^"]+)"'
