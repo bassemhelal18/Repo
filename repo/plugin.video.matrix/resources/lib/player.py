@@ -135,7 +135,7 @@ class cPlayer(xbmc.Player):
             item.setContentLookup(False)
             item.setMimeType('application/xml+dash')
             item.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')
-            
+            item.setProperty('inputstream.adaptive.manifest_type', 'hls')
             if '|' in  sUrl:
                sUrl, hdrs = sUrl.split('|')
             else:

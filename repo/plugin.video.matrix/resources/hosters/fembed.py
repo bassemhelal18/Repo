@@ -13,7 +13,7 @@ UA = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:70.0) Gecko/20100101 Firefox/7
 class cHoster(iHoster):
 
     def __init__(self):
-        iHoster.__init__(self, 'fembed', 'Fembed')
+        iHoster.__init__(self, 'fembed', '-[Fembed]')
 
     def setUrl(self, url):
         self._url = str(url)
