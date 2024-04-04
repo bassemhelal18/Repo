@@ -246,7 +246,7 @@ def showEpisodes():
     if aResult[0]:
         post =  aResult[1][0]
         
-    sPattern = '<a data-season="(.*?)" href=".*?">(.*?)</a>'
+    sPattern = 'data-season="(.*?)" href=".*?">(.*?)</a>'
 
     oParser = cParser()
     aResult = oParser.parse(sHtmlContent, sPattern)
