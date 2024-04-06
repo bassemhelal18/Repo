@@ -337,7 +337,7 @@ class cHosterGui:
         streamwish = next((x for x in ['streamwish', 'ankrzkz', 'cilootv', 'sfastwish', 'egtpgrvh', 'volvovideo','cimawish',
                                       'wishfast.top', 'fsdcmo.sbs', 'flaswish', 'cdnwish-down', 'heavenlyvideo', 'm3lomatik.store',
                                        'egopxutd', 'obeywish', 'trgsfjller', 'trgsfjll', 'anime4low', 'embedwish', 'cdnwish',
-                                        'ma2d.store', 'mohahhda', 'asnwish'] if x in sHostName), None)
+                                        'ma2d.store', 'mohahhda', 'asnwish', 'jodwish'] if x in sHostName), None)
         if streamwish:
             return self.getHoster('streamwish')
         
