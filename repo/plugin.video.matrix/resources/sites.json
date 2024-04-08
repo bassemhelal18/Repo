@@ -37,7 +37,7 @@
         },
         "cimaclub": {
             "label": "CimaClub",
-            "active": "True",
+            "active": "False",
             "url": "https://cimaclub.top/"
         },
         "coolcima": {
