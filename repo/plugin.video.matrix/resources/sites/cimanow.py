@@ -134,10 +134,10 @@ def showMovies(sSearch = ''):
     
     oParser = cParser()
     oRequestHandler = cRequestHandler(sUrl)
-    page = oRequestHandler.request()
-    if 'adilbo' in page:
-       page = prase_function(page)
-       page =str(page.encode('latin-1'),'utf-8')
+    data = oRequestHandler.request()
+    
+    page = prase_function(data)
+    page =str(page.encode('latin-1'),'utf-8')
    
     sPattern = '<article aria-label="post">.*?<a href="([^"]+).+?<li aria-label="year">(.+?)</li>.+?<li aria-label="title">([^<]+)<em>.+?data-src="(.+?)" width'
     aResult = oParser.parse(page, sPattern)
@@ -227,11 +227,11 @@ def showSeries(sSearch = ''):
     
     oParser = cParser()
     oRequestHandler = cRequestHandler(sUrl)
-    page = oRequestHandler.request()
-    if 'adilbo' in page:
-       page = prase_function(page)
-       page =str(page.encode('latin-1'),'utf-8')
+    data = oRequestHandler.request()
     
+    page = prase_function(data)
+    page =str(page.encode('latin-1'),'utf-8')
+
     sPattern = '<article aria-label="post">.*?<a href="([^"]+).+?<li aria-label="year">(.+?)</li>.+?<li aria-label="title">([^<]+)<em>.+?data-src="(.+?)" width'
 
     oParser = cParser()
@@ -325,12 +325,12 @@ def showSeasons():
     # (.+?) .+?  ([^<]+)
     oParser = cParser()
     oRequestHandler = cRequestHandler(sUrl)
-    page = oRequestHandler.request()
-    if 'adilbo' in page:
-       page = prase_function(page)
-       page =str(page.encode('latin-1'),'utf-8')
+    data = oRequestHandler.request()
+    
+    page = prase_function(data)
+    page =str(page.encode('latin-1'),'utf-8')
             
-         
+            
     oParser = cParser()
     sStart = '<section aria-label="seasons">'
     sEnd = '<ul class="tabcontent" id="related">'
@@ -372,10 +372,10 @@ def showEps():
 
     oParser = cParser()
     oRequestHandler = cRequestHandler(sUrl)
-    page = oRequestHandler.request()
-    if 'adilbo' in page:
-       page = prase_function(page)
-       page =str(page.encode('latin-1'),'utf-8')
+    data = oRequestHandler.request()
+    
+    page = prase_function(data)
+    page =str(page.encode('latin-1'),'utf-8')
             
             
     oParser = cParser()
@@ -417,10 +417,11 @@ def showServer(oInputParameterHandler = False):
       
     oParser = cParser()
     oRequestHandler = cRequestHandler(sUrl)
-    page = oRequestHandler.request()
-    if 'adilbo' in page:
-       page = prase_function(page)
-       page =str(page.encode('latin-1'),'utf-8')
+    data = oRequestHandler.request()
+
+    
+    page = prase_function(data)
+    page =str(page.encode('latin-1'),'utf-8')
                     
 
     # (.+?) .+? ([^<]+)        	
@@ -532,10 +533,10 @@ def showServer(oInputParameterHandler = False):
             
     oGui.setEndOfDirectory()
 
-def prase_function(page): 
-    if 'adilbo' in page:
-     t_script = re.findall('<script.*?;.*?\'(.*?);', page, re.S)
-     t_int = re.findall('/g.....(.*?)\)', page, re.S)
+def prase_function(data):
+    if 'adilbo' in data:
+     t_script = re.findall('<script.*?;.*?\'(.*?);', data, re.S)
+     t_int = re.findall('/g.....(.*?)\)', data, re.S)
      if t_script and t_int:
          script = t_script[0].replace("'",'')
          script = script.replace("+",'')
