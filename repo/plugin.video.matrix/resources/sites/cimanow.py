@@ -541,7 +541,7 @@ def prase_function(page):
          script = script.replace("+",'')
          script = script.replace("\n",'')
          sc = script.split('.')
-         page = ''
+         
          for elm in sc:
              c_elm = base64.b64decode(elm+'==').decode()
              t_ch = re.findall('\d+', c_elm, re.S)

@@ -691,15 +691,15 @@ def showHosters(oInputParameterHandler = False):
                                 oHoster.setFileName(sMovieTitle)
                                 cHosterGui().showHoster(oGui, oHoster, sHosterUrl + "|Referer=" + rUrl, sThumb, oInputParameterHandler=oInputParameterHandler)
                                 
-                        if "stream/" in aEntry:
+                        if "role/" in aEntry:
                             aurl = aEntry
 
                             cook = oRequestHandler.GetCookies()
                             hdr = {'Sec-Fetch-Mode' : 'navigate','Cookie' : cook,'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.58','Referer' : rUrl}
                             sHtmlContent = St.get(aurl,headers=hdr)
                             sHtmlContent = sHtmlContent.content
-                            
-                            sPattern = '<source src="([^"]+)".+?size="([^"]+)'
+                          
+                            sPattern = 'file: "([^"]+)".*?label: "([^"]+)"'
                             oParser = cParser()
                             aResult = oParser.parse(sHtmlContent, sPattern)
 
@@ -712,7 +712,7 @@ def showHosters(oInputParameterHandler = False):
                                     if '.ak' in sHosterUrl:
                                         sHosterUrl = sHosterUrl+"|verifypeer=false"  
 
-                                    sTitle = ('%s  [%sp]') % (sMovieTitle, qual)
+                                    sTitle = ('%s  [%s]') % (sMovieTitle, qual)
                                     oHoster = cHosterGui().checkHoster(sHosterUrl)
                                     if oHoster:
                                         sDisplayTitle = sTitle
