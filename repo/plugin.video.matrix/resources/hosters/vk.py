@@ -5,6 +5,9 @@ from resources.lib.comaddon import dialog, VSlog
 from resources.hosters.hoster import iHoster
 import re, requests, json
 
+from resources.lib.handler.requestHandler import cRequestHandler
+from resources.lib.parser import cParser
+
 UA = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0'
 
 class cHoster(iHoster):
@@ -23,30 +26,38 @@ class cHoster(iHoster):
         if 'video_ext.php?' in media_id:
             media_id = media_id.split('video_ext.php?')[1]
 
-        query = urllib_parse.parse_qs(media_id)
+            query = urllib_parse.parse_qs(media_id)
 
-        try:
-            oid, video_id = query['oid'][0], query['id'][0]
+            try:
+                oid, video_id = query['oid'][0], query['id'][0]
 
-        except:
-            oid, video_id = re.findall('video(.*)_(.*)', media_id)[0]
+            except:
+                oid, video_id = re.findall('video(.*)_(.*)', media_id)[0]
         
 
-        sources = self.__get_sources(oid, video_id, headers)
-        if sources:
-            sources.sort(key=lambda x: int(x[0]), reverse=True)
+            sources = self.__get_sources(oid, video_id, headers)
+            if sources:
+                sources.sort(key=lambda x: int(x[0]), reverse=True)
         
-        if len(sources) == 1:
-            api_call = sources[0][1]
+            if len(sources) == 1:
+                api_call = sources[0][1]
             
-        elif len(sources) > 1:
-            url=[]
-            qua=[]
-            for aEntry in sources:
-                url.append(str(aEntry[1]))
-                qua.append(str(aEntry[0]))
-            api_call = dialog().VSselectqual(qua, url)
+            elif len(sources) > 1:
+                url=[]
+                qua=[]
+                for aEntry in sources:
+                    url.append(str(aEntry[1]))
+                    qua.append(str(aEntry[0]))
+                api_call = dialog().VSselectqual(qua, url)
+        else:
+            oRequest = cRequestHandler(self._url)
+            sHtmlContent = oRequest.request()
+            oParser = cParser()
+            sPattern = '<div class="docs_no_preview_download_btn_container">.*?href="([^"]+)"'
+            aResult = oParser.parse(sHtmlContent, sPattern)
 
+            if aResult[0]:
+                api_call = aResult[1][0]
         if api_call:
             return True, api_call + '|User-Agent=' + UA + '&Referer=' + self._url
 
