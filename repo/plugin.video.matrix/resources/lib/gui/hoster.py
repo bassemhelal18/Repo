@@ -553,7 +553,7 @@ class cHosterGui:
         if ('skyvid' in sHostName)or ('gvadz' in sHostName):
             return self.getHoster('skyvid')
             
-        arabseed = next((x for x in ['seeeed' ,'reviewtech', 'reviewrate', 'techinsider'] if x in sHostName), None)
+        arabseed = next((x for x in ['seeeed' ,'reviewtech', 'reviewrate', 'techinsider', 'gamezone.cam'] if x in sHostName), None)
         if arabseed:
            return self.getHoster('arabseed')    
         
