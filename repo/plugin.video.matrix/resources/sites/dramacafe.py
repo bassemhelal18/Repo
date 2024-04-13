@@ -367,7 +367,9 @@ def showHosters(oInputParameterHandler = False):
             sTitle =  sMovieTitle
             if url.startswith('//'):
                url = 'http:' + url
-				
+			
+            if 'vtbe' in url:
+                url = url +'|Referer='+URL_MAIN	
 					
             
             sHosterUrl = url 
@@ -398,7 +400,8 @@ def showHosters(oInputParameterHandler = False):
                url = 'http:' + url
 				
 					
-            
+            if 'vtbe' in url:
+                url = url +'|Referer='+URL_MAIN
             sHosterUrl = url 
             if 'userload' in sHosterUrl:
                sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN

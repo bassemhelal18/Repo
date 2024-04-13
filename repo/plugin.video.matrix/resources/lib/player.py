@@ -130,22 +130,26 @@ class cPlayer(xbmc.Player):
                 dialog().VSerror('Nécessite kodi 17 minimum')
                 return
         elif '.m3u8' in sUrl:
-            
-            item.setProperty('inputstream', 'inputstream.adaptive')
-            item.setContentLookup(False)
-            item.setMimeType('application/vnd.apple.mpegurl')
-            item.setMimeType('application/x-mpegurl')
-            item.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')
-            item.setProperty('inputstream.adaptive.manifest_type', 'hls')
-            if '|' in  sUrl:
-               sUrl, hdrs = sUrl.split('|')
+            if 'lulustream' or 'luluvdo' in sUrl:
+                xbmcplugin.setResolvedUrl(sPluginHandle, True, item)
+                VSlog('Player use setResolvedUrl() method')
             else:
+             item.setProperty('inputstream', 'inputstream.adaptive')
+             item.setContentLookup(False)
+             item.setMimeType('application/vnd.apple.mpegurl')
+             item.setMimeType('application/x-mpegurl')
+             item.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')
+             item.setProperty('inputstream.adaptive.manifest_type', 'hls')
+             if '|' in  sUrl:
+               sUrl, hdrs = sUrl.split('|')
+             else:
                hdrs=''
-            item.setProperty('inputstream.adaptive.stream_headers', hdrs)
-            item.setProperty('inputstream.adaptive.manifest_headers', hdrs)
+             item.setProperty('inputstream.adaptive.stream_headers', hdrs)
+             item.setProperty('inputstream.adaptive.manifest_headers', hdrs)
             
             xbmcplugin.setResolvedUrl(sPluginHandle, True, listitem=item)
             VSlog('Player use inputstream addon')
+        
         # 1 er mode de lecture
         elif player_conf == '0':
             self.play(sUrl, item)

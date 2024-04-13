@@ -288,7 +288,7 @@ class cHosterGui:
         if ('gofile' in sHostName):
             return self.getHoster('gofile')
         if ('drop.download' in sHostName):
-            return self.getHoster('resolver')
+            return self.getHoster('drop')
 
         if ('sblanh' in sHostName):
             return self.getHoster('resolver')
@@ -456,10 +456,8 @@ class cHosterGui:
             return self.getHoster('resolver')
 			
         if ('clicknupload' in sHostName):
-            f = self.getHoster('resolver')
-            #mise a jour du nom
-            f.setRealHost('[CLICKNUPLOAD]')
-            return f
+            return self.getHoster('clicknupload')
+            
         
         if ('linkbox' in sHostName) or ('sharezweb' in sHostName):
             f = self.getHoster('resolver')

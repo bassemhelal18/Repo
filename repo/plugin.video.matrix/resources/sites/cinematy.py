@@ -419,7 +419,15 @@ def showHosters(oInputParameterHandler = False):
     oRequestHandler = cRequestHandler(sUrl)
     cook = oRequestHandler.GetCookies()  
     sHtmlContent = oRequestHandler.request()
-
+    
+    oParser = cParser()
+    sPattern =  "<link rel='dns-prefetch' href='([^']+)' />" 
+    aResult = oParser.parse(sHtmlContent,sPattern)
+    if aResult[0]:
+        urlre = aResult[1][0] 
+        if urlre.startswith('//'):
+               urlre = 'https:' + urlre
+        
     oParser = cParser()
     sPattern =  'postid-(.*?)"' 
     aResult = oParser.parse(sHtmlContent,sPattern)
@@ -456,6 +464,8 @@ def showHosters(oInputParameterHandler = False):
                 sTitle = sMovieTitle
                 if 'mystream' in sHosterUrl:
                     sHosterUrl = sHosterUrl + "|Referer=" + URL_MAIN    
+                if 'ma2d' in sHosterUrl:
+                    sHosterUrl = sHosterUrl + "|Referer=" + urlre
                 oHoster = cHosterGui().checkHoster(sHosterUrl)
                 if oHoster:
                     oHoster.setDisplayName(sTitle)
@@ -483,7 +493,8 @@ def showHosters(oInputParameterHandler = False):
             sTitle = sMovieTitle
             if url.startswith('//'):
                url = 'http:' + url
-
+            if 'ma2d' in sHosterUrl:
+                    sHosterUrl = sHosterUrl + "|Referer=" + urlre
             sHosterUrl = url 
             oHoster = cHosterGui().checkHoster(sHosterUrl)
             if oHoster:
