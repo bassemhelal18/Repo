@@ -645,35 +645,6 @@ def showHosters(oInputParameterHandler = False):
         oRequest = cRequestHandler(murl)
         sHtmlContent = oRequest.request()
 
-    
-
-    sPattern =  '>Click here</span>.+?<a href="([^"]+)' 
-    aResult = oParser.parse(sHtmlContent,sPattern)
-    
-    if aResult[0]:
-        murl =  aResult[1][0]
-  
-        oRequest = cRequestHandler(murl)
-        oRequest.disableSSL()
-        sHtmlContent = oRequest.request()
-    
-    import requests
-    s = requests.Session() 
-    from resources.lib import recaptcha_v2
-    from resolveurl import common
-    test = recaptcha_v2.UnCaptchaReCaptcha().processCaptcha("6LdMb-QZAAAAAPpUMcYZSn9CpIgBqDVAfTx_SAao", lang='en', Referer=URL_MAIN)
-    data = {'g-recaptcha-response':test}
-    url = URL_MAIN+'/verify'
-    headers = {'User-Agent': common.RAND_UA,
-                    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
-                    'Accept-Language': 'en-US,en;q=0.9',
-                    'Accept-Encoding': 'gzip, deflate, br',
-                    'Referer': murl,
-                    'Content-Type': 'application/x-www-form-urlencoded'}
-    r = s.post(url,data=data,headers=headers)
-    rt = s.get(murl)
-    sHtmlContent = rt.text
-    
     oParser = cParser()           
     sPattern =  '<source.+?src="(.+?)".+?size="(.+?)"' 
 	
