@@ -33,7 +33,8 @@ class cHoster(iHoster):
         link = s.post("https://send.cm/", data=data, allow_redirects=False)
         
         if "Location" in link.headers:
-            api_call=link.headers["Location"]+"|Referer=https://send.cm/"
+            data = str(link.headers['Location']).replace(' ','%20')
+            api_call=data+"|Referer=https://send.cm/"
            
         if api_call:
             return True, api_call

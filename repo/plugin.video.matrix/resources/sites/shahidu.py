@@ -484,6 +484,8 @@ def showHosters(oInputParameterHandler = False):
     
     sUrl2 = sUrl.replace('/download/','/watch/')
     oRequestHandler = cRequestHandler(sUrl2)
+    oRequestHandler.disableRedirect()
+    oRequestHandler.disableSSL()
     sHtmlContent1 = oRequestHandler.request()
     oParser = cParser()
 
@@ -512,15 +514,15 @@ def showHosters(oInputParameterHandler = False):
     sStart = 'class="down-container">'
     sEnd = '<button style='
     sHtmlContent0 = oParser.abParse(sHtmlContent, sStart, sEnd)
-
-    sPattern = '<div class="qual">.+?</i>(.+?)</h1>(.+?)<hr/>'
+    
+    sPattern = '<div\s*class="qual">.+?</i>(.+?)</h1>(.*?)<hr'
     oParser = cParser()
     aResult = oParser.parse(sHtmlContent0, sPattern)
 
     if aResult[0] :
        
         for aEntry in aResult[1]:
-            sQual = aEntry[0].replace("سيرفرات تحميل","")
+            sQual = aEntry[0].replace("سيرفرات تحميل","").strip()
             sHtmlContent1 = aEntry[1]
 
             sPattern = 'href="([^"]+)'
