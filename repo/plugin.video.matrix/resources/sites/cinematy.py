@@ -308,7 +308,7 @@ def showSeasons():
         sEnd = '</div>'
         sHtmlContent = oParser.abParse(sHtmlContent2, sStart, sEnd)
     # (.+?) .+? ([^<]+)
-        sPattern = '<a class=".+?" href="(.+?)" title="(.+?)"'
+        sPattern = 'href="(.+?)" title="(.+?)"'
 
         oParser = cParser()
         aResult = oParser.parse(sHtmlContent, sPattern)
