@@ -487,7 +487,7 @@ class cHosterGui:
         if ('eeggyy' in sHosterUrl):
             return self.getHoster('egybest')
 
-        if ('shoffree' in sHostName) or ('egy-best' in sHostName) or ('egy.best' in sHostName):
+        if ('shoffree' in sHostName) or ('egy-best' in sHostName) or ('egy.best' in sHostName)or ('egybest' in sHostName):
             return self.getHoster('shoffree')    
         
         if ('filemoon' in sHostName):

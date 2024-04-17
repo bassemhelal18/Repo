@@ -77,7 +77,7 @@
         },
         "mixcima": {
             "label": "Mixcima",
-            "active": "True",
+            "active": "False",
             "url": "https://mixcima.online/"
         },
         "shahidu": {
