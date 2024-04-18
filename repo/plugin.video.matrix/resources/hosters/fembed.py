@@ -5,7 +5,7 @@
 from resources.lib.handler.requestHandler import cRequestHandler
 from resources.lib.parser import cParser
 from resources.hosters.hoster import iHoster
-from resources.lib.comaddon import dialog
+from resources.lib.comaddon import VSlog, dialog
 
 UA = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0'
 
@@ -26,6 +26,6 @@ class cHoster(iHoster):
         oParser = cParser()
         aResult = oParser.parse(sHtmlContent, sPattern)
         if aResult:
-            return True, aResult[1][0] + '|User-Agent=' + UA
+            return True, aResult[1][0] + '|User-Agent=' + UA +'&Referer=https://sendvid.com/'
 
         return False, False

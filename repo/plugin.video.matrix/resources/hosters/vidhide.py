@@ -18,8 +18,12 @@ class cHoster(iHoster):
         self._url = self._url.replace('/d/','/v/').replace('/f/','/v/').replace('/file/','/v/')
         VSlog(self._url)
         api_call = ''
-
+        sReferer = self._url
+        if '|Referer=' in self._url:
+            sReferer = self._url.split('|Referer=')[1]            
+            self._url = self._url.split('|Referer=')[0]
         oRequest = cRequestHandler(self._url)
+        oRequest.addHeaderEntry('Referer',sReferer)
         sHtmlContent = oRequest.request()
         oParser = cParser()
         

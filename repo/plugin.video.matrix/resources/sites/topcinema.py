@@ -465,7 +465,10 @@ def showHosters(oInputParameterHandler = False):
             if aResult[0]:
                 for aEntry in aResult[1]:           
                     url = aEntry
-
+                    if 'trgsfjll' in url:
+                        url = url+'|Referer='+URL_MAIN
+                    if 'vidhide' in url:
+                        url = url+'|Referer='+URL_MAIN
                     if url.startswith('//'):
                         url = 'http:' + url
             sTitle = sMovieTitle         		
@@ -499,7 +502,10 @@ def showHosters(oInputParameterHandler = False):
             sTitle = sMovieTitle
             if url.startswith('//'):
                url = 'http:' + url
-             					
+            if 'trgsfjll' in url:
+                url = url+'|Referer='+URL_MAIN 	
+            if 'vidhide' in url:
+                url = url+'|Referer='+URL_MAIN     				
             sHosterUrl = url 
             if 'mdiaload' in sHosterUrl:
                      continue
