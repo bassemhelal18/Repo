@@ -1,6 +1,6 @@
 ﻿#-*- coding: utf-8 -*-
 # Yonn1981 https://github.com/Yonn1981/Repo
-
+from resources.lib import helpers
 from resources.lib.handler.requestHandler import cRequestHandler
 from resources.hosters.hoster import iHoster
 from resources.lib.comaddon import VSlog
@@ -64,6 +64,6 @@ class cHoster(iHoster):
                   api_call = api_call.replace(' ', '%20')
          
          if api_call:
-             return True, api_call
+             return True, api_call + helpers.append_headers(headers)
 
          return False, False
