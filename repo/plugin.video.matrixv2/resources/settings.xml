@@ -1,0 +1,1190 @@
+<?xml version="1.0" ?>
+<settings version="1">
+	<section id="plugin.video.matrixv2">
+		<category id="general" label="30020" help="">
+			<group id="presentation" label="30031">
+				<setting id="GlobalSearchPosition" type="boolean" label="30011" help="">
+					<level>0</level>
+					<default>True</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="SettingsFolder" type="boolean" label="30012" help="">
+					<level>0</level>
+					<default>True</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="replacefanart" type="boolean" label="30019" help="">
+					<level>0</level>
+					<default>True</default>
+					<control type="toggle"/>
+				</setting>
+			</group>
+			<group id="content" label="30032">
+				<setting id="prefLanguage" type="string" label="30002" help="">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="30105" help="All">0</option>
+							<option label="30103" help="German">1</option>
+							<option label="30104" help="English">2</option>
+							<option label="30194" help="Japanese">3</option>
+						</options>
+					</constraints>
+					<control type="spinner" format="string"/>
+				</setting>
+				<setting id="preferedQuality" type="string" label="30013" help="">
+					<level>0</level>
+					<default>5</default>
+					<constraints>
+						<options>
+							<option label="30106" help="240p">0</option>
+							<option label="30107" help="360p">1</option>
+							<option label="30108" help="480p">2</option>
+							<option label="30109" help="720p">3</option>
+							<option label="30110" help="1080p">4</option>
+							<option label="30111" help="Best">5</option>
+						</options>
+					</constraints>
+					<control type="spinner" format="string"/>
+				</setting>
+				<setting id="showAdult" type="boolean" label="30003" help="">
+					<level>0</level>
+					<default>False</default>
+					<control type="toggle"/>
+				</setting>
+			</group>
+			<group id="hoster" label="30034">
+				<setting id="hosterSelect" type="string" label="30005" help="">
+					<level>0</level>
+					<default>30129</default>
+					<constraints>
+						<options>
+							<option label="30129">Dialog</option>
+							<option label="30130">Auto</option>
+							<option label="30131">List</option>
+						</options>
+					</constraints>
+					<control type="spinner" format="string"/>
+				</setting>
+				<setting id="maxHoster" type="integer" label="30007" help="">
+					<level>0</level>
+					<default>100</default>
+					<constraints>
+						<minimum>10</minimum>
+						<step>1</step>
+						<maximum>1000</maximum>
+					</constraints>
+					<control type="slider" format="integer">
+						<popup>false</popup>
+					</control>
+				</setting>
+				<setting id="presortHoster" type="boolean" label="30009" help="">
+					<level>0</level>
+					<default>False</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="hosterSelect">30130</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="blockedHoster" type="string" label="30404" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control type="edit" format="string">
+						<heading>30527</heading>
+					</control>
+				</setting>
+			</group>
+			<group id="networkSettings" label="30035">
+				<setting id="cacheTime" type="integer" label="30006" help="">
+					<level>0</level>
+					<default>600</default>
+					<constraints>
+						<minimum>0</minimum>
+						<step>60</step>
+						<maximum>1800</maximum>
+					</constraints>
+					<control type="slider" format="integer">
+						<popup>false</popup>
+					</control>
+				</setting>
+				<setting id="requestTimeout" type="integer" label="30014" help="">
+					<level>0</level>
+					<default>30</default>
+					<constraints>
+						<minimum>1</minimum>
+						<step>1</step>
+						<maximum>60</maximum>
+					</constraints>
+					<control type="slider" format="integer">
+						<popup>false</popup>
+					</control>
+				</setting>
+				<setting id="cacheDeltaDay" type="integer" label="30164" help="">
+					<level>0</level>
+					<default>2</default>
+					<constraints>
+						<minimum>1</minimum>
+						<step>1</step>
+						<maximum>14</maximum>
+					</constraints>
+					<control type="slider" format="integer">
+						<popup>false</popup>
+					</control>
+				</setting>
+				<setting id="delHtmlCache" type="action" label="30165" help="">
+					<level>0</level>
+					<data>RunPlugin(plugin://plugin.video.matrixv2/?function=clearCache)</data>
+					<control type="button" format="action">
+						<close>true</close>
+					</control>
+				</setting>
+			</group>
+		</category>
+		<category id="updates" label="14303" help="">
+			<group id="matrixv2.updates" label="30096">
+				<setting id="githubUpdateMatrixv2" type="boolean" label="30010" help="">
+					<level>0</level>
+					<default>False</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="matrixv2.branch" type="string" label="30406" help="30173">
+					<level>0</level>
+					<default>release</default>
+					<constraints>
+						<options>
+							<option label="Release">release</option>
+							<option label="Nightly Version (Kodi 20.x)">nightly</option>
+						</options>
+					</constraints>
+					<dependencies>
+						<dependency type="visible" setting="githubUpdateMatrixv2">true</dependency>
+					</dependencies>
+					<control type="spinner" format="string"/>
+				</setting>
+				<!--
+				<setting id="matrixv2.branch.release" type="string" label="30167" help="30173">
+					<level>0</level>
+					<default>nexus</default>
+					<constraints>
+						<options>
+							<option label="Release (Kodi 19.x)">matrix</option>
+							<option label="Release (Kodi 20.x)">nexus</option>
+							<option label="Pre Alpha (Kodi 21)">omega</option>
+						</options>
+					</constraints>
+					<dependencies>
+						<dependency type="visible" setting="githubUpdateMatrixv2">true</dependency>
+						<dependency type="visible" setting="matrixv2.branch">release</dependency>
+					</dependencies>
+					<control type="spinner" format="string"/>
+				</setting>
+				-->
+			</group>
+			<group id="resolver.updates" label="30030">
+				<setting id="githubUpdateResolver" type="boolean" label="30015" help="">
+					<level>0</level>
+					<default>False</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="resolver.branch" type="string" label="30098" help="30101">
+					<level>0</level>
+					<default>release</default>
+					<constraints>
+						<options>
+							<option label="Release">release</option>
+							<option label="Nightly">nightly</option>
+						</options>
+					</constraints>
+					<dependencies>
+						<dependency type="visible" setting="githubUpdateResolver">true</dependency>
+					</dependencies>
+					<control type="spinner" format="string"/>
+				</setting>
+			</group>
+			<group id="notification" label="30270">
+				<setting id="update.notification" type="string" label="30271" help="">
+					<level>0</level>
+					<default>full</default>
+					<constraints>
+						<options>
+							<option label="30272">simple</option>
+							<option label="30273">full</option>
+						</options>
+					</constraints>
+					<control type="spinner" format="string"/>
+				</setting>
+				<setting id="popup.update.notification" type="boolean" label="30274" help="">
+					<level>0</level>
+					<default>True</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="start.popup.update.notification" type="action" label="30276" help="">
+					<level>0</level>
+					<data>RunPlugin(plugin://plugin.video.matrixv2/?function=changelog)</data>
+					<control type="button" format="action">
+						<close>true</close>
+					</control>
+				</setting>
+			</group>
+        </category>
+		<category id="indexsite1" label="30094">
+			<group id="plugin_faselhd" label="30700">
+				<setting id="plugin_faselhd" type="boolean" label="30050" help="">
+					<level>0</level>
+                    <default>True</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="global_search_faselhd" type="boolean" label="30052">
+					<level>0</level>
+					<default>True</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_faselhd">False</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<!-- Domain Überprüfung mit automatischer und manueller Anpassung -->
+				<setting id="plugin_faselhd_checkDomain" type="boolean" label="30277">
+					<level>3</level>
+					<default>True</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_faselhd">false</dependency>
+						<dependency type="visible" operator="!is" setting="plugin_faselhd">false</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="plugin_faselhd.domain" type="string" label="30278" help="">
+					<level>3</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_faselhd">false</dependency>
+						<dependency type="visible" operator="!is" setting="plugin_faselhd">false</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>30278</heading>
+					</control>
+				</setting>
+			</group>
+			<group id="plugin_akwam" label="30720">
+				<setting id="plugin_akwam" type="boolean" label="30050" help="">
+					<level>0</level>
+                    <default>True</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="global_search_akwam" type="boolean" label="30052">
+					<level>0</level>
+					<default>True</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_akwam">False</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<!-- Domain Überprüfung mit automatischer und manueller Anpassung -->
+				<setting id="plugin_akwam_checkDomain" type="boolean" label="30277">
+					<level>3</level>
+					<default>True</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_akwam">false</dependency>
+						<dependency type="visible" operator="!is" setting="plugin_akwam">false</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="plugin_akwam.domain" type="string" label="30278" help="">
+					<level>3</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_akwam">false</dependency>
+						<dependency type="visible" operator="!is" setting="plugin_akwam">false</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>30278</heading>
+					</control>
+				</setting>
+			</group>
+			<group id="plugin_arabseed" label="30701">
+				<setting id="plugin_arabseed" type="boolean" label="30050" help="">
+					<level>0</level>
+                    <default>True</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="global_search_arabseed" type="boolean" label="30052">
+					<level>0</level>
+					<default>True</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_arabseed">False</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<!-- Domain Überprüfung mit automatischer und manueller Anpassung -->
+				<setting id="plugin_arabseed_checkDomain" type="boolean" label="30277">
+					<level>3</level>
+					<default>True</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_arabseed">false</dependency>
+						<dependency type="visible" operator="!is" setting="plugin_arabseed">false</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="plugin_arabseed.domain" type="string" label="30278" help="">
+					<level>3</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_arabseed">false</dependency>
+						<dependency type="visible" operator="!is" setting="plugin_arabseed">false</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>30278</heading>
+					</control>
+				</setting>
+			</group>
+			<group id="plugin_topcinema" label="30723">
+				<setting id="plugin_topcinema" type="boolean" label="30050" help="">
+					<level>0</level>
+                    <default>True</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="global_search_topcinema" type="boolean" label="30052">
+					<level>0</level>
+					<default>True</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_topcinema">False</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<!-- Domain Überprüfung mit automatischer und manueller Anpassung -->
+				<setting id="plugin_topcinema_checkDomain" type="boolean" label="30277">
+					<level>3</level>
+					<default>True</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_topcinema">false</dependency>
+						<dependency type="visible" operator="!is" setting="plugin_topcinema">false</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="plugin_topcinema.domain" type="string" label="30278" help="">
+					<level>3</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_topcinema">false</dependency>
+						<dependency type="visible" operator="!is" setting="plugin_topcinema">false</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>30278</heading>
+					</control>
+				</setting>
+			</group>
+			<group id="shahidu" label="30705">
+				<setting id="plugin_shahidu" type="boolean" label="30050" help="">
+					<level>0</level>
+                    <default>True</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="global_search_shahidu" type="boolean" label="30052">
+					<level>0</level>
+					<default>True</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_shahidu">false</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<!-- Domain Überprüfung mit automatischer und manueller Anpassung -->
+				<setting id="plugin_shahidu_checkDomain" type="boolean" label="30277">
+					<level>3</level>
+					<default>True</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_shahidu">false</dependency>
+						<dependency type="visible" operator="!is" setting="plugin_shahidu">false</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="plugin_shahidu.domain" type="string" label="30278" help="">
+					<level>3</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_shahidu">false</dependency>
+						<dependency type="visible" operator="!is" setting="plugin_shahidu">false</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>30278</heading>
+					</control>
+				</setting>
+			</group>
+			<group id="tuktukcinema" label="30702">
+				<setting id="plugin_tuktukcinema" type="boolean" label="30050" help="">
+					<level>0</level>
+                    <default>True</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="global_search_tuktukcinema" type="boolean" label="30052">
+					<level>0</level>
+					<default>True</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_tuktukcinema">false</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<!-- Domain Überprüfung mit automatischer und manueller Anpassung -->
+				<setting id="plugin_tuktukcinema_checkDomain" type="boolean" label="30277">
+					<level>3</level>
+					<default>True</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_tuktukcinema">false</dependency>
+						<dependency type="visible" operator="!is" setting="plugin_tuktukcinema">false</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="plugin_tuktukcinema.domain" type="string" label="30278" help="">
+					<level>3</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_tuktukcinema">false</dependency>
+						<dependency type="visible" operator="!is" setting="plugin_tuktukcinema">false</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>30278</heading>
+					</control>
+				</setting>
+			</group>
+			<group id="plugin_arblionz" label="30703">
+				<setting id="plugin_arblionz" type="boolean" label="30050" help="">
+					<level>0</level>
+                    <default>True</default>
+					<control type="toggle"/>
+				</setting>				
+				<setting id="global_search_arblionz" type="boolean" label="30052">
+					<level>0</level>
+					<default>False</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_arblionz">False</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<!-- Domain Überprüfung mit automatischer und manueller Anpassung -->
+				<setting id="plugin_arblionz_checkDomain" type="boolean" label="30277">
+					<level>3</level>
+					<default>True</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_arblionz">false</dependency>
+						<dependency type="visible" operator="!is" setting="plugin_arblionz">false</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="plugin_arblionz.domain" type="string" label="30278" help="">
+					<level>3</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_arblionz">false</dependency>
+						<dependency type="visible" operator="!is" setting="plugin_arblionz">false</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>30278</heading>
+					</control>
+				</setting>
+			</group>
+			<group id="plugin_cimawbas" label="30704">
+				<setting id="plugin_cimawbas" type="boolean" label="30050" help="">
+					<level>0</level>
+                    <default>True</default>
+					<control type="toggle"/>
+				</setting>				
+				<setting id="global_search_cimawbas" type="boolean" label="30052">
+					<level>0</level>
+					<default>False</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_cimawbas">False</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<!-- Domain Überprüfung mit automatischer und manueller Anpassung -->
+				<setting id="plugin_cimawbas_checkDomain" type="boolean" label="30277">
+					<level>3</level>
+					<default>True</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_cimawbas">false</dependency>
+						<dependency type="visible" operator="!is" setting="plugin_cimawbas">false</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="plugin_cimawbas.domain" type="string" label="30278" help="">
+					<level>3</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_cimawbas">false</dependency>
+						<dependency type="visible" operator="!is" setting="plugin_cimawbas">false</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>30278</heading>
+					</control>
+				</setting>
+			</group>
+			<group id="plugin_wecima" label="30712">
+				<setting id="plugin_wecima" type="boolean" label="30050" help="">
+					<level>0</level>
+                    <default>True</default>
+					<control type="toggle"/>
+				</setting>				
+				<setting id="global_search_wecima" type="boolean" label="30052">
+					<level>0</level>
+					<default>False</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_wecima">False</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<!-- Domain Überprüfung mit automatischer und manueller Anpassung -->
+				<setting id="plugin_wecima_checkDomain" type="boolean" label="30277">
+					<level>3</level>
+					<default>True</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_wecima">false</dependency>
+						<dependency type="visible" operator="!is" setting="plugin_wecima">false</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="plugin_wecima.domain" type="string" label="30278" help="">
+					<level>3</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_wecima">false</dependency>
+						<dependency type="visible" operator="!is" setting="plugin_wecima">false</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>30278</heading>
+					</control>
+				</setting>
+			</group>
+		</category>
+		<category id="indexsite2" label="30095">
+			<group id="plugin_cimanow" label="30725">
+				<setting id="plugin_cimanow" type="boolean" label="30050" help="">
+					<level>0</level>
+                    <default>True</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="global_search_cimanow" type="boolean" label="30052">
+					<level>0</level>
+					<default>True</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_cimanow">False</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<!-- Domain Überprüfung mit automatischer und manueller Anpassung -->
+				<setting id="plugin_cimanow_checkDomain" type="boolean" label="30277">
+					<level>3</level>
+					<default>True</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_cimanow">false</dependency>
+						<dependency type="visible" operator="!is" setting="plugin_cimanow">false</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="plugin_cimanow.domain" type="string" label="30278" help="">
+					<level>3</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_cimanow">false</dependency>
+						<dependency type="visible" operator="!is" setting="plugin_cimanow">false</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>30278</heading>
+					</control>
+				</setting>
+			</group>
+			<group id="plugin_coolcima" label="30706">
+				<setting id="plugin_coolcima" type="boolean" label="30050" help="">
+					<level>0</level>
+                    <default>True</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="global_search_coolcima" type="boolean" label="30052">
+					<level>0</level>
+					<default>True</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_coolcima">False</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<!-- Domain Überprüfung mit automatischer und manueller Anpassung -->
+				<setting id="plugin_coolcima_checkDomain" type="boolean" label="30277">
+					<level>3</level>
+					<default>True</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_coolcima">false</dependency>
+						<dependency type="visible" operator="!is" setting="plugin_coolcima">false</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="plugin_coolcima.domain" type="string" label="30278" help="">
+					<level>3</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_coolcima">false</dependency>
+						<dependency type="visible" operator="!is" setting="plugin_coolcima">false</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>30278</heading>
+					</control>
+				</setting>
+			</group>
+			<group id="plugin_cinematy" label="30707">
+				<setting id="plugin_cinematy" type="boolean" label="30050" help="">
+					<level>0</level>
+                    <default>True</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="global_search_cinematy" type="boolean" label="30052">
+					<level>0</level>
+					<default>True</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_cinematy">False</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<!-- Domain Überprüfung mit automatischer und manueller Anpassung -->
+				<setting id="plugin_cinematy_checkDomain" type="boolean" label="30277">
+					<level>3</level>
+					<default>True</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_cinematy">false</dependency>
+						<dependency type="visible" operator="!is" setting="plugin_cinematy">false</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="plugin_cinematy.domain" type="string" label="30278" help="">
+					<level>3</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_cinematy">false</dependency>
+						<dependency type="visible" operator="!is" setting="plugin_cinematy">false</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>30278</heading>
+					</control>
+				</setting>
+			</group>
+			<group id="plugin_egydead" label="30708">
+				<setting id="plugin_egydead" type="boolean" label="30050" help="">
+					<level>0</level>
+                    <default>True</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="global_search_egydead" type="boolean" label="30052">
+					<level>0</level>
+					<default>True</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_egydead">False</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<!-- Domain Überprüfung mit automatischer und manueller Anpassung -->
+				<setting id="plugin_egydead_checkDomain" type="boolean" label="30277">
+					<level>3</level>
+					<default>True</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_egydead">false</dependency>
+						<dependency type="visible" operator="!is" setting="plugin_egydead">false</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="plugin_egydead.domain" type="string" label="30278" help="">
+					<level>3</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_egydead">false</dependency>
+						<dependency type="visible" operator="!is" setting="plugin_egydead">false</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>30278</heading>
+					</control>
+				</setting>
+			</group>
+			<group id="plugin_dramacafe" label="30709">
+				<setting id="plugin_dramacafe" type="boolean" label="30050" help="">
+					<level>0</level>
+                    <default>True</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="global_search_dramacafe" type="boolean" label="30052">
+					<level>0</level>
+					<default>True</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_dramacafe">False</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<!-- Domain Überprüfung mit automatischer und manueller Anpassung -->
+				<setting id="plugin_dramacafe_checkDomain" type="boolean" label="30277">
+					<level>3</level>
+					<default>True</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_dramacafe">false</dependency>
+						<dependency type="visible" operator="!is" setting="plugin_dramacafe">false</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="plugin_dramacafe.domain" type="string" label="30278" help="">
+					<level>3</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="plugin_dramacafe">false</dependency>
+						<dependency type="visible" operator="!is" setting="plugin_dramacafe">false</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>30278</heading>
+					</control>
+				</setting>
+			</group>	
+		</category>
+		<category id="tmdb" label="30174" help="">
+			<group id="tmdbhandler" label="30033">
+				<setting id="TMDBMETA" type="boolean" label="30004" help="">
+					<level>0</level>
+					<default>True</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="metaOverwrite" type="boolean" label="30008" help="">
+					<level>0</level>
+					<default>True</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="TMDBMETA">True</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="advanced" type="boolean" label="30044" help="">
+					<level>0</level>
+					<default>True</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="TMDBMETA">False</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="poster_tmdb" type="string" label="30170" help="">
+					<level>0</level>
+					<default>original</default>
+					<constraints>
+						<options>
+							<option label="w92">w92</option>
+							<option label="w154">w154</option>
+							<option label="w185">w185</option>
+							<option label="w342">w342</option>
+							<option label="w500">w500</option>
+							<option label="w780">w780</option>
+							<option label="original">original</option>
+						</options>
+					</constraints>
+					<control type="list" format="string">
+						<heading>30170</heading>
+					</control>
+				</setting>
+				<setting id="backdrop_tmdb" type="string" label="30171" help="">
+					<level>0</level>
+					<default>original</default>
+					<constraints>
+						<options>
+							<option label="w300">w300</option>
+							<option label="w780">w780</option>
+							<option label="w1280">w1280</option>
+							<option label="original">original</option>
+						</options>
+					</constraints>
+					<control type="list" format="string">
+						<heading>30171</heading>
+					</control>
+				</setting>
+			</group>
+			<group id="extentedtmdbhandler" label="30080">
+				<setting id="tmdb_lang" type="string" label="30172" help="">
+					<level>0</level>
+					<default>en</default>
+					<constraints>
+						<options>
+							<option label="30175">en</option>
+							<option label="30176">de</option>
+							<option label="30177">fr</option>
+							<option label="30178">it</option>
+							<option label="30179">nl</option>
+							<option label="30180">sv</option>
+							<option label="30181">cs</option>
+							<option label="30182">da</option>
+							<option label="30183">fi</option>
+							<option label="30184">pl</option>
+							<option label="30185">es</option>
+							<option label="30186">el</option>
+							<option label="30187">tr</option>
+							<option label="30188">uk</option>
+							<option label="30189">ru</option>
+							<option label="30190">kn</option>
+							<option label="30191">ga</option>
+							<option label="30192">hr</option>
+							<option label="30193">hu</option>
+							<option label="30194">ja</option>
+							<option label="30195">no</option>
+							<option label="30196">id</option>
+							<option label="30197">ko</option>
+							<option label="30198">pt</option>
+							<option label="30199">lv</option>
+							<option label="30200">lt</option>
+							<option label="30201">ro</option>
+							<option label="30202">sk</option>
+							<option label="30203">sl</option>
+							<option label="30204">sq</option>
+							<option label="30205">sr</option>
+							<option label="30206">th</option>
+							<option label="30207">vi</option>
+							<option label="30208">bg</option>
+							<option label="30209">fa</option>
+							<option label="30210">hy</option>
+							<option label="30211">ka</option>
+							<option label="30212">ar</option>
+							<option label="30213">af</option>
+							<option label="30214">bs</option>
+							<option label="30215">zh</option>
+							<option label="30216">cn</option>
+							<option label="30217">hi</option>
+						</options>
+					</constraints>
+					<control type="list" format="string">
+						<heading>30172</heading>
+					</control>
+				</setting>
+				<setting id="Color" type="string" label="30133" help="">
+					<level>0</level>
+					<default>lightblue</default>
+					<constraints>
+						<options>
+							<option label="30218">lightblue</option>
+							<option label="30219">lightcoral</option>
+							<option label="30220">lightcyan</option>
+							<option label="30221">lightgreen</option>
+							<option label="30222">lightgrey</option>
+							<option label="30223">lightpink</option>
+							<option label="30224">lightsalmon</option>
+							<option label="30225">lightseagreen</option>
+							<option label="30226">lightskyblue</option>
+							<option label="30227">lightslategray</option>
+							<option label="30228">lightsteelblue</option>
+							<option label="30229">lightyellow</option>
+							<option label="30230">aliceblue</option>
+							<option label="30231">coral</option>
+							<option label="30232">lavender</option>
+							<option label="30233">lemonchiffon</option>
+							<option label="30234">moccasin</option>
+							<option label="30235">pink</option>
+							<option label="30236">plum</option>
+							<option label="30237">powderblue</option>
+							<option label="30238">seashell</option>
+						</options>
+					</constraints>
+					<control type="list" format="string">
+						<heading>30133</heading>
+					</control>
+				</setting>
+			</group>
+		</category>
+		<category id="view" label="30022" help="">
+			<group id="views" label="30022">
+				<setting id="auto-view" type="boolean" label="30060" help="">
+					<level>0</level>
+					<default>False</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="files-view" type="integer" label="30061" help="">
+					<level>0</level>
+					<default>55</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="auto-view">False</dependency>
+					</dependencies>
+					<control type="edit" format="integer">
+						<heading>30061</heading>
+					</control>
+				</setting>
+				<setting id="movies-view" type="integer" label="30062" help="">
+					<level>0</level>
+					<default>503</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="auto-view">False</dependency>
+					</dependencies>
+					<control type="edit" format="integer">
+						<heading>30062</heading>
+					</control>
+				</setting>
+				<setting id="tvshows-view" type="integer" label="30063" help="">
+					<level>0</level>
+					<default>503</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="auto-view">False</dependency>
+					</dependencies>
+					<control type="edit" format="integer">
+						<heading>30063</heading>
+					</control>
+				</setting>
+				<setting id="seasons-view" type="integer" label="30064" help="">
+					<level>0</level>
+					<default>504</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="auto-view">False</dependency>
+					</dependencies>
+					<control type="edit" format="integer">
+						<heading>30064</heading>
+					</control>
+				</setting>
+				<setting id="episodes-view" type="integer" label="30065" help="">
+					<level>0</level>
+					<default>504</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="auto-view">False</dependency>
+					</dependencies>
+					<control type="edit" format="integer">
+						<heading>30065</heading>
+					</control>
+				</setting>
+			</group>
+		</category>
+		<category id="download" label="30023" help="">
+			<group id="downloads" label="30023">
+				<setting id="download-folder" type="path" label="30081" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control type="button" format="path">
+						<heading>30081</heading>
+					</control>
+				</setting>
+				<setting id="backgrounddownload" type="boolean" label="30132" help="">
+					<level>0</level>
+					<default>False</default>
+					<control type="toggle"/>
+				</setting>
+			</group>
+			<group id="downloadplugins" label="30070">
+				<setting id="jd_enabled" type="boolean" label="30071" help="">
+					<level>0</level>
+					<default>False</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="jd_host" type="string" label="30072" help="">
+					<level>0</level>
+					<default>127.0.0.1</default>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="jd_enabled">False</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>30072</heading>
+					</control>
+				</setting>
+				<setting id="jd_port" type="integer" label="30073" help="">
+					<level>0</level>
+					<default>10025</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="jd_enabled">False</dependency>
+					</dependencies>	
+					<control type="edit" format="integer">
+						<heading>30073</heading>
+					</control>
+				</setting>
+			</group>
+			<group id="downloadplugins1" label="30076">
+				<setting id="jd2_enabled" type="boolean" label="30077" help="">
+					<level>0</level>
+					<default>False</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="jd2_host" type="string" label="30072" help="">
+					<level>0</level>
+					<default>127.0.0.1</default>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="jd2_enabled">False</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>30072</heading>
+					</control>
+				</setting>
+				<setting id="jd2_port" type="integer" label="30073" help="">
+					<level>0</level>
+					<default>9666</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="jd2_enabled">False</dependency>
+					</dependencies>
+					<control type="edit" format="integer">
+						<heading>30073</heading>
+					</control>
+				</setting>
+			</group>
+			<group id="downloadplugins2" label="30090">
+				<setting id="myjd_enabled" type="boolean" label="30091" help="">
+					<level>0</level>
+					<default>False</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="myjd_device" type="string" label="30092" help="">
+					<level>0</level>
+					<default>JDownloader@Device</default>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="myjd_enabled">False</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>30092</heading>
+					</control>
+				</setting>
+				<setting id="myjd_user" type="string" label="30083" help="">
+					<level>0</level>
+					<default>example@example.com</default>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="myjd_enabled">False</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>30083</heading>
+					</control>
+				</setting>
+				<setting id="myjd_pass" type="string" label="30084" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="myjd_enabled">False</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>30084</heading>
+						<hidden>true</hidden>
+					</control>
+				</setting>
+			</group>
+			<group id="downloadplugins3" label="30257">
+				<setting id="pyload_enabled" type="boolean" label="30082" help="">
+					<level>0</level>
+					<default>False</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="pyload_host" type="string" label="30072" help="">
+					<level>0</level>
+					<default>127.0.0.1</default>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="pyload_enabled">False</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>30072</heading>
+					</control>
+				</setting>
+				<setting id="pyload_port" type="integer" label="30073" help="">
+					<level>0</level>
+					<default>8000</default>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="pyload_enabled">False</dependency>
+					</dependencies>	
+					<control type="edit" format="integer">
+						<heading>30073</heading>
+					</control>
+				</setting>
+				<setting id="pyload_user" type="string" label="30083" help="">
+					<level>0</level>
+					<default>user</default>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="pyload_enabled">False</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>30083</heading>
+					</control>
+				</setting>
+				<setting id="pyload_passwd" type="string" label="30084" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable" operator="!is" setting="pyload_enabled">False</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>30084</heading>
+						<hidden>true</hidden>
+					</control>
+				</setting>
+			</group>
+		</category>
+		<!-- # Hidden -->
+		<category>
+			<group>
+				<setting id="enforceUpdate" type="boolean" label="30102" help="">
+					<level>0</level>
+					<default>False</default>
+					<visible>False</visible>
+					<control type="toggle"/>
+				</setting>
+				<setting id="newSetting" type="boolean" label="newSetting" help="">
+					<level>0</level>
+					<default>True</default>
+					<visible>False</visible>
+					<control type="toggle"/>
+				</setting>
+			</group>
+		</category>
+	</section>
+</settings>
