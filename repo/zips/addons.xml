@@ -148,7 +148,7 @@
 <screenshot>resources/art/screenshot.jpg</screenshot>
 </assets>
 </extension>
-</addon><addon id="service.upnext" name="UpNext" version="2.0.30" provider-name="im85288, MoojMidge">
+</addon><addon id="service.upnext" name="UpNext" version="2.0.31" provider-name="im85288, MoojMidge">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
     <import addon="script.module.pil" version="1.1.7"/>
