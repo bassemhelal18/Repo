@@ -204,7 +204,7 @@ Många befintliga tillägg integreras redan med den här utanför lådan-tjänst
       <screenshot>upnext-developer.jpg</screenshot>
     </assets>
   </extension>
-</addon><addon id="script.module.matrixv2scraper" name="Matrixv2 Scraper" provider-name="bassemhelal18" version="2.6">
+</addon><addon id="script.module.matrixv2scraper" name="Matrixv2 Scraper" provider-name="bassemhelal18" version="2.7">
 	<requires>
         <import addon="script.module.requests"/>
         <import addon="script.module.six"/>
