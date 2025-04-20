@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.matrixv2" name="MatrixV2" version="4.0.10~nightly9" provider-name="bassemhelal18">
+<addon id="plugin.video.matrixv2" name="MatrixV2" version="4.0.11" provider-name="bassemhelal18">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 		<import addon="script.module.infotagger" version="0.0.3"/>
