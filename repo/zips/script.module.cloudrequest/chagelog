@@ -1,0 +1,42 @@
+# Changelog
+
+---
+
+## [1.0.2] — 2026-04-26
+
+### Removed
+- `js2py` library dependency — no longer required
+- `requests-toolbelt` library dependency — replaced by a custom module
+- `interpreters/js2py.py` — replaced by `js_engine`
+- `interpreters/js2py_interpreter.py` — replaced by `js_engine`
+- `interpreters/native.py` — logic moved to `interpreters/__init__.py`
+- `interpreters/nodejs.py` — required external Node.js runtime
+- `interpreters/chakracore.py` — required native ChakraCore library
+- `interpreters/v8.py` — required external v8eval library
+- `interpreters/encapsulated.py` — only used by removed interpreters
+- `interpreters/jsunfuck.py` — not used by any active project files
+
+### Added
+- `interpreters/js_engine.py` — core project engine, pure Python JavaScript interpreter
+  - Lexer, Parser and Interpreter fully implemented from scratch
+  - ES5/ES6 support: closures, arrow functions, `typeof`, bitwise operators
+  - Cloudflare type coercion: `+[]`, `!+[]`, `[]+{}` and similar
+  - Built-ins: `Math`, `JSON`, `Array`, `String`, `Object`, `Number`, `atob/btoa`, `parseInt`, `console`, `Date.now`
+- `http_inspector.py` — custom HTTP traffic inspection module
+  - `inspect_response()` and `inspect_all()` compatible with the previous API
+
+### Changed
+- `interpreters/__init__.py` — rewritten with built-in `_NativeInterpreter` backed by `js_engine`
+  - Single interpreter in the project, registered as `'native'`
+  - `dynamicImport()` simplified — any requested name resolves directly to `'native'`
+- `cloudflare_v3.py` — migrated to use `JavaScriptInterpreter.dynamicImport('native')`
+- `cloudflare_v2.py` — removed unused import of `JavaScriptInterpreter`
+- `__init__.py` — default interpreter changed from `'js2py'` to `'native'`
+- `__init__.py` — `dump.dump_all()` replaced by `_inspect_all()` from `http_inspector`
+- `help.py` — `systemInfo()` updated with label `'native (built-in)'`
+
+---
+
+## [1.0.1] — previous
+
+- Initial version with `js2py` as external JavaScript interpreter
